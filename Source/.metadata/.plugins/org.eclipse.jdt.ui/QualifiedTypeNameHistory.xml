@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.badlogic.gdx.math.Vector3"/>
-<fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="com.mygdx.game.MyTestGame.Pos"/>
-<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.OrthographicCamera"/>
-</qualifiedTypeNameHistroy>
