@@ -1,0 +1,13 @@
+Auftragsverteilung Analyse
+Aufträge bis Dienstag 14.10.2014 dann wird alles genauer besprochen.
+Logbuch nicht vergessen!
+
+Projektmanagement   					-> Remo
+Anwendungsfälle (fully dressed 1, casual 3, brief 3)   	-> bereits gemacht, noch aussortieren (Christoph)
+Anwendungsfalldiagramm  				-> Christoph
+Domänenmodell						-> Remo
+Eine erste Architektur   				-> Yacine
+Zusätzliche Spezifikationen   				-> Emily
+System-Sequenzdiagramm   				-> bereits gemacht, noch aussortieren (Christoph)
+Systemoperationen   					-> bereits gemacht, noch aussortieren (Christoph)
+Glossar   						-> erstellen Yacine, pflegen alle
