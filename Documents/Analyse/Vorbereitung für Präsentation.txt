@@ -1,0 +1,23 @@
+
+
+Präsentation
+Folie selbe wie letztes Mal				kopieren Remo
+
+Anwendungsfall mit Diagramm				Christoph 2min
+evt. ein Fall detailiert mit System-Sequenzdiagramm
+
+Domänenmodell						Remo 2min
+
+Architektur						Yacine 3min
+kurzer Input LibGDX
+
+Zusätzliche Spezifikationen				Emily 3min
+kurzer Input Android
+
+
+
+Analyse Dokument
+
+Merge und Style			Emily
+Querlesen			Alle
+Dokument Drucken  		Remo Höppli
