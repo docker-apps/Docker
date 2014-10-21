@@ -3,7 +3,9 @@ package com.mygdx.game;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class OldDemo implements Screen {
+	MyTestGame game;
 	SpriteBatch batch;
 	Texture img;
 	Texture ship;
@@ -22,23 +25,34 @@ public class OldDemo implements Screen {
 	ArrayList<Vector2> shipPosList = new ArrayList<Vector2>();
 	TestObject movingObject;
 	float state_time = 0f;
-	
-	public OldDemo() {
+
+	public OldDemo(MyTestGame game) {
+		this.game = game;
+		Gdx.input.setCatchBackKey(true);
 		OrthographicCamera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
 
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
-		
+
 		//img = new Texture("badlogic.jpg");
 		ship = new Texture("raumschiff.png");
-		
+
 		movingObject = new TestObject(10, 10);
+	}
+
+	public void exit(){
+		game.setLastScreen();
 	}
 
 	@Override
 	public void render (float delta) {
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE) ||
+				Gdx.input.isKeyPressed(Input.Keys.BACK))
+		{
+			this.exit();
+		}
 		this.state_time += Gdx.graphics.getDeltaTime();
 		this.movingObject.step();
 		shipPosList.clear();
@@ -50,10 +64,7 @@ public class OldDemo implements Screen {
 				this.movingObject.setY(pos.y);
 			}
 		}
-		
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE))
-			Gdx.app.exit();
-		
+
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
@@ -72,31 +83,31 @@ public class OldDemo implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

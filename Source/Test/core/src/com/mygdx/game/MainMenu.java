@@ -12,12 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class MainMenu implements Screen{
-	private Game game;
+	private MyTestGame game;
 	private SpriteBatch batch;
 	private Skin skin;
 	private Stage stage;
 
-	public MainMenu(Game game) {
+	public MainMenu(MyTestGame game) {
 		this.game = game;
 		batch = new SpriteBatch();
 		skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
@@ -55,7 +55,7 @@ public class MainMenu implements Screen{
 	}
 	
 	private void startOldDemo(){
-		game.setScreen(new OldDemo());
+		game.setScreen(new OldDemo(game));
 	}
 	
 	private void startFallingContainers(){
@@ -80,8 +80,8 @@ public class MainMenu implements Screen{
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+		Gdx.input.setInputProcessor(stage);
+		Gdx.input.setCatchBackKey(false);
 	}
 
 	@Override
