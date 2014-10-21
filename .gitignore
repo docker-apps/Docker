@@ -1,7 +1,6 @@
 .metadata
 *.prefs
-.gradle
-settings.gradle
+.gradle/*
 local.properties
 .classpath
 .project
