@@ -1,0 +1,21 @@
+-- TO DO bis: ~04.11.14 --
+
+Yacine:
+	- Packages & Klassen anlegen
+	- evtl. Klassendiagramm beginnen
+	- Rendering
+	- Graficken
+
+Remo:
+	- Auswertungs-Algorithmus
+		- Gewicht
+		- "Schönheit"
+	- Rendering
+
+Christoph:
+	- Ship
+	- Game
+
+Emily:
+	- Train
+	- Menu
