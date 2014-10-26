@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.6" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="com.docker.Docker" project="docker-core" 
+    file="/docker-core/src/com/docker/Docker.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="904" y="104"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.docker.domain.game.AbstractGame" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/game/AbstractGame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="315" y="355"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.docker.domain.game.CareerGame" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/game/CareerGame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="524" y="64"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="com.docker.domain.game.QuickGame" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/game/QuickGame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="105" y="128"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.docker.domain.game.Level" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/game/Level.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="809" y="577"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.docker.domain.game.InfiniteGame" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/game/InfiniteGame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="310" y="66"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.docker.domain.gameobject.Crane" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/gameobject/Crane.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="110" y="607"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.docker.domain.gameobject.Ship" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/gameobject/Ship.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="334" y="649"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="9" language="java" name="com.docker.domain.gameobject.Container.ContainerColor" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/gameobject/Container.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="604" y="1112"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="10" language="java" name="com.docker.domain.gameobject.Train" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/gameobject/Train.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="597" y="489"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.docker.domain.gameobject.Container" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/gameobject/Container.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="600" y="877"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="com.docker.domain.user.Handicap" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/user/Handicap.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="88" width="146" x="914" y="735"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="com.docker.domain.user.Config" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/user/Config.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="88" width="146" x="1100" y="735"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="com.docker.domain.user.Statistics" project="docker-core" 
+    file="/docker-core/src/com/docker/domain/user/Statistics.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="88" width="146" x="1286" y="735"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="com.docker.technicalservices.Persistence" project="docker-core" 
+    file="/docker-core/src/com/docker/technicalservices/Persistence.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="88" width="171" x="902" y="857"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="com.docker.ui.menus.MainMenu" project="docker-core" 
+    file="/docker-core/src/com/docker/ui/menus/MainMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1319" y="345"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="17">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="18" name="color"/>      
+      <multiplicity id="19" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="20">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="21" name="train"/>      
+      <multiplicity id="22" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="23">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="24" name="containers"/>      
+      <multiplicity id="25" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="26">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="27" name="crane"/>      
+      <multiplicity id="28" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="29">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="30">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="31">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="32" name="containers"/>      
+      <multiplicity id="33" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="34">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="9"/>  
+  </nesting>  
+  <association id="35">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="36" name="ship"/>      
+      <multiplicity id="37" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="38">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="39">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="40" name="containers"/>      
+      <multiplicity id="41" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="42">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="43" name="application"/>      
+      <multiplicity id="44" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
