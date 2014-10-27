@@ -8,11 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Container extends Actor {
 
+	private static final float LABEL_TRANSPARENCY = 0.8f;
+
 	public enum ContainerColor {
 		RED, GREEN, BLUE, YELLOW
 	}
 
 	public final static Color RED = new Color(1f, 0.2f, 0.15f, 1f);
+	public final static Color GREEN = new Color(0.5f, 1f, 0.15f, 1f);
+	public final static Color BLUE = new Color(0.15f, 0.5f, 1f, 1f);
+	public final static Color YELLOW = new Color(1f, 1f, 0f, 1f);
 
 	private int weight;
 	private int length;
@@ -69,8 +74,8 @@ public class Container extends Actor {
 		else{
 			batch.draw(this.container_base_front, this.getX(), this.getY());
 		}
-		//draw number & labels, set transparency here
-		batch.setColor(new Color(1f,1f,1f,0.8f));
+		//draw number & labels
+		batch.setColor(new Color(1f,1f,1f,LABEL_TRANSPARENCY));
 		batch.draw(this.number, this.getX()+3, this.getY()+this.getElementHeight()-this.number.getHeight()-3);
 
 		batch.draw(label, this.getX()+(getElementWidth()*(this.length)) - label.getWidth() - 3, this.getY() + 3);
