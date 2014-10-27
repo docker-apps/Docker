@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Container extends Actor {
@@ -23,12 +25,12 @@ public class Container extends Actor {
 	private int length;
 	private Color color;
 
-	private Texture container_base_left;
-	private Texture container_base_center;
-	private Texture container_base_right;
-	private Texture container_base_front;
-	private Texture number;
-	private Texture label;
+	private TextureRegion base_left;
+	private TextureRegion base_center;
+	private TextureRegion base_right;
+	private TextureRegion base_front;
+	private TextureRegion number;
+	private TextureRegion label;
 
 	public Container(int weight, int length, Color color, float x, float y) {
 		super();
@@ -41,16 +43,14 @@ public class Container extends Actor {
 		this.weight = weight;
 		this.length = length;
 		this.color = color;
-
-		this.container_base_left= new Texture(Gdx.files.internal("img//container_base_left.png"));
-		this.container_base_center = new Texture(Gdx.files.internal("img//container_base_center.png"));
-		this.container_base_right = new Texture(Gdx.files.internal("img//container_base_right.png"));
-		this.container_base_front = new Texture(Gdx.files.internal("img//container_base_front.png"));
-		this.number = new Texture(Gdx.files.internal("img//nr_"+this.weight+".png"));
-		if(this.length > 1)
-			this.label = new Texture(Gdx.files.internal("img//label_1.png"));
-		else
-			this.label = new Texture(Gdx.files.internal("img//label_2.png"));
+		
+		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));		
+		this.base_left= atlas.findRegion("container_base_left");
+		this.base_center = atlas.findRegion("container_base_center");
+		this.base_right = atlas.findRegion("container_base_right");
+		this.base_front = atlas.findRegion("container_base_front");
+		this.number = atlas.findRegions("nr").get(this.weight-1);
+		this.label = atlas.findRegions("label").get(this.length > 1 ? 0 : 1);
 
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
@@ -65,20 +65,20 @@ public class Container extends Actor {
 		//draw container base
 		batch.setColor(this.color);
 		if(this.length > 1){
-			batch.draw(this.container_base_left, this.getX(), this.getY());
+			batch.draw(this.base_left, this.getX(), this.getY());
 			for (int i = 1; i <= this.length-2; i++) {
-				batch.draw(this.container_base_center, this.getX()+(getElementWidth()*i), this.getY());			
+				batch.draw(this.base_center, this.getX()+(getElementWidth()*i), this.getY());			
 			}
-			batch.draw(this.container_base_right, this.getX()+(getElementWidth()*(this.length-1)), this.getY());
+			batch.draw(this.base_right, this.getX()+(getElementWidth()*(this.length-1)), this.getY());
 		}
 		else{
-			batch.draw(this.container_base_front, this.getX(), this.getY());
+			batch.draw(this.base_front, this.getX(), this.getY());
 		}
 		//draw number & labels
 		batch.setColor(new Color(1f,1f,1f,LABEL_TRANSPARENCY));
-		batch.draw(this.number, this.getX()+3, this.getY()+this.getElementHeight()-this.number.getHeight()-3);
+		batch.draw(this.number, this.getX()+3, this.getY()+this.getElementHeight()-this.number.getRegionHeight()-3);
 
-		batch.draw(label, this.getX()+(getElementWidth()*(this.length)) - label.getWidth() - 3, this.getY() + 3);
+		batch.draw(label, this.getX()+(getElementWidth()*(this.length)) - label.getRegionWidth() - 3, this.getY() + 3);
 
 		//reset color tint to white
 		batch.setColor(Color.WHITE);
@@ -95,10 +95,10 @@ public class Container extends Actor {
 	}
 
 	public float getElementWidth(){
-		return container_base_left.getWidth();
+		return base_left.getRegionWidth();
 	}
 
 	public float getElementHeight(){
-		return container_base_left.getHeight();
+		return base_left.getRegionHeight();
 	}
 }

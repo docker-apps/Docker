@@ -1,0 +1,104 @@
+
+docker.png
+size: 256,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+container_base_center
+  rotate: false
+  xy: 176, 41
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+container_base_front
+  rotate: false
+  xy: 199, 41
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+container_base_left
+  rotate: false
+  xy: 222, 41
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+container_base_right
+  rotate: false
+  xy: 176, 18
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+label
+  rotate: false
+  xy: 2, 2
+  size: 11, 3
+  orig: 11, 3
+  offset: 0, 0
+  index: 1
+label
+  rotate: false
+  xy: 153, 14
+  size: 3, 7
+  orig: 3, 7
+  offset: 0, 0
+  index: 2
+nr
+  rotate: false
+  xy: 2, 7
+  size: 6, 10
+  orig: 6, 10
+  offset: 0, 0
+  index: 1
+nr
+  rotate: false
+  xy: 10, 7
+  size: 6, 10
+  orig: 6, 10
+  offset: 0, 0
+  index: 2
+nr
+  rotate: false
+  xy: 199, 29
+  size: 6, 10
+  orig: 6, 10
+  offset: 0, 0
+  index: 3
+ship_body_center
+  rotate: false
+  xy: 153, 23
+  size: 21, 39
+  orig: 21, 39
+  offset: 0, 0
+  index: -1
+ship_body_left
+  rotate: false
+  xy: 63, 18
+  size: 49, 44
+  orig: 49, 44
+  offset: 0, 0
+  index: -1
+ship_body_right
+  rotate: false
+  xy: 2, 19
+  size: 59, 43
+  orig: 59, 43
+  offset: 0, 0
+  index: -1
+ship_mast
+  rotate: false
+  xy: 245, 33
+  size: 6, 29
+  orig: 6, 29
+  offset: 0, 0
+  index: -1
+ship_tower
+  rotate: false
+  xy: 114, 12
+  size: 37, 50
+  orig: 37, 50
+  offset: 0, 0
+  index: -1
