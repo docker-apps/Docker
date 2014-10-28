@@ -3,7 +3,7 @@ package com.docker.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
-import com.docker.DockerMyTest;
+import com.docker.Docker;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -14,6 +14,6 @@ public class DesktopLauncher {
 		//TexturePacker.process("../../../Documents/Grafik/deploy", "../android/assets/img", "docker");
 
 		
-		new LwjglApplication(new DockerMyTest(), config);
+		new LwjglApplication(new Docker(), config);
 	}
 }
