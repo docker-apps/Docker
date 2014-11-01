@@ -93,6 +93,10 @@ public class Container extends Actor {
 	public float getHeight(){
 		return this.getElementHeight();
 	}
+	
+	public int getLength(){
+		return this.length;
+	}
 
 	public float getElementWidth(){
 		return base_left.getRegionWidth();

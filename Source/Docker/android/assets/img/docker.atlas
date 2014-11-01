@@ -6,70 +6,105 @@ filter: Nearest,Nearest
 repeat: none
 container_base_center
   rotate: false
-  xy: 176, 41
+  xy: 199, 41
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
 container_base_front
   rotate: false
-  xy: 199, 41
+  xy: 222, 41
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
 container_base_left
   rotate: false
-  xy: 222, 41
+  xy: 199, 18
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
 container_base_right
   rotate: false
-  xy: 176, 18
+  xy: 222, 18
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
+crane_body
+  rotate: false
+  xy: 153, 15
+  size: 21, 47
+  orig: 21, 47
+  offset: 0, 0
+  index: -1
+crane_extension_left
+  rotate: false
+  xy: 176, 13
+  size: 21, 8
+  orig: 21, 8
+  offset: 0, 0
+  index: -1
+crane_extension_left_outer
+  rotate: false
+  xy: 37, 9
+  size: 21, 8
+  orig: 21, 8
+  offset: 0, 0
+  index: -1
+crane_extension_right
+  rotate: false
+  xy: 60, 2
+  size: 21, 8
+  orig: 21, 8
+  offset: 0, 0
+  index: -1
+crane_extension_right_outer
+  rotate: false
+  xy: 83, 2
+  size: 21, 8
+  orig: 21, 8
+  offset: 0, 0
+  index: -1
 label
   rotate: false
-  xy: 2, 2
+  xy: 231, 13
   size: 11, 3
   orig: 11, 3
   offset: 0, 0
   index: 1
 label
   rotate: false
-  xy: 153, 14
+  xy: 123, 3
   size: 3, 7
   orig: 3, 7
   offset: 0, 0
   index: 2
 nr
   rotate: false
-  xy: 2, 7
+  xy: 245, 21
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 1
 nr
   rotate: false
-  xy: 10, 7
+  xy: 106, 6
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 2
 nr
   rotate: false
-  xy: 199, 29
+  xy: 153, 3
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 3
 ship_body_center
   rotate: false
-  xy: 153, 23
+  xy: 176, 23
   size: 21, 39
   orig: 21, 39
   offset: 0, 0
@@ -100,5 +135,40 @@ ship_tower
   xy: 114, 12
   size: 37, 50
   orig: 37, 50
+  offset: 0, 0
+  index: -1
+train_platform_center
+  rotate: false
+  xy: 60, 12
+  size: 27, 4
+  orig: 27, 4
+  offset: 0, 0
+  index: -1
+train_platform_left
+  rotate: false
+  xy: 2, 3
+  size: 30, 6
+  orig: 30, 6
+  offset: 0, 0
+  index: -1
+train_platform_right
+  rotate: false
+  xy: 199, 10
+  size: 30, 6
+  orig: 30, 6
+  offset: 0, 0
+  index: -1
+train_platform_single
+  rotate: false
+  xy: 2, 11
+  size: 33, 6
+  orig: 33, 6
+  offset: 0, 0
+  index: -1
+train_wheel
+  rotate: false
+  xy: 114, 3
+  size: 7, 7
+  orig: 7, 7
   offset: 0, 0
   index: -1
