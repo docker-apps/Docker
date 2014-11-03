@@ -1,0 +1,5 @@
+- Klassendiagramm
+- Klassenverantwortlichkeiten
+- Zusammenarbeitsdiagramme aufteilen (16)
+	Systemoperationen:
+	- 
