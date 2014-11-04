@@ -1,0 +1,12 @@
+RH * Nächste Containerposition setzen
+EW * Container von Zug auf Kran tun
+YM * Container von Kran auf Schiff tun (inkl. bewegung kran -> schiff)
+RH * Rating-Algorithmus Punkteberechnung
+RH * Rating-Algorithmus Kentert Schiff?
+YM * Rating-Algorithmus Bricht Schiff (inkl. belastung berechnen & anzeigen)
+EW * Spiel starten (Handicap & settings holen)
+YM * Karrierespiel starten (Level laden & initialisieren)
+EW * Leben abziehen (wenn Container rechts ankommt)
+YM * Karrierespiel-Fortschritt speichern
+RH * Daten nach Spielende in Statistik abfüllen
+EW * Schnelles Spiel initialisieren (random schiff/zug (?))
