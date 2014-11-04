@@ -74,7 +74,7 @@ public class Ship extends Actor {
 	
 	@Override
 	public float getWidth(){
-		return this.body_left.getRegionWidth() + this.body_center.getRegionWidth()*this.gridWidth + this.body_right.getRegionWidth();
+		return this.body_left.getRegionWidth() + this.body_center.getRegionWidth()*(this.gridWidth-2) + this.body_right.getRegionWidth();
 	}
 	
 	public float getElementWidth(){
