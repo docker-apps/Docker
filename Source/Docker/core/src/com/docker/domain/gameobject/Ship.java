@@ -17,6 +17,8 @@ public class Ship extends Actor {
 	private int gridHeight;
 	private int carryingCapacity;
 	private List<Container> containers;
+	private static final Integer GRIDSIZE = 21;
+	private int[] topLine;
 	
 	private TextureRegion body_left;
 	private TextureRegion body_center;
@@ -47,9 +49,22 @@ public class Ship extends Actor {
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
 	
-	public void addContainer(int gridX, int gridY, Container container){
-		throw new NotImplementedException();
+	//Die Position im Grid wird vom Schiff selberausgerechnet
+	public void addContainer(float x, Container container){
+		float xGrid = (float) Math.floor((double) (x-this.body_left.getRegionWidth())/GRIDSIZE) * GRIDSIZE; 
+		float yGrid = getYContainerPositon(xGrid, container);
+		if(yGrid >= 0){
+			container.setPosition(xGrid+this.body_left.getRegionWidth(), yGrid);
+			this.containers.add(container);
+		}else{
+			//TODO was passiert hier?
+		}
 	}
+	
+	public void showPossiblePosition(int X, Container container){
+		
+	}
+	
 	
 	public boolean isFree(int gridX, int gridY){
 		throw new NotImplementedException();
@@ -70,6 +85,9 @@ public class Ship extends Actor {
 		float bodyRightX = this.getX()+this.body_left.getRegionWidth()+(getElementWidth()*(this.gridWidth-2));
 		batch.draw(this.body_right, bodyRightX, this.getY());
 		batch.draw(this.tower, bodyRightX+this.body_right.getRegionWidth()-this.tower.getRegionWidth()-1, this.getY()+this.body_right.getRegionHeight());
+		for (Container container : containers) {
+			container.draw(batch, parentAlpha);
+		}
 	}
 	
 	@Override
@@ -80,4 +98,82 @@ public class Ship extends Actor {
 	public float getElementWidth(){
 		return this.body_center.getRegionWidth();
 	}
+	
+	/**
+	 * Returns on with GridY the Container fits, 
+	 * if result is negativ, it's not possible to Fit it in this GridX
+	 * @param gridX
+	 * @param size
+	 * @return 
+	 */
+	public float posYIFit(float gridX, float size){
+		float result = this.gridWidth - (gridX + size -1);
+		if(size == 1){
+			return topLine[(int)gridX];
+		}
+		if(result >= 0){
+			if (topLine[(int)gridX] > posYIFit(gridX + 1, size -1 )) {
+				return topLine[(int)gridX];
+			}
+		}
+		return result;
+	}
+	
+	public float getYContainerPositon(float Fingerposition, Container nextContainer){
+		float containerSize = (nextContainer.getWidth())/GRIDSIZE;
+		float gridX = Fingerposition/GRIDSIZE;
+		createTopLine();
+		return posYIFit(gridX, containerSize);
+	}
+	
+	public void createTopLine(){
+		this.topLine = new int[gridWidth];
+		for (Container container : containers) {
+			int gridX = ((int) container.getOriginX())/GRIDSIZE;
+			int gridY = ((int) container.getOriginY())/GRIDSIZE;
+			int lenght = container.getLength();
+			while (lenght > 0) {
+				if (topLine[gridX] < gridY) {
+					topLine[gridX] = gridY;
+				}
+				gridX++;
+				lenght--;
+			}
+		}
+	} 
+	
+
+
+	public int getGridWidth() {
+		return gridWidth;
+	}
+
+	public void setGridWidth(int gridWidth) {
+		this.gridWidth = gridWidth;
+	}
+
+	public int getGridHeight() {
+		return gridHeight;
+	}
+
+	public void setGridHeight(int gridHeight) {
+		this.gridHeight = gridHeight;
+	}
+
+	public int getCarryingCapacity() {
+		return carryingCapacity;
+	}
+
+	public void setCarryingCapacity(int carryingCapacity) {
+		this.carryingCapacity = carryingCapacity;
+	}
+
+	public List<Container> getContainers() {
+		return containers;
+	}
+
+	public void setContainers(List<Container> containers) {
+		this.containers = containers;
+	}
+	
 }
