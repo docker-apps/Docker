@@ -30,12 +30,16 @@ public class Foreground extends Actor {
 	private ShapeRenderer shapeRenderer;
 	float stateTime;
 	
-	public Foreground(float width) {
+	/**
+	 * @param width The width over which the foreground spans. Usually equals the stages/screens width.
+	 * @param waterLevel The height of the water plane.
+	 */
+	public Foreground(float width, float waterLevel) {
 		super();
 		this.setX(0);
 		this.setY(0);
 		this.setWidth(width);
-		this.setWaterLevel(20);
+		this.setWaterLevel(waterLevel);
 		this.shapeRenderer = new ShapeRenderer();
 		this.stateTime = 0f;
 		
@@ -106,6 +110,14 @@ public class Foreground extends Actor {
 					this.waterMovementAnimation.getKeyFrame(stateTime, true),
 					position.x,
 					position.y);
+			if(position.y > 0){
+				position.add(0, -0.05f);
+			}
+			else{
+				Random rand = new Random();
+				position.x = rand.nextFloat()*this.getWidth();
+				position.y = (this.getWaterLevel()-2);
+			}
 //			if(this.waterMovementAnimation.isAnimationFinished(stateTime)){
 //				Random rand = new Random();
 //				position.set(rand.nextFloat()*this.getWidth(), rand.nextFloat()*this.getWaterLevel());
@@ -113,10 +125,16 @@ public class Foreground extends Actor {
 		}		
 	}
 
+	/**
+	 * @return the height of the water plane
+	 */
 	public float getWaterLevel() {
 		return waterLevel;
 	}
 
+	/**
+	 * @param waterLevel the height of the water plane
+	 */
 	public void setWaterLevel(float waterLevel) {
 		this.waterLevel = waterLevel;
 	}	

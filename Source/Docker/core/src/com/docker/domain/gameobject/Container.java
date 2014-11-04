@@ -12,10 +12,6 @@ public class Container extends Actor {
 
 	private static final float LABEL_TRANSPARENCY = 0.8f;
 
-	public enum ContainerColor {
-		RED, GREEN, BLUE, YELLOW
-	}
-
 	public final static Color RED = new Color(1f, 0.2f, 0.15f, 1f);
 	public final static Color GREEN = new Color(0.5f, 1f, 0.15f, 1f);
 	public final static Color BLUE = new Color(0.15f, 0.5f, 1f, 1f);
@@ -25,13 +21,20 @@ public class Container extends Actor {
 	private int length;
 	private Color color;
 
-	private TextureRegion base_left;
-	private TextureRegion base_center;
-	private TextureRegion base_right;
-	private TextureRegion base_front;
+	private TextureRegion baseLeft;
+	private TextureRegion baseCenter;
+	private TextureRegion baseRight;
+	private TextureRegion baseFront;
 	private TextureRegion number;
 	private TextureRegion label;
 
+	/**
+	 * @param weight the container's weight value.
+	 * @param length the container's length (not in pixels but in amount of elements)
+	 * @param color the container's color. Any color is possible, but you should stick to the ones defined in this class.
+	 * @param x the container's initial position in the x-plane
+	 * @param y the container's initial position in the y-plane
+	 */
 	public Container(int weight, int length, Color color, float x, float y) {
 		super();
 		
@@ -45,10 +48,10 @@ public class Container extends Actor {
 		this.color = color;
 		
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));		
-		this.base_left= atlas.findRegion("container_base_left");
-		this.base_center = atlas.findRegion("container_base_center");
-		this.base_right = atlas.findRegion("container_base_right");
-		this.base_front = atlas.findRegion("container_base_front");
+		this.baseLeft= atlas.findRegion("container_base_left");
+		this.baseCenter = atlas.findRegion("container_base_center");
+		this.baseRight = atlas.findRegion("container_base_right");
+		this.baseFront = atlas.findRegion("container_base_front");
 		this.number = atlas.findRegions("nr").get(this.weight-1);
 		this.label = atlas.findRegions("label").get(this.length > 1 ? 0 : 1);
 
@@ -65,14 +68,14 @@ public class Container extends Actor {
 		//draw container base
 		batch.setColor(this.color);
 		if(this.length > 1){
-			batch.draw(this.base_left, this.getX(), this.getY());
+			batch.draw(this.baseLeft, this.getX(), this.getY());
 			for (int i = 1; i <= this.length-2; i++) {
-				batch.draw(this.base_center, this.getX()+(getElementWidth()*i), this.getY());			
+				batch.draw(this.baseCenter, this.getX()+(getElementWidth()*i), this.getY());			
 			}
-			batch.draw(this.base_right, this.getX()+(getElementWidth()*(this.length-1)), this.getY());
+			batch.draw(this.baseRight, this.getX()+(getElementWidth()*(this.length-1)), this.getY());
 		}
 		else{
-			batch.draw(this.base_front, this.getX(), this.getY());
+			batch.draw(this.baseFront, this.getX(), this.getY());
 		}
 		//draw number & labels
 		batch.setColor(new Color(1f,1f,1f,LABEL_TRANSPARENCY));
@@ -94,15 +97,24 @@ public class Container extends Actor {
 		return this.getElementHeight();
 	}
 	
+	/**
+	 * @return the container's length in amount of elements.
+	 */
 	public int getLength(){
 		return this.length;
 	}
 
+	/**
+	 * @return the width of an individual element.
+	 */
 	public float getElementWidth(){
-		return base_left.getRegionWidth();
+		return baseLeft.getRegionWidth();
 	}
 
+	/**
+	 * @return the height of an individual element.
+	 */
 	public float getElementHeight(){
-		return base_left.getRegionHeight();
+		return baseLeft.getRegionHeight();
 	}
 }

@@ -73,16 +73,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="9" language="java" name="com.docker.domain.gameobject.Container.ContainerColor" project="docker-core" 
-    file="/docker-core/src/com/docker/domain/gameobject/Container.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="604" y="1112"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </enumeration>  
-  <class id="10" language="java" name="com.docker.domain.gameobject.Train" project="docker-core" 
+  <class id="9" language="java" name="com.docker.domain.gameobject.Train" project="docker-core" 
     file="/docker-core/src/com/docker/domain/gameobject/Train.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="597" y="489"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -91,7 +82,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="com.docker.domain.gameobject.Container" project="docker-core" 
+  <class id="10" language="java" name="com.docker.domain.gameobject.Container" project="docker-core" 
     file="/docker-core/src/com/docker/domain/gameobject/Container.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="600" y="877"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -100,7 +91,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="com.docker.domain.user.Handicap" project="docker-core" 
+  <class id="11" language="java" name="com.docker.domain.user.Handicap" project="docker-core" 
     file="/docker-core/src/com/docker/domain/user/Handicap.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="88" width="146" x="914" y="735"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -109,7 +100,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="com.docker.domain.user.Config" project="docker-core" 
+  <class id="12" language="java" name="com.docker.domain.user.Config" project="docker-core" 
     file="/docker-core/src/com/docker/domain/user/Config.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="88" width="146" x="1100" y="735"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -118,7 +109,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="com.docker.domain.user.Statistics" project="docker-core" 
+  <class id="13" language="java" name="com.docker.domain.user.Statistics" project="docker-core" 
     file="/docker-core/src/com/docker/domain/user/Statistics.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="88" width="146" x="1286" y="735"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -127,7 +118,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="com.docker.technicalservices.Persistence" project="docker-core" 
+  <class id="14" language="java" name="com.docker.technicalservices.Persistence" project="docker-core" 
     file="/docker-core/src/com/docker/technicalservices/Persistence.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="88" width="171" x="902" y="857"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -136,74 +127,70 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
+  <generalization id="15">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
   <association id="16">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="17" name="ship"/>      
+      <attribute id="17" name="application"/>      
       <multiplicity id="18" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="19">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="20" name="ship"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="19">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="20" name="containers"/>      
-      <multiplicity id="21" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <generalization id="22">    
-    <end type="SOURCE" refId="3"/>    
+    <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
-  <nesting id="23">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="9"/>  
-  </nesting>  
+  <generalization id="23">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
   <association id="24">    
     <end type="SOURCE" refId="5" navigable="false">      
       <attribute id="25" name="containers"/>      
       <multiplicity id="26" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="27">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="28" name="application"/>      
-      <multiplicity id="29" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="28" name="containers"/>      
+      <multiplicity id="29" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="30">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="31" name="crane"/>      
+      <attribute id="31" name="train"/>      
       <multiplicity id="32" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="33">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="34" name="crane"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="33">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <generalization id="34">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <association id="35">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="36" name="containers"/>      
-      <multiplicity id="37" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="38">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="39" name="train"/>      
-      <multiplicity id="40" minimum="0" maximum="1"/>    
+  <association id="36">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="37" name="containers"/>      
+      <multiplicity id="38" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

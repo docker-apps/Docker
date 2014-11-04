@@ -14,13 +14,18 @@ public class Crane extends Actor {
 	private Container container;
 
 	private TextureRegion body;
-	private TextureRegion extension_left;
-	private TextureRegion extension_left_outer;
-	private TextureRegion extension_right;
-	private TextureRegion extension_right_outer;
-	private List<TextureRegion> elements;
+	private TextureRegion extensionLeft;
+	private TextureRegion extensionLeftOuter;
+	private TextureRegion extensionRight;
+	private TextureRegion extensionRightOuter;
 
+	/**
+	 * @param speed the speed at which the crane can move.
+	 * @param x the crane's initial position on the x-plane
+	 * @param y the crane's initial position on the y-plane
+	 */
 	public Crane(int speed, float x, float y){
+		super();
 		this.setX(x);
 		this.setY(y);
 		this.speed = speed;
@@ -28,17 +33,10 @@ public class Crane extends Actor {
 
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
 		this.body = atlas.findRegion("crane_body");
-		this.extension_left = atlas.findRegion("crane_extension_left");
-		this.extension_left_outer = atlas.findRegion("crane_extension_left_outer");
-		this.extension_right = atlas.findRegion("crane_extension_right");
-		this.extension_right_outer = atlas.findRegion("crane_extension_right_outer");
-
-		this.elements = new ArrayList<TextureRegion>(5);
-		this.elements.add(this.extension_left_outer);
-		this.elements.add(this.extension_left);
-		//this.elements.add(this.body);
-		this.elements.add(this.extension_right);
-		this.elements.add(this.extension_right_outer);
+		this.extensionLeft = atlas.findRegion("crane_extension_left");
+		this.extensionLeftOuter = atlas.findRegion("crane_extension_left_outer");
+		this.extensionRight = atlas.findRegion("crane_extension_right");
+		this.extensionRightOuter = atlas.findRegion("crane_extension_right_outer");
 	}
 
 	@Override
@@ -59,47 +57,48 @@ public class Crane extends Actor {
 			float elementWidth = this.container.getElementWidth();
 			float yPos = this.getY()+this.container.getHeight()-4;
 			
+			// Not great code, but it works. If you can create an elegant algorithm, feel free to improve.
 			if(length == 5){
-				batch.draw(this.extension_left_outer,
+				batch.draw(this.extensionLeftOuter,
 						this.getX(),
 						yPos);
-				batch.draw(this.extension_right_outer,
+				batch.draw(this.extensionRightOuter,
 						this.getX()+elementWidth*4,
 						yPos);
-				batch.draw(this.extension_left,
+				batch.draw(this.extensionLeft,
 						this.getX()+elementWidth,
 						yPos);
-				batch.draw(this.extension_right,
+				batch.draw(this.extensionRight,
 						this.getX()+elementWidth*3,
 						yPos);
 			}
 			else if(length == 4){
-				batch.draw(this.extension_left_outer,
+				batch.draw(this.extensionLeftOuter,
 						this.getX(),
 						yPos);
-				batch.draw(this.extension_right_outer,
+				batch.draw(this.extensionRightOuter,
 						this.getX()+elementWidth*3,
 						yPos);
-				batch.draw(this.extension_left,
+				batch.draw(this.extensionLeft,
 						this.getX()+elementWidth*0.5f,
 						yPos);
-				batch.draw(this.extension_right,
+				batch.draw(this.extensionRight,
 						this.getX()+elementWidth*2f,
 						yPos);
 			}
 			else if(length == 3){
-				batch.draw(this.extension_left,
+				batch.draw(this.extensionLeft,
 						this.getX(),
 						yPos);
-				batch.draw(this.extension_right,
+				batch.draw(this.extensionRight,
 						this.getX()+elementWidth*2f,
 						yPos);
 			}
 			else if(length == 2){
-				batch.draw(this.extension_left,
+				batch.draw(this.extensionLeft,
 						this.getX(),
 						yPos);
-				batch.draw(this.extension_right,
+				batch.draw(this.extensionRight,
 						this.getX()+elementWidth,
 						yPos);
 			}
@@ -112,10 +111,25 @@ public class Crane extends Actor {
 		}
 	}
 
+	/**
+	 * @param container the container which the crane holds.
+	 */
 	public void setContainer(Container container){
 		this.container = container;
 	}
+	
+	/**
+	 * @return wether the crane is holding a container.
+	 */
+	public boolean hasContainer(){
+		return this.container != null;
+	}
 
+	/** 
+	 * Removes the container which the crane is holding and returns it.
+	 * 
+	 * @return the container which the crane was holding, null if it's not holding one.
+	 */
 	public Container removeContainer(){
 		Container container = this.container;
 		this.container = null;

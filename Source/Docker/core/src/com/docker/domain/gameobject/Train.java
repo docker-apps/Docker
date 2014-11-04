@@ -1,10 +1,7 @@
 package com.docker.domain.gameobject;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
-
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import com.badlogic.gdx.Gdx;
@@ -14,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Train extends Actor {
-	private static final float PADDING = 11;
+	private final float PADDING = 11;
 	
 	private int speed;
 	private List<Container> containers;
@@ -25,6 +22,11 @@ public class Train extends Actor {
 	private TextureRegion platform_right;
 	private TextureRegion wheel;
 	
+	/**
+	 * @param speed Speed at which the train moves rightward
+	 * @param x Initial Position on the x-plane
+	 * @param y Position on the y-plane
+	 */
 	public Train(int speed, float x, float y) {
 		super();
 		this.setX(x);
@@ -40,16 +42,19 @@ public class Train extends Actor {
 		this.wheel = atlas.findRegion("train_wheel");
 	}
 	
-	public void addContainer(Container container){
+	public void addContainer(Container container) {
 		this.containers.add(container);
 	}
 	
-	public Container popContainer(){
+	public Container popContainer() {
 		throw new NotImplementedException();
 	}
 	
 	@Override
-	public void act(float delta){
+	public void act(float delta) {
+		this.setX(this.getX() + this.speed*delta);
+		
+		
 		float xPos = this.getX();
 		for (Container container : this.containers) {
 			container.setX(xPos);
