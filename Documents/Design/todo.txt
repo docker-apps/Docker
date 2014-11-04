@@ -1,5 +1,26 @@
-- Klassendiagramm
-- Klassenverantwortlichkeiten
-- Zusammenarbeitsdiagramme aufteilen (16)
+Arbeitsaufteilung
+
+Projektmanagement				Remo Höppli
+	Vergleich Prognostiziert Erreicht
+	Massnahmen
+	Planung aufdatiert
+	Risikoliste
+
+Architektur					Yacine Mekesser
+	Beschreibung der gewählten Architektur mit Begründung des Entscheides
+
+Design-Klassendiagramm				Yacine Mekesser (generieren)
+	Wichtigste Klassen des Lösungskonzepts, ohne GUI Klassen
+
+Klassenverantwortlichkeiten			Emily Wangler
+	Gesamtverantwortlichkeit in einem Satz beschreiben.
+	Tabelle mit allen Klassen und deren Verantwortlichkeiten
+
+Zusammenarbeitsdiagramme aufteilen (16)
 	Systemoperationen:
-	- 
+	- alle Systemoperationen aufzählen.
+
+Glossar Pflegen					Alle
+
+GUI-Design					Yacine Mekesser
+	GUI Screen anzeigen, mit kurzer Beschreibung
