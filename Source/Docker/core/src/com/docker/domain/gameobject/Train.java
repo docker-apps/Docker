@@ -64,8 +64,8 @@ public class Train extends Actor {
 
             if (lastX == 0 || fits(container, lastX) || !toRemove.isEmpty()) {
                 container.setY(this.getY());
-                if (xPos + container.getWidth() < 600) {
-                    xPos = speed + container.getX();
+                if (xPos + container.getWidth() < this.getStage().getWidth()) {
+                    xPos = speed*delta + container.getX();
                     container.setX(xPos);
                     lastX = xPos;
                 } else {
