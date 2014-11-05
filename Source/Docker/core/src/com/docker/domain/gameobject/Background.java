@@ -26,7 +26,7 @@ public class Background extends Actor {
 	private Vector2 cloudPosition;
 	private Animation birdAnimation;
 	private ShapeRenderer shapeRenderer;
-	float stateTime;
+	private float stateTime;
 
 
 	public Background(float width, float height){

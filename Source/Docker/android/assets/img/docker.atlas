@@ -179,6 +179,20 @@ fg_water_movement
   orig: 22, 1
   offset: 0, 0
   index: 4
+indicator_lamp_red
+  rotate: false
+  xy: 473, 100
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+indicator_lamp_white
+  rotate: false
+  xy: 531, 47
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
 label
   rotate: false
   xy: 451, 100

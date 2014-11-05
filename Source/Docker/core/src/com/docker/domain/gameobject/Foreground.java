@@ -28,7 +28,7 @@ public class Foreground extends Actor {
 	private Animation shipReflectionAnimation;
 	private List<Vector2> waterMovementPositions;
 	private ShapeRenderer shapeRenderer;
-	float stateTime;
+	private float stateTime;
 	
 	/**
 	 * @param width The width over which the foreground spans. Usually equals the stages/screens width.

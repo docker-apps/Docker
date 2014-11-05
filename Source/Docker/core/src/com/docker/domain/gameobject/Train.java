@@ -23,6 +23,7 @@ public class Train extends Actor {
 	private TextureRegion platform_left;
 	private TextureRegion platform_right;
 	private TextureRegion wheel;
+	private float stateTime;
 	
 	/**
 	 * @param speed Speed at which the train moves rightward
@@ -35,6 +36,7 @@ public class Train extends Actor {
 		this.setY(y);
 		this.speed = speed;
 		this.containers = new LinkedList<Container>();
+		this.stateTime = 0f;
 
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
 		this.platform_single = atlas.findRegion("train_platform_single");
@@ -48,15 +50,16 @@ public class Train extends Actor {
 		this.containers.add(container);
 	}
 
-	public Container popContainer(){
+	public Container removeContainer(){
 		return containers.remove();
 	}
-	public Container getContainer(){
+	public Container getFirstContainer(){
 		return containers.peek();
 	}
 
 	@Override
 	public void act(float delta){
+		this.stateTime += delta;
         List<Container> toRemove = new ArrayList<Container>();
         float lastX = 0f;
 		for (Container container : this.containers) {
@@ -86,14 +89,17 @@ public class Train extends Actor {
     @Override
 	public void draw (Batch batch, float parentAlpha) {
 		for (Container container : this.containers) {
+			float wheelOffset = 0f;
+			if(Math.round(this.stateTime*5)%2 == 0)
+				wheelOffset = 1f;
 			batch.draw(
 					this.wheel,
 					container.getX(),
-					container.getY() - 8);
+					container.getY() - 8 + wheelOffset);
 			batch.draw(
 					this.wheel,
 					container.getX() + container.getWidth() - this.wheel.getRegionWidth(),
-					container.getY() - 8);
+					container.getY() - 8 + wheelOffset);
 
 			container.draw(batch, parentAlpha);
 
