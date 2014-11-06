@@ -9,6 +9,9 @@ import com.docker.domain.gameobject.Container;
 
 public class Level {
 	private List<Container> containers;
+	// better if there is a ship or just the ship measurement?
+	private int shipHeight;
+	private int shipLength;
 	
 	public Level(){
 		this.containers = new Stack<Container>();

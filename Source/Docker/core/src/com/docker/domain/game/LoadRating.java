@@ -5,16 +5,17 @@ import sun.security.x509.DeltaCRLIndicatorExtension;
 public class LoadRating {
 
 	private float[][] loadTable;
-	private float breakThreshold;
-	private float capsizeThreshold;
+	private float breakThreshold; //test with 5
+	private float capsizeThreshold; //test with 5
 	private float[] breakValues;
-	private Float breakValueSum;
+	private float breakValueSum;
 	private float capsizeValue;
 	private float handicapFactor;
 	private int score;
 	public enum Capsized {LEFT, RIGHT, NONE};
 	private float[] loadDeltas;
 	private float[] loadSums;
+	private int beauty;
 	
 	public LoadRating(float breakValue, float capsizeValue, float handicapFactor){
 		this.breakThreshold = breakValue;
@@ -28,13 +29,16 @@ public class LoadRating {
 		this.calculateLoadDelta();
 		this.calculateCapsized();
 		this.calculateBreak();
+		this.calculateBeauty();
 	}
 	
 	public void calculateScore(float[][] loadTable) throws Exception {
 		this.calculate(loadTable);
-		score = (int)Math.round(1000*(breakThreshold-breakValueSum/loadSums.length)/breakThreshold);
-		score += (int)Math.round(1000*(capsizeThreshold-Math.abs(capsizeValue))/capsizeThreshold);
-		//score += score beauty
+		float tempscore;
+		tempscore = 1000*(breakThreshold-breakValueSum/loadSums.length)/breakThreshold;
+		tempscore += 1000*(capsizeThreshold-Math.abs(capsizeValue))/capsizeThreshold;
+		tempscore += 100*beauty;
+		score = (int)Math.round(tempscore*handicapFactor);
 	}
 	
 	/*
@@ -63,7 +67,7 @@ public class LoadRating {
 	 */
 	private void calculateBreak() {
 		breakValues = new float[loadTable.length];
-		breakValueSum = 0f;
+		breakValueSum = 0;
 		
 		for (int i = 0; i < breakValues.length; i++) {
 			if(i==0){
@@ -82,7 +86,29 @@ public class LoadRating {
 	}
 	
 	private void calculateBeauty(){
-		//calculate beauty of the load
+		int beauty = 10;
+		int[] holes = new int[loadTable[0].length];
+		
+		for (int i = 0; i < loadTable[0].length; i++) {
+			for (int j = 0; j < loadTable.length; j++) {
+				if(loadTable[j][i] == 0)
+					holes[i]++;
+			}
+		}
+		
+		boolean a = false;
+		int count = 1;
+		for (int i = 0; i < holes.length; i++) {
+			if(a){
+				beauty -= holes[i]*count;
+				count++;
+			}
+			if(holes[i] != loadTable.length && a == false)
+				a = true;
+			
+			if(beauty < 0)
+				beauty = 0;
+		}
 	}
 
 	private void calculateLoadDelta() throws Exception{
