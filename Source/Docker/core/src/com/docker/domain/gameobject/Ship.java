@@ -116,7 +116,7 @@ public class Ship extends Actor {
 		if (NoSpace < 0) {
 			return -1;
 		}
-		if(size == 0){
+		if(size == 1){
 			return (topLine[(int)gridX]);
 		}
 		float topline = posYIFit(gridX + 1, size -1 );

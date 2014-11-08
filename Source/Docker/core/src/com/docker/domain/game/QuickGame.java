@@ -42,7 +42,7 @@ public class QuickGame extends AbstractGame {
 		getTrain().addContainer(new Container(3, 5, Color.BLUE, 0, 0));
 		getShip().addContainer(61, new Container(2, 4, Color.GRAY, 0, 0));
 		getShip().addContainer(98, new Container(2, 4, Color.DARK_GRAY, 0, 0));
-		//getShip().addContainer(65, new Container(3, 1, Color.YELLOW, 0, 0));
+		getShip().addContainer(65, new Container(3, 1, Color.YELLOW, 0, 0));
 		getShip().addContainer(102, new Container(3, 1, Color.OLIVE, 0, 0));
 		getShip().addContainer(98, new Container(3, 3, Color.ORANGE, 0, 0));
 	}
