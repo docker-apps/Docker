@@ -56,8 +56,9 @@ public class QuickGame extends AbstractGame {
 		this.stage.draw();
 		
 		if(Gdx.input.justTouched()){
-			Container container = new Container(3, 2, Color.GREEN, 0, 0);
-			getShip().addContainer(Gdx.input.getX(), container);
+			if (getShip().addContainer(Gdx.input.getX(), getTrain().getFirstContainer())) {
+				getTrain().removeContainer();
+			}			
 		}
 	}
 

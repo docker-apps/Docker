@@ -55,14 +55,15 @@ public class Ship extends Actor {
 	}
 	
 	//Die Position im Grid wird vom Schiff selberausgerechnet
-	public void addContainer(float x, Container container){
+	public boolean addContainer(float x, Container container){
 		float xGrid = (float) Math.floor((double) (x-xGridstart)/GRIDSIZE) * GRIDSIZE; 
 		float yGrid = getYContainerPositon(xGrid, container)*GRIDSIZE;
-		if(yGrid >= 0){
+		if(yGrid >= 0 ){
 			container.setPosition(xGrid+xGridstart, yGrid+yGridstart);
 			this.containers.add(container);
+			return true;
 		}else{
-			//TODO was passiert hier?
+			return false;
 		}
 	}
 	
@@ -113,7 +114,7 @@ public class Ship extends Actor {
 	 */
 	public float posYIFit(float gridX, float size){
 		float NoSpace = this.gridWidth - (gridX + size -1);
-		if (NoSpace < 0) {
+		if (NoSpace < 0 || gridX < 0) {
 			return -1;
 		}
 		if(size == 1){
