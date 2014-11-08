@@ -40,9 +40,11 @@ public class QuickGame extends AbstractGame {
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE, 0, 0));
 		getTrain().addContainer(new Container(3, 4, Color.GREEN, 0, 0));
 		getTrain().addContainer(new Container(3, 5, Color.BLUE, 0, 0));
-		getShip().addContainer(65, new Container(2, 4, Color.GRAY, 0, 0));
-		getShip().addContainer(120, new Container(2, 4, Color.DARK_GRAY, 0, 0));
-		
+		getShip().addContainer(61, new Container(2, 4, Color.GRAY, 0, 0));
+		getShip().addContainer(98, new Container(2, 4, Color.DARK_GRAY, 0, 0));
+		//getShip().addContainer(65, new Container(3, 1, Color.YELLOW, 0, 0));
+		getShip().addContainer(102, new Container(3, 1, Color.OLIVE, 0, 0));
+		getShip().addContainer(98, new Container(3, 3, Color.ORANGE, 0, 0));
 	}
 
 	@Override
@@ -52,6 +54,11 @@ public class QuickGame extends AbstractGame {
 
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();
+		
+		if(Gdx.input.justTouched()){
+			Container container = new Container(3, 2, Color.GREEN, 0, 0);
+			getShip().addContainer(Gdx.input.getX(), container);
+		}
 	}
 
 	@Override

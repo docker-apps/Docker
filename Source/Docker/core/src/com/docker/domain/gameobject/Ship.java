@@ -19,6 +19,8 @@ public class Ship extends Actor {
 	private List<Container> containers;
 	private static final Integer GRIDSIZE = 21;
 	private int[] topLine;
+	private float yGridstart;
+	private float xGridstart;
 	
 	private TextureRegion body_left;
 	private TextureRegion body_center;
@@ -47,14 +49,17 @@ public class Ship extends Actor {
 		this.mast = atlas.findRegion("ship_mast");
 
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		
+		this.xGridstart = x+body_left.getRegionWidth();
+		this.yGridstart = y+body_center.getRegionHeight();
 	}
 	
 	//Die Position im Grid wird vom Schiff selberausgerechnet
 	public void addContainer(float x, Container container){
-		float xGrid = (float) Math.floor((double) (x-this.body_left.getRegionWidth())/GRIDSIZE) * GRIDSIZE; 
-		float yGrid = getYContainerPositon(xGrid, container);
+		float xGrid = (float) Math.floor((double) (x-xGridstart)/GRIDSIZE) * GRIDSIZE; 
+		float yGrid = getYContainerPositon(xGrid, container)*GRIDSIZE;
 		if(yGrid >= 0){
-			container.setPosition(xGrid+this.body_left.getRegionWidth(), yGrid);
+			container.setPosition(xGrid+xGridstart, yGrid+yGridstart);
 			this.containers.add(container);
 		}else{
 			//TODO was passiert hier?
@@ -107,20 +112,22 @@ public class Ship extends Actor {
 	 * @return 
 	 */
 	public float posYIFit(float gridX, float size){
-		float result = this.gridWidth - (gridX + size -1);
-		if(size == 1){
-			return topLine[(int)gridX];
+		float NoSpace = this.gridWidth - (gridX + size -1);
+		if (NoSpace < 0) {
+			return -1;
 		}
-		if(result >= 0){
-			if (topLine[(int)gridX] > posYIFit(gridX + 1, size -1 )) {
-				return topLine[(int)gridX];
-			}
+		if(size == 0){
+			return (topLine[(int)gridX]);
 		}
-		return result;
+		float topline = posYIFit(gridX + 1, size -1 );
+		if (topLine[(int)gridX] > topline) {
+			return (topLine[(int)gridX]);
+		}
+		return topline;
 	}
 	
-	public float getYContainerPositon(float Fingerposition, Container nextContainer){
-		float containerSize = (nextContainer.getWidth())/GRIDSIZE;
+	public float getYContainerPositon(float Fingerposition, Container container){
+		float containerSize = (container.getWidth())/GRIDSIZE;
 		float gridX = Fingerposition/GRIDSIZE;
 		createTopLine();
 		return posYIFit(gridX, containerSize);
@@ -129,12 +136,12 @@ public class Ship extends Actor {
 	public void createTopLine(){
 		this.topLine = new int[gridWidth];
 		for (Container container : containers) {
-			int gridX = ((int) container.getOriginX())/GRIDSIZE;
-			int gridY = ((int) container.getOriginY())/GRIDSIZE;
+			int gridX = (int) (container.getX()-xGridstart)/GRIDSIZE;
+			int gridY = (int) ((container.getY()-yGridstart)/GRIDSIZE);
 			int lenght = container.getLength();
 			while (lenght > 0) {
-				if (topLine[gridX] < gridY) {
-					topLine[gridX] = gridY;
+				if (topLine[gridX] < gridY+1) {
+					topLine[gridX] = gridY+1;
 				}
 				gridX++;
 				lenght--;
