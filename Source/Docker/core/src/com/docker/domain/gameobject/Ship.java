@@ -51,8 +51,8 @@ public class Ship extends Actor {
 
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 		
-		this.xGridstart = x+body_left.getRegionWidth();
-		this.yGridstart = y+body_center.getRegionHeight();
+		this.xGridstart = this.getX()+body_left.getRegionWidth() - GRIDSIZE;
+		this.yGridstart = this.getY()+body_center.getRegionHeight();
 	}
 	
 	//Die Position im Grid wird vom Schiff selberausgerechnet
@@ -125,26 +125,25 @@ public class Ship extends Actor {
 	 * @param size
 	 * @return 
 	 */
-	public float posYIFit(float gridX, float size){
+	public float posYIFit(int gridX, int size){
 		float NoSpace = this.gridWidth - (gridX + size -1);
 		if (NoSpace < 0 || gridX < 0) {
 			return -1;
 		}
 		if(size == 1){
-			return (topLine[(int)gridX]);
+			return (topLine[gridX]);
 		}
 		float topline = posYIFit(gridX + 1, size -1 );
-		if (topLine[(int)gridX] > topline) {
-			return (topLine[(int)gridX]);
+		if (topLine[gridX] > topline) {
+			return (topLine[gridX]);
 		}
 		return topline;
 	}
 	
-	public float getYContainerPositon(float Fingerposition, Container container){
-		float containerSize = (container.getWidth())/GRIDSIZE;
-		float gridX = Fingerposition/GRIDSIZE;
+	public float getYContainerPositon(float fingerposition, Container container){
+		int gridX = (int) fingerposition/GRIDSIZE;
 		createTopLine();
-		return posYIFit(gridX, containerSize);
+		return posYIFit(gridX, container.getLength());
 	}
 	
 	public void createTopLine(){
