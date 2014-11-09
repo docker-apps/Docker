@@ -29,7 +29,29 @@ public class QuickGame extends AbstractGame {
 		
 		this.viewport = new ExtendViewport(Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
-		this.stage = new Stage(viewport);
+		this.stage = new Stage(viewport){
+			 @Override
+			   public boolean touchDown (int x, int y, int pointer, int button) {
+				 	getShip().setPreviewContainer(x, getTrain().getFirstContainer());
+				 	return true;
+			   }
+			 
+			@Override
+			   public boolean touchDragged (int x, int y, int pointer) {
+				getShip().setPreviewContainer(x, getTrain().getFirstContainer());
+			 	return true;
+			   }
+
+			   @Override
+			   public boolean touchUp (int x, int y, int pointer, int button) {
+				   if (getShip().addContainer(Gdx.input.getX(), getTrain().getFirstContainer())) {
+						getTrain().removeContainer();
+						return true;
+					}
+				   return false;
+			   }
+			
+		};
 
 		Gdx.input.setInputProcessor(this.stage);
 		Gdx.input.setCatchBackKey(true);
@@ -45,6 +67,7 @@ public class QuickGame extends AbstractGame {
 		getShip().addContainer(65, new Container(3, 1, Color.YELLOW, 0, 0));
 		getShip().addContainer(102, new Container(3, 1, Color.OLIVE, 0, 0));
 		getShip().addContainer(98, new Container(3, 3, Color.ORANGE, 0, 0));
+		
 	}
 
 	@Override
@@ -55,11 +78,13 @@ public class QuickGame extends AbstractGame {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();
 		
-		if(Gdx.input.justTouched()){
+/*		if(Gdx.input.justTouched()){
 			if (getShip().addContainer(Gdx.input.getX(), getTrain().getFirstContainer())) {
 				getTrain().removeContainer();
 			}			
 		}
+*/
+		
 	}
 
 	@Override

@@ -58,6 +58,12 @@ public class Container extends Actor {
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
 
+
+
+	public Container(Container container) {
+		this(container.getWeight(), container.getLength(), container.getColor(), container.getX(), container.getY());
+	}
+
 	@Override
 	public void act(float delta) {
 		super.act(delta);
@@ -116,5 +122,12 @@ public class Container extends Actor {
 	 */
 	public float getElementHeight(){
 		return baseLeft.getRegionHeight();
+	}
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 }

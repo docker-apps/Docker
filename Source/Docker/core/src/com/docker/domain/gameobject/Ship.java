@@ -17,6 +17,7 @@ public class Ship extends Actor {
 	private int gridHeight;
 	private int carryingCapacity;
 	private List<Container> containers;
+	private Container previewContainer;
 	private static final Integer GRIDSIZE = 21;
 	private int[] topLine;
 	private float yGridstart;
@@ -67,6 +68,15 @@ public class Ship extends Actor {
 		}
 	}
 	
+	public void setPreviewContainer(float x, Container container){
+		float xGrid = (float) Math.floor((double) (x-xGridstart)/GRIDSIZE) * GRIDSIZE; 
+		float yGrid = getYContainerPositon(xGrid, container)*GRIDSIZE;
+		if(yGrid >= 0 ){
+			previewContainer = new Container(container);
+			previewContainer.setPosition(xGrid+xGridstart, yGrid+yGridstart);
+		}
+	}
+	
 	public void showPossiblePosition(int X, Container container){
 		
 	}
@@ -91,6 +101,9 @@ public class Ship extends Actor {
 		float bodyRightX = this.getX()+this.body_left.getRegionWidth()+(getElementWidth()*(this.gridWidth-2));
 		batch.draw(this.body_right, bodyRightX, this.getY());
 		batch.draw(this.tower, bodyRightX+this.body_right.getRegionWidth()-this.tower.getRegionWidth()-1, this.getY()+this.body_right.getRegionHeight());
+		if (previewContainer != null) {
+			previewContainer.draw(batch, parentAlpha);
+		}
 		for (Container container : containers) {
 			container.draw(batch, parentAlpha);
 		}
