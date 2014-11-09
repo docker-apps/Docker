@@ -7,7 +7,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 public class Crane extends Actor {
 	private int speed;
@@ -37,6 +40,46 @@ public class Crane extends Actor {
 		this.extensionLeftOuter = atlas.findRegion("crane_extension_left_outer");
 		this.extensionRight = atlas.findRegion("crane_extension_right");
 		this.extensionRightOuter = atlas.findRegion("crane_extension_right_outer");
+	}
+	
+	/**
+	 * Orderds the crane to deploy the given container to the ship, at the given position.
+	 * 
+	 * @param container the container to deploy
+	 * @param ship the ship to which the container should be deployed
+	 * @param gridX the position on the ship at which the container should be deployed
+	 */
+	public void deployContainer(Container container, final Ship ship, final int gridX){
+		// add the container to the crane
+		this.setContainer(container);
+		
+		// Hier bräuchte ich die tatsächlichen Koordinaten, zu denen der container geliefert werden soll
+		float x = 0f;	
+		float y = 0f;
+		
+		// calculate the animation duration from the distance to the target and the cranes speed
+		float xDistance = Math.abs(this.getX() - x);
+		float yDistance = Math.abs(this.getY() - y);
+		float distance = (float) Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+		float duration = distance / this.speed;
+		
+		// create a new Move-To Action
+		MoveToAction moveAction = new MoveToAction();
+		moveAction.setPosition(x, y);
+		moveAction.setDuration(duration);
+		
+		// create an action which deploys the container to the ship
+		Action completeAction = new Action(){
+		    public boolean act( float delta ) {
+		        // give the container to the ship here, preferrably to a grid coordinate
+		    	ship.addContainer(gridX, removeContainer());
+		    	return true;
+		    }
+		};
+		
+		// chain the two actions and add it to this actor
+		SequenceAction actions = new SequenceAction(moveAction, completeAction);
+		this.addAction(actions);
 	}
 
 	@Override
