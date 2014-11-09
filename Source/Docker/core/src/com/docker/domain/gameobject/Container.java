@@ -138,20 +138,18 @@ public class Container extends Actor {
 	
 	private void setRandomColor() {
 		int randomColorNr = (int)Math.random()*4;
-		Color randomColor;
 		switch (randomColorNr) {
 		case 0:
-			randomColor = RED;
+			this.color = RED;
 			break;
 		case 1:
-			randomColor = GREEN;
+			this.color = GREEN;
 			break;
 		case 2:
-			randomColor = BLUE;
+			this.color = BLUE;
 		default:
-			randomColor = YELLOW;
+			this.color = YELLOW;
 			break;
 		}
-		this.color = randomColor;
 	}
 }
