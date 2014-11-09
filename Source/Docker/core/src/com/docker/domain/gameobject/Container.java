@@ -57,6 +57,11 @@ public class Container extends Actor {
 
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
+	
+	public Container(int weight, int length, float x, float y){
+		this(weight, length, RED, x, y);
+		this.setRandomColor();
+	}
 
 
 
@@ -129,5 +134,22 @@ public class Container extends Actor {
 
 	public void setWeight(int weight) {
 		this.weight = weight;
+	}
+	
+	private void setRandomColor() {
+		int randomColorNr = (int)Math.random()*4;
+		switch (randomColorNr) {
+		case 0:
+			this.color = RED;
+			break;
+		case 1:
+			this.color = GREEN;
+			break;
+		case 2:
+			this.color = BLUE;
+		default:
+			this.color = YELLOW;
+			break;
+		}
 	}
 }

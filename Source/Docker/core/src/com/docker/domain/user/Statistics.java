@@ -9,6 +9,7 @@ public class Statistics {
 	private int totalShipsCapsized;
 	private int totalShipsBroken;
 	
+	//wie wird die Statistik persistent abgelegt und wieder geladen?
 	public Statistics(){
 		this.totalScore = 0;
 		this.totalContainer = 0;
@@ -40,25 +41,25 @@ public class Statistics {
 	public int getTotalShipsBroken() {
 		return totalShipsBroken;
 	}
-	public void setTotalScore(int totalScore) {
+	public void incrementTotalScore(int totalScore) {
 		this.totalScore += totalScore;
 	}
-	public void setTotalContainer(int totalContainer) {
+	public void incrementTotalContainer(int totalContainer) {
 		this.totalContainer += totalContainer;
 	}
-	public void setTotalWeight(int totalWeight) {
+	public void incrementTotalWeight(int totalWeight) {
 		this.totalWeight += totalWeight;
 	}
-	public void setTotalGames(int totalGames) {
+	public void incrementTotalGames(int totalGames) {
 		this.totalGames += totalGames;
 	}
-	public void setTotalShipsSuccessfullyLoaded(int totalShipsSuccessfullyLoaded) {
+	public void incrementTotalShipsSuccessfullyLoaded(int totalShipsSuccessfullyLoaded) {
 		this.totalShipsSuccessfullyLoaded += totalShipsSuccessfullyLoaded;
 	}
-	public void setTotalShipsCapsized(int totalShipsCapsized) {
+	public void incrementTotalShipsCapsized(int totalShipsCapsized) {
 		this.totalShipsCapsized += totalShipsCapsized;
 	}
-	public void setTotalShipsBroken(int totalShipsBroken) {
+	public void incrementTotalShipsBroken(int totalShipsBroken) {
 		this.totalShipsBroken += totalShipsBroken;
 	}
 }
