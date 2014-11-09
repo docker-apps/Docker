@@ -10,9 +10,12 @@ import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 
 public abstract class AbstractGame extends ScreenAdapter {
+	public static final float WIDTH = 360;
+	public static final float HEIGHT = 200;
+	
 	private Game application;
 	private int score;
-	private double timeLeft;
+	private double time;
 	private int lives;
 	private Ship ship;
 	private Train train;
@@ -24,6 +27,11 @@ public abstract class AbstractGame extends ScreenAdapter {
 		this.score = 0;
 	}
 	
+	@Override
+	public void render(float delta) {
+		this.time += delta;
+	}
+	
 
 	public int getScore() {
 		return score;
@@ -33,12 +41,12 @@ public abstract class AbstractGame extends ScreenAdapter {
 		this.score = score;
 	}
 
-	public double getTimeLeft() {
-		return timeLeft;
+	public double getTime() {
+		return time;
 	}
 
-	public void setTimeLeft(double timeLeft) {
-		this.timeLeft = timeLeft;
+	public void setTime(double time) {
+		this.time = time;
 	}
 
 	public int getLives() {

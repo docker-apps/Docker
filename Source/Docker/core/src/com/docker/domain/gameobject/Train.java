@@ -13,7 +13,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Train extends Actor {
-	private static final float PADDING = 11;
+	private static final float PADDING = 11f;
+	private static final float PLATFORM_OFFSET = 6f;
 
 	private int speed;
 	private Queue<Container> containers;
@@ -67,7 +68,7 @@ public class Train extends Actor {
 
             if (lastX == 0 || fits(container, lastX) || !toRemove.isEmpty()) {
                 container.setY(this.getY());
-                if (xPos + container.getWidth() < this.getStage().getWidth()) {
+                if (xPos - PLATFORM_OFFSET < this.getStage().getWidth()) {
                     xPos = speed*delta + container.getX();
                     container.setX(xPos);
                     lastX = xPos;
@@ -83,7 +84,7 @@ public class Train extends Actor {
     }
 
     private boolean fits(Container container, float lastX) {
-        return container.getWidth() + container.getX() + PADDING < lastX;
+        return container.getX() + container.getWidth() + PADDING < lastX;
     }
 
     @Override
@@ -106,22 +107,22 @@ public class Train extends Actor {
 			if(container.getLength() == 1){
 				batch.draw(
 						this.platform_single,
-						container.getX() - 6f,
-						container.getY() - 4f);
+						container.getX() - PLATFORM_OFFSET,
+						container.getY() - 4f + wheelOffset);
 			} else {
 				float elementWidth = container.getElementWidth();
 				batch.draw(
 						this.platform_left,
-						container.getX() - 6f,
-						container.getY() - 4f);
+						container.getX() - PLATFORM_OFFSET,
+						container.getY() - 4f + wheelOffset);
 				for (int i = 1; i <= container.getLength()-2; i++) {
 					batch.draw(this.platform_center,
 							container.getX() + elementWidth*i,
-							container.getY() - 4f);
+							container.getY() - 4f + wheelOffset);
 				}
 				batch.draw(this.platform_right,
 						container.getX() + elementWidth*(container.getLength()-1) - 3,
-						container.getY() - 4f);
+						container.getY() - 4f + wheelOffset);
 			}
 		}
 	}

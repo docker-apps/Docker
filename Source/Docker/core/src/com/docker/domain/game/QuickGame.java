@@ -16,19 +16,20 @@ import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 
 public class QuickGame extends AbstractGame {
-	private static final double TIMELEFT = 60;
+	private static final double GAME_DURATION = 60;
+
+	private double timeLeft;
 
 	private Stage stage;
 	private ExtendViewport viewport;
 
 	public QuickGame(Game application) {
 		super(application);
-		setTimeLeft(TIMELEFT);
-		setShip(new Ship(40, 10, 400, 10f, 10f));
-		setTrain(new Train(5, 0f, 680f));
+		setTimeLeft(GAME_DURATION);
+		setShip(new Ship(10, 10, 5, 10f, 10f));
+		setTrain(new Train(5, 0f, 160f));
 		
-		this.viewport = new ExtendViewport(Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight());
+		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
 		this.stage = new Stage(viewport){
 			 @Override
 			   public boolean touchDown (int x, int y, int pointer, int button) {
@@ -72,19 +73,18 @@ public class QuickGame extends AbstractGame {
 
 	@Override
 	public void render(float delta) {
-
+		super.render(delta);
 		this.stage.act(Gdx.graphics.getDeltaTime());
 
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		this.stage.draw();
-		
-/*		if(Gdx.input.justTouched()){
+		if(Gdx.input.justTouched()){
 			if (getShip().addContainer(Gdx.input.getX(), getTrain().getFirstContainer())) {
-				getTrain().removeContainer();
+				Container container = getTrain().removeContainer();
+				getCrane().deployContainer(container, getShip(), 2);
 			}			
 		}
-*/
 		
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		this.stage.draw();
 	}
 
 	@Override
@@ -137,6 +137,14 @@ public class QuickGame extends AbstractGame {
 
 	public void setViewport(ExtendViewport viewport) {
 		this.viewport = viewport;
+	}
+
+	public double getTimeLeft() {
+		return timeLeft;
+	}
+
+	public void setTimeLeft(double timeLeft) {
+		this.timeLeft = timeLeft;
 	}
 
 	
