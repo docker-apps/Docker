@@ -32,59 +32,52 @@ public class QuickGame extends AbstractGame {
 		super(application);
 		setTimeLeft(GAME_DURATION);
 		setShip(new Ship(10, 4, 5, 10f, 10f));
-		setTrain(new Train(15, 0f, 160f));
-		setCrane(new Crane(100, WIDTH/2, HEIGHT));
-
+		setTrain(new Train(5, 0f, 160f));
+		setCrane(new Crane(80, 100, 100));
+		
 		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
 		this.stage = new WorldStage(viewport){
-
+			
+			 @Override
+			   public boolean touchDown (int x, int y, int pointer, int button) {
+				 	if(!getCrane().isDeploying()){
+				 		Container container = getTrain().getFirstContainer();
+					    getShip().setPreviewContainer(getXPosition(x, y, container), container);
+				 	}
+				 	return true;
+			   }
+			 
 			@Override
-			public boolean touchDown (int x, int y, int pointer, int button) {
-				if(!getCrane().isDeploying() && getTrain().hasContainers()){
-					Vector2 touchCoords = new Vector2(x,y);
-					touchCoords = getViewport().unproject(touchCoords);
-					getShip().setPreviewContainer(
-							getContainerPos(touchCoords.x, getTrain().getFirstContainer()), 
-							getTrain().getFirstContainer());
-				}
-				return true;
-			}
+			   public boolean touchDragged (int x, int y, int pointer) {
+			 	if(!getCrane().isDeploying()){
+			 		Container container = getTrain().getFirstContainer();
+				    getShip().setPreviewContainer(getXPosition(x, y, container),	container);
+			 	}
+			 	return true;
+			   }
 
-			@Override
-			public boolean touchDragged (int x, int y, int pointer) {
-				if(!getCrane().isDeploying() && getTrain().hasContainers()){
-					Vector2 touchCoords = new Vector2(x,y);
-					touchCoords = getViewport().unproject(touchCoords);
-
-					getShip().setPreviewContainer(
-							getContainerPos(touchCoords.x, getTrain().getFirstContainer()), 
-							getTrain().getFirstContainer());
-				}
-				return true;
-			}
-
-			@Override
-			public boolean touchUp (int x, int y, int pointer, int button) {
-				if(!getCrane().isDeploying() && getTrain().hasContainers()){
-					Vector2 touchCoords = new Vector2(x,y);
-					touchCoords = getViewport().unproject(touchCoords);
-					float yPos = getShip().getRealYPos(x, getTrain().getFirstContainer().getLength());
-					if (!getCrane().isDeploying() && yPos > 0) {
-						Container container = getTrain().removeContainer();
-						Vector2 gridCoords = getShip().getGridCoords(
-								getContainerPos(touchCoords.x, container), 
-								container.getLength());
-						Vector2 realCoords = getShip().getRealCoord(gridCoords);
-						getCrane().deployContainer(
-								container,
-								getShip(), 
-								realCoords.x, 
-								realCoords.y);
+			   @Override
+			   public boolean touchUp (int x, int y, int pointer, int button) {
+				    Container container = getTrain().getFirstContainer();
+				    Vector2 realCoords = getShip().getRealCoord(getXPosition(x, y, container), container);
+				   if (!getCrane().isDeploying() && realCoords != null) {
+					   	getCrane().deployContainer(
+					   			getTrain().removeContainer(),
+					   			getShip(), 
+					   			realCoords.x, 
+					   			realCoords.y);
 						return true;
 					}
-				}
-				return false;
+				   return false;
+			   }
+
+			private float getXPosition(int x, int y, Container container) {
+				Vector2 touchCoords = new Vector2(x,y);
+				touchCoords = getViewport().unproject(touchCoords);
+				float containerPos = getContainerPos(touchCoords.x, container);
+				return containerPos;
 			}
+			
 		};
 		Background background = new Background(this.stage.getWidth(), this.stage.getHeight());
 		background.toBack();
@@ -93,7 +86,7 @@ public class QuickGame extends AbstractGame {
 		foreground.toFront();
 		this.stage.setForeground(foreground);
 		this.getShip().setZIndex(50);
-
+		
 		this.stage.addActor(getShip());
 		this.stage.addActor(getTrain());
 		this.stage.addActor(getCrane());
@@ -102,8 +95,7 @@ public class QuickGame extends AbstractGame {
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
 		getTrain().addContainer(new Container(3, 4, Color.GREEN));
 		getTrain().addContainer(new Container(3, 5, Color.BLUE));
-
-
+		
 	}
 
 	@Override
@@ -111,17 +103,17 @@ public class QuickGame extends AbstractGame {
 		super.render(delta);
 		this.stage.act(Gdx.graphics.getDeltaTime());
 
-		//		if(Gdx.input.justTouched()){
-			//			if (getShip().addContainer(Gdx.input.getX(), getTrain().getFirstContainer())) {
-		//				Container container = getTrain().removeContainer();
-		//				getCrane().deployContainer(container, getShip(), 2);
-		//			}			
-		//		}
-
+//		if(Gdx.input.justTouched()){
+//			if (getShip().addContainer(Gdx.input.getX(), getTrain().getFirstContainer())) {
+//				Container container = getTrain().removeContainer();
+//				getCrane().deployContainer(container, getShip(), 2);
+//			}			
+//		}
+		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();
 	}
-
+	
 	public float getContainerPos(float fingerPos, Container container){
 		return fingerPos - (container.getLength() / 2) * container.getElementWidth();
 	}
@@ -186,5 +178,5 @@ public class QuickGame extends AbstractGame {
 		this.timeLeft = timeLeft;
 	}
 
-
+	
 }
