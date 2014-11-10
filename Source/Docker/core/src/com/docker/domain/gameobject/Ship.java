@@ -12,7 +12,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 public class Ship extends Actor {
 	private int gridWidth;
@@ -61,7 +64,14 @@ public class Ship extends Actor {
 		createTopLineAndGrid();
 	}
 	
-	//Die Position im Grid wird vom Schiff selberausgerechnet
+	/**
+	 * Adds the Container if possible at the given X position
+	 * if returned false, it was not possible to set the Container
+	 * 
+	 * @param x
+	 * @param container
+	 * @return
+	 */
 	public boolean addContainer(float x, Container container){
 		Vector2 gridCoords = getGridCoords(x, container.getLength());
 		if(gridCoords.y >= 0 &&  gridCoords.y < gridHeight){
@@ -75,6 +85,12 @@ public class Ship extends Actor {
 		}
 	}
 	
+	/**
+	 * Sets a Preview Container, where the Container possible could be set.
+	 * 
+	 * @param x
+	 * @param container
+	 */
 	public void setPreviewContainer(float x, Container container){
 		Vector2 gridCoords = getGridCoords(x, container.getLength());
 		if(gridCoords.y >= 0 ){
@@ -89,8 +105,13 @@ public class Ship extends Actor {
 			previewContainer = null;
 		}
 	}
-	
-
+	^
+	/**
+	 * 
+	 * @param x
+	 * @param containerLenght
+	 * @return
+	 */
 	private int getXGrid(float x, int containerLenght) {
 		int xGrid = (int) Math.floor((double) (x-xGridstart)/gridSize); 
         if(xGrid < 0){
@@ -103,38 +124,99 @@ public class Ship extends Actor {
 		return xGrid;
 	}
 	
-	public Vector2 getGridCoords(float x, int containerLenght){
+
+	/**
+	 * 
+	 * @param x
+	 * @param containerLenght
+	 * @return
+	 */
+	private Vector2 getGridCoords(float x, int containerLenght){
 		Vector2 gridCoords = new Vector2();
 		gridCoords.x = getXGrid(x, containerLenght);
 		gridCoords.y = getYGrid((int) gridCoords.x, containerLenght);
 		return gridCoords; 
 	}
 	
-	public int getRealYPos(float x, int containerLenght){
-		Vector2 gridCoords = getGridCoords(x, containerLenght);
-		Vector2 realCoords = new Vector2();
-		int realY = -1;
+^
+	
+	/**
+	 * Returns Coordinates where the Container will be places
+	 * If it returns null the Container can't be placed at this place.
+	 * 
+	 * @param x
+	 * @param container
+	 * @return 
+	 */
+	public Vector2 getRealCoord(float x, Container container){
+		Vector2 gridCoords = getGridCoords(x, container.getLength());
+		Vector2 realCoords = null;
 		if (gridCoords.y < gridHeight) {
 			realCoords = getRealCoord(gridCoords);
-			realY = (int) realCoords.y;
 		}
-		return realY; 
+		return realCoords;
 	}
 	
-	public Vector2 getRealCoord(Vector2 gridCoords){
+
+	/**
+	 * 
+	 * @param gridCoords
+	 * @return
+	 */
+	private Vector2 getRealCoord(Vector2 gridCoords){
 		Vector2 realCoords = new Vector2();
 		realCoords.x = gridCoords.x * gridSize + xGridstart;
 		realCoords.y = gridCoords.y * gridSize + yGridstart;
 		return realCoords;
 	}
 
-	public void showPossiblePosition(int X, Container container){
+
+	/**
+	 * Method which will be called to make the ship sail away.
+	 * 
+	 * @param container
+	 * @param ship
+	 * @param x
+	 * @param y
+	 */
+	public void takeOff(Container container, final Ship ship, final float x, float y){
+		// add the container to the crane
 		
+//		this.setContainer(container);
+		
+		// calculate the animation duration from the distance to the target and the cranes speed
+//		float xDistance = Math.abs(this.getX() - x);
+//		float yDistance = Math.abs(this.getY() - y);
+//		float distance = (float) Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+//		float duration = distance / this.speed;
+		
+		// create a new Move-To Action
+//		MoveToAction moveAction = new MoveToAction();
+//		moveAction.setPosition(x, y);
+//		moveAction.setDuration(duration);
+		
+		// create an action which deploys the container to the ship
+//		Action completeAction = new Action(){
+//		    public boolean act( float delta ) {
+//		        // give the container to the ship here, preferrably to a grid coordinate
+//		    	ship.addContainer(x, removeContainer());
+//		    	return true;
+//		    }
+//		};
+		
+		// chain the two actions and add it to this actor
+//		SequenceAction actions = new SequenceAction(moveAction, completeAction);
+//		this.addAction(actions);
 	}
 	
-	
-	public boolean isFree(int gridX, int gridY){
-		throw new NotImplementedException();
+
+	/**
+	 * Can be called to check if the ship is taking off.
+	 * 
+	 * @return
+	 */
+	public boolean isTakingOff(){
+		return this.getActions().size > 0;
 	}
 
 	@Override
