@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Ship extends Actor {
@@ -62,10 +63,10 @@ public class Ship extends Actor {
 	
 	//Die Position im Grid wird vom Schiff selberausgerechnet
 	public boolean addContainer(float x, Container container){
-		int xGrid = getXGrid(x, container);
-		int yGrid = posYIFit(xGrid, container.getLength());
-		if(yGrid >= 0 &&  yGrid < gridHeight){
-			container.setPosition((xGrid*gridSize)+xGridstart, (yGrid*gridSize)+yGridstart);
+		Vector2 gridCoords = getGridCoords(x, container.getLength());
+		if(gridCoords.y >= 0 &&  gridCoords.y < gridHeight){
+			Vector2 realCoords = getRealCoord(gridCoords);
+			container.setPosition(realCoords.x, realCoords.y);
 			this.containers.add(container);
 			createTopLineAndGrid();
 			return true;
@@ -73,35 +74,61 @@ public class Ship extends Actor {
 			return false;
 		}
 	}
-
-	private int getXGrid(float x, Container container) {
-		int fingerInTheMiddle = (int) (x-(container.getLength()/2)*gridSize);
-		int xGrid = (int) Math.floor((double) (fingerInTheMiddle-xGridstart)/gridSize); 
-        if(xGrid < 0){
-        	xGrid = 0;
-        }
-        float noSpace = this.gridWidth- (xGrid + container.getLength());
-        if (noSpace < 0 ) {
-			xGrid = this.gridWidth-container.getLength();
-		}
-		return xGrid;
-	}
 	
 	public void setPreviewContainer(float x, Container container){
-		int xGrid = getXGrid(x, container);
-		int yGrid = posYIFit(xGrid, container.getLength());
-		if(yGrid >= 0 ){
+		Vector2 gridCoords = getGridCoords(x, container.getLength());
+		if(gridCoords.y >= 0 ){
 			previewContainer = new Container(container);
 			previewContainer.setColor(Color.MAGENTA);
-			if (yGrid < gridHeight) {
+			if (gridCoords.y < gridHeight) {
 				previewContainer.setColor(Color.DARK_GRAY);
 			}
-			previewContainer.setPosition((xGrid*gridSize)+xGridstart, (yGrid*gridSize)+yGridstart);
+			Vector2 realCoords = getRealCoord(gridCoords);
+			previewContainer.setPosition(realCoords.x, realCoords.y);
 		}else{
 			previewContainer = null;
 		}
 	}
 	
+
+	private int getXGrid(float x, int containerLenght) {
+		int fingerInTheMiddle = (int) (x-(containerLenght/2)*gridSize);
+		int xGrid = (int) Math.floor((double) (fingerInTheMiddle-xGridstart)/gridSize); 
+        if(xGrid < 0){
+        	xGrid = 0;
+        }
+        float noSpace = this.gridWidth- (xGrid + containerLenght);
+        if (noSpace < 0 ) {
+			xGrid = this.gridWidth-containerLenght;
+		}
+		return xGrid;
+	}
+	
+	public Vector2 getGridCoords(float x, int containerLenght){
+		Vector2 gridCoords = new Vector2();
+		gridCoords.x = getXGrid(x, containerLenght);
+		gridCoords.y = getYGrid((int) gridCoords.x, containerLenght);
+		return gridCoords; 
+	}
+	
+	public int getRealYPos(float x, int containerLenght){
+		Vector2 gridCoords = getGridCoords(x, containerLenght);
+		Vector2 realCoords = new Vector2();
+		int realY = -1;
+		if (gridCoords.y < gridHeight) {
+			realCoords = getRealCoord(gridCoords);
+			realY = (int) realCoords.y;
+		}
+		return realY; 
+	}
+	
+	private Vector2 getRealCoord(Vector2 gridCoords){
+		Vector2 realCoords = new Vector2();
+		realCoords.x = gridCoords.x * gridSize + xGridstart;
+		realCoords.y = gridCoords.y * gridSize + yGridstart;
+		return realCoords;
+	}
+
 	public void showPossiblePosition(int X, Container container){
 		
 	}
@@ -150,11 +177,11 @@ public class Ship extends Actor {
 	 * @param lenght
 	 * @return 
 	 */
-	public int posYIFit(int gridX, int lenght){
+	public int getYGrid(int gridX, int lenght){
 		if(lenght == 1){
 			return (topLine[gridX]);
 		}
-		int topline = posYIFit(gridX + 1, lenght -1 );
+		int topline = getYGrid(gridX + 1, lenght -1 );
 		if (topLine[gridX] > topline) {
 			return (topLine[gridX]);
 		}
