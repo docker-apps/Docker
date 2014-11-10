@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
+import com.docker.domain.gameobject.Crane;
 import com.docker.domain.gameobject.Foreground;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
@@ -32,24 +33,33 @@ public class QuickGame extends AbstractGame {
 		setTimeLeft(GAME_DURATION);
 		setShip(new Ship(10, 4, 5, 10f, 10f));
 		setTrain(new Train(5, 0f, 160f));
+		setCrane(new Crane(80, 100, 100));
 		
 		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
-//		this.viewport = new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		this.stage = new WorldStage(viewport){
 			
 			 @Override
 			   public boolean touchDown (int x, int y, int pointer, int button) {
-					Vector2 touchCoords = new Vector2(x,y);
-				    touchCoords = getViewport().unproject(touchCoords);
-				 	getShip().setPreviewContainer(touchCoords.x, getTrain().getFirstContainer());
+				 	if(!getCrane().isDeploying()){
+						Vector2 touchCoords = new Vector2(x,y);
+					    touchCoords = getViewport().unproject(touchCoords);
+					    getShip().setPreviewContainer(
+					 			getContainerPos(touchCoords.x, getTrain().getFirstContainer()), 
+					 			getTrain().getFirstContainer());
+				 	}
 				 	return true;
 			   }
 			 
 			@Override
 			   public boolean touchDragged (int x, int y, int pointer) {
-				Vector2 touchCoords = new Vector2(x,y);
-			    touchCoords = getViewport().unproject(touchCoords);
-				getShip().setPreviewContainer(touchCoords.x, getTrain().getFirstContainer());
+			 	if(!getCrane().isDeploying()){
+					Vector2 touchCoords = new Vector2(x,y);
+				    touchCoords = getViewport().unproject(touchCoords);
+	
+				    getShip().setPreviewContainer(
+				 			getContainerPos(touchCoords.x, getTrain().getFirstContainer()), 
+				 			getTrain().getFirstContainer());
+			 	}
 			 	return true;
 			   }
 
@@ -57,8 +67,18 @@ public class QuickGame extends AbstractGame {
 			   public boolean touchUp (int x, int y, int pointer, int button) {
 					Vector2 touchCoords = new Vector2(x,y);
 				    touchCoords = getViewport().unproject(touchCoords);
-				   if (getShip().addContainer(touchCoords.x, getTrain().getFirstContainer())) {
-					   	getCrane().deployContainer(getTrain().removeContainer(), getShip(), touchCoords.x);
+				    float yPos = getShip().getRealYPos(x, getTrain().getFirstContainer().getLength());
+				   if (!getCrane().isDeploying() && yPos > 0) {
+					   Container container = getTrain().removeContainer();
+					   Vector2 gridCoords = getShip().getGridCoords(
+					   							getContainerPos(touchCoords.x, container), 
+					   							container.getLength());
+					   Vector2 realCoords = getShip().getRealCoord(gridCoords);
+					   	getCrane().deployContainer(
+					   			container,
+					   			getShip(), 
+					   			realCoords.x, 
+					   			realCoords.y);
 						return true;
 					}
 				   return false;
@@ -75,6 +95,7 @@ public class QuickGame extends AbstractGame {
 		
 		this.stage.addActor(getShip());
 		this.stage.addActor(getTrain());
+		this.stage.addActor(getCrane());
 		getTrain().addContainer(new Container(3, 3, Color.YELLOW));
 		getTrain().addContainer(new Container(3, 2, Color.RED));
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
@@ -97,6 +118,10 @@ public class QuickGame extends AbstractGame {
 		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();
+	}
+	
+	public float getContainerPos(float fingerPos, Container container){
+		return fingerPos - (container.getLength() / 2) * container.getElementWidth();
 	}
 
 	@Override

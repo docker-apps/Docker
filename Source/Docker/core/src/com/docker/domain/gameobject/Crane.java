@@ -47,15 +47,11 @@ public class Crane extends Actor {
 	 * 
 	 * @param container the container to deploy
 	 * @param ship the ship to which the container should be deployed
-	 * @param gridX the position on the ship at which the container should be deployed
+	 * @param x the position on the ship at which the container should be deployed
 	 */
-	public void deployContainer(Container container, final Ship ship, final int gridX){
+	public void deployContainer(Container container, final Ship ship, final float x, float y){
 		// add the container to the crane
 		this.setContainer(container);
-		
-		// Hier bräuchte ich die tatsächlichen Koordinaten, zu denen der container geliefert werden soll
-		float x = 0f;	
-		float y = 0f;
 		
 		// calculate the animation duration from the distance to the target and the cranes speed
 		float xDistance = Math.abs(this.getX() - x);
@@ -72,7 +68,7 @@ public class Crane extends Actor {
 		Action completeAction = new Action(){
 		    public boolean act( float delta ) {
 		        // give the container to the ship here, preferrably to a grid coordinate
-		    	ship.addContainer(gridX, removeContainer());
+		    	ship.addContainer(x, removeContainer());
 		    	return true;
 		    }
 		};
@@ -80,6 +76,10 @@ public class Crane extends Actor {
 		// chain the two actions and add it to this actor
 		SequenceAction actions = new SequenceAction(moveAction, completeAction);
 		this.addAction(actions);
+	}
+	
+	public boolean isDeploying(){
+		return this.getActions().size > 0;
 	}
 
 	@Override
@@ -93,12 +93,12 @@ public class Crane extends Actor {
 
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
-		this.container.draw(batch, parentAlpha);
-		
 		if(this.container != null){
 			int length = this.container.getLength();
 			float elementWidth = this.container.getElementWidth();
 			float yPos = this.getY()+this.container.getHeight()-4;
+
+			this.container.draw(batch, parentAlpha);
 			
 			// Not great code, but it works. If you can create an elegant algorithm, feel free to improve.
 			if(length == 5){

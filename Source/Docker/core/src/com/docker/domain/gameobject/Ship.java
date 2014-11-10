@@ -92,8 +92,7 @@ public class Ship extends Actor {
 	
 
 	private int getXGrid(float x, int containerLenght) {
-		int fingerInTheMiddle = (int) (x-(containerLenght/2)*gridSize);
-		int xGrid = (int) Math.floor((double) (fingerInTheMiddle-xGridstart)/gridSize); 
+		int xGrid = (int) Math.floor((double) (x-xGridstart)/gridSize); 
         if(xGrid < 0){
         	xGrid = 0;
         }
@@ -122,7 +121,7 @@ public class Ship extends Actor {
 		return realY; 
 	}
 	
-	private Vector2 getRealCoord(Vector2 gridCoords){
+	public Vector2 getRealCoord(Vector2 gridCoords){
 		Vector2 realCoords = new Vector2();
 		realCoords.x = gridCoords.x * gridSize + xGridstart;
 		realCoords.y = gridCoords.y * gridSize + yGridstart;
