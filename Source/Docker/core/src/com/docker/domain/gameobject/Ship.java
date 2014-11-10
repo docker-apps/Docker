@@ -105,7 +105,7 @@ public class Ship extends Actor {
 			previewContainer = null;
 		}
 	}
-	^
+	
 	/**
 	 * 
 	 * @param x
@@ -138,7 +138,6 @@ public class Ship extends Actor {
 		return gridCoords; 
 	}
 	
-^
 	
 	/**
 	 * Returns Coordinates where the Container will be places
