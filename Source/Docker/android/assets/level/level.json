@@ -2,10 +2,12 @@
     "level": [
     {
         "id": "1",
+        "stage": 1,
         "name": "Level 1",
         "shipLength": 10,
         "shipHeight": 5,
-        "capacity": 50,
+        "breakThreshold": 5,
+        "capsizeThreshold": 5;
         "containers": {
             "container": [
                 {"weight": 1, "length": 2},
