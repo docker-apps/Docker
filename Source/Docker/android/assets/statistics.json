@@ -1,0 +1,12 @@
+{
+"data": {
+	"bla": {
+		"class": "java.lang.Integer",
+		"value": 3
+	},
+	"huhu": {
+		"class": "java.lang.String",
+		"value": "sssadf"
+	}
+}
+}

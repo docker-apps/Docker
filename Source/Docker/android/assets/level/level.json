@@ -1,0 +1,33 @@
+{"levels": {
+    "level": [
+    {
+        "id": "1",
+        "name": "Level 1",
+        "shipLength": 10,
+        "shipHeight": 5,
+        "capacity": 50,
+        "containers": {
+            "container": [
+                {"weight": 1, "length": 2},
+                {"weight": 1, "length": 2},
+                {"weight": 1, "length": 2}
+            ]
+        }
+    },
+    {
+        "id": "2",
+        "name": "Level 2",
+        "shipLength": 10,
+        "shipHeight": 5,
+        "capacity": 50,
+        "containers": {
+            "container": [
+                {"weight": 1, "length": 2},
+                {"weight": 1, "length": 2}
+            ]
+        }
+    }
+
+    ]
+}
+}
