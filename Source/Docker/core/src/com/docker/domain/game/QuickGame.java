@@ -32,7 +32,7 @@ public class QuickGame extends AbstractGame {
 		super(application);
 		setTimeLeft(GAME_DURATION);
 		setShip(new Ship(10, 4, 5, 10f, 10f));
-		setTrain(new Train(5, 0f, 160f));
+		setTrain(new Train(5, 0f, HEIGHT-23));
 		setCrane(new Crane(80, WIDTH/2, HEIGHT));
 
 		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
@@ -92,11 +92,12 @@ public class QuickGame extends AbstractGame {
 		this.stage.addActor(getShip());
 		this.stage.addActor(getTrain());
 		this.stage.addActor(getCrane());
-		getTrain().addContainer(new Container(3, 3, Color.YELLOW));
-		getTrain().addContainer(new Container(3, 2, Color.RED));
+		getTrain().addContainer(new Container(1, 3, Color.YELLOW));
+		getTrain().addContainer(new Container(2, 2, Color.RED));
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 4, Color.GREEN));
-		getTrain().addContainer(new Container(3, 5, Color.BLUE));
+		getTrain().addContainer(new Container(4, 4, Color.GREEN));
+		getTrain().addContainer(new Container(5, 5, Color.BLUE));
+		getTrain().addContainer(new Container(6, 5));
 
 	}
 

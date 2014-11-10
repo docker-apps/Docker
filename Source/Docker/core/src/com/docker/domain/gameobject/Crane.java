@@ -1,8 +1,5 @@
 package com.docker.domain.gameobject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -23,7 +20,8 @@ public class Crane extends Actor {
 	private TextureRegion extensionLeftOuter;
 	private TextureRegion extensionRight;
 	private TextureRegion extensionRightOuter;
-
+	private TextureRegion cable;
+	
 	/**
 	 * @param speed the speed at which the crane can move.
 	 * @param xOrigin the crane's initial position on the x-plane. The Crane will always return to this position.
@@ -44,6 +42,7 @@ public class Crane extends Actor {
 		this.extensionLeftOuter = atlas.findRegion("crane_extension_left_outer");
 		this.extensionRight = atlas.findRegion("crane_extension_right");
 		this.extensionRightOuter = atlas.findRegion("crane_extension_right_outer");
+		this.cable = atlas.findRegion("crane_cable");
 	}
 	
 	/**
@@ -72,7 +71,10 @@ public class Crane extends Actor {
 		Action completeAction = new Action(){
 		    public boolean act( float delta ) {
 		        // give the container to the ship here, preferrably to a grid coordinate
-		    	ship.addContainer(x, removeContainer());
+		    	Container container = removeContainer();
+		    	ship.addContainer(x, container);
+		    	setX(getX()+container.getWidth()/2);
+		    	setY(getY()+container.getElementHeight());
 		    	return true;
 		    }
 		};
@@ -102,6 +104,8 @@ public class Crane extends Actor {
 
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
+		float xBody;
+		float yBody;
 		if(this.container != null){
 			int length = this.container.getLength();
 			float elementWidth = this.container.getElementWidth();
@@ -157,12 +161,17 @@ public class Crane extends Actor {
 
 
 
-			batch.draw(this.body, 
-					this.getX()+((float)this.container.getWidth())/2-((float)this.body.getRegionWidth())/2, 
-					this.getY()+this.container.getHeight()-4);
+			xBody = this.getX()+((float)this.container.getWidth())/2-((float)this.body.getRegionWidth())/2;
+			yBody = this.getY()+this.container.getHeight()-4;
 		}
 		else{
-			batch.draw(this.body, this.getX(), this.getY());
+			xBody = this.getX();
+			yBody = this.getY();
+		}
+		batch.draw(this.body, xBody, yBody);
+		
+		for(float i=yBody + this.body.getRegionHeight();i<this.getStage().getHeight()+this.cable.getRegionHeight();i+=this.cable.getRegionHeight()){
+			batch.draw(this.cable, xBody+8, i);
 		}
 	}
 

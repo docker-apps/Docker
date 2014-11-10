@@ -22,6 +22,7 @@ public class Background extends Actor {
 	private Array<AtlasRegion> bird;
 	private Array<AtlasRegion> cloud;
 	private TextureRegion crane;
+	private TextureRegion tunnel;
 	private int cloudIndex;
 	private Vector2 cloudPosition;
 	private Animation birdAnimation;
@@ -42,6 +43,7 @@ public class Background extends Actor {
 		this.bird = atlas.findRegions("bg_bird");
 		this.cloud = atlas.findRegions("bg_cloud");
 		this.crane = atlas.findRegion("bg_crane");
+		this.tunnel = atlas.findRegion("bg_train_tunnel");
 
 		this.birdAnimation = new Animation(0.2f, this.bird);
 
@@ -109,6 +111,13 @@ public class Background extends Actor {
 					this.crane,
 					5+(this.crane.getRegionWidth()+20)*i,
 					this.getX()+this.harborLevel);
+		}
+		
+		for(float i=0;i<this.getWidth()+this.tunnel.getRegionWidth();i+=this.tunnel.getRegionWidth()){
+			batch.draw(
+					this.tunnel,
+					i,
+					this.getHeight()-this.tunnel.getRegionHeight());
 		}
 	}
 }

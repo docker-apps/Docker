@@ -6,39 +6,39 @@ filter: Nearest,Nearest
 repeat: none
 bg_bird
   rotate: false
-  xy: 464, 100
-  size: 7, 3
-  orig: 7, 3
-  offset: 0, 0
-  index: 2
-bg_bird
-  rotate: false
-  xy: 26, 2
-  size: 7, 2
-  orig: 7, 2
-  offset: 0, 0
-  index: 3
-bg_bird
-  rotate: false
-  xy: 603, 81
+  xy: 804, 117
   size: 7, 4
   orig: 7, 4
   offset: 0, 0
   index: 1
 bg_bird
   rotate: false
-  xy: 221, 30
+  xy: 815, 123
+  size: 7, 3
+  orig: 7, 3
+  offset: 0, 0
+  index: 2
+bg_bird
+  rotate: false
+  xy: 826, 123
   size: 7, 3
   orig: 7, 3
   offset: 0, 0
   index: 4
 bg_bird
   rotate: false
-  xy: 681, 120
+  xy: 837, 123
   size: 7, 3
   orig: 7, 3
   offset: 0, 0
   index: 5
+bg_bird
+  rotate: false
+  xy: 815, 117
+  size: 7, 2
+  orig: 7, 2
+  offset: 0, 0
+  index: 3
 bg_cloud
   rotate: false
   xy: 2, 38
@@ -48,252 +48,287 @@ bg_cloud
   index: 1
 bg_cloud
   rotate: false
-  xy: 225, 41
+  xy: 227, 37
   size: 144, 57
   orig: 144, 57
   offset: 0, 0
   index: 2
 bg_cloud
   rotate: false
-  xy: 2, 14
+  xy: 455, 104
   size: 171, 22
   orig: 171, 22
   offset: 0, 0
   index: 3
 bg_crane
   rotate: false
-  xy: 371, 28
+  xy: 375, 24
   size: 107, 70
   orig: 107, 70
   offset: 0, 0
   index: -1
+bg_train_tunnel
+  rotate: false
+  xy: 574, 16
+  size: 15, 36
+  orig: 15, 36
+  offset: 0, 0
+  index: -1
 container_base_center
   rotate: false
-  xy: 175, 15
+  xy: 2, 13
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
 container_base_front
   rotate: false
-  xy: 451, 105
+  xy: 630, 105
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
 container_base_left
   rotate: false
-  xy: 626, 105
+  xy: 27, 13
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
 container_base_right
   rotate: false
-  xy: 198, 15
+  xy: 655, 105
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
 crane_body
   rotate: false
-  xy: 580, 79
-  size: 21, 47
-  orig: 21, 47
+  xy: 52, 17
+  size: 21, 17
+  orig: 21, 17
+  offset: 0, 0
+  index: -1
+crane_cable
+  rotate: false
+  xy: 593, 22
+  size: 5, 30
+  orig: 5, 30
   offset: 0, 0
   index: -1
 crane_extension_left
   rotate: false
-  xy: 626, 95
+  xy: 77, 16
   size: 21, 8
   orig: 21, 8
   offset: 0, 0
   index: -1
 crane_extension_left_outer
   rotate: false
-  xy: 649, 104
+  xy: 714, 118
   size: 21, 8
   orig: 21, 8
   offset: 0, 0
   index: -1
 crane_extension_right
   rotate: false
-  xy: 649, 94
+  xy: 739, 118
   size: 21, 8
   orig: 21, 8
   offset: 0, 0
   index: -1
 crane_extension_right_outer
   rotate: false
-  xy: 626, 85
+  xy: 764, 118
   size: 21, 8
   orig: 21, 8
   offset: 0, 0
   index: -1
 fg_dock
   rotate: false
-  xy: 480, 2
+  xy: 486, 20
   size: 43, 33
   orig: 43, 33
   offset: 0, 0
   index: -1
 fg_ship_reflection
   rotate: false
-  xy: 225, 114
+  xy: 227, 114
   size: 224, 12
   orig: 224, 12
   offset: 0, 0
   index: 1
 fg_ship_reflection
   rotate: false
-  xy: 225, 100
+  xy: 227, 98
   size: 224, 12
   orig: 224, 12
   offset: 0, 0
   index: 2
 fg_water_movement
   rotate: false
-  xy: 225, 38
+  xy: 455, 99
   size: 22, 1
   orig: 22, 1
   offset: 0, 0
   index: 1
 fg_water_movement
   rotate: false
-  xy: 221, 35
+  xy: 111, 33
   size: 22, 1
   orig: 22, 1
   offset: 0, 0
   index: 2
 fg_water_movement
   rotate: false
-  xy: 2, 3
+  xy: 680, 107
   size: 22, 1
   orig: 22, 1
   offset: 0, 0
   index: 3
 fg_water_movement
   rotate: false
-  xy: 681, 125
+  xy: 789, 125
   size: 22, 1
   orig: 22, 1
   offset: 0, 0
   index: 4
 indicator_lamp_red
   rotate: false
-  xy: 473, 100
+  xy: 848, 123
   size: 3, 3
   orig: 3, 3
   offset: 0, 0
   index: -1
 indicator_lamp_white
   rotate: false
-  xy: 531, 47
+  xy: 855, 123
   size: 3, 3
   orig: 3, 3
   offset: 0, 0
   index: -1
 label
   rotate: false
-  xy: 451, 100
+  xy: 789, 118
   size: 11, 3
   orig: 11, 3
   offset: 0, 0
   index: 1
 label
   rotate: false
-  xy: 525, 28
+  xy: 50, 2
   size: 3, 7
   orig: 3, 7
   offset: 0, 0
   index: 2
 nr
   rotate: false
-  xy: 69, 2
+  xy: 574, 2
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 1
 nr
   rotate: false
-  xy: 77, 2
+  xy: 584, 2
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 2
 nr
   rotate: false
-  xy: 85, 2
+  xy: 612, 47
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 3
+nr
+  rotate: false
+  xy: 612, 33
+  size: 6, 10
+  orig: 6, 10
+  offset: 0, 0
+  index: 4
+nr
+  rotate: false
+  xy: 102, 14
+  size: 6, 10
+  orig: 6, 10
+  offset: 0, 0
+  index: 5
+nr
+  rotate: false
+  xy: 57, 2
+  size: 6, 10
+  orig: 6, 10
+  offset: 0, 0
+  index: 6
 ship_body_center
   rotate: false
-  xy: 603, 87
+  xy: 602, 61
   size: 21, 39
   orig: 21, 39
   offset: 0, 0
   index: -1
 ship_body_left
   rotate: false
-  xy: 480, 37
+  xy: 549, 56
   size: 49, 44
   orig: 49, 44
   offset: 0, 0
   index: -1
 ship_body_right
   rotate: false
-  xy: 480, 83
+  xy: 486, 57
   size: 59, 43
   orig: 59, 43
   offset: 0, 0
   index: -1
 ship_mast
   rotate: false
-  xy: 531, 52
+  xy: 602, 28
   size: 6, 29
   orig: 6, 29
   offset: 0, 0
   index: -1
 ship_tower
   rotate: false
-  xy: 541, 76
+  xy: 533, 2
   size: 37, 50
   orig: 37, 50
   offset: 0, 0
   index: -1
 train_platform_center
   rotate: false
-  xy: 649, 114
+  xy: 680, 112
   size: 27, 4
   orig: 27, 4
   offset: 0, 0
   index: -1
 train_platform_left
   rotate: false
-  xy: 649, 120
+  xy: 680, 120
   size: 30, 6
   orig: 30, 6
   offset: 0, 0
   index: -1
 train_platform_right
   rotate: false
-  xy: 37, 6
+  xy: 77, 28
   size: 30, 6
   orig: 30, 6
   offset: 0, 0
   index: -1
 train_platform_single
   rotate: false
-  xy: 2, 6
+  xy: 2, 3
   size: 33, 6
   orig: 33, 6
   offset: 0, 0
   index: -1
 train_wheel
   rotate: false
-  xy: 649, 85
+  xy: 39, 2
   size: 7, 7
   orig: 7, 7
   offset: 0, 0
