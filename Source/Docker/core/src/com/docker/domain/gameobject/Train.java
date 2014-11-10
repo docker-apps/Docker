@@ -84,7 +84,8 @@ public class Train extends Actor {
     }
 
     private boolean fits(Container container, float lastX) {
-        return container.getX() + container.getWidth() + PADDING < lastX;
+        float fit = container.getWidth() + container.getX() + PADDING;
+        return Math.round(fit) < lastX;
     }
 
     @Override
@@ -107,8 +108,8 @@ public class Train extends Actor {
 			if(container.getLength() == 1){
 				batch.draw(
 						this.platform_single,
-						container.getX() - PLATFORM_OFFSET,
-						container.getY() - 4f + wheelOffset);
+                        container.getX() - PLATFORM_OFFSET,
+                        container.getY() - 4f + wheelOffset);
 			} else {
 				float elementWidth = container.getElementWidth();
 				batch.draw(
