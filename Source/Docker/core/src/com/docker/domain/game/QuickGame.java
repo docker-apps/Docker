@@ -26,10 +26,11 @@ public class QuickGame extends AbstractGame {
 	public QuickGame(Game application) {
 		super(application);
 		setTimeLeft(GAME_DURATION);
-		setShip(new Ship(10, 10, 5, 10f, 10f));
+		setShip(new Ship(10, 4, 5, 10f, 10f));
 		setTrain(new Train(5, 0f, 160f));
 		
-		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
+//		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
+		this.viewport = new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		this.stage = new Stage(viewport){
 			 @Override
 			   public boolean touchDown (int x, int y, int pointer, int button) {
@@ -45,7 +46,7 @@ public class QuickGame extends AbstractGame {
 
 			   @Override
 			   public boolean touchUp (int x, int y, int pointer, int button) {
-				   if (getShip().addContainer(Gdx.input.getX(), getTrain().getFirstContainer())) {
+				   if (getShip().addContainer(x, getTrain().getFirstContainer())) {
 						getTrain().removeContainer();
 						return true;
 					}
@@ -63,11 +64,11 @@ public class QuickGame extends AbstractGame {
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE, 0, 0));
 		getTrain().addContainer(new Container(3, 4, Color.GREEN, 0, 0));
 		getTrain().addContainer(new Container(3, 5, Color.BLUE, 0, 0));
-		getShip().addContainer(61, new Container(2, 4, Color.GRAY, 0, 0));
-		getShip().addContainer(98, new Container(2, 4, Color.DARK_GRAY, 0, 0));
-		getShip().addContainer(65, new Container(3, 1, Color.YELLOW, 0, 0));
-		getShip().addContainer(102, new Container(3, 1, Color.OLIVE, 0, 0));
-		getShip().addContainer(98, new Container(3, 3, Color.ORANGE, 0, 0));
+//		getShip().addContainer(61, new Container(2, 4, Color.GRAY, 0, 0));
+//		getShip().addContainer(98, new Container(2, 4, Color.DARK_GRAY, 0, 0));
+//		getShip().addContainer(65, new Container(3, 1, Color.YELLOW, 0, 0));
+//		getShip().addContainer(102, new Container(3, 1, Color.OLIVE, 0, 0));
+//		getShip().addContainer(98, new Container(3, 3, Color.ORANGE, 0, 0));
 		
 	}
 
@@ -76,12 +77,12 @@ public class QuickGame extends AbstractGame {
 		super.render(delta);
 		this.stage.act(Gdx.graphics.getDeltaTime());
 
-		if(Gdx.input.justTouched()){
-			if (getShip().addContainer(Gdx.input.getX(), getTrain().getFirstContainer())) {
-				Container container = getTrain().removeContainer();
-				getCrane().deployContainer(container, getShip(), 2);
-			}			
-		}
+//		if(Gdx.input.justTouched()){
+//			if (getShip().addContainer(Gdx.input.getX(), getTrain().getFirstContainer())) {
+//				Container container = getTrain().removeContainer();
+//				getCrane().deployContainer(container, getShip(), 2);
+//			}			
+//		}
 		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();

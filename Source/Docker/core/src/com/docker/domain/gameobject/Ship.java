@@ -6,6 +6,7 @@ import java.util.List;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,8 +19,9 @@ public class Ship extends Actor {
 	private int carryingCapacity;
 	private List<Container> containers;
 	private Container previewContainer;
-	private static final Integer GRIDSIZE = 21;
+	private Integer gridSize;
 	private int[] topLine;
+	private float[][] grid;
 	private float yGridstart;
 	private float xGridstart;
 	
@@ -48,20 +50,24 @@ public class Ship extends Actor {
 		this.body_right = atlas.findRegion("ship_body_right");
 		this.tower = atlas.findRegion("ship_tower");
 		this.mast = atlas.findRegion("ship_mast");
+		
+		this.gridSize = this.body_center.getRegionWidth();
 
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 		
-		this.xGridstart = this.getX()+body_left.getRegionWidth() - GRIDSIZE;
+		this.xGridstart = this.getX()+body_left.getRegionWidth() - gridSize;
 		this.yGridstart = this.getY()+body_center.getRegionHeight();
+		createTopLineAndGrid();
 	}
 	
 	//Die Position im Grid wird vom Schiff selberausgerechnet
 	public boolean addContainer(float x, Container container){
-		float xGrid = (float) Math.floor((double) (x-xGridstart)/GRIDSIZE) * GRIDSIZE; 
-		float yGrid = getYContainerPositon(xGrid, container)*GRIDSIZE;
-		if(yGrid >= 0 ){
-			container.setPosition(xGrid+xGridstart, yGrid+yGridstart);
+		int xGrid = (int) Math.floor((double) (x-xGridstart)/gridSize); 
+		float yGrid = posYIFit(xGrid, container.getLength());
+		if(yGrid >= 0 &&  yGrid < gridHeight){
+			container.setPosition((xGrid*gridSize)+xGridstart, (yGrid*gridSize)+yGridstart);
 			this.containers.add(container);
+			createTopLineAndGrid();
 			return true;
 		}else{
 			return false;
@@ -69,11 +75,17 @@ public class Ship extends Actor {
 	}
 	
 	public void setPreviewContainer(float x, Container container){
-		float xGrid = (float) Math.floor((double) (x-xGridstart)/GRIDSIZE) * GRIDSIZE; 
-		float yGrid = getYContainerPositon(xGrid, container)*GRIDSIZE;
+		int xGrid = (int) Math.floor((double) (x-xGridstart)/gridSize); 
+		float yGrid = posYIFit(xGrid, container.getLength());
 		if(yGrid >= 0 ){
 			previewContainer = new Container(container);
-			previewContainer.setPosition(xGrid+xGridstart, yGrid+yGridstart);
+			previewContainer.setColor(Color.MAGENTA);
+			if (yGrid < gridHeight) {
+				previewContainer.setColor(Color.DARK_GRAY);
+			}
+			previewContainer.setPosition((xGrid*gridSize)+xGridstart, (yGrid*gridSize)+yGridstart);
+		}else{
+			previewContainer = null;
 		}
 	}
 	
@@ -126,7 +138,7 @@ public class Ship extends Actor {
 	 * @return 
 	 */
 	public float posYIFit(int gridX, int size){
-		float NoSpace = this.gridWidth - (gridX + size -1);
+		float NoSpace = this.gridWidth - (gridX + size);
 		if (NoSpace < 0 || gridX < 0) {
 			return -1;
 		}
@@ -140,19 +152,16 @@ public class Ship extends Actor {
 		return topline;
 	}
 	
-	public float getYContainerPositon(float fingerposition, Container container){
-		int gridX = (int) fingerposition/GRIDSIZE;
-		createTopLine();
-		return posYIFit(gridX, container.getLength());
-	}
-	
-	public void createTopLine(){
+	public void createTopLineAndGrid(){
 		this.topLine = new int[gridWidth];
+		this.grid = new float[gridWidth][gridHeight];
 		for (Container container : containers) {
-			int gridX = (int) (container.getX()-xGridstart)/GRIDSIZE;
-			int gridY = (int) ((container.getY()-yGridstart)/GRIDSIZE);
+			int gridX = (int) (container.getX()-xGridstart)/gridSize;
+			int gridY = (int) ((container.getY()-yGridstart)/gridSize);
 			int lenght = container.getLength();
+			int weight = container.getWeight();
 			while (lenght > 0) {
+				grid[gridX][gridY] = lenght/weight;
 				if (topLine[gridX] < gridY+1) {
 					topLine[gridX] = gridY+1;
 				}
@@ -162,7 +171,9 @@ public class Ship extends Actor {
 		}
 	} 
 	
-
+	public float[][] getGrid(){
+		return this.grid;
+	}
 
 	public int getGridWidth() {
 		return gridWidth;

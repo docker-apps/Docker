@@ -19,7 +19,7 @@ public class Container extends Actor {
 
 	private int weight;
 	private int length;
-	private Color color;
+//	private Color color;
 
 	private TextureRegion baseLeft;
 	private TextureRegion baseCenter;
@@ -45,7 +45,8 @@ public class Container extends Actor {
 		this.setY(y);
 		this.weight = weight;
 		this.length = length;
-		this.color = color;
+	//	this.color = color;
+		super.setColor(color);
 		
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));		
 		this.baseLeft= atlas.findRegion("container_base_left");
@@ -77,7 +78,8 @@ public class Container extends Actor {
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
 		//draw container base
-		batch.setColor(this.color);
+//		batch.setColor(this.color);
+		batch.setColor(getColor());
 		if(this.length > 1){
 			batch.draw(this.baseLeft, this.getX(), this.getY());
 			for (int i = 1; i <= this.length-2; i++) {
@@ -140,15 +142,15 @@ public class Container extends Actor {
 		int randomColorNr = (int)Math.random()*4;
 		switch (randomColorNr) {
 		case 0:
-			this.color = RED;
+			setColor(RED);
 			break;
 		case 1:
-			this.color = GREEN;
+			setColor(GREEN);
 			break;
 		case 2:
-			this.color = BLUE;
+			setColor(BLUE);
 		default:
-			this.color = YELLOW;
+			setColor(YELLOW);
 			break;
 		}
 	}
