@@ -32,6 +32,10 @@ public abstract class AbstractGame extends ScreenAdapter {
 		this.time += delta;
 	}
 	
+	public int removeLive() {
+		this.lives--;
+		return this.lives;
+	}
 
 	public int getScore() {
 		return score;

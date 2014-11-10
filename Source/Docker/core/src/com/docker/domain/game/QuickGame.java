@@ -103,13 +103,7 @@ public class QuickGame extends AbstractGame {
 		super.render(delta);
 		this.stage.act(Gdx.graphics.getDeltaTime());
 
-//		if(Gdx.input.justTouched()){
-//			if (getShip().addContainer(Gdx.input.getX(), getTrain().getFirstContainer())) {
-//				Container container = getTrain().removeContainer();
-//				getCrane().deployContainer(container, getShip(), 2);
-//			}			
-//		}
-		
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();
 	}

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.game.CareerGame;
+import com.docker.domain.game.InfiniteGame;
 import com.docker.domain.game.QuickGame;
 
 /**
@@ -56,7 +57,7 @@ public class GameMenu implements Screen {
         infiniteGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //game.setScreen(new InfiniteGame(game));
+                game.setScreen(new InfiniteGame(game));
             }
         });
 
