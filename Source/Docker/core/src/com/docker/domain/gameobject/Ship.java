@@ -110,18 +110,16 @@ public class Ship extends Actor {
 		return gridCoords; 
 	}
 	
-	public int getRealYPos(float x, int containerLenght){
-		Vector2 gridCoords = getGridCoords(x, containerLenght);
-		Vector2 realCoords = new Vector2();
-		int realY = -1;
+	public Vector2 getRealCoord(float x, Container container){
+		Vector2 gridCoords = getGridCoords(x, container.getLength());
+		Vector2 realCoords = null;
 		if (gridCoords.y < gridHeight) {
 			realCoords = getRealCoord(gridCoords);
-			realY = (int) realCoords.y;
 		}
-		return realY; 
+		return realCoords;
 	}
 	
-	public Vector2 getRealCoord(Vector2 gridCoords){
+	private Vector2 getRealCoord(Vector2 gridCoords){
 		Vector2 realCoords = new Vector2();
 		realCoords.x = gridCoords.x * gridSize + xGridstart;
 		realCoords.y = gridCoords.y * gridSize + yGridstart;
