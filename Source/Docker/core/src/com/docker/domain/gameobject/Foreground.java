@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
 public class Foreground extends Actor {
+	public static float DEFAULT_WATERLEVEL = 20;
 	
 	private float waterLevel;
 	private TextureRegion dock;
@@ -62,6 +63,10 @@ public class Foreground extends Actor {
 					rand.nextFloat()*(this.getWaterLevel()-2));
 			this.waterMovementPositions.add(position);
 		}
+	}
+	
+	public Foreground(float width){
+		this(width, DEFAULT_WATERLEVEL);
 	}
 	
 	@Override

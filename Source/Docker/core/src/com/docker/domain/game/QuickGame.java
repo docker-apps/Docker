@@ -12,16 +12,19 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
+import com.docker.domain.gameobject.Foreground;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
+import com.docker.technicalservices.WorldStage;
 
 public class QuickGame extends AbstractGame {
 	private static final double GAME_DURATION = 60;
 
 	private double timeLeft;
 
-	private Stage stage;
+	private WorldStage stage;
 	private ExtendViewport viewport;
 
 	public QuickGame(Game application) {
@@ -32,7 +35,7 @@ public class QuickGame extends AbstractGame {
 		
 		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
 //		this.viewport = new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-		this.stage = new Stage(viewport){
+		this.stage = new WorldStage(viewport){
 			
 			 @Override
 			   public boolean touchDown (int x, int y, int pointer, int button) {
@@ -55,16 +58,21 @@ public class QuickGame extends AbstractGame {
 					Vector2 touchCoords = new Vector2(x,y);
 				    touchCoords = getViewport().unproject(touchCoords);
 				   if (getShip().addContainer(touchCoords.x, getTrain().getFirstContainer())) {
-						getTrain().removeContainer();
+					   	getCrane().deployContainer(getTrain().removeContainer(), getShip(), touchCoords.x);
 						return true;
 					}
 				   return false;
 			   }
 			
 		};
-
-		Gdx.input.setInputProcessor(this.stage);
-		Gdx.input.setCatchBackKey(true);
+		Background background = new Background(this.stage.getWidth(), this.stage.getHeight());
+		background.toBack();
+		this.stage.setBackground(background);
+		Foreground foreground = new Foreground(this.stage.getWidth());
+		foreground.toFront();
+		this.stage.setForeground(foreground);
+		this.getShip().setZIndex(50);
+		
 		this.stage.addActor(getShip());
 		this.stage.addActor(getTrain());
 		getTrain().addContainer(new Container(3, 3, Color.YELLOW));
@@ -72,11 +80,6 @@ public class QuickGame extends AbstractGame {
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
 		getTrain().addContainer(new Container(3, 4, Color.GREEN));
 		getTrain().addContainer(new Container(3, 5, Color.BLUE));
-//		getShip().addContainer(61, new Container(2, 4, Color.GRAY, 0, 0));
-//		getShip().addContainer(98, new Container(2, 4, Color.DARK_GRAY, 0, 0));
-//		getShip().addContainer(65, new Container(3, 1, Color.YELLOW, 0, 0));
-//		getShip().addContainer(102, new Container(3, 1, Color.OLIVE, 0, 0));
-//		getShip().addContainer(98, new Container(3, 3, Color.ORANGE, 0, 0));
 		
 	}
 
@@ -104,8 +107,8 @@ public class QuickGame extends AbstractGame {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-
+		Gdx.input.setInputProcessor(this.stage);
+		Gdx.input.setCatchBackKey(true);
 	}
 
 	@Override
@@ -132,11 +135,11 @@ public class QuickGame extends AbstractGame {
 
 	}
 
-	public Stage getStage() {
+	public WorldStage getStage() {
 		return stage;
 	}
 
-	public void setStage(Stage stage) {
+	public void setStage(WorldStage stage) {
 		this.stage = stage;
 	}
 
