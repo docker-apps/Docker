@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 public class Crane extends Actor {
 	private int speed;
+	private float xOrigin;
+	private float yOrigin;
 	private Container container;
 
 	private TextureRegion body;
@@ -24,13 +26,15 @@ public class Crane extends Actor {
 
 	/**
 	 * @param speed the speed at which the crane can move.
-	 * @param x the crane's initial position on the x-plane
-	 * @param y the crane's initial position on the y-plane
+	 * @param xOrigin the crane's initial position on the x-plane. The Crane will always return to this position.
+	 * @param yOrigin the crane's initial position on the y-plane. The Crane will always return to this position.
 	 */
-	public Crane(int speed, float x, float y){
+	public Crane(int speed, float xOrigin, float yOrigin){
 		super();
-		this.setX(x);
-		this.setY(y);
+		this.setX(xOrigin);
+		this.setY(yOrigin);
+		this.xOrigin = xOrigin;
+		this.yOrigin = yOrigin;
 		this.speed = speed;
 		this.container = null;
 
@@ -43,7 +47,7 @@ public class Crane extends Actor {
 	}
 	
 	/**
-	 * Orderds the crane to deploy the given container to the ship, at the given position.
+	 * Orders the crane to deploy the given container to the ship, at the given position.
 	 * 
 	 * @param container the container to deploy
 	 * @param ship the ship to which the container should be deployed
@@ -73,8 +77,13 @@ public class Crane extends Actor {
 		    }
 		};
 		
+		// create a new Move-To Action
+		MoveToAction moveBackAction = new MoveToAction();
+		moveBackAction.setPosition(xOrigin, yOrigin);
+		moveBackAction.setDuration(1);
+		
 		// chain the two actions and add it to this actor
-		SequenceAction actions = new SequenceAction(moveAction, completeAction);
+		SequenceAction actions = new SequenceAction(moveAction, completeAction, moveBackAction);
 		this.addAction(actions);
 	}
 	
@@ -151,6 +160,9 @@ public class Crane extends Actor {
 			batch.draw(this.body, 
 					this.getX()+((float)this.container.getWidth())/2-((float)this.body.getRegionWidth())/2, 
 					this.getY()+this.container.getHeight()-4);
+		}
+		else{
+			batch.draw(this.body, this.getX(), this.getY());
 		}
 	}
 
