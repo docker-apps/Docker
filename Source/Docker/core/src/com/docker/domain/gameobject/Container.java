@@ -74,8 +74,6 @@ public class Container extends Actor {
 		this(weight, length, getRandomColor());
 	}
 
-
-
 	public Container(Container container) {
 		this(container.getWeight(), container.getLength(), container.getColor(), container.getX(), container.getY());
 	}

@@ -62,8 +62,8 @@ public class Ship extends Actor {
 	
 	//Die Position im Grid wird vom Schiff selberausgerechnet
 	public boolean addContainer(float x, Container container){
-		int xGrid = (int) Math.floor((double) (x-xGridstart)/gridSize); 
-		float yGrid = posYIFit(xGrid, container.getLength());
+		int xGrid = getXGrid(x, container);
+		int yGrid = posYIFit(xGrid, container.getLength());
 		if(yGrid >= 0 &&  yGrid < gridHeight){
 			container.setPosition((xGrid*gridSize)+xGridstart, (yGrid*gridSize)+yGridstart);
 			this.containers.add(container);
@@ -73,10 +73,23 @@ public class Ship extends Actor {
 			return false;
 		}
 	}
+
+	private int getXGrid(float x, Container container) {
+		int fingerInTheMiddle = (int) (x-(container.getLength()/2)*gridSize);
+		int xGrid = (int) Math.floor((double) (fingerInTheMiddle-xGridstart)/gridSize); 
+        if(xGrid < 0){
+        	xGrid = 0;
+        }
+        float noSpace = this.gridWidth- (xGrid + container.getLength());
+        if (noSpace < 0 ) {
+			xGrid = this.gridWidth-container.getLength();
+		}
+		return xGrid;
+	}
 	
 	public void setPreviewContainer(float x, Container container){
-		int xGrid = (int) Math.floor((double) (x-xGridstart)/gridSize); 
-		float yGrid = posYIFit(xGrid, container.getLength());
+		int xGrid = getXGrid(x, container);
+		int yGrid = posYIFit(xGrid, container.getLength());
 		if(yGrid >= 0 ){
 			previewContainer = new Container(container);
 			previewContainer.setColor(Color.MAGENTA);
@@ -134,18 +147,14 @@ public class Ship extends Actor {
 	 * Returns on with GridY the Container fits, 
 	 * if result is negativ, it's not possible to Fit it in this GridX
 	 * @param gridX
-	 * @param size
+	 * @param lenght
 	 * @return 
 	 */
-	public float posYIFit(int gridX, int size){
-		float NoSpace = this.gridWidth - (gridX + size);
-		if (NoSpace < 0 || gridX < 0) {
-			return -1;
-		}
-		if(size == 1){
+	public int posYIFit(int gridX, int lenght){
+		if(lenght == 1){
 			return (topLine[gridX]);
 		}
-		float topline = posYIFit(gridX + 1, size -1 );
+		int topline = posYIFit(gridX + 1, lenght -1 );
 		if (topLine[gridX] > topline) {
 			return (topLine[gridX]);
 		}
