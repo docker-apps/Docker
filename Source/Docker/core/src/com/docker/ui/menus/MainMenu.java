@@ -22,7 +22,8 @@ public class MainMenu implements Screen{
     private Table table = new Table();
 
     private TextButton gameMenuButton = new TextButton("Play", skin),
-            settingsButton = new TextButton("Settings", skin);
+            settingsButton = new TextButton("Settings", skin),
+            statisticsButton = new TextButton("Statistics", skin);
     private Label title = new Label("Docker",skin);
 	
 	public MainMenu(final Docker application){
@@ -35,6 +36,12 @@ public class MainMenu implements Screen{
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new SettingsMenu(application));
             }
         });
+        statisticsButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new StatisticsMenu(application));
+            }
+        });
         gameMenuButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -45,6 +52,7 @@ public class MainMenu implements Screen{
         table.add(title).padBottom(40).row();
         table.add(gameMenuButton).size(150, 60).padBottom(20).row();
         table.add(settingsButton).size(150, 60).padBottom(20).row();
+        table.add(statisticsButton).size(150, 60).padBottom(20).row();
 
         table.setFillParent(true);
         stage.addActor(table);

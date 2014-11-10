@@ -44,6 +44,14 @@ public class Persistence {
         prefs.put(map);
     }
 
+    public Boolean isSoundOn() {
+        return prefs.getBoolean("soundOn");
+    }
+
+    public void setSound(Boolean soundOn) {
+        prefs.putBoolean("soundOn", soundOn);
+    }
+
     public Integer getHighscore() {
         return prefs.getInteger("highscore", 0);
     }
