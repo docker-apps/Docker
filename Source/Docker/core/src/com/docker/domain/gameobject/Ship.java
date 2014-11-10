@@ -159,9 +159,9 @@ public class Ship extends Actor {
 			int gridX = (int) (container.getX()-xGridstart)/gridSize;
 			int gridY = (int) ((container.getY()-yGridstart)/gridSize);
 			int lenght = container.getLength();
-			int weight = container.getWeight();
+			int weightPerLenght = lenght/container.getWeight();
 			while (lenght > 0) {
-				grid[gridX][gridY] = lenght/weight;
+				grid[gridX][gridY] = weightPerLenght;
 				if (topLine[gridX] < gridY+1) {
 					topLine[gridX] = gridY+1;
 				}

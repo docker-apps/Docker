@@ -9,6 +9,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.domain.gameobject.Container;
@@ -29,24 +30,31 @@ public class QuickGame extends AbstractGame {
 		setShip(new Ship(10, 4, 5, 10f, 10f));
 		setTrain(new Train(5, 0f, 160f));
 		
-//		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
-		this.viewport = new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
+//		this.viewport = new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		this.stage = new Stage(viewport){
+			
 			 @Override
 			   public boolean touchDown (int x, int y, int pointer, int button) {
-				 	getShip().setPreviewContainer(x, getTrain().getFirstContainer());
+					Vector2 touchCoords = new Vector2(x,y);
+				    touchCoords = getViewport().unproject(touchCoords);
+				 	getShip().setPreviewContainer(touchCoords.x, getTrain().getFirstContainer());
 				 	return true;
 			   }
 			 
 			@Override
 			   public boolean touchDragged (int x, int y, int pointer) {
-				getShip().setPreviewContainer(x, getTrain().getFirstContainer());
+				Vector2 touchCoords = new Vector2(x,y);
+			    touchCoords = getViewport().unproject(touchCoords);
+				getShip().setPreviewContainer(touchCoords.x, getTrain().getFirstContainer());
 			 	return true;
 			   }
 
 			   @Override
 			   public boolean touchUp (int x, int y, int pointer, int button) {
-				   if (getShip().addContainer(x, getTrain().getFirstContainer())) {
+					Vector2 touchCoords = new Vector2(x,y);
+				    touchCoords = getViewport().unproject(touchCoords);
+				   if (getShip().addContainer(touchCoords.x, getTrain().getFirstContainer())) {
 						getTrain().removeContainer();
 						return true;
 					}
@@ -59,11 +67,11 @@ public class QuickGame extends AbstractGame {
 		Gdx.input.setCatchBackKey(true);
 		this.stage.addActor(getShip());
 		this.stage.addActor(getTrain());
-		getTrain().addContainer(new Container(3, 3, Color.YELLOW, 0, 0));
-		getTrain().addContainer(new Container(3, 2, Color.RED, 0, 0));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE, 0, 0));
-		getTrain().addContainer(new Container(3, 4, Color.GREEN, 0, 0));
-		getTrain().addContainer(new Container(3, 5, Color.BLUE, 0, 0));
+		getTrain().addContainer(new Container(3, 3, Color.YELLOW));
+		getTrain().addContainer(new Container(3, 2, Color.RED));
+		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
+		getTrain().addContainer(new Container(3, 4, Color.GREEN));
+		getTrain().addContainer(new Container(3, 5, Color.BLUE));
 //		getShip().addContainer(61, new Container(2, 4, Color.GRAY, 0, 0));
 //		getShip().addContainer(98, new Container(2, 4, Color.DARK_GRAY, 0, 0));
 //		getShip().addContainer(65, new Container(3, 1, Color.YELLOW, 0, 0));

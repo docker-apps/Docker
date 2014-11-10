@@ -19,7 +19,6 @@ public class Container extends Actor {
 
 	private int weight;
 	private int length;
-//	private Color color;
 
 	private TextureRegion baseLeft;
 	private TextureRegion baseCenter;
@@ -28,25 +27,24 @@ public class Container extends Actor {
 	private TextureRegion number;
 	private TextureRegion label;
 
+	
+
 	/**
 	 * @param weight the container's weight value.
 	 * @param length the container's length (not in pixels but in amount of elements)
 	 * @param color the container's color. Any color is possible, but you should stick to the ones defined in this class.
-	 * @param x the container's initial position in the x-plane
-	 * @param y the container's initial position in the y-plane
 	 */
-	public Container(int weight, int length, Color color, float x, float y) {
+	public Container(int weight, int length, Color color) {
 		super();
 		
 		if(length <= 0)
 			throw new IllegalArgumentException();		
 		
-		this.setX(x);
-		this.setY(y);
 		this.weight = weight;
 		this.length = length;
-	//	this.color = color;
-		super.setColor(color);
+		this.setColor(color);
+		this.setX(0);
+		this.setY(0);
 		
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));		
 		this.baseLeft= atlas.findRegion("container_base_left");
@@ -59,9 +57,21 @@ public class Container extends Actor {
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
 	
-	public Container(int weight, int length, float x, float y){
-		this(weight, length, RED, x, y);
-		this.setRandomColor();
+	/**
+	 * @param weight the container's weight value.
+	 * @param length the container's length (not in pixels but in amount of elements)
+	 * @param color the container's color. Any color is possible, but you should stick to the ones defined in this class.
+	 * @param x the container's initial position in the x-plane
+	 * @param y the container's initial position in the y-plane
+	 */
+	public Container(int weight, int length, Color color, float x, float y) {
+       this(weight,length,color);
+       this.setX(x);
+       this.setY(y);
+	}
+	
+	public Container(int weight, int length){
+		this(weight, length, getRandomColor());
 	}
 
 
@@ -77,9 +87,9 @@ public class Container extends Actor {
 
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
+		
 		//draw container base
-//		batch.setColor(this.color);
-		batch.setColor(getColor());
+		batch.setColor(this.getColor());
 		if(this.length > 1){
 			batch.draw(this.baseLeft, this.getX(), this.getY());
 			for (int i = 1; i <= this.length-2; i++) {
@@ -138,20 +148,17 @@ public class Container extends Actor {
 		this.weight = weight;
 	}
 	
-	private void setRandomColor() {
+	private static Color getRandomColor() {
 		int randomColorNr = (int)Math.random()*4;
 		switch (randomColorNr) {
 		case 0:
-			setColor(RED);
-			break;
+			return RED;
 		case 1:
-			setColor(GREEN);
-			break;
+			return GREEN;
 		case 2:
-			setColor(BLUE);
+			return BLUE;
 		default:
-			setColor(YELLOW);
-			break;
+			return YELLOW;
 		}
 	}
 }
