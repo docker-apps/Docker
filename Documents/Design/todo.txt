@@ -12,7 +12,7 @@ Architektur					Yacine Mekesser
 Design-Klassendiagramm				Yacine Mekesser (generieren)
 	Wichtigste Klassen des Lösungskonzepts, ohne GUI Klassen
 
-Klassenverantwortlichkeiten			Emily Wangler
+Klassenverantwortlichkeiten			Christoph Mathis
 	Gesamtverantwortlichkeit in einem Satz beschreiben.
 	Tabelle mit allen Klassen und deren Verantwortlichkeiten
 
