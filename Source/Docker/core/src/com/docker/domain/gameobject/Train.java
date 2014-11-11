@@ -95,17 +95,17 @@ public class Train extends Actor {
     @Override
 	public void draw (Batch batch, float parentAlpha) {
 		for (Container container : this.containers) {
-			float wheelOffset = 0f;
+			float bounceOffset = 0f;
 			if(Math.round(this.stateTime*5)%2 == 0)
-				wheelOffset = 1f;
+				bounceOffset = 1f;
 			batch.draw(
 					this.wheel,
 					container.getX(),
-					container.getY() - 8 + wheelOffset);
+					container.getY() - 8 + bounceOffset);
 			batch.draw(
 					this.wheel,
 					container.getX() + container.getWidth() - this.wheel.getRegionWidth(),
-					container.getY() - 8 + wheelOffset);
+					container.getY() - 8 + bounceOffset);
 
 			container.draw(batch, parentAlpha);
 
@@ -113,21 +113,21 @@ public class Train extends Actor {
 				batch.draw(
 						this.platform_single,
                         container.getX() - PLATFORM_OFFSET,
-                        container.getY() - 4f + wheelOffset);
+                        container.getY() - 4f + bounceOffset);
 			} else {
 				float elementWidth = container.getElementWidth();
 				batch.draw(
 						this.platform_left,
 						container.getX() - PLATFORM_OFFSET,
-						container.getY() - 4f + wheelOffset);
+						container.getY() - 4f + bounceOffset);
 				for (int i = 1; i <= container.getLength()-2; i++) {
 					batch.draw(this.platform_center,
 							container.getX() + elementWidth*i,
-							container.getY() - 4f + wheelOffset);
+							container.getY() - 4f + bounceOffset);
 				}
 				batch.draw(this.platform_right,
 						container.getX() + elementWidth*(container.getLength()-1) - 3,
-						container.getY() - 4f + wheelOffset);
+						container.getY() - 4f + bounceOffset);
 			}
 		}
 	}
