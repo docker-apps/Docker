@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
@@ -27,6 +28,8 @@ public class QuickGame extends AbstractGame {
 
 	private WorldStage stage;
 	private ExtendViewport viewport;
+	private boolean isdeploying;
+	
 
 	public QuickGame(Game application) {
 		super(application);
@@ -34,6 +37,7 @@ public class QuickGame extends AbstractGame {
 		setShip(new Ship(10, 4, 5, 10f, 10f));
 		setTrain(new Train(5, 0f, HEIGHT-23));
 		setCrane(new Crane(80, WIDTH/2, HEIGHT));
+		setLoadRating(new LoadRating(5, 5, 1));
 
 		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
 		this.stage = new WorldStage(viewport){
@@ -105,7 +109,16 @@ public class QuickGame extends AbstractGame {
 	public void render(float delta) {
 		super.render(delta);
 		this.stage.act(Gdx.graphics.getDeltaTime());
-
+		
+		if (getCrane().isDeploying() && !isdeploying) {
+			isdeploying = true;
+		}
+		if (isdeploying && !getCrane().isDeploying()) {
+			getLoadRating().calculate(getShip().getGrid());
+			System.out.println(getLoadRating().getCapsizeValue());
+			System.out.println(getLoadRating().getBreakValues().toString());
+			isdeploying = false;
+		}
 
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();
