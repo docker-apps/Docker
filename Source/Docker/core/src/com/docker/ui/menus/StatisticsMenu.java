@@ -37,7 +37,7 @@ public class StatisticsMenu implements Screen {
         });
 
         table.add(title).padBottom(20).row();
-        meh(table);
+        loadStatistics(table);
         table.add(backButton).bottom().row();
 
         table.setFillParent(true);
@@ -61,7 +61,7 @@ public class StatisticsMenu implements Screen {
         stage.draw();
     }
 
-    private void meh(Table table) {
+    private void loadStatistics(Table table) {
         ObjectMap<String, Object> statisticsMap = persistence.getStatisticsMap();
         for (ObjectMap.Entry<String, Object> stringObjectEntry : statisticsMap) {
             Label l = new Label(stringObjectEntry.key, skin);

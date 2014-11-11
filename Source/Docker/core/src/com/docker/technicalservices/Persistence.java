@@ -64,16 +64,21 @@ public class Persistence {
 
 
     public FileHandle getLevelFile() {
-        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
-        if (isLocAvailable) {
-            return Gdx.files.internal("level/level.json");
+        FileHandle levelHandle = Gdx.files.internal("level/level.json");
+        boolean fileExists = levelHandle.exists();
+        if (fileExists) {
+            return levelHandle;
         }
         return null;
     }
 
     public JsonValue getLevel(String id) {
         JsonReader r = new JsonReader();
-        JsonValue value = r.parse(getLevelFile());
+        FileHandle levelFile = getLevelFile();
+        if (levelFile == null) {
+            return null;
+        }
+        JsonValue value = r.parse(levelFile);
         JsonValue levels = value.child.child;
         for (int i = 0; i < 2; i++) {
             JsonValue level = levels.get(i);
@@ -85,11 +90,14 @@ public class Persistence {
     }
 
     public FileHandle getStatisticsFile() {
-        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
-        if (isLocAvailable) {
-            return Gdx.files.local("statistics.json");
+        FileHandle local = Gdx.files.local("statistics.json");
+        boolean isLocAvailable = local.exists();
+        if (!isLocAvailable) {
+            FileHandle internal = Gdx.files.internal("statistics.json");
+            internal.copyTo(Gdx.files.local("statistics.json"));
+            return internal;
         }
-        return null;
+        return local;
     }
 
     public ObjectMap<String, Object> getStatisticsMap() {
