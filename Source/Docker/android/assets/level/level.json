@@ -7,7 +7,9 @@
         "shipLength": 10,
         "shipHeight": 5,
         "breakThreshold": 5,
-        "capsizeThreshold": 5;
+        "capsizeThreshold": 5,
+        "trainSpeed": 10,
+        "lives": 3,
         "containers": {
             "container": [
                 {"weight": 1, "length": 2},
@@ -18,14 +20,21 @@
     },
     {
         "id": "2",
+        "stage": 1,
         "name": "Level 2",
         "shipLength": 10,
         "shipHeight": 5,
-        "capacity": 50,
+        "breakThreshold": 5,
+        "capsizeThreshold": 5,
+        "trainSpeed": 5,
+        "lives": 3,
         "containers": {
             "container": [
-                {"weight": 1, "length": 2},
-                {"weight": 1, "length": 2}
+                {"weight": 1, "length": 1},
+                {"weight": 3, "length": 4},
+                {"weight": 2, "length": 2},
+                {"weight": 3, "length": 3},
+                {"weight": 1, "length": 4}
             ]
         }
     }

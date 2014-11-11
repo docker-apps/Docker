@@ -1,0 +1,9 @@
+RH * Nächste Containerposition setzen //Kommunikationsdiagramm
+RH * Rating-Algorithmus Punkteberechnung //Sequenzdiagramm
+RH * Rating-Algorithmus Kentert Schiff? //Kommunikationsdiagramm
+RH * Daten nach Spielende in Statistik abfüllen //Sequenzdiagramm
+
+
+
+
+
