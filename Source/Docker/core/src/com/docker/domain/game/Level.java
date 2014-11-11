@@ -15,6 +15,9 @@ import com.docker.domain.gameobject.Train;
 public class Level {
 	private List<Integer> containerLengths;
 	private List<Integer> containerWeights;
+	private int breakThreshold;
+	private int capsizeThreshold;
+	private int time;
 	private int shipHeight = 5;
 	private int shipLength = 20;
 	private int maxContainerLength = 4;
