@@ -35,9 +35,13 @@ public class LoadRating {
 	public void calculateScore(float[][] loadTable){
 		this.calculate(loadTable);
 		float tempscore;
-		tempscore = 1000*(breakThreshold-breakValueSum/loadSums.length)/breakThreshold;
-		tempscore += 1000*(capsizeThreshold-Math.abs(capsizeValue))/capsizeThreshold;
-		tempscore += 100*beauty;
+		float tempBreak;
+		float tempCapsize;
+		float tempBeauty;
+		tempBreak = 1000*(breakThreshold-breakValueSum/loadSums.length)/breakThreshold;
+		tempCapsize = 1000*(capsizeThreshold-Math.abs(capsizeValue))/capsizeThreshold;
+		tempBeauty = 100*beauty;
+		tempscore = tempBreak + tempCapsize + tempBeauty;
 		score = (int)Math.round(tempscore*handicapFactor);
 	}
 	
