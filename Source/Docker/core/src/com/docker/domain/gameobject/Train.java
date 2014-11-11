@@ -30,7 +30,7 @@ public class Train extends Actor {
 	 * @param speed Speed at which the train moves rightward
 	 * @param x Initial Position on the x-plane
 	 * @param y Position on the y-plane
-	 */
+	 */	
 	public Train(int speed, float x, float y) {
 		super();
 		this.setX(x);
@@ -45,6 +45,11 @@ public class Train extends Actor {
 		this.platform_left = atlas.findRegion("train_platform_left");
 		this.platform_right = atlas.findRegion("train_platform_right");
 		this.wheel = atlas.findRegion("train_wheel");
+	}
+	
+	public Train(Queue<Container> containerList){
+		this(0, 0, 0);
+		this.containers = containerList;
 	}
 
 	public void addContainer(Container container){
