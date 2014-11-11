@@ -95,9 +95,9 @@ public class Ship extends Actor {
 		Vector2 gridCoords = getGridCoords(x, container.getLength());
 		if(gridCoords.y >= 0 ){
 			previewContainer = new Container(container);
-			previewContainer.setColor(Color.MAGENTA);
+			previewContainer.setColor(new Color(1f, 0f, 0f, 0.5f));
 			if (gridCoords.y < gridHeight) {
-				previewContainer.setColor(Color.DARK_GRAY);
+				previewContainer.setColor(new Color(1f, 1f, 1f, 0.5f));
 			}
 			Vector2 realCoords = getRealCoord(gridCoords);
 			previewContainer.setPosition(realCoords.x, realCoords.y);
