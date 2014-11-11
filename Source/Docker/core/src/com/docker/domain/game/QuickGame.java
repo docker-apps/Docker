@@ -62,10 +62,10 @@ public class QuickGame extends AbstractGame {
 
 			@Override
 			public boolean touchUp (int x, int y, int pointer, int button) {
-				if(getTrain().hasContainers()){
+				if(!getCrane().isDeploying() &&getTrain().hasContainers()){
 					Container container = getTrain().getFirstContainer();
 					Vector2 realCoords = getShip().getRealCoord(getXPosition(x, y, container), container);
-					if (!getCrane().isDeploying() && realCoords != null) {
+					if (realCoords != null) {
 						getCrane().deployContainer(
 								getTrain().removeContainer(),
 								getShip(), 
@@ -96,6 +96,8 @@ public class QuickGame extends AbstractGame {
 		this.stage.addActor(getShip());
 		this.stage.addActor(getTrain());
 		this.stage.addActor(getCrane());
+		getTrain().addContainer(new Container(4, 4, Color.ORANGE));
+		getTrain().addContainer(new Container(3, 4, Color.GREEN));
 		getTrain().addContainer(new Container(1, 3, Color.YELLOW));
 		getTrain().addContainer(new Container(2, 2, Color.RED));
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
