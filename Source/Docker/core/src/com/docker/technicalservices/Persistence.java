@@ -50,6 +50,7 @@ public class Persistence {
 
     public void setSound(Boolean soundOn) {
         prefs.putBoolean("soundOn", soundOn);
+        prefs.flush();
     }
 
     public Integer getHighscore() {

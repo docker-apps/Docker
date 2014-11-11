@@ -24,7 +24,7 @@ public class LoadRating {
 		
 	}
 
-	public void calculate(float[][] loadTable) throws Exception{
+	public void calculate(float[][] loadTable){
 		this.setLoadTable(loadTable);
 		this.calculateLoadDelta();
 		this.calculateCapsized();
@@ -32,7 +32,7 @@ public class LoadRating {
 		this.calculateBeauty();
 	}
 	
-	public void calculateScore(float[][] loadTable) throws Exception {
+	public void calculateScore(float[][] loadTable){
 		this.calculate(loadTable);
 		float tempscore;
 		tempscore = 1000*(breakThreshold-breakValueSum/loadSums.length)/breakThreshold;
@@ -72,7 +72,7 @@ public class LoadRating {
 		for (int i = 0; i < breakValues.length; i++) {
 			if(i==0){
 				breakValues[i] = loadDeltas[i]/breakThreshold;
-			} if(i==loadDeltas.length){
+			} else if(i==loadDeltas.length){
 				breakValues[i] = loadDeltas[i-1]/breakThreshold;
 			} else {
 				if(loadDeltas[i-1]>loadDeltas[i]){
@@ -89,10 +89,10 @@ public class LoadRating {
 		int beauty = 10;
 		int[] holes = new int[loadTable[0].length];
 		
-		for (int i = 0; i < loadTable[0].length; i++) {
+		for (int i = loadTable[0].length-1; i >= 0; i--) {
 			for (int j = 0; j < loadTable.length; j++) {
 				if(loadTable[j][i] == 0)
-					holes[i]++;
+					holes[loadTable[0].length-1-i]++;
 			}
 		}
 		
@@ -111,10 +111,7 @@ public class LoadRating {
 		}
 	}
 
-	private void calculateLoadDelta() throws Exception{
-		if(loadTable == null)
-			throw new Exception("loadTable not initialized");
-		
+	private void calculateLoadDelta(){
 		loadSums = new float[loadTable.length];
 		loadDeltas = new float[loadTable.length-1];
 		

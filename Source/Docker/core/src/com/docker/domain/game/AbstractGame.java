@@ -20,13 +20,15 @@ public abstract class AbstractGame extends ScreenAdapter {
 	private Ship ship;
 	private Train train;
 	private Crane crane;
+	private LoadRating loadRating;
+	
 	
 	public AbstractGame(Game application){
 		this.application = application;
 
 		this.score = 0;
 	}
-	
+
 	@Override
 	public void render(float delta) {
 		this.time += delta;
@@ -83,5 +85,13 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	public void setCrane(Crane crane) {
 		this.crane = crane;
+	}
+	
+	public LoadRating getLoadRating() {
+		return loadRating;
+	}
+
+	public void setLoadRating(LoadRating loadRating) {
+		this.loadRating = loadRating;
 	}
 }
