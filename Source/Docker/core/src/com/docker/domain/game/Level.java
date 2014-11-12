@@ -15,37 +15,46 @@ import com.docker.domain.gameobject.Train;
 public class Level {
 	private List<Integer> containerLengths;
 	private List<Integer> containerWeights;
-	private int shipHeight = 5;//values used for random level
-	private int shipLength = 20;//values used for random level
-	private int maxContainerLength = 4;//random level only
-	private final int MAXCONTAINERWEIGHT = 6;//random level only
+	private int shipHeight;
+	private int shipLength;
+	private final int MAXCONTAINERLENGTH = 4;
+	private final int MAXCONTAINERWEIGHT = 6;
 	private Train train;
 	private Ship ship;
-	private int lifeCount = 3;//values used for random level
-	private int breakThreshold = 10;//values used for random level
-	private int capsizeThreshold = 5;//values used for random level
-	private int time = 60;//values used for random level
+	private int lifeCount;
+	private int breakThreshold;
+	private int capsizeThreshold;
+	private int time;
 	
-	private Level(){
-		this.containerLengths = new ArrayList<Integer>();
-		this.containerWeights = new ArrayList<Integer>();
+	public Level(List<Integer> containerLengths,
+			List<Integer> containerWeights, int shipHeight, int shipLength,
+			int lifeCount, int breakThreshold, int capsizeThreshold, int time) {
+		super();
+		this.containerLengths = containerLengths;
+		this.containerWeights = containerWeights;
+		this.shipHeight = shipHeight;
+		this.shipLength = shipLength;
+		this.lifeCount = lifeCount;
+		this.breakThreshold = breakThreshold;
+		this.capsizeThreshold = capsizeThreshold;
+		this.time = time;
 	}
 	
-	public Level createLevel(int index){
-		loadLevel(index);
-		this.generateSpecifiedLevel();
-		return this;
-	}
+	//vorbereitet für emily
+	/*public static Level loadLevel(int index){
+		//lade werte aus persistenz und fülle sie in der nächsten zeile in den konstruktor ab
+		Level level = new Level(containerLengths, containerWeights, shipHeight, shipLength, lifeCount, breakThreshold, capsizeThreshold, time);
+		level.generateSpecifiedLevel();
+		return level;
+	}*/
 	
-	public Level createLevel(){
-		this.generateRandomLevel();
-		return this;
+	public static Level loadLevel(){
+		Level level = new Level(new LinkedList<Integer>(), new LinkedList<Integer>(), 5, 20, 3, 10, 5, 60);
+		level.generateRandomLevel();
+		return level;
 	}
 	
 	//persistence method
-	private static Level loadLevel(int index){
-		throw new NotImplementedException();
-	}
 
 	private void generateSpecifiedLevel(){
 		//ship does not need carryingCapacity
@@ -64,7 +73,7 @@ public class Level {
 		int containerLength;
 		while(row>0){
 			while(line>0){
-				containerLength = (int)Math.random()*(maxContainerLength+1);
+				containerLength = ((int)Math.random()*(MAXCONTAINERLENGTH))+1;
 				if(line-containerLength > 2) {
 					allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
 					line -= containerLength;
