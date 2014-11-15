@@ -1,12 +1,12 @@
 RH * Nächste Containerposition setzen //Kommunikationsdiagramm
-EW * Container von Zug auf Kran tun
+EW * Container von Zug auf Kran tun  //kommunikationsdiagramm
 YM * Container von Kran auf Schiff tun (inkl. bewegung kran -> schiff)
 RH * Rating-Algorithmus Punkteberechnung //Sequenzdiagramm
 RH * Rating-Algorithmus Kentert Schiff? //Kommunikationsdiagramm
 YM * Rating-Algorithmus Bricht Schiff (inkl. belastung berechnen & anzeigen)
-EW * Spiel starten (Handicap & settings holen)
+EW * Spiel starten (Handicap & settings holen)  //kommunikationsdiagramm
 YM * Karrierespiel starten (Level laden & initialisieren)
-EW * Leben abziehen (wenn Container rechts ankommt)
+EW * Leben abziehen (wenn Container rechts ankommt) //Sequenzdiagramm
 YM * Karrierespiel-Fortschritt speichern
 RH * Daten nach Spielende in Statistik abfüllen //Sequenzdiagramm
-EW * Schnelles Spiel initialisieren (random schiff/zug (?))
+EW * Schnelles Spiel initialisieren (random schiff/zug (?)) //kommunikationsdiagramm

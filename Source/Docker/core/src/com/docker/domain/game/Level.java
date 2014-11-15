@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import com.badlogic.gdx.utils.JsonValue;
+import com.docker.technicalservices.Persistence;
 
 import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Ship;
@@ -39,14 +39,15 @@ public class Level {
 		this.capsizeThreshold = capsizeThreshold;
 		this.time = time;
 	}
-	
-	//vorbereitet für emily
-	/*public static Level loadLevel(int index){
-		//lade werte aus persistenz und fülle sie in der nächsten zeile in den konstruktor ab
-		Level level = new Level(containerLengths, containerWeights, shipHeight, shipLength, lifeCount, breakThreshold, capsizeThreshold, time);
-		level.generateSpecifiedLevel();
-		return level;
-	}*/
+
+    public static Level loadLevel(String id, Persistence persistence){
+        Level level = parseLevel(persistence.getLevel(id));
+        if (level != null) {
+            level.generateSpecifiedLevel();
+            return level;
+        }
+        return null;
+	}
 	
 	public static Level loadLevel(){
 		Level level = new Level(new LinkedList<Integer>(), new LinkedList<Integer>(), 5, 20, 3, 10, 5, 60);
@@ -126,7 +127,25 @@ public class Level {
 		}
 		return MAXCONTAINERWEIGHT;
 	}
-	
+
+    private static Level parseLevel(JsonValue level) {
+        if (level!= null) {
+            List<Integer> containerLengths = new ArrayList<Integer>();
+            List<Integer> containerWeights = new ArrayList<Integer>();
+            JsonValue containerList = level.get("containers").get("container");
+            int trainSpeed = level.get("trainSpeed").asInt();
+            for (JsonValue container : containerList) {
+                containerLengths.add(container.getInt("length"));
+                containerWeights.add(container.getInt("weight"));
+            }
+            return new Level(containerLengths, containerWeights, level.get("shipHeight").asInt(),
+                    level.getInt("shipLength"), level.getInt("lives"), level.getInt("breakThreshold"),
+                    level.getInt("capsizeThreshold"), 0);
+        }
+        return null;
+    }
+
+
 	public Ship getShip(){
 		return ship;
 	}
