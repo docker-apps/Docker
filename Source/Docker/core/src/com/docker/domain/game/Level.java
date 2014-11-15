@@ -74,7 +74,7 @@ public class Level {
 		int containerLength;
 		while(row>0){
 			while(line>0){
-				containerLength = ((int)Math.random()*(MAXCONTAINERLENGTH))+1;
+				containerLength = (int)(Math.random()*(MAXCONTAINERLENGTH))+1;
 				if(line-containerLength > 2) {
 					allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
 					line -= containerLength;
@@ -83,13 +83,13 @@ public class Level {
 					switch (line-containerLength) {
 					case 2:
 						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), 1));
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), 1));
-						line = 0;				
+						allContainers.add(new Container(this.generateRandomWeight(1), 1));
+						allContainers.add(new Container(this.generateRandomWeight(1), 1));
+						line = 0;
 						break;
 					case 1:
 						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), 1));
+						allContainers.add(new Container(this.generateRandomWeight(1), 1));
 						line = 0;				
 						break;
 					case 0:
@@ -97,13 +97,14 @@ public class Level {
 						line = 0;	
 						break;
 					default:
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength+(line-containerLength)));
+						containerLength = line;
+						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
 						line = 0;
 						break;
 					}
 				}
 			}
-			line = shipHeight;
+			line = shipLength;
 			row--;
 		}
 		Collections.shuffle(allContainers);
@@ -114,15 +115,15 @@ public class Level {
 	private int generateRandomWeight(int containerLength){
 		//one-size container have a weight from 1 to 3
 		//1-2 80%, 3 20%
-		if(containerLength == 1 && (int)(Math.random()*11)<9) {
+		if(containerLength == 1 && (int)(Math.random()*10)<8) {
 			return (int)(Math.random()*2)+1;
 		} else if(containerLength ==1) {
 			return 3;
 		}
 		//60% of the containers have a weight from 1 to 3
-		if((int)(Math.random()*11)<=6){
+		if((int)(Math.random()*10)<6){
 			return (int)(Math.random()*3)+1;
-		} else if ((int)(Math.random()*6)<=4) {
+		} else if ((int)(Math.random()*8)<7) {
 			return (int)(Math.random()*2)+(4);
 		}
 		return MAXCONTAINERWEIGHT;
