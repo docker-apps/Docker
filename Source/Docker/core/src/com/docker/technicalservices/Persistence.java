@@ -1,5 +1,6 @@
 package com.docker.technicalservices;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ import com.badlogic.gdx.utils.ObjectMap;
  */
 public class Persistence {
 
-    private Preferences prefs;
+    private static Preferences prefs;
     private String localDir;
 
     public Persistence() {
@@ -29,31 +30,40 @@ public class Persistence {
         prefs.putBoolean("soundOn", true);
     }
 
-    public Map<String, ?> getPreferenceMap() {
+    public static Map<String, ?> getPreferenceMap() {
         return prefs.get();
     }
 
-    public void setAllPreferences(Map<String,?> map) {
+    public static void setAllPreferences(Map<String,?> map) {
         prefs.put(map);
         prefs.flush();
     }
 
-    public void setPreference(String key, Object value) {
+    public static void setPreference(String key, Object value) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(key, value);
         prefs.put(map);
     }
 
-    public Boolean isSoundOn() {
+    public static Boolean isSoundOn() {
         return prefs.getBoolean("soundOn");
     }
 
-    public void setSound(Boolean soundOn) {
+    public static Boolean isLevelOpen(String levelId) {
+        return prefs.getBoolean(levelId);
+    }
+
+    public static void setLevelOpen(String levelId) {
+        prefs.putBoolean(levelId, true);
+        prefs.flush();
+    }
+
+    public static void setSound(Boolean soundOn) {
         prefs.putBoolean("soundOn", soundOn);
         prefs.flush();
     }
 
-    public Integer getHighscore() {
+    public static Integer getHighscore() {
         return prefs.getInteger("highscore", 0);
     }
 
@@ -63,7 +73,7 @@ public class Persistence {
     }
 
 
-    public FileHandle getLevelFile() {
+    public static FileHandle getLevelFile() {
         FileHandle levelHandle = Gdx.files.internal("level/level.json");
         boolean fileExists = levelHandle.exists();
         if (fileExists) {
@@ -72,7 +82,20 @@ public class Persistence {
         return null;
     }
 
-    public JsonValue getLevel(String id) {
+    public static ArrayList<String> getAllLevels() {
+        ArrayList<String> list = new ArrayList<String>();
+        JsonReader r = new JsonReader();
+        FileHandle levelFile = getLevelFile();
+        JsonValue value = r.parse(levelFile);
+        JsonValue levels = value.child.child;
+        for (int i = 0; i < levels.size; i++) {
+            JsonValue level = levels.get(i);
+            list.add(level.getString("id"));
+        }
+        return list;
+    }
+
+    public static JsonValue getLevel(String id) {
         JsonReader r = new JsonReader();
         FileHandle levelFile = getLevelFile();
         if (levelFile == null) {
@@ -80,7 +103,7 @@ public class Persistence {
         }
         JsonValue value = r.parse(levelFile);
         JsonValue levels = value.child.child;
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < levels.size; i++) {
             JsonValue level = levels.get(i);
             if (level.get("id").asString().equals(id)) {
                 return level;
@@ -89,7 +112,7 @@ public class Persistence {
         return null;
     }
 
-    public FileHandle getStatisticsFile() {
+    public static FileHandle getStatisticsFile() {
         FileHandle local = Gdx.files.local("statistics.json");
         boolean isLocAvailable = local.exists();
         if (!isLocAvailable) {
@@ -100,13 +123,13 @@ public class Persistence {
         return local;
     }
 
-    public ObjectMap<String, Object> getStatisticsMap() {
+    public static ObjectMap<String, Object> getStatisticsMap() {
         Json json = new Json();
         JsonStatistics stats = json.fromJson(JsonStatistics.class, getStatisticsFile().readString());
         return stats.data;
     }
 
-    public void writeStatisticMap(ObjectMap<String, Object> map) {
+    public static void writeStatisticMap(ObjectMap<String, Object> map) {
         JsonStatistics s = new JsonStatistics();
         s.data = map;
         Json json = new Json();
@@ -115,7 +138,7 @@ public class Persistence {
         file.writeString(json.prettyPrint(s), false);
     }
 
-    public void saveStatisticValue(String key, Object object){
+    public static void saveStatisticValue(String key, Object object){
         ObjectMap<String, Object> statisticsMap = getStatisticsMap();
         statisticsMap.put(key, object);
         writeStatisticMap(statisticsMap);

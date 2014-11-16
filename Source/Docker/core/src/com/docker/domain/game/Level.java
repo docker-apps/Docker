@@ -40,8 +40,8 @@ public class Level {
 		this.time = time;
 	}
 
-    public static Level loadLevel(String id, Persistence persistence){
-        Level level = parseLevel(persistence.getLevel(id));
+    public static Level loadLevel(String id){
+        Level level = parseLevel(Persistence.getLevel(id));
         if (level != null) {
             level.generateSpecifiedLevel();
             return level;
