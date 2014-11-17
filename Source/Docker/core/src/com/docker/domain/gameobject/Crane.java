@@ -65,7 +65,7 @@ public class Crane extends Actor {
 		// create a new Move-To Action
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(x, y);
-		moveAction.setDuration(duration);
+		moveAction.setDuration(distance / this.speed);
 		
 		// create an action which deploys the container to the ship
 		Action completeAction = new Action(){

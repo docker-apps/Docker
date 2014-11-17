@@ -53,13 +53,15 @@ public class LoadRating {
 	 */
 	private void calculateCapsized() {
 		capsizeValue = 0;
-		int middle = loadSums.length/2;
+		int middle = (int) Math.ceil(loadSums.length/2);
 		for (int i = 0; i < middle; i++) {
 			capsizeValue += loadSums[i]*(float)(middle-i);
 			
 		}
-		for (int i = loadSums.length; i > loadSums.length-1-middle; i--){
-			capsizeValue -= loadSums[i-1]*(float)(i/2);
+		int factor = middle;
+		for (int i = loadSums.length; i > loadSums.length-middle; i--){
+			capsizeValue -= loadSums[i-1]*(float)(factor);
+			factor--;
 		}
 		capsizeValue = capsizeValue/capsizeThreshold;
 		
@@ -145,6 +147,14 @@ public class LoadRating {
 
 	private void setLoadTable(float[][] loadTable) {
 		this.loadTable = loadTable;
+	}
+
+	public float[] getLoadSums() {
+		return loadSums;
+	}
+
+	public void setLoadSums(float[] loadSums) {
+		this.loadSums = loadSums;
 	}
 	
 }

@@ -1,17 +1,12 @@
 package com.docker.domain.game;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
@@ -28,17 +23,20 @@ public class QuickGame extends AbstractGame {
 
 	private WorldStage stage;
 	private ExtendViewport viewport;
-	private boolean isdeploying;
+	private BitmapFont font;
+	private boolean showDebugInfo = true;
 	
 
 	public QuickGame(Game application) {
 		super(application);
 		setTimeLeft(GAME_DURATION);
 		setShip(new Ship(10, 4, 5, 10f, 10f));
-		setTrain(new Train(5, 0f, HEIGHT-23));
-		setCrane(new Crane(80, WIDTH/2, HEIGHT));
+		setTrain(new Train(15, 0f, HEIGHT-23));
+		setCrane(new Crane(150, WIDTH/2, HEIGHT));
 		setLoadRating(new LoadRating(3, 10, 1));
-
+		
+		this.font = new BitmapFont();
+		font.setColor(Color.WHITE);
 		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
 		this.stage = new WorldStage(viewport){
 
@@ -93,50 +91,79 @@ public class QuickGame extends AbstractGame {
 		this.stage.setForeground(foreground);
 		this.getShip().setZIndex(50);
 
-		this.stage.addActor(getShip());
-		this.stage.addActor(getTrain());
+		Level level = Level.loadLevel();
+		this.stage.addActor(level.getShip());
+		this.stage.addActor(level.getTrain());
 		this.stage.addActor(getCrane());
-		getTrain().addContainer(new Container(4, 4, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 4, Color.GREEN));
-		getTrain().addContainer(new Container(1, 3, Color.YELLOW));
-		getTrain().addContainer(new Container(2, 2, Color.RED));
-		getTrain().addContainer(new Container(2, 2));
-		getTrain().addContainer(new Container(2, 2));
-		getTrain().addContainer(new Container(2, 2));
-		getTrain().addContainer(new Container(2, 2));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(4, 4, Color.GREEN));
-		getTrain().addContainer(new Container(5, 5, Color.BLUE));
-		getTrain().addContainer(new Container(6, 5));
-
+		
+//		this.stage.addActor(getShip());
+//		this.stage.addActor(getTrain());
+//		this.stage.addActor(getCrane());
+//		getTrain().addContainer(new Container(5, 1, Color.ORANGE));
+//		getTrain().addContainer(new Container(5, 1, Color.ORANGE));
+//		getTrain().addContainer(new Container(4, 4, Color.ORANGE));
+//		getTrain().addContainer(new Container(3, 4, Color.GREEN));
+//		getTrain().addContainer(new Container(1, 3, Color.YELLOW));
+//		getTrain().addContainer(new Container(2, 2, Color.RED));
+//		getTrain().addContainer(new Container(2, 2));
+//		getTrain().addContainer(new Container(2, 2));
+//		getTrain().addContainer(new Container(2, 2));
+//		getTrain().addContainer(new Container(2, 2));
+//		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
+//		getTrain().addContainer(new Container(4, 4, Color.GREEN));
+//		getTrain().addContainer(new Container(5, 5, Color.BLUE));
+//		getTrain().addContainer(new Container(6, 5));
 	}
 
 	@Override
 	public void render(float delta) {
 		super.render(delta);
 		this.stage.act(Gdx.graphics.getDeltaTime());
-		
-		if (getCrane().isDeploying() && !isdeploying) {
-			isdeploying = true;
-		}
-		if (isdeploying && !getCrane().isDeploying()) {
-			getLoadRating().calculateScore(getShip().getGrid());
-			System.out.println("CapsizeValue: "+getLoadRating().getCapsizeValue());
-			System.out.println("Score: "+getLoadRating().getScore());
-			float[] breakvalues = getLoadRating().getBreakValues();
-			for (int i = 0; i < breakvalues.length; i++) {
-				System.out.println(i+":"+breakvalues[i]);
-			}
-			isdeploying = false;
-		}
+
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		this.stage.draw();
+
+		getLoadRating().calculateScore(getShip().getGrid());
+		if(showDebugInfo)
+			drawDebugInfo(this.stage.getBatch());
 		
 		if(isGameOver() && !isScoreScreen()){
 //			Add overlay Code here with Button and Score screen
 			setScoreScreen(true);
 		}
-
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		this.stage.draw();
+	}
+	
+	private void drawDebugInfo(Batch batch){
+		float capsizeValue = getLoadRating().getCapsizeValue();
+		
+		batch.begin();
+		this.font.setScale(0.7f	);
+		if(Math.abs(capsizeValue) > 1)
+			this.font.setColor(Color.RED);
+        this.font.draw(batch, "CapsizeValue: "+capsizeValue, 20, HEIGHT-this.font.getCapHeight()-30);
+		this.font.setColor(Color.WHITE);
+        this.font.draw(batch, "Score: "+getLoadRating().getScore(), 20, HEIGHT-2*this.font.getCapHeight()-40);
+		float[] breakvalues = getLoadRating().getBreakValues();
+		for (int i = 0; i < getLoadRating().getLoadSums().length; i++) {
+			this.font.draw(batch, 
+					String.format("%.1f", getLoadRating().getLoadSums()[i]), 
+					getShip().getX() + 30 + i*getShip().getElementWidth(), 
+					getShip().getY()+35);
+		}
+		for (int i = 0; i < breakvalues.length; i++) {
+			if(breakvalues[i] <= 0.5)
+				this.font.setColor(0, 1, 0, 1);
+			else if(breakvalues[i] <= 1)
+				this.font.setColor(1, 1, 0, 1);
+			else
+				this.font.setColor(1, 0, 0, 1);
+			this.font.draw(batch, 
+					String.format("%.1f", breakvalues[i]), 
+					getShip().getX() + 30 + i*getShip().getElementWidth(), 
+					getShip().getY()+25);
+		}
+		this.font.setColor(Color.WHITE);
+		batch.end();
 	}
 
 	public float getContainerPos(float fingerPos, Container container){
