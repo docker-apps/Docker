@@ -147,7 +147,7 @@ public class Container extends Actor {
 	}
 	
 	private static Color getRandomColor() {
-		int randomColorNr = (int)Math.random()*4;
+		int randomColorNr = (int)(Math.random()*4);
 		switch (randomColorNr) {
 		case 0:
 			return RED;
