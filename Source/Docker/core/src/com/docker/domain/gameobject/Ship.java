@@ -6,6 +6,7 @@ import java.util.List;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -28,6 +29,8 @@ public class Ship extends Actor {
 	private float[][] grid;
 	private float yGridstart;
 	private float xGridstart;
+
+    private Sound containerSound;
 	
 	private TextureRegion body_left;
 	private TextureRegion body_center;
@@ -61,6 +64,8 @@ public class Ship extends Actor {
 		
 		this.xGridstart = this.getX()+body_left.getRegionWidth() - gridSize;
 		this.yGridstart = this.getY()+body_center.getRegionHeight();
+		
+		containerSound = Gdx.audio.newSound(Gdx.files.internal("container_load.wav"));
 		createTopLineAndGrid();
 	}
 	
@@ -78,6 +83,7 @@ public class Ship extends Actor {
 			Vector2 realCoords = getRealCoord(gridCoords);
 			container.setPosition(realCoords.x, realCoords.y);
 			this.containers.add(container);
+			containerSound.play();
 			createTopLineAndGrid();
 			return true;
 		}else{

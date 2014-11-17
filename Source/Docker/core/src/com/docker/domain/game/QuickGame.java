@@ -2,6 +2,8 @@ package com.docker.domain.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -27,8 +29,15 @@ public class QuickGame extends AbstractGame {
 	private boolean showDebugInfo = true;
 	
 
+    private Music backgroundMusic;
+
 	public QuickGame(Game application) {
 		super(application);
+
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("hustle.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(1);
+        
 		setTimeLeft(GAME_DURATION);
 		setShip(new Ship(10, 4, 5, 10f, 10f));
 		setTrain(new Train(15, 0f, HEIGHT-23));
@@ -173,6 +182,7 @@ public class QuickGame extends AbstractGame {
 
 	@Override
 	public void show() {
+		backgroundMusic.play();
 		Gdx.input.setInputProcessor(this.stage);
 		Gdx.input.setCatchBackKey(true);
 	}
@@ -197,6 +207,7 @@ public class QuickGame extends AbstractGame {
 
 	@Override
 	public void dispose() {
+	      backgroundMusic.dispose();
 		// TODO Auto-generated method stub
 
 	}
