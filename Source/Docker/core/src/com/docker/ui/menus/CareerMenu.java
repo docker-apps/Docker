@@ -1,6 +1,6 @@
 package com.docker.ui.menus;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.JsonValue;
 import com.docker.Docker;
 import com.docker.domain.game.CareerGame;
 import com.docker.technicalservices.Persistence;
@@ -48,20 +49,26 @@ public class CareerMenu implements Screen {
     }
 
     private void addLevelButtons(Table table) {
-        ArrayList<String> allLevels = Persistence.getAllLevels();
-        for (final String level : allLevels) {
-            TextButton button = new TextButton("Level " + level, skin);
+        List<JsonValue> allLevels = Persistence.getAllLevels();
+        int i = 1;
+        for (final JsonValue level : allLevels) {
+            final String id = level.getString("id");
+            TextButton button = new TextButton(level.getString("name"), skin);
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    application.setScreen(new CareerGame(application, level));
+                    application.setScreen(new CareerGame(application, id));
                 }
             });
-            Boolean levelOpen = Persistence.isLevelOpen(level);
+            Boolean levelOpen = Persistence.isLevelOpen(id);
             if (!levelOpen) {
                 button.setTouchable(Touchable.disabled);
             }
-            table.add(button).padBottom(40).row();
+            table.add(button).fillX().width(100).pad(20);
+            if (i % 3 == 0) {
+                table.row();
+            }
+            i++;
         }
     }
 

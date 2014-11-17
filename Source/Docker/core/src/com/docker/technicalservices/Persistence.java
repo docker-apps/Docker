@@ -2,6 +2,7 @@ package com.docker.technicalservices;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
@@ -28,6 +29,7 @@ public class Persistence {
         localDir = Gdx.files.getLocalStoragePath();
         //default prefs
         prefs.putBoolean("soundOn", true);
+        prefs.putBoolean("1", true);
     }
 
     public static Map<String, ?> getPreferenceMap() {
@@ -82,17 +84,17 @@ public class Persistence {
         return null;
     }
 
-    public static ArrayList<String> getAllLevels() {
-        ArrayList<String> list = new ArrayList<String>();
+    public static List<JsonValue> getAllLevels() {
+        List<JsonValue> jsonValues = new ArrayList<JsonValue>();
         JsonReader r = new JsonReader();
         FileHandle levelFile = getLevelFile();
         JsonValue value = r.parse(levelFile);
         JsonValue levels = value.child.child;
         for (int i = 0; i < levels.size; i++) {
             JsonValue level = levels.get(i);
-            list.add(level.getString("id"));
+            jsonValues.add(level);
         }
-        return list;
+        return jsonValues;
     }
 
     public static JsonValue getLevel(String id) {

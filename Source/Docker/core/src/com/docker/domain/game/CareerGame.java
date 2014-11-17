@@ -9,6 +9,7 @@ import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Crane;
 import com.docker.domain.gameobject.Foreground;
+import com.docker.domain.gameobject.Train;
 import com.docker.technicalservices.WorldStage;
 
 public class CareerGame extends AbstractGame {
@@ -86,7 +87,11 @@ public class CareerGame extends AbstractGame {
         this.getShip().setZIndex(50);
 
         this.stage.addActor(getShip());
-        this.stage.addActor(getTrain());
+        Train train = getTrain();
+        train.setX(0f);
+        train.setY(HEIGHT-23);
+        train.setSpeed(level.getTrainSpeed());
+        this.stage.addActor(train);
         this.stage.addActor(getCrane());
     }
 

@@ -25,10 +25,11 @@ public class Level {
 	private int breakThreshold;
 	private int capsizeThreshold;
 	private int time;
+    private int trainSpeed;
 	
 	public Level(List<Integer> containerLengths,
 			List<Integer> containerWeights, int shipHeight, int shipLength,
-			int lifeCount, int breakThreshold, int capsizeThreshold, int time) {
+			int lifeCount, int breakThreshold, int capsizeThreshold, int time, int trainSpeed) {
 		super();
 		this.containerLengths = containerLengths;
 		this.containerWeights = containerWeights;
@@ -37,7 +38,8 @@ public class Level {
 		this.lifeCount = lifeCount;
 		this.breakThreshold = breakThreshold;
 		this.capsizeThreshold = capsizeThreshold;
-		this.time = time;
+        this.time = time;
+        this.trainSpeed = trainSpeed;
 	}
 
     public static Level loadLevel(String id){
@@ -50,7 +52,7 @@ public class Level {
 	}
 	
 	public static Level loadLevel(){
-		Level level = new Level(new LinkedList<Integer>(), new LinkedList<Integer>(), 5, 20, 3, 10, 5, 60);
+		Level level = new Level(new LinkedList<Integer>(), new LinkedList<Integer>(), 5, 20, 3, 10, 5, 60, 5);
 		level.generateRandomLevel();
 		return level;
 	}
@@ -141,7 +143,7 @@ public class Level {
             }
             return new Level(containerLengths, containerWeights, level.get("shipHeight").asInt(),
                     level.getInt("shipLength"), level.getInt("lives"), level.getInt("breakThreshold"),
-                    level.getInt("capsizeThreshold"), 0);
+                    level.getInt("capsizeThreshold"), 0, trainSpeed);
         }
         return null;
     }
@@ -169,4 +171,8 @@ public class Level {
 	public int getTime(){
 		return time;
 	}
+
+    public int getTrainSpeed() {
+        return trainSpeed;
+    }
 }
