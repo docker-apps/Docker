@@ -91,18 +91,28 @@ public class Container extends Actor {
 		if(this.length > 1){
 			batch.draw(this.baseLeft, this.getX(), this.getY());
 			for (int i = 1; i <= this.length-2; i++) {
-				batch.draw(this.baseCenter, this.getX()+(getElementWidth()*i), this.getY());			
+				batch.draw(this.baseCenter, 
+						this.getX()+(getElementWidth()*i), 
+						this.getY());			
 			}
-			batch.draw(this.baseRight, this.getX()+(getElementWidth()*(this.length-1)), this.getY());
+			batch.draw(this.baseRight, 
+					this.getX()+(getElementWidth()*(this.length-1)), 
+					this.getY());
 		}
 		else{
-			batch.draw(this.baseFront, this.getX(), this.getY());
+			batch.draw(this.baseFront, 
+					this.getX(), 
+					this.getY());
 		}
 		//draw number & labels
 		batch.setColor(new Color(1f,1f,1f,LABEL_TRANSPARENCY));
-		batch.draw(this.number, this.getX()+3, this.getY()+this.getElementHeight()-this.number.getRegionHeight()-3);
+		batch.draw(this.number, 
+				this.getX()+this.getWidth()-this.number.getRegionWidth()-3, 
+				this.getY()+this.getElementHeight()-this.number.getRegionHeight()-3);
 
-		batch.draw(label, this.getX()+(getElementWidth()*(this.length)) - label.getRegionWidth() - 3, this.getY() + 3);
+		batch.draw(label, 
+				this.getX()+3, 
+				this.getY()+3);
 
 		//reset color tint to white
 		batch.setColor(Color.WHITE);
