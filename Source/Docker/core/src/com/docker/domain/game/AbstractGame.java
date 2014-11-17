@@ -21,8 +21,12 @@ public abstract class AbstractGame extends ScreenAdapter {
 	private Train train;
 	private Crane crane;
 	private LoadRating loadRating;
+	private boolean gameOver;
+	private boolean scoreScreen;
 	
 	
+	
+
 	public AbstractGame(Game application){
 		this.application = application;
 
@@ -94,4 +98,22 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public void setLoadRating(LoadRating loadRating) {
 		this.loadRating = loadRating;
 	}
+	
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
+	public boolean isScoreScreen() {
+		return scoreScreen;
+	}
+
+	public void setScoreScreen(boolean scoreScreen) {
+		this.scoreScreen = scoreScreen;
+	}
+	
+	
 }

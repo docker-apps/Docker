@@ -90,7 +90,7 @@ public class LoadRating {
 	}
 	
 	private void calculateBeauty(){
-		int beauty = 10;
+		beauty = 10;
 		int[] holes = new int[loadTable[0].length];
 		
 		for (int i = loadTable[0].length-1; i >= 0; i--) {

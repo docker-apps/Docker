@@ -37,7 +37,7 @@ public class QuickGame extends AbstractGame {
 		setShip(new Ship(10, 4, 5, 10f, 10f));
 		setTrain(new Train(5, 0f, HEIGHT-23));
 		setCrane(new Crane(80, WIDTH/2, HEIGHT));
-		setLoadRating(new LoadRating(5, 5, 1));
+		setLoadRating(new LoadRating(3, 10, 1));
 
 		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
 		this.stage = new WorldStage(viewport){
@@ -100,6 +100,10 @@ public class QuickGame extends AbstractGame {
 		getTrain().addContainer(new Container(3, 4, Color.GREEN));
 		getTrain().addContainer(new Container(1, 3, Color.YELLOW));
 		getTrain().addContainer(new Container(2, 2, Color.RED));
+		getTrain().addContainer(new Container(2, 2));
+		getTrain().addContainer(new Container(2, 2));
+		getTrain().addContainer(new Container(2, 2));
+		getTrain().addContainer(new Container(2, 2));
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
 		getTrain().addContainer(new Container(4, 4, Color.GREEN));
 		getTrain().addContainer(new Container(5, 5, Color.BLUE));
@@ -116,10 +120,19 @@ public class QuickGame extends AbstractGame {
 			isdeploying = true;
 		}
 		if (isdeploying && !getCrane().isDeploying()) {
-			getLoadRating().calculate(getShip().getGrid());
-			System.out.println(getLoadRating().getCapsizeValue());
-			System.out.println(getLoadRating().getBreakValues().toString());
+			getLoadRating().calculateScore(getShip().getGrid());
+			System.out.println("CapsizeValue: "+getLoadRating().getCapsizeValue());
+			System.out.println("Score: "+getLoadRating().getScore());
+			float[] breakvalues = getLoadRating().getBreakValues();
+			for (int i = 0; i < breakvalues.length; i++) {
+				System.out.println(i+":"+breakvalues[i]);
+			}
 			isdeploying = false;
+		}
+		
+		if(isGameOver() && !isScoreScreen()){
+//			Add overlay Code here with Button and Score screen
+			setScoreScreen(true);
 		}
 
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

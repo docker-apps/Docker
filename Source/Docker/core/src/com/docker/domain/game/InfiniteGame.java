@@ -77,6 +77,8 @@ public class InfiniteGame extends AbstractGame{
 			}
 			
 		};
+		
+		
 		gameMenuButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -84,6 +86,7 @@ public class InfiniteGame extends AbstractGame{
             	
             }
         });
+		
 		
 		Background background = new Background(this.stage.getWidth(), this.stage.getHeight());
 		background.toBack();
@@ -107,44 +110,12 @@ public class InfiniteGame extends AbstractGame{
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
 		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
 		getTrain().addContainer(new Container(3, 4, Color.GREEN));
 		getTrain().addContainer(new Container(3, 5, Color.BLUE));
+		
+		
+
+		this.stage.addActor(gameMenuButton);
 		
 	}
 
