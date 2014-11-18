@@ -103,8 +103,6 @@ public class QuickGame extends AbstractGame {
 		this.stage.addActor(getShip());
 		this.stage.addActor(getTrain());
 		this.stage.addActor(getCrane());
-		getTrain().addContainer(new Container(5, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(5, 1, Color.ORANGE));
 		getTrain().addContainer(new Container(4, 4, Color.ORANGE));
 		getTrain().addContainer(new Container(3, 4, Color.GREEN));
 		getTrain().addContainer(new Container(1, 3, Color.YELLOW));
