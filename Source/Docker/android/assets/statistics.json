@@ -1,12 +1,32 @@
 {
 "data": {
-	"bla": {
+	"totalShipsCapsized": {
 		"class": "java.lang.Integer",
-		"value": 3
+		"value": 0
 	},
-	"huhu": {
-		"class": "java.lang.String",
-		"value": "sssadf"
+	"totalShipsBroken": {
+		"class": "java.lang.Integer",
+		"value": 0
+	},
+	"totalScore": {
+		"class": "java.lang.Integer",
+		"value": 0
+	},
+	"totalGames": {
+		"class": "java.lang.Integer",
+		"value": 0
+	},
+	"totalWeight": {
+		"class": "java.lang.Integer",
+		"value": 0
+	},
+	"totalContainer": {
+		"class": "java.lang.Integer",
+		"value": 0
+	},
+	"totalShipsSuccessfullyLoaded": {
+		"class": "java.lang.Integer",
+		"value": 0
 	}
 }
 }

@@ -1,5 +1,8 @@
 package com.docker.ui.menus;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -17,7 +20,6 @@ import com.docker.technicalservices.Persistence;
 
 public class StatisticsMenu implements Screen {
     Docker application;
-    Persistence persistence;
 
     private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
     private TextButton backButton = new TextButton("back", skin);
@@ -25,9 +27,10 @@ public class StatisticsMenu implements Screen {
     private Stage stage = new Stage();
     private Table table = new Table();
 
+    private static Map<String,String> labelMap = new HashMap<String, String>();
+
     public StatisticsMenu(final Docker application) {
         this.application = application;
-        this.persistence = application.persistence;
 
         backButton.addListener(new ClickListener() {
             @Override
@@ -35,6 +38,7 @@ public class StatisticsMenu implements Screen {
                 application.setLastScreen();
             }
         });
+        setLabelMap();
 
         table.add(title).padBottom(20).row();
         loadStatistics(table);
@@ -62,11 +66,11 @@ public class StatisticsMenu implements Screen {
     }
 
     private void loadStatistics(Table table) {
-        ObjectMap<String, Object> statisticsMap = persistence.getStatisticsMap();
+        ObjectMap<String, Object> statisticsMap = Persistence.getStatisticsMap();
         for (ObjectMap.Entry<String, Object> stringObjectEntry : statisticsMap) {
-            Label l = new Label(stringObjectEntry.key, skin);
+            Label l = new Label(labelMap.get(stringObjectEntry.key), skin);
             Label v = new Label(stringObjectEntry.value.toString(), skin);
-            table.add(l).left();
+            table.add(l).width(300).left();
             table.add(v).row().padBottom(10);
         }
     }
@@ -100,5 +104,15 @@ public class StatisticsMenu implements Screen {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+    }
+
+    public void setLabelMap() {
+        labelMap.put("totalScore", "total highscore");
+        labelMap.put("totalContainer", "total containers loaded");
+        labelMap.put("totalWeight", "total weight");
+        labelMap.put("totalGames", "total games played");
+        labelMap.put("totalShipsSuccessfullyLoaded", "total ships successfully loaded");
+        labelMap.put("totalShipsCapsized", "total ships capsized");
+        labelMap.put("totalShipsBroken", "total ships broken");
     }
 }
