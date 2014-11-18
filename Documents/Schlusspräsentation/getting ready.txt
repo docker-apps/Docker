@@ -1,0 +1,26 @@
+CM - Game abbrechen mit zurück!!!
+CM - Schlussscreen
+
+EW - 1min nicht mehr!!! Statistics Liste
+EW - Settings richtig einbinden (Ton ein aus, Lautstärke slider, Soundeffekte)
+vorerst bleiben lassen - Handicap Menu (Yacine für langweilige WK-Tage)
+na unwichtiger als alles andere - Lokomotive zeichnen (WK falls es stinklangweilig wird)
+vorerst bleiben lassen - Animation, brechen, kentern (Yacine für langweilige WK-Tage)
+
+YM - Anzeigen der Bruchgefahr via Leuchten
+YM - Anzeigen der Kentergefahr via Wasserwage
+
+YM - Abstract Game (funktionen im Game für Eventhandler)
+Leben Spiel (Container verlust)
+CM -Infinite Game //schiff leben
+EW - Career Game (+ Punktestand pro Level)
+RH - Level erstellen
+RH - Projektmanagement
+RH - Scoreverteilung etwas feiner
+
+vorerst bleiben lassen Hauptmenü attraktiver gestalten
+
+Bugs erfassen -EW
+- Menüflackern
+- Zug zu weit unten
+- Container Abstand Zug
