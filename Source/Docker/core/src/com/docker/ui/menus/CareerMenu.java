@@ -27,7 +27,7 @@ public class CareerMenu implements Screen {
     private Stage stage = new Stage();
     private Table table = new Table();
 
-    private Label title = new Label("career game",skin);
+    private Label title = new Label("Career game",skin);
     private TextButton backButton = new TextButton("back", skin);
 
 

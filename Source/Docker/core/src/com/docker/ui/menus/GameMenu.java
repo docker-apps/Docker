@@ -27,10 +27,10 @@ public class GameMenu implements Screen {
     private Table table = new Table();
 
     private Label title = new Label("game menu",skin);
-    private TextButton careerGameButton = new TextButton("career game", skin);
-    private TextButton quickGameButton = new TextButton("quick game", skin);
-    private TextButton infiniteGameButton = new TextButton("infinite game", skin);
-    private TextButton backButton = new TextButton("back", skin);
+    private TextButton careerGameButton = new TextButton("Career game", skin);
+    private TextButton quickGameButton = new TextButton("Quick game", skin);
+    private TextButton infiniteGameButton = new TextButton("Infinite game", skin);
+    private TextButton backButton = new TextButton("Back", skin);
 
 
     public GameMenu(final Docker game) {

@@ -328,7 +328,7 @@ public class Ship extends Actor {
 		this.breakThreshold = breakThreshold;
 	}
 
-	public int setCapsizeThreshold() {
+	public int getCapsizeThreshold() {
 		return capsizeThreshold;
 	}
 

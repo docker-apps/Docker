@@ -63,11 +63,13 @@ public class Level {
 	private void generateSpecifiedLevel(){
 		//ship does not need carryingCapacity
 		this.ship = new Ship(shipLength, shipHeight, capsizeThreshold, breakThreshold, 0, 0);
+		this.initShipPosition();
 		LinkedList<Container> allContainers = new LinkedList<Container>();
 		while(!containerLengths.isEmpty()){
 			allContainers.add(new Container(containerWeights.remove(0), containerLengths.remove(0)));
 		}
 		this.train = new Train(allContainers, trainSpeed);
+		this.initTrainPosition();
 	}
 	
 	private void generateRandomLevel(){
@@ -111,9 +113,11 @@ public class Level {
 			row--;
 		}
 		Collections.shuffle(allContainers);
-		train = new Train(allContainers, trainSpeed, 0f, Docker.HEIGHT-23);
-		ship = new Ship(shipLength, shipHeight, capsizeThreshold, breakThreshold, 0f, 10f);
-		ship.setX((Docker.WIDTH-ship.getWidth())/2-20);
+		
+		this.train = new Train(allContainers, trainSpeed);
+		this.initTrainPosition();
+		this.ship = new Ship(shipLength, shipHeight, capsizeThreshold, breakThreshold, 0f, 10f);
+		this.initShipPosition();
 	}
 	
 	private int generateRandomWeight(int containerLength){
@@ -149,7 +153,16 @@ public class Level {
         }
         return null;
     }
-
+    
+    private void initShipPosition(){
+    	this.ship.setPosition(
+    			(Docker.WIDTH-ship.getWidth())/2-20f,
+    			10f);
+    }
+    
+    private void initTrainPosition(){
+    	this.train.setPosition(0f, Docker.HEIGHT-23);
+    }
 
 	public Ship getShip(){
 		return ship;
