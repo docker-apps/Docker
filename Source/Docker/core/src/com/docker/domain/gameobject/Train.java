@@ -16,7 +16,7 @@ public class Train extends Actor {
 	private static final float PADDING = 11f;
 	private static final float PLATFORM_OFFSET = 6f;
 
-	private int speed;
+	private float speed;
 	private Queue<Container> containers;
 
 	private TextureRegion platform_single;
@@ -31,7 +31,7 @@ public class Train extends Actor {
 	 * @param x Initial Position on the x-plane
 	 * @param y Position on the y-plane
 	 */	
-	public Train(int speed, float x, float y) {
+	public Train(float speed, float x, float y) {
 		super();
 		this.setX(x);
 		this.setY(y);
@@ -47,8 +47,13 @@ public class Train extends Actor {
 		this.wheel = atlas.findRegion("train_wheel");
 	}
 	
-	public Train(Queue<Container> containerList){
-		this(0, 0, 0);
+	public Train(Queue<Container> containerList, float speed){
+		this(speed, 0, 0);
+		this.containers = containerList;
+	}
+	
+	public Train(Queue<Container> containerList, float speed, float x, float y){
+		this(speed, x, y);
 		this.containers = containerList;
 	}
 
@@ -140,14 +145,14 @@ public class Train extends Actor {
 	/**
 	 * @return  the speed at which the train moves rightward.
 	 */
-	public int getSpeed() {
+	public float getSpeed() {
 		return speed;
 	}
 
 	/**
 	 * @param speed the speed at which the train moves rightward.
 	 */
-	public void setSpeed(int speed) {
+	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
 }

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
 
 import com.docker.domain.gameobject.Container;
@@ -52,7 +53,7 @@ public class Level {
 	}
 	
 	public static Level loadLevel(){
-		Level level = new Level(new LinkedList<Integer>(), new LinkedList<Integer>(), 5, 20, 3, 10, 5, 60, 5);
+		Level level = new Level(new LinkedList<Integer>(), new LinkedList<Integer>(), 5, 10, 3, 10, 20, 60, 15);
 		level.generateRandomLevel();
 		return level;
 	}
@@ -61,12 +62,12 @@ public class Level {
 
 	private void generateSpecifiedLevel(){
 		//ship does not need carryingCapacity
-		this.ship = new Ship(shipLength, shipHeight, breakThreshold, 0, 0);
+		this.ship = new Ship(shipLength, shipHeight, capsizeThreshold, breakThreshold, 0, 0);
 		LinkedList<Container> allContainers = new LinkedList<Container>();
 		while(!containerLengths.isEmpty()){
 			allContainers.add(new Container(containerWeights.remove(0), containerLengths.remove(0)));
 		}
-		this.train = new Train(allContainers);
+		this.train = new Train(allContainers, trainSpeed);
 	}
 	
 	private void generateRandomLevel(){
@@ -110,8 +111,9 @@ public class Level {
 			row--;
 		}
 		Collections.shuffle(allContainers);
-		train = new Train(allContainers);
-		ship = new Ship(shipLength, shipHeight, breakThreshold, 0, 0);
+		train = new Train(allContainers, trainSpeed, 0f, Docker.HEIGHT-23);
+		ship = new Ship(shipLength, shipHeight, capsizeThreshold, breakThreshold, 0f, 10f);
+		ship.setX((Docker.WIDTH-ship.getWidth())/2-20);
 	}
 	
 	private int generateRandomWeight(int containerLength){

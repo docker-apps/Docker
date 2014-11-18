@@ -21,7 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 public class Ship extends Actor {
 	private int gridWidth;
 	private int gridHeight;
-	private int carryingCapacity;
+	private int breakThreshold;
+	private int capsizeThreshold;
 	private List<Container> containers;
 	private Container previewContainer;
 	private Integer gridSize;
@@ -38,7 +39,7 @@ public class Ship extends Actor {
 	private TextureRegion tower;
 	private TextureRegion mast;
 	
-	public Ship(int gridWidth, int gridHeight, int carryingCapacity, float x, float y) {
+	public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
 		super();
 		
 		if(gridWidth <= 1)
@@ -48,7 +49,8 @@ public class Ship extends Actor {
 		this.setY(y);
 		this.gridWidth = gridWidth;
 		this.gridHeight = gridHeight;
-		this.carryingCapacity = carryingCapacity;
+		this.capsizeThreshold = capsizeThreshold;
+		this.breakThreshold = breakThreshold;
 		this.containers = new ArrayList<Container>();
 
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
@@ -227,6 +229,8 @@ public class Ship extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		this.xGridstart = this.getX()+body_left.getRegionWidth() - gridSize;
+		this.yGridstart = this.getY()+body_center.getRegionHeight();
 	}
 	
 	@Override
@@ -249,7 +253,10 @@ public class Ship extends Actor {
 	
 	@Override
 	public float getWidth(){
-		return this.body_left.getRegionWidth() + this.body_center.getRegionWidth()*(this.gridWidth-2) + this.body_right.getRegionWidth();
+		return 
+				this.body_left.getRegionWidth() + 
+				this.body_center.getRegionWidth()*(this.gridWidth-2) + 
+				this.body_right.getRegionWidth();
 	}
 	
 	public float getElementWidth(){
@@ -313,12 +320,20 @@ public class Ship extends Actor {
 		this.gridHeight = gridHeight;
 	}
 
-	public int getCarryingCapacity() {
-		return carryingCapacity;
+	public int getBreakThreshold() {
+		return breakThreshold;
 	}
 
-	public void setCarryingCapacity(int carryingCapacity) {
-		this.carryingCapacity = carryingCapacity;
+	public void setBreakThreshold(int breakThreshold) {
+		this.breakThreshold = breakThreshold;
+	}
+
+	public int setCapsizeThreshold() {
+		return capsizeThreshold;
+	}
+
+	public void setCapsizeThreshold(int capsizeThreshold) {
+		this.capsizeThreshold = capsizeThreshold;
 	}
 
 	public List<Container> getContainers() {

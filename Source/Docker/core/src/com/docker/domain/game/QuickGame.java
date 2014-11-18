@@ -9,7 +9,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.docker.Docker;
 import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Crane;
@@ -26,27 +30,28 @@ public class QuickGame extends AbstractGame {
 	private WorldStage stage;
 	private ExtendViewport viewport;
 	private BitmapFont font;
-	private boolean showDebugInfo = true;
+	private boolean showDebugInfo = false;
 	
 
     private Music backgroundMusic;
 
-	public QuickGame(Game application) {
+	public QuickGame(Docker application) {
 		super(application);
-
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("hustle.mp3"));
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(1);
         
 		setTimeLeft(GAME_DURATION);
-		setShip(new Ship(10, 4, 5, 10f, 10f));
-		setTrain(new Train(15, 0f, HEIGHT-23));
-		setCrane(new Crane(150, WIDTH/2, HEIGHT));
-		setLoadRating(new LoadRating(3, 10, 1));
+		Level level = Level.loadLevel();
+		
+		setShip(level.getShip());
+		setTrain(level.getTrain());
+		setCrane(new Crane(150, Docker.WIDTH/2, Docker.HEIGHT));
+		setLoadRating(new LoadRating(level.getBreakThreshold(), level.getCapsizeThreshold(), 1));
 		
 		this.font = new BitmapFont();
 		font.setColor(Color.WHITE);
-		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
+		this.viewport = new ExtendViewport(Docker.WIDTH, Docker.HEIGHT);
 		this.stage = new WorldStage(viewport){
 
 			@Override
@@ -98,25 +103,10 @@ public class QuickGame extends AbstractGame {
 		Foreground foreground = new Foreground(this.stage.getWidth());
 		foreground.toFront();
 		this.stage.setForeground(foreground);
-		this.getShip().setZIndex(50);
 		
 		this.stage.addActor(getShip());
 		this.stage.addActor(getTrain());
 		this.stage.addActor(getCrane());
-		getTrain().addContainer(new Container(5, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(5, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(4, 4, Color.ORANGE));
-		getTrain().addContainer(new Container(3, 4, Color.GREEN));
-		getTrain().addContainer(new Container(1, 3, Color.YELLOW));
-		getTrain().addContainer(new Container(2, 2, Color.RED));
-		getTrain().addContainer(new Container(2, 2));
-		getTrain().addContainer(new Container(2, 2));
-		getTrain().addContainer(new Container(2, 2));
-		getTrain().addContainer(new Container(2, 2));
-		getTrain().addContainer(new Container(3, 1, Color.ORANGE));
-		getTrain().addContainer(new Container(4, 4, Color.GREEN));
-		getTrain().addContainer(new Container(5, 5, Color.BLUE));
-		getTrain().addContainer(new Container(6, 5));
 	}
 
 	@Override
@@ -144,9 +134,9 @@ public class QuickGame extends AbstractGame {
 		this.font.setScale(0.7f	);
 		if(Math.abs(capsizeValue) > 1)
 			this.font.setColor(Color.RED);
-        this.font.draw(batch, "CapsizeValue: "+capsizeValue, 20, HEIGHT-this.font.getCapHeight()-30);
+        this.font.draw(batch, "CapsizeValue: "+capsizeValue, 20, Docker.HEIGHT-this.font.getCapHeight()-30);
 		this.font.setColor(Color.WHITE);
-        this.font.draw(batch, "Score: "+getLoadRating().getScore(), 20, HEIGHT-2*this.font.getCapHeight()-40);
+        this.font.draw(batch, "Score: "+getLoadRating().getScore(), 20, Docker.HEIGHT-2*this.font.getCapHeight()-40);
 		float[] breakvalues = getLoadRating().getBreakValues();
 		for (int i = 0; i < getLoadRating().getLoadSums().length; i++) {
 			this.font.draw(batch, 

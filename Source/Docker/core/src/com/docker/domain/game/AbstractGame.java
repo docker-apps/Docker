@@ -5,15 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.docker.Docker;
 import com.docker.domain.gameobject.Crane;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 
 public abstract class AbstractGame extends ScreenAdapter {
-	public static final float WIDTH = 360;
-	public static final float HEIGHT = 200;
 	
-	private Game application;
+	private Docker application;
 	private int score;
 	private double time;
 	private int lives;
@@ -27,7 +26,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	
 	
 
-	public AbstractGame(Game application){
+	public AbstractGame(Docker application){
 		this.application = application;
 
 		this.score = 0;

@@ -6,6 +6,9 @@ import com.docker.technicalservices.Persistence;
 import com.docker.ui.menus.MainMenu;
 
 public class Docker extends Game {
+	public static final float WIDTH = 360;
+	public static final float HEIGHT = 200;
+	
 	Screen lastScreen;
     public Persistence persistence;
 	

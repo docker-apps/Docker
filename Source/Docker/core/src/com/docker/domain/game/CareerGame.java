@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.docker.Docker;
 import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Crane;
@@ -20,7 +21,7 @@ public class CareerGame extends AbstractGame {
     private ExtendViewport viewport;
     private double timeLeft;
 
-    public CareerGame(Game application, String levelId) {
+    public CareerGame(Docker application, String levelId) {
 		super(application);
 
         Level level = Level.loadLevel(levelId);
@@ -29,10 +30,10 @@ public class CareerGame extends AbstractGame {
         this.setTrain(level.getTrain());
 
         setTimeLeft(GAME_DURATION);
-        setCrane(new Crane(80, WIDTH/2, HEIGHT));
+        setCrane(new Crane(80, Docker.WIDTH/2, Docker.HEIGHT));
         setLoadRating(new LoadRating(5, 5, 1));
 
-        this.viewport = new ExtendViewport(WIDTH, HEIGHT);
+        this.viewport = new ExtendViewport(Docker.WIDTH, Docker.HEIGHT);
         this.stage = new WorldStage(viewport){
 
             @Override
@@ -89,7 +90,7 @@ public class CareerGame extends AbstractGame {
         this.stage.addActor(getShip());
         Train train = getTrain();
         train.setX(0f);
-        train.setY(HEIGHT-23);
+        train.setY(Docker.HEIGHT-23);
         train.setSpeed(level.getTrainSpeed());
         this.stage.addActor(train);
         this.stage.addActor(getCrane());

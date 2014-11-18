@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.docker.Docker;
 import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Crane;
@@ -27,13 +28,13 @@ public class InfiniteGame extends AbstractGame{
     private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 	private TextButton gameMenuButton = new TextButton("Play", skin);
 
-	public InfiniteGame(Game application) {
+	public InfiniteGame(Docker application) {
 		super(application);
-		setShip(new Ship(10, 4, 5, 10f, 10f));
+		setShip(new Ship(10, 4, 5, 5, 10f, 10f));
 		setTrain(new Train(50, 0f, 160f));
 		setCrane(new Crane(80, 100, 100));
 		
-		this.viewport = new ExtendViewport(WIDTH, HEIGHT);
+		this.viewport = new ExtendViewport(Docker.WIDTH, Docker.HEIGHT);
 		this.stage = new WorldStage(viewport){
 			
 			 @Override
