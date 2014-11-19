@@ -38,10 +38,20 @@ public class LoadRating {
 		float tempBreak;
 		float tempCapsize;
 		float tempBeauty;
-		tempBreak = 1000*(breakThreshold-breakValueSum/loadSums.length)/breakThreshold;
-		tempCapsize = 1000*(capsizeThreshold-Math.abs(capsizeValue))/capsizeThreshold;
-		tempBeauty = 100*beauty;
-		tempscore = tempBreak + tempCapsize + tempBeauty;
+		float factor;
+		System.out.println(breakValueSum+" "+breakThreshold+" "+capsizeThreshold+" "+capsizeValue);
+		factor = 1;//(breakThreshold-breakValueSum)/breakThreshold;
+		//tempBreak = 300*(breakThreshold-breakValueSum)/breakThreshold;
+		if(1 > Math.abs(capsizeValue)){
+			factor = factor*((1-Math.abs(capsizeValue*3/6))/1);
+			tempCapsize = 450*((1-Math.abs(capsizeValue*3/6))/1);
+		}else{
+			factor = factor*0;
+			tempCapsize = 0;
+		}
+		factor = factor*(float)beauty/10;
+		tempBeauty = 45*beauty;
+		tempscore = /*tempBreak +*/ tempCapsize + tempBeauty + factor*2100;
 		score = (int)Math.round(tempscore*handicapFactor);
 	}
 	
