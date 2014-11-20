@@ -51,7 +51,7 @@
         "shipLength": 6,
         "shipHeight": 3,
         "breakThreshold": 3,
-        "capsizeThreshold": 5,
+        "capsizeThreshold": 6,
         "trainSpeed": 5,
         "lives": 3,
         "containers": {
@@ -82,10 +82,16 @@
         "containers": {
             "container": [
                 {"weight": 1, "length": 1},
-                {"weight": 3, "length": 4},
-                {"weight": 2, "length": 4},
+                {"weight": 4, "length": 4},
+                {"weight": 2, "length": 3},
+                {"weight": 2, "length": 1},
                 {"weight": 3, "length": 2},
-                {"weight": 1, "length": 2}
+                {"weight": 2, "length": 2},
+                {"weight": 3, "length": 1},
+                {"weight": 1, "length": 1},
+                {"weight": 1, "length": 1},
+                {"weight": 2, "length": 1},
+                {"weight": 1, "length": 1}
             ]
         }
     },
@@ -96,116 +102,200 @@
         "shipLength": 7,
         "shipHeight": 4,
         "breakThreshold": 5,
-        "capsizeThreshold": 5,
+        "capsizeThreshold": 6,
         "trainSpeed": 5,
         "lives": 3,
         "containers": {
             "container": [
+                {"weight": 5, "length": 4},
+                {"weight": 2, "length": 2},
+                {"weight": 2, "length": 1},
+                {"weight": 4, "length": 2},
                 {"weight": 1, "length": 1},
-                {"weight": 3, "length": 3},
-                {"weight": 4, "length": 4},
-                {"weight": 3, "length": 4},
-                {"weight": 2, "length": 2}
+                {"weight": 2, "length": 2},
+                {"weight": 2, "length": 1},
+                {"weight": 4, "length": 3},
+                {"weight": 1, "length": 1},
+                {"weight": 2, "length": 1},
+                {"weight": 3, "length": 2},
+                {"weight": 5, "length": 3},
+                {"weight": 2, "length": 2},
+                {"weight": 2, "length": 1},
+                {"weight": 1, "length": 1}
+
             ]
         }
     },
     {
         "id": "6",
         "stage": 1,
-        "name": "Level 5",
+        "name": "Level 6",
         "shipLength": 8,
         "shipHeight": 4,
         "breakThreshold": 5,
-        "capsizeThreshold": 5,
+        "capsizeThreshold": 7,
         "trainSpeed": 5,
         "lives": 3,
         "containers": {
             "container": [
-                {"weight": 1, "length": 1},
+                {"weight": 2, "length": 4},
+                {"weight": 4, "length": 2},
+                {"weight": 2, "length": 3},
+                {"weight": 1, "length": 2},
+                {"weight": 2, "length": 1},
                 {"weight": 3, "length": 3},
-                {"weight": 4, "length": 4},
-                {"weight": 3, "length": 4},
-                {"weight": 2, "length": 2}
+                {"weight": 5, "length": 2},
+                {"weight": 2, "length": 2},
+                {"weight": 2, "length": 1},
+                {"weight": 3, "length": 2},
+                {"weight": 4, "length": 2},
+                {"weight": 2, "length": 3},
+                {"weight": 1, "length": 1},
+                {"weight": 1, "length": 1},
+                {"weight": 4, "length": 2},
+                {"weight": 3, "length": 1}
             ]
         }
     },
     {
         "id": "7",
         "stage": 1,
-        "name": "Level 5",
+        "name": "Level 7",
         "shipLength": 8,
         "shipHeight": 4,
         "breakThreshold": 5,
-        "capsizeThreshold": 5,
+        "capsizeThreshold": 7,
         "trainSpeed": 5,
         "lives": 3,
         "containers": {
             "container": [
-                {"weight": 1, "length": 1},
-                {"weight": 3, "length": 3},
+                {"weight": 2, "length": 2},
                 {"weight": 4, "length": 4},
+                {"weight": 2, "length": 1},
+                {"weight": 1, "length": 2},
+                {"weight": 3, "length": 2},
                 {"weight": 3, "length": 4},
-                {"weight": 2, "length": 2}
+                {"weight": 1, "length": 1},
+                {"weight": 2, "length": 3},
+                {"weight": 3, "length": 1},
+                {"weight": 3, "length": 2},
+                {"weight": 2, "length": 2},
+                {"weight": 5, "length": 3},
+                {"weight": 1, "length": 1},
+                {"weight": 1, "length": 2},
+                {"weight": 3, "length": 2},
+                {"weight": 3, "length": 1}
             ]
         }
     },
     {
         "id": "8",
         "stage": 1,
-        "name": "Level 5",
+        "name": "Level 8",
         "shipLength": 9,
         "shipHeight": 5,
         "breakThreshold": 5,
-        "capsizeThreshold": 5,
+        "capsizeThreshold": 8,
         "trainSpeed": 5,
         "lives": 3,
         "containers": {
             "container": [
+                {"weight": 5, "length": 3},
+                {"weight": 6, "length": 4},
                 {"weight": 1, "length": 1},
+                {"weight": 3, "length": 2},
+                {"weight": 2, "length": 2},
                 {"weight": 3, "length": 3},
-                {"weight": 4, "length": 4},
+                {"weight": 4, "length": 2},
+                {"weight": 1, "length": 1},
+                {"weight": 2, "length": 1},
+                {"weight": 2, "length": 3},
+                {"weight": 1, "length": 2},
+                {"weight": 3, "length": 1},
+                {"weight": 1, "length": 1},
+                {"weight": 2, "length": 4},
+                {"weight": 3, "length": 3},
+                {"weight": 2, "length": 1},
+                {"weight": 1, "length": 2},
+                {"weight": 2, "length": 2},
                 {"weight": 3, "length": 4},
-                {"weight": 2, "length": 2}
+                {"weight": 3, "length": 1},
+                {"weight": 2, "length": 1}
+
             ]
         }
     },
     {
         "id": "9",
         "stage": 1,
-        "name": "Level 5",
+        "name": "Level 9",
         "shipLength": 9,
         "shipHeight": 5,
         "breakThreshold": 5,
-        "capsizeThreshold": 5,
+        "capsizeThreshold": 8,
         "trainSpeed": 5,
         "lives": 3,
         "containers": {
             "container": [
+                {"weight": 3, "length": 2},
+                {"weight": 4, "length": 3},
+                {"weight": 2, "length": 2},
+                {"weight": 5, "length": 4},
+                {"weight": 2, "length": 1},
+                {"weight": 3, "length": 4},
+                {"weight": 3, "length": 1},
+                {"weight": 1, "length": 2},
+                {"weight": 5, "length": 3},
+                {"weight": 2, "length": 1},
                 {"weight": 1, "length": 1},
-                {"weight": 3, "length": 3},
+                {"weight": 3, "length": 2},
+                {"weight": 1, "length": 3},
+                {"weight": 3, "length": 2},
+                {"weight": 2, "length": 1},
                 {"weight": 4, "length": 4},
                 {"weight": 3, "length": 4},
-                {"weight": 2, "length": 2}
+                {"weight": 2, "length": 1},
+                {"weight": 2, "length": 2},
+                {"weight": 1, "length": 1},
+                {"weight": 2, "length": 1}
             ]
         }
     },
     {
         "id": "10",
         "stage": 1,
-        "name": "Level 5",
+        "name": "Level 10",
         "shipLength": 10,
         "shipHeight": 5,
         "breakThreshold": 5,
-        "capsizeThreshold": 5,
+        "capsizeThreshold": 9,
         "trainSpeed": 5,
         "lives": 3,
         "containers": {
             "container": [
+                {"weight": 1, "length": 4},
+                {"weight": 6, "length": 2},
+                {"weight": 2, "length": 2},
+                {"weight": 2, "length": 1},
                 {"weight": 1, "length": 1},
+                {"weight": 3, "length": 1},
                 {"weight": 3, "length": 3},
-                {"weight": 4, "length": 4},
+                {"weight": 2, "length": 1},
+                {"weight": 1, "length": 1},
+                {"weight": 6, "length": 4},
+                {"weight": 2, "length": 4},
                 {"weight": 3, "length": 4},
-                {"weight": 2, "length": 2}
+                {"weight": 2, "length": 2},
+                {"weight": 3, "length": 3},
+                {"weight": 1, "length": 3},
+                {"weight": 1, "length": 2},
+                {"weight": 2, "length": 1},
+                {"weight": 2, "length": 2},
+                {"weight": 5, "length": 2},
+                {"weight": 1, "length": 1},
+                {"weight": 1, "length": 1},
+                {"weight": 4, "length": 4},
+                {"weight": 2, "length": 1}
             ]
         }
     }
