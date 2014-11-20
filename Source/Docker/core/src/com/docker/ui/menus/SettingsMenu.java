@@ -38,7 +38,7 @@ public class SettingsMenu implements Screen {
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                persistence.setSound(!persistence.isSoundOn());
+                persistence.setSoundOn(!persistence.isSoundOn());
             }
         });
         table.add(title).padBottom(20).row();
