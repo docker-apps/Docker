@@ -6,8 +6,8 @@
         "name": "Level 1",
         "shipLength": 4,
         "shipHeight": 2,
-        "breakThreshold": 2,
-        "capsizeThreshold": 3,
+        "breakThreshold": 3,
+        "capsizeThreshold": 4,
         "trainSpeed": 10,
         "lives": 3,
         "containers": {
@@ -33,9 +33,14 @@
         "lives": 3,
         "containers": {
             "container": [
+                {"weight": 4, "length": 2},
+                {"weight": 2, "length": 1},
+                {"weight": 3, "length": 3},
+                {"weight": 3, "length": 2},
                 {"weight": 1, "length": 1},
-                {"weight": 3, "length": 4},
-                {"weight": 2, "length": 2},
+                {"weight": 6, "length": 6},
+                {"weight": 1, "length": 1},
+                {"weight": 2, "length": 2}
             ]
         }
     },
@@ -51,10 +56,16 @@
         "lives": 3,
         "containers": {
             "container": [
+                {"weight": 5, "length": 3},
+                {"weight": 3, "length": 1},
                 {"weight": 1, "length": 1},
-                {"weight": 3, "length": 5},
-                {"weight": 2, "length": 1},
-                {"weight": 4, "length": 2}
+                {"weight": 2, "length": 2},
+                {"weight": 3, "length": 3},
+                {"weight": 2, "length": 2},
+                {"weight": 1, "length": 2},
+                {"weight": 1, "length": 1},
+                {"weight": 3, "length": 1},
+                {"weight": 3, "length": 2}
             ]
         }
     },
