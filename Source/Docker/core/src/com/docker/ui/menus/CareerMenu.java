@@ -60,9 +60,10 @@ public class CareerMenu implements Screen {
                     application.setScreen(new CareerGame(application, id));
                 }
             });
-            Boolean levelOpen = Persistence.isLevelOpen(id);
-            if (!levelOpen) {
+            Boolean locked = Persistence.isLevelLocked(id);
+            if (locked) {
                 button.setTouchable(Touchable.disabled);
+                button.setText("locked");
             }
             table.add(button).fillX().width(100).pad(20);
             if (i % 3 == 0) {
@@ -74,17 +75,15 @@ public class CareerMenu implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ||
                 Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             application.setLastScreen();
         }
-
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
-
     }
 
     @Override
