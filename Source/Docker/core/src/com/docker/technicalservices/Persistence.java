@@ -29,6 +29,7 @@ public class Persistence {
         localDir = Gdx.files.getLocalStoragePath();
         //default prefs
         prefs.putBoolean("soundOn", true);
+        prefs.putBoolean("musicOn", true);
         prefs.putBoolean("1", true);
     }
 
@@ -67,6 +68,15 @@ public class Persistence {
 
     public static void setSoundOn(Boolean soundOn) {
         prefs.putBoolean("soundOn", soundOn);
+        prefs.flush();
+    }
+
+    public static Boolean isMusicOn() {
+        return prefs.getBoolean("musicOn");
+    }
+
+    public static void setMusicOn(Boolean soundOn) {
+        prefs.putBoolean("musicOn", soundOn);
         prefs.flush();
     }
 
@@ -199,6 +209,15 @@ public class Persistence {
         ObjectMap<String, Object> statisticsMap = getStatisticsMap();
         statisticsMap.put(key, value);
         writeStatisticMap(statisticsMap);
+    }
+
+    public static float getVolume() {
+        return prefs.getFloat("volume");
+    }
+
+    public static void setVolume(float volume) {
+        prefs.putFloat("volume", volume);
+        prefs.flush();
     }
 
     private static class JsonStatistics {
