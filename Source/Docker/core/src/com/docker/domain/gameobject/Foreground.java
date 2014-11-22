@@ -23,6 +23,7 @@ public class Foreground extends Actor {
 	
 	private float waterLevel;
 	private float capsizeValue;
+	private float bubbleXOffset;
 	
 	private TextureRegion dock;
 	private TextureRegion waterLevelBase;
@@ -48,6 +49,7 @@ public class Foreground extends Actor {
 		this.setWaterLevel(waterLevel);
 		this.shapeRenderer = new ShapeRenderer();
 		this.stateTime = 0f;
+		this.bubbleXOffset = 0f;
 		
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
 		this.dock = atlas.findRegion("fg_dock");
@@ -80,6 +82,16 @@ public class Foreground extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		float goalXPos = 13*this.capsizeValue;
+		if(Math.abs(this.bubbleXOffset - goalXPos) > 0.01)
+			this.bubbleXOffset += (goalXPos- this.bubbleXOffset+1)*delta;
+		else
+			this.bubbleXOffset = goalXPos;
+		if(this.bubbleXOffset >= 0)
+			this.bubbleXOffset = Math.min(15, this.bubbleXOffset);
+		else
+			this.bubbleXOffset = Math.max(-15, this.bubbleXOffset);
+			
 	}
 
 	@Override
@@ -94,7 +106,10 @@ public class Foreground extends Actor {
 		
 		// draw water level
 		batch.draw(this.waterLevelBase, this.getWidth()-39, 30);
-		batch.draw(this.waterLevelBubble, this.getWidth()-23-13*this.capsizeValue, 32);
+		if(Math.abs(this.bubbleXOffset) >= 13)
+			batch.setColor(Color.RED);
+		batch.draw(this.waterLevelBubble, this.getWidth()-this.bubbleXOffset-23, 32);
+		batch.setColor(Color.WHITE);
 		batch.draw(this.waterLevelMarkings, this.getWidth()-39, 30);
 		
 		

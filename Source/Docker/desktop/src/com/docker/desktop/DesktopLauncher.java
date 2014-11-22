@@ -5,7 +5,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import com.docker.Docker;
-import com.docker.DockerMyTest;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
