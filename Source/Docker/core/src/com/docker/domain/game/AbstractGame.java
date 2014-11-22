@@ -1,6 +1,5 @@
 package com.docker.domain.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Background;
@@ -38,6 +36,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 	protected boolean gameOver;
 	protected boolean scoreScreen;
 	protected Music backgroundMusic;
+	private Foreground foreground;
+	private Background background;
 
 	public AbstractGame(Docker application){
 		this.application = application;
@@ -67,10 +67,10 @@ public abstract class AbstractGame extends ScreenAdapter {
 				return touchUpEvent(x, y, pointer, button);
 			}
 		};		
-		Background background = new Background(this.stage.getWidth(), this.stage.getHeight());
+		background = new Background(this.stage.getWidth(), this.stage.getHeight());
 		background.toBack();
 		this.stage.setBackground(background);
-		Foreground foreground = new Foreground(this.stage.getWidth());
+		foreground = new Foreground(this.stage.getWidth());
 		foreground.toFront();
 		this.stage.setForeground(foreground);
 		
@@ -171,6 +171,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 		this.stage.draw();
 
 		getLoadRating().calculateScore(getShip().getGrid());
+		getShip().setBreakValues(getLoadRating().getBreakValues());
+		this.foreground.setCapsizeValue(getLoadRating().getCapsizeValue());
 		if(showDebugInfo)
 			drawDebugInfo(this.stage.getBatch());
 	}
@@ -291,6 +293,4 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public void setShowDebugInfo(boolean showDebugInfo) {
 		this.showDebugInfo = showDebugInfo;
 	}
-
-
 }

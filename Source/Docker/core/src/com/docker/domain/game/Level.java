@@ -53,7 +53,7 @@ public class Level {
 	}
 	
 	public static Level loadLevel(){
-		Level level = new Level(new LinkedList<Integer>(), new LinkedList<Integer>(), 5, 10, 3, 10, 20, 60, 15);
+		Level level = new Level(new LinkedList<Integer>(), new LinkedList<Integer>(), 5, 10, 3, 5, 20, 60, 15);
 		level.generateRandomLevel();
 		return level;
 	}

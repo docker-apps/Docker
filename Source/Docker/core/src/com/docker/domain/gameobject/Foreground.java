@@ -22,7 +22,12 @@ public class Foreground extends Actor {
 	public static float DEFAULT_WATERLEVEL = 20;
 	
 	private float waterLevel;
+	private float capsizeValue;
+	
 	private TextureRegion dock;
+	private TextureRegion waterLevelBase;
+	private TextureRegion waterLevelMarkings;
+	private TextureRegion waterLevelBubble;
 	private Array<AtlasRegion> waterMovement;
 	private Array<AtlasRegion> shipReflection;
 	private Animation waterMovementAnimation;
@@ -46,6 +51,9 @@ public class Foreground extends Actor {
 		
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
 		this.dock = atlas.findRegion("fg_dock");
+		this.waterLevelBase = atlas.findRegion("water_level_base");
+		this.waterLevelMarkings = atlas.findRegion("water_level_markings");
+		this.waterLevelBubble = atlas.findRegion("water_level_bubble");
 		this.waterMovement = atlas.findRegions("fg_water_movement");
 		this.shipReflection = atlas.findRegions("fg_ship_reflection");
 		
@@ -78,12 +86,19 @@ public class Foreground extends Actor {
 	public void draw (Batch batch, float parentAlpha) {
 		this.stateTime += Gdx.graphics.getDeltaTime();
 		
+		// draw dock
 		batch.draw(
 				this.dock,
 				this.getWidth() - this.dock.getRegionWidth(),
 				this.getWaterLevel() - 3);
 		
-		//draw water plane
+		// draw water level
+		batch.draw(this.waterLevelBase, this.getWidth()-39, 30);
+		batch.draw(this.waterLevelBubble, this.getWidth()-23-13*this.capsizeValue, 32);
+		batch.draw(this.waterLevelMarkings, this.getWidth()-39, 30);
+		
+		
+		// draw water plane
 		batch.end();
 		shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
@@ -110,6 +125,7 @@ public class Foreground extends Actor {
 				this.getX()+((this.getWidth()-shipReflectionFrame.getRegionWidth()) / 2),
 				this.getY()+this.getWaterLevel() - shipReflectionFrame.getRegionHeight());
 		
+		// draw water animation
 		for (Vector2 position : this.waterMovementPositions) {
 			batch.draw(
 					this.waterMovementAnimation.getKeyFrame(stateTime, true),
@@ -123,10 +139,6 @@ public class Foreground extends Actor {
 				position.x = rand.nextFloat()*this.getWidth();
 				position.y = (this.getWaterLevel()-2);
 			}
-//			if(this.waterMovementAnimation.isAnimationFinished(stateTime)){
-//				Random rand = new Random();
-//				position.set(rand.nextFloat()*this.getWidth(), rand.nextFloat()*this.getWaterLevel());
-//			}
 		}		
 	}
 
@@ -142,5 +154,9 @@ public class Foreground extends Actor {
 	 */
 	public void setWaterLevel(float waterLevel) {
 		this.waterLevel = waterLevel;
-	}	
+	}
+	
+	public void setCapsizeValue(float capsizeValue){
+		this.capsizeValue = capsizeValue;
+	}
 }

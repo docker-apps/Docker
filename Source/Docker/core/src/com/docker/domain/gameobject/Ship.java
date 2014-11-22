@@ -30,14 +30,18 @@ public class Ship extends Actor {
 	private float[][] grid;
 	private float yGridstart;
 	private float xGridstart;
+	private float[] breakValues;
 
     private Sound containerSound;
 	
-	private TextureRegion body_left;
-	private TextureRegion body_center;
-	private TextureRegion body_right;
+	private TextureRegion bodyLeft;
+	private TextureRegion bodyCenter;
+	private TextureRegion bodyRight;
 	private TextureRegion tower;
 	private TextureRegion mast;
+	private TextureRegion indicatorLampWhite;
+	private TextureRegion indicatorLampRed;
+	private TextureRegion indicatorLampOn;
 	
 	public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
 		super();
@@ -52,20 +56,24 @@ public class Ship extends Actor {
 		this.capsizeThreshold = capsizeThreshold;
 		this.breakThreshold = breakThreshold;
 		this.containers = new ArrayList<Container>();
+		this.setBreakValues(null);
 
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
-		this.body_left = atlas.findRegion("ship_body_left");
-		this.body_center = atlas.findRegion("ship_body_center");
-		this.body_right = atlas.findRegion("ship_body_right");
+		this.bodyLeft = atlas.findRegion("ship_body_left");
+		this.bodyCenter = atlas.findRegion("ship_body_center");
+		this.bodyRight = atlas.findRegion("ship_body_right");
 		this.tower = atlas.findRegion("ship_tower");
 		this.mast = atlas.findRegion("ship_mast");
+		this.indicatorLampWhite = atlas.findRegion("indicator_lamp_white");
+		this.indicatorLampRed = atlas.findRegion("indicator_lamp_red");
+		this.indicatorLampOn = atlas.findRegion("indicator_lamp_on");
 		
-		this.gridSize = this.body_center.getRegionWidth();
+		this.gridSize = this.bodyCenter.getRegionWidth();
 
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 		
-		this.xGridstart = this.getX()+body_left.getRegionWidth() - gridSize;
-		this.yGridstart = this.getY()+body_center.getRegionHeight();
+		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
+		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
 		
 		containerSound = Gdx.audio.newSound(Gdx.files.internal("container_load.wav"));
 		createTopLineAndGrid();
@@ -229,38 +237,64 @@ public class Ship extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		this.xGridstart = this.getX()+body_left.getRegionWidth() - gridSize;
-		this.yGridstart = this.getY()+body_center.getRegionHeight();
+		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
+		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
 	}
 	
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
-		batch.draw(this.body_left, this.getX(), this.getY());
-		batch.draw(this.mast, this.getX()+this.body_left.getRegionWidth()-this.getElementWidth()-this.mast.getRegionWidth()-1, this.getY()+this.body_left.getRegionHeight());
+		// draw ship
+		batch.draw(this.bodyLeft, this.getX(), this.getY());
+		batch.draw(this.mast, this.getX()+this.bodyLeft.getRegionWidth()-this.getElementWidth()-this.mast.getRegionWidth()-1, this.getY()+this.bodyLeft.getRegionHeight());
 		for (int i = 0; i < this.gridWidth-2; i++) {
-			batch.draw(this.body_center, this.getX()+this.body_left.getRegionWidth()+(getElementWidth()*i), this.getY());			
+			float xPos = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*i);
+			batch.draw(this.bodyCenter, xPos, this.getY());
 		}
-		float bodyRightX = this.getX()+this.body_left.getRegionWidth()+(getElementWidth()*(this.gridWidth-2));
-		batch.draw(this.body_right, bodyRightX, this.getY());
-		batch.draw(this.tower, bodyRightX+this.body_right.getRegionWidth()-this.tower.getRegionWidth()-1, this.getY()+this.body_right.getRegionHeight());
+		float bodyRightX = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*(this.gridWidth-2));
+		batch.draw(this.bodyRight, bodyRightX, this.getY());
+		batch.draw(this.tower, bodyRightX+this.bodyRight.getRegionWidth()-this.tower.getRegionWidth()-1, this.getY()+this.bodyRight.getRegionHeight());
+		
+		// draw preview Container
 		if (previewContainer != null) {
 			previewContainer.draw(batch, parentAlpha);
 		}
+		
+		// draw Containers
 		for (Container container : containers) {
 			container.draw(batch, parentAlpha);
+		}
+		
+		float lampsOffsetX = this.getX() + this.bodyLeft.getRegionWidth() - 
+				this.getElementWidth()/2-this.indicatorLampOn.getRegionWidth()/2;
+		float lampsOffsetY = this.getY()+34;
+		// draw indicator lamps
+		if(this.breakValues != null){
+			for (int i = 0; i < this.breakValues.length; i++) {
+				if(breakValues[i] <= 0.5)
+					batch.setColor(Color.WHITE);
+				else if(breakValues[i] <= 1)
+					batch.setColor(1, 1, 0, 1);
+				else
+					batch.setColor(1f, 0, 0, 1);
+				batch.draw(
+						this.indicatorLampOn,
+						lampsOffsetX + this.getElementWidth()*i,
+						lampsOffsetY);
+			}
+			batch.setColor(Color.WHITE);
 		}
 	}
 	
 	@Override
 	public float getWidth(){
 		return 
-				this.body_left.getRegionWidth() + 
-				this.body_center.getRegionWidth()*(this.gridWidth-2) + 
-				this.body_right.getRegionWidth();
+				this.bodyLeft.getRegionWidth() + 
+				this.bodyCenter.getRegionWidth()*(this.gridWidth-2) + 
+				this.bodyRight.getRegionWidth();
 	}
 	
 	public float getElementWidth(){
-		return this.body_center.getRegionWidth();
+		return this.bodyCenter.getRegionWidth();
 	}
 	
 	/**
@@ -342,6 +376,10 @@ public class Ship extends Actor {
 
 	public void setContainers(List<Container> containers) {
 		this.containers = containers;
+	}
+
+	public void setBreakValues(float[] breakValues) {
+		this.breakValues = breakValues;
 	}
 	
 }
