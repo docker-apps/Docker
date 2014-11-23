@@ -64,7 +64,22 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 			@Override
 			public boolean touchUp (int x, int y, int pointer, int button) {
+				
 				return touchUpEvent(x, y, pointer, button);
+			}
+			
+			@Override
+			public boolean keyTyped(char character){
+				if(character == 'c'){
+					getShip().capsize(50);
+				}
+				else if(character == 'v'){
+					getShip().capsize(-1.898f);
+				}
+				else if(character == 'b'){
+					getShip().breakShip(3);
+				}
+				return true;
 			}
 		};		
 		background = new Background(this.stage.getWidth(), this.stage.getHeight());

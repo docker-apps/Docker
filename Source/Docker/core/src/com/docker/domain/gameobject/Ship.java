@@ -3,6 +3,8 @@ package com.docker.domain.gameobject;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.GroupLayout.Alignment;
+
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import com.badlogic.gdx.Gdx;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -25,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.docker.Docker;
 import com.docker.domain.game.LoadRating;
 
@@ -41,7 +45,8 @@ public class Ship extends Actor {
 	private float yGridstart;
 	private float xGridstart;
 	private float[] breakValues;
-	private boolean isCapsizing;
+	private boolean isCapsizing = false;
+	private boolean isBreaking = false;
 
     private Sound containerSound;
 	
@@ -51,7 +56,7 @@ public class Ship extends Actor {
 	private TextureRegion tower;
 	private TextureRegion mast;
 	private TextureRegion indicatorLampOn;
-	private Group imgGroup;
+	private FrameBuffer fbo;
 	
 	public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
 		super();
@@ -75,7 +80,6 @@ public class Ship extends Actor {
 		this.tower = atlas.findRegion("ship_tower");
 		this.mast = atlas.findRegion("ship_mast");
 		this.indicatorLampOn = atlas.findRegion("indicator_lamp_on");
-		this.imgGroup = new Group();
 		
 		this.gridSize = this.bodyCenter.getRegionWidth();
 
@@ -243,19 +247,73 @@ public class Ship extends Actor {
 		return this.getActions().size > 0;
 	}
 	
-	public void capsize(float capsizeValue){
-		MoveToAction moveAction = new MoveToAction();
-		moveAction.setPosition(this.getX(), this.getY()-this.getWidth());
-		moveAction.setDuration(5);
-		moveAction.setInterpolation(Interpolation.exp5In);
-		this.imgGroup.addAction(moveAction);
+	public void capsize(float capsizeValue){		
+		TextureRegion region = takeSnapshot();
 		
-		this.imgGroup.setOrigin(this.getWidth()/2-this.getWidth()/6*capsizeValue, 10);
+		this.isCapsizing = true;
+		
+		Ship.addCapsizeAnimation(this, capsizeValue);
+
+		Image img = new Image(region);
+		addCapsizeAnimation(img, capsizeValue);
+		this.getStage().addActor(img);
+	}
+	
+	private static void addCapsizeAnimation(Actor actor, float capsizeValue){
+		// define animation
+		MoveToAction moveAction = new MoveToAction();
+		moveAction.setPosition(actor.getX(), actor.getY()-actor.getWidth());
+		moveAction.setDuration(8);
+		moveAction.setInterpolation(Interpolation.exp5In);
+		actor.addAction(moveAction);
+
+		actor.setOrigin(actor.getWidth()/2-actor.getWidth()/6*Math.signum(capsizeValue), 10);
 		RotateByAction rotateAction = new RotateByAction();
-		rotateAction.setAmount(90*capsizeValue);
-		rotateAction.setDuration(5);
+		rotateAction.setAmount(90*Math.signum(capsizeValue));
+		rotateAction.setDuration(10);
 		rotateAction.setInterpolation(Interpolation.exp5Out);
-		this.imgGroup.addAction(rotateAction);
+		actor.addAction(rotateAction);
+	}
+	
+	private TextureRegion takeSnapshot(){
+		fbo = new FrameBuffer(Format.RGBA8888, (int)Docker.WIDTH, (int)Docker.HEIGHT, false);
+		fbo.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		TextureRegion fboRegion = new TextureRegion(fbo.getColorBufferTexture());
+		fboRegion.flip(false, true);
+
+		fbo.begin();
+		Batch batch = this.getStage().getBatch();
+		batch.begin();
+		this.draw(batch, 1f);
+		batch.end();
+		fbo.end();
+		
+		return fboRegion;
+	}
+	
+	public void breakShip(int breakPosition){
+		TextureRegion fboRegion1 = takeSnapshot();
+		TextureRegion fboRegion2 = takeSnapshot();
+
+		this.isBreaking = true;
+		
+		float breakingXPos = this.xGridstart + this.gridSize*breakPosition;
+		
+		//left part
+		fboRegion1.setRegionWidth((int)breakingXPos);
+		Image img = new Image(fboRegion1);
+		img.setOrigin(breakingXPos, this.getY());
+		addCapsizeAnimation(img, -1);
+		this.getStage().addActor(img);
+		
+		//right part
+		fboRegion2.setRegionX((int)breakingXPos);
+		fboRegion2.setRegionWidth(fbo.getWidth() - (int)breakingXPos);
+		Image img2 = new Image(fboRegion2);
+		img2.setPosition(breakingXPos, 0);
+		img2.setOrigin(breakingXPos, this.getY());
+		addCapsizeAnimation(img2, 1);
+		this.getStage().addActor(img2);
 	}
 
 	@Override
@@ -263,68 +321,55 @@ public class Ship extends Actor {
 		super.act(delta);
 		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
 		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
-		this.imgGroup.act(delta);
-	}
-	
-	private void addTexture(TextureRegion texture, float x, float y){
-		Image img = new Image(texture);
-		img.setPosition(x, y);
-		this.imgGroup.addActor(img);
 	}
 	
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
-		this.imgGroup.clearChildren();
-		// draw ship
-		addTexture(this.bodyLeft, this.getX(), this.getY());
-		addTexture(this.mast, this.getX()+this.bodyLeft.getRegionWidth()-this.getElementWidth()-this.mast.getRegionWidth()-1, this.getY()+this.bodyLeft.getRegionHeight());
-		for (int i = 0; i < this.gridWidth-2; i++) {
-			float xPos = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*i);
-			addTexture(this.bodyCenter, xPos, this.getY());
-		}
-		float bodyRightX = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*(this.gridWidth-2));
-		addTexture(this.bodyRight, bodyRightX, this.getY());
-		addTexture(this.tower, bodyRightX+this.bodyRight.getRegionWidth()-this.tower.getRegionWidth()-1, this.getY()+this.bodyRight.getRegionHeight());
-		
-		// draw preview Container
-		if (previewContainer != null) {
-			previewContainer.draw(batch, parentAlpha);
-		}
-		
-		// draw Containers
-		for (Container container : containers) {
-			container.draw(batch, parentAlpha);
-		}
-		
-		float lampsOffsetX = this.getX() + this.bodyLeft.getRegionWidth() - 
-				this.getElementWidth()/2-this.indicatorLampOn.getRegionWidth()/2;
-		float lampsOffsetY = this.getY()+34;
-		// draw indicator lamps
-		if(this.breakValues != null){
-			for (int i = 0; i < this.breakValues.length; i++) {
-				if(breakValues[i] <= 0.5)
-					batch.setColor(Color.WHITE);
-				else if(breakValues[i] <= 1)
-					batch.setColor(1, 1, 0, 1);
-				else
-					batch.setColor(1f, 0, 0, 1);
-				addTexture(
-						this.indicatorLampOn,
-						lampsOffsetX + this.getElementWidth()*i,
-						lampsOffsetY);
+		if(isCapsizing == false && isBreaking == false){
+			// draw ship
+			batch.draw(this.bodyLeft, this.getX(), this.getY());
+			batch.draw(this.mast, this.getX()+this.bodyLeft.getRegionWidth()-this.getElementWidth()-this.mast.getRegionWidth()-1, this.getY()+this.bodyLeft.getRegionHeight());
+			for (int i = 0; i < this.gridWidth-2; i++) {
+				float xPos = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*i);
+				batch.draw(this.bodyCenter, xPos, this.getY());
 			}
-			batch.setColor(Color.WHITE);
+			float bodyRightX = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*(this.gridWidth-2));
+			batch.draw(this.bodyRight, bodyRightX, this.getY());
+			batch.draw(this.tower, bodyRightX+this.bodyRight.getRegionWidth()-this.tower.getRegionWidth()-1, this.getY()+this.bodyRight.getRegionHeight());
+			
+			// draw preview Container
+			if (previewContainer != null) {
+				previewContainer.draw(batch, parentAlpha);
+			}
+			
+			// draw Containers
+			for (Container container : containers) {
+				container.draw(batch, parentAlpha);
+			}
+			
+			float lampsOffsetX = this.getX() + this.bodyLeft.getRegionWidth() - 
+					this.getElementWidth()/2-this.indicatorLampOn.getRegionWidth()/2;
+			float lampsOffsetY = this.getY()+34;
+			// draw indicator lamps
+			if(this.breakValues != null){
+				for (int i = 0; i < this.breakValues.length; i++) {
+					if(breakValues[i] <= 0.5)
+						batch.setColor(Color.WHITE);
+					else if(breakValues[i] <= 1)
+						batch.setColor(1, 1, 0, 1);
+					else
+						batch.setColor(1f, 0, 0, 1);
+					batch.draw(
+							this.indicatorLampOn,
+							lampsOffsetX + this.getElementWidth()*i,
+							lampsOffsetY);
+				}
+				batch.setColor(Color.WHITE);
+			}
 		}
-		
-		FrameBuffer fbo = new FrameBuffer(Format.RGBA8888, (int)Docker.WIDTH, (int)Docker.HEIGHT, false);
-		fbo.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		TextureRegion fbo_region = new TextureRegion(fbo.getColorBufferTexture());
-		fbo_region.flip(false, true);
-		fbo.begin();
-		this.imgGroup.draw(batch, parentAlpha);
-		fbo.end();
-		
-		batch.draw(fbo_region, 0, 0);
+		else if(isCapsizing){
+			//batch.draw(fboRegion1, this.getX(), this.getY(), Docker.WIDTH/2, 20, fboRegion1.getRegionWidth(), fboRegion1.getRegionHeight(), 1, 1, this.getRotation());
+		}		
 	}
 	
 	@Override
