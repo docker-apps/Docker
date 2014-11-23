@@ -200,20 +200,6 @@ indicator_lamp_on
   orig: 9, 4
   offset: 0, 0
   index: -1
-indicator_lamp_red
-  rotate: false
-  xy: 648, 98
-  size: 3, 3
-  orig: 3, 3
-  offset: 0, 0
-  index: -1
-indicator_lamp_white
-  rotate: false
-  xy: 637, 66
-  size: 3, 3
-  orig: 3, 3
-  offset: 0, 0
-  index: -1
 label
   rotate: false
   xy: 193, 26
