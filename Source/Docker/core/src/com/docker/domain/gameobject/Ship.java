@@ -47,6 +47,8 @@ public class Ship extends Actor {
 	private float[] breakValues;
 	private boolean isCapsizing = false;
 	private boolean isBreaking = false;
+	private boolean isStaticAnimationRunning = false;
+	private int breakPos;
 
     private Sound containerSound;
 	
@@ -56,6 +58,8 @@ public class Ship extends Actor {
 	private TextureRegion tower;
 	private TextureRegion mast;
 	private TextureRegion indicatorLampOn;
+	private TextureRegion bodyBrokenLeft;
+	private TextureRegion bodyBrokenRight;
 	private FrameBuffer fbo;
 	
 	public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
@@ -80,6 +84,8 @@ public class Ship extends Actor {
 		this.tower = atlas.findRegion("ship_tower");
 		this.mast = atlas.findRegion("ship_mast");
 		this.indicatorLampOn = atlas.findRegion("indicator_lamp_on");
+		this.bodyBrokenLeft = atlas.findRegion("ship_body_broken_left");
+		this.bodyBrokenRight = atlas.findRegion("ship_body_broken_right");
 		
 		this.gridSize = this.bodyCenter.getRegionWidth();
 
@@ -247,16 +253,17 @@ public class Ship extends Actor {
 		return this.getActions().size > 0;
 	}
 	
-	public void capsize(float capsizeValue){		
+	public void capsize(float capsizeValue){
+		this.isCapsizing = true;	
 		TextureRegion region = takeSnapshot();
 		
-		this.isCapsizing = true;
 		
 		Ship.addCapsizeAnimation(this, capsizeValue);
 
 		Image img = new Image(region);
 		addCapsizeAnimation(img, capsizeValue);
 		this.getStage().addActor(img);
+		this.isStaticAnimationRunning = true;
 	}
 	
 	private static void addCapsizeAnimation(Actor actor, float capsizeValue){
@@ -292,12 +299,10 @@ public class Ship extends Actor {
 	}
 	
 	public void breakShip(int breakPosition){
+		float breakingXPos = this.xGridstart + this.gridSize*breakPosition;
+		this.isBreaking = true;
 		TextureRegion fboRegion1 = takeSnapshot();
 		TextureRegion fboRegion2 = takeSnapshot();
-
-		this.isBreaking = true;
-		
-		float breakingXPos = this.xGridstart + this.gridSize*breakPosition;
 		
 		//left part
 		fboRegion1.setRegionWidth((int)breakingXPos);
@@ -314,6 +319,7 @@ public class Ship extends Actor {
 		img2.setOrigin(breakingXPos, this.getY());
 		addCapsizeAnimation(img2, 1);
 		this.getStage().addActor(img2);
+		this.isStaticAnimationRunning = true;
 	}
 
 	@Override
@@ -325,13 +331,21 @@ public class Ship extends Actor {
 	
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
-		if(isCapsizing == false && isBreaking == false){
+		if(isStaticAnimationRunning == false){
 			// draw ship
 			batch.draw(this.bodyLeft, this.getX(), this.getY());
 			batch.draw(this.mast, this.getX()+this.bodyLeft.getRegionWidth()-this.getElementWidth()-this.mast.getRegionWidth()-1, this.getY()+this.bodyLeft.getRegionHeight());
 			for (int i = 0; i < this.gridWidth-2; i++) {
 				float xPos = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*i);
-				batch.draw(this.bodyCenter, xPos, this.getY());
+				if(isBreaking && i == this.breakPos+1){
+					batch.draw(this.bodyBrokenLeft, xPos, this.getY());
+				}
+				else if(isBreaking && i == this.breakPos+2){
+					batch.draw(this.bodyBrokenRight, xPos, this.getY());
+				}
+				else{
+					batch.draw(this.bodyCenter, xPos, this.getY());
+				}
 			}
 			float bodyRightX = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*(this.gridWidth-2));
 			batch.draw(this.bodyRight, bodyRightX, this.getY());
@@ -366,10 +380,7 @@ public class Ship extends Actor {
 				}
 				batch.setColor(Color.WHITE);
 			}
-		}
-		else if(isCapsizing){
-			//batch.draw(fboRegion1, this.getX(), this.getY(), Docker.WIDTH/2, 20, fboRegion1.getRegionWidth(), fboRegion1.getRegionHeight(), 1, 1, this.getRotation());
-		}		
+		}	
 	}
 	
 	@Override
