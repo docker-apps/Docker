@@ -18,19 +18,15 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
 
-public class StatisticsMenu implements Screen {
-    Docker application;
-
+public class StatisticsMenu extends AbstractMenu {
     private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
     private TextButton backButton = new TextButton("back", skin);
     private Label title = new Label("Statistics",skin);
-    private Stage stage = new Stage();
-    private Table table = new Table();
 
     private static Map<String,String> labelMap = new HashMap<String, String>();
 
     public StatisticsMenu(final Docker application) {
-        this.application = application;
+    	super(application);
 
         backButton.addListener(new ClickListener() {
             @Override
@@ -40,29 +36,17 @@ public class StatisticsMenu implements Screen {
         });
         setLabelMap();
 
-        table.add(title).padBottom(20).row();
+        table.add(title).padBottom(0).row();
         loadStatistics(table);
         table.add(backButton).bottom().row();
-
-        table.setFillParent(true);
-        stage.addActor(table);
-
-        Gdx.input.setInputProcessor(stage);
-        Gdx.input.setCatchBackKey(true);
     }
-
+    
     @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ||
+    public void handleInput(){
+    	if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ||
                 Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             application.setLastScreen();
         }
-
-        stage.act();
-        stage.draw();
     }
 
     private void loadStatistics(Table table) {
@@ -71,39 +55,8 @@ public class StatisticsMenu implements Screen {
             Label l = new Label(labelMap.get(stringObjectEntry.key), skin);
             Label v = new Label(stringObjectEntry.value.toString(), skin);
             table.add(l).width(300).left();
-            table.add(v).row().padBottom(10);
+            table.add(v).row().padBottom(0);
         }
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-        skin.dispose();
     }
 
     public void setLabelMap() {

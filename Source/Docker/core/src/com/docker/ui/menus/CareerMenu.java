@@ -19,33 +19,24 @@ import com.docker.Docker;
 import com.docker.domain.game.CareerGame;
 import com.docker.technicalservices.Persistence;
 
-public class CareerMenu implements Screen {
-    Docker application;
-
-    private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-
-    private Stage stage = new Stage();
-    private Table table = new Table();
-
+public class CareerMenu extends AbstractMenu {
     private Label title = new Label("Career game",skin);
     private TextButton backButton = new TextButton("back", skin);
-
+    
 
     public CareerMenu(final Docker application) {
-        this.application = application;
+        super(application);
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 application.setLastScreen();
             }
         });
-        table.add(title).padBottom(40).row();
+        table.add(title).padBottom(10).row();
 
         addLevelButtons(table);
-
-        table.setFillParent(true);
-        stage.addActor(table);
-        Gdx.input.setCatchBackKey(true);
+        
+        table.add(backButton).width(80);
     }
 
     private void addLevelButtons(Table table) {
@@ -65,11 +56,19 @@ public class CareerMenu implements Screen {
                 button.setTouchable(Touchable.disabled);
                 button.setText("locked");
             }
-            table.add(button).fillX().width(100).pad(20);
+            table.add(button).fillX().width(80).pad(5);
             if (i % 3 == 0) {
                 table.row();
             }
             i++;
+        }
+    }
+    
+    @Override
+    public void handleInput(){
+    	if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ||
+                Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            application.setLastScreen();
         }
     }
 
@@ -78,44 +77,8 @@ public class CareerMenu implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ||
-                Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            application.setLastScreen();
-        }
+        
         stage.act();
         stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void show() {
-
-        Gdx.input.setInputProcessor(stage);
-        Gdx.input.setCatchBackKey(true);
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
     }
 }

@@ -18,14 +18,7 @@ import com.docker.domain.game.QuickGame;
 /**
  *
  */
-public class GameMenu implements Screen {
-    Docker game;
-
-    private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-
-    private Stage stage = new Stage();
-    private Table table = new Table();
-
+public class GameMenu extends AbstractMenu {
     private Label title = new Label("game menu",skin);
     private TextButton careerGameButton = new TextButton("Career game", skin);
     private TextButton quickGameButton = new TextButton("Quick game", skin);
@@ -33,87 +26,46 @@ public class GameMenu implements Screen {
     private TextButton backButton = new TextButton("Back", skin);
 
 
-    public GameMenu(final Docker game) {
-        this.game = game;
+    public GameMenu(final Docker application) {
+        super(application);
+        
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setLastScreen();
+                application.setLastScreen();
             }
         });
         careerGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new CareerMenu(game));
+                application.setScreen(new CareerMenu(application));
             }
         });
         quickGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new QuickGame(game));
+                application.setScreen(new QuickGame(application));
             }
         });
         infiniteGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new InfiniteGame(game));
+                application.setScreen(new InfiniteGame(application));
             }
         });
 
-        table.add(title).padBottom(40).row();
-        table.add(careerGameButton).size(150, 60).padBottom(20).row();
-        table.add(quickGameButton).size(150, 60).padBottom(20).row();
-        table.add(infiniteGameButton).size(150, 60).padBottom(20).row();
-        table.add(backButton).size(100, 40).left();
-
-        table.setFillParent(true);
-        stage.addActor(table);
+        table.add(title).padBottom(10).row();
+        table.add(careerGameButton).size(150, 35).padBottom(5).row();
+        table.add(quickGameButton).size(150, 35).padBottom(5).row();
+        table.add(infiniteGameButton).size(150, 35).padBottom(5).row();
+        table.add(backButton).size(100, 35).left();
     }
-
+    
     @Override
-    public void show() {
-
-        Gdx.input.setInputProcessor(stage);
-        Gdx.input.setCatchBackKey(true);
-    }
-
-    @Override
-    public void render(float delta) {
-
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ||
+    public void handleInput(){
+    	if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ||
                 Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            game.setLastScreen();
+            application.setLastScreen();
         }
-
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act();
-        stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-        skin.dispose();
     }
 }
