@@ -28,8 +28,6 @@ public class Persistence {
         prefs = Gdx.app.getPreferences("dockerPrefs");
         localDir = Gdx.files.getLocalStoragePath();
         //default prefs
-        prefs.putBoolean("soundOn", true);
-        prefs.putBoolean("musicOn", true);
         prefs.putBoolean("1", true);
     }
 
@@ -63,7 +61,7 @@ public class Persistence {
     }
 
     public static Boolean isSoundOn() {
-        return prefs.getBoolean("soundOn");
+        return prefs.getBoolean("soundOn", true);
     }
 
     public static void setSoundOn(Boolean soundOn) {
@@ -72,7 +70,7 @@ public class Persistence {
     }
 
     public static Boolean isMusicOn() {
-        return prefs.getBoolean("musicOn");
+        return prefs.getBoolean("musicOn", true);
     }
 
     public static void setMusicOn(Boolean soundOn) {

@@ -42,7 +42,7 @@ public class Ship extends Actor {
 	private TextureRegion indicatorLampWhite;
 	private TextureRegion indicatorLampRed;
 	private TextureRegion indicatorLampOn;
-    private Boolean playContainerSound;
+    private Boolean playContainerSound = true;
 
     public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
 		super();
