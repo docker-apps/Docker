@@ -60,12 +60,4 @@ public class GameMenu extends AbstractMenu {
         table.add(infiniteGameButton).size(150, 35).padBottom(5).row();
         table.add(backButton).size(100, 35).left();
     }
-    
-    @Override
-    public void handleInput(){
-    	if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ||
-                Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            application.setLastScreen();
-        }
-    }
 }

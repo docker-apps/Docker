@@ -77,12 +77,4 @@ public class SettingsMenu extends AbstractMenu {
         table.add(volumeValue).center().width(50).row().padBottom(10);
         table.add(backButton).size(100, 30).left().row();
     }
-    
-    @Override
-    public void handleInput(){
-    	if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ||
-                Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            application.setLastScreen();
-        }
-    }
 }

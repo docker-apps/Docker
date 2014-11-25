@@ -40,14 +40,6 @@ public class StatisticsMenu extends AbstractMenu {
         loadStatistics(table);
         table.add(backButton).bottom().row();
     }
-    
-    @Override
-    public void handleInput(){
-    	if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ||
-                Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            application.setLastScreen();
-        }
-    }
 
     private void loadStatistics(Table table) {
         ObjectMap<String, Object> statisticsMap = Persistence.getStatisticsMap();

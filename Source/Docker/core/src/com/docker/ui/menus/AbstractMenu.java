@@ -1,6 +1,7 @@
 package com.docker.ui.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -30,7 +31,14 @@ public class AbstractMenu implements Screen {
     }
     
     public void handleInput(){
-    	
+    	lastScreenOnReturn();
+    }
+    
+    public void lastScreenOnReturn(){
+    	if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ||
+                Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+            application.setLastScreen();
+        }
     }
 
     @Override
@@ -53,7 +61,7 @@ public class AbstractMenu implements Screen {
 	@Override
 	public void show() {
         Gdx.input.setInputProcessor(stage);
-        Gdx.input.setCatchBackKey(false);
+        Gdx.input.setCatchBackKey(true);
 	}
 
 	@Override

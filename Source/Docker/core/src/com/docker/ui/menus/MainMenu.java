@@ -2,6 +2,7 @@ package com.docker.ui.menus;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -49,4 +50,12 @@ public class MainMenu extends AbstractMenu{
         table.add(settingsButton).size(100, 35).padBottom(5).row();
         table.add(statisticsButton).size(100, 35).padBottom(5).row();
 	}
+	
+	@Override
+    public void handleInput(){
+    	if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ||
+                Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+            Gdx.app.exit();
+        }
+    }
 }
