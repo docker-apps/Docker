@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -39,6 +40,13 @@ public class StatisticsMenu extends AbstractMenu {
         table.add(title).padBottom(0).row();
         loadStatistics(table);
         table.add(backButton).bottom().row();
+        ScrollPane scrollpane = new ScrollPane(table);
+        scrollpane.setPosition(0, 0);
+        scrollpane.setSize(Docker.WIDTH, Docker.HEIGHT);
+        scrollpane.setScrollY(500);
+        scrollpane.setupOverscroll(20, 30, 200);
+        this.stage = new Stage(viewport);
+        this.stage.addActor(scrollpane);
     }
 
     private void loadStatistics(Table table) {

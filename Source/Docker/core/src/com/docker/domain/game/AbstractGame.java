@@ -180,8 +180,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE) ||
-				Gdx.input.isKeyPressed(Input.Keys.BACK))
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE) ||
+				Gdx.input.isKeyJustPressed(Input.Keys.BACK))
 		{
 			application.setScreen(new InGameMenu(application));
 		}
