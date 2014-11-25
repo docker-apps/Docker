@@ -7,8 +7,12 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.Docker;
@@ -183,7 +187,15 @@ public abstract class AbstractGame extends ScreenAdapter {
 		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE) ||
 				Gdx.input.isKeyJustPressed(Input.Keys.BACK))
 		{
-			application.setScreen(new InGameMenu(application));
+			FrameBuffer fbo = new FrameBuffer(Format.RGBA8888, (int)Docker.WIDTH, (int)Docker.HEIGHT, false);
+			TextureRegion fboRegion = new TextureRegion(fbo.getColorBufferTexture());
+			fboRegion.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+			fboRegion.flip(false, true);
+			fbo.begin();
+			this.stage.draw();
+			fbo.end();
+			
+			application.setScreen(new InGameMenu(application, fboRegion));
 		}
 		
 		this.time += delta;

@@ -29,9 +29,11 @@ public class WorldStage extends Stage {
 		if (batch != null) {
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
-			background.draw(batch, 1);
+			if(this.background != null)
+				background.draw(batch, 1);
 			getRoot().draw(batch, 1);
-			foreground.draw(batch, 1);
+			if(this.foreground != null)
+				foreground.draw(batch, 1);
 			batch.end();
 		}
 
@@ -41,9 +43,11 @@ public class WorldStage extends Stage {
 
 	@Override
 	public void act (float delta) {
-		this.background.act(delta);
+		if(this.background != null)
+			this.background.act(delta);
 		super.act(delta);
-		this.foreground.act(delta);
+		if(this.foreground != null)
+			this.foreground.act(delta);
 	}
 
 	public Actor getForeground() {
