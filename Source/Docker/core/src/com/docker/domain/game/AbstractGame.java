@@ -7,13 +7,11 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Background;
@@ -187,15 +185,9 @@ public abstract class AbstractGame extends ScreenAdapter {
 		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE) ||
 				Gdx.input.isKeyJustPressed(Input.Keys.BACK))
 		{
-			FrameBuffer fbo = new FrameBuffer(Format.RGBA8888, (int)Docker.WIDTH, (int)Docker.HEIGHT, false);
-			TextureRegion fboRegion = new TextureRegion(fbo.getColorBufferTexture());
-			fboRegion.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-			fboRegion.flip(false, true);
-			fbo.begin();
-			this.stage.draw();
-			fbo.end();
+			TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 			
-			application.setScreen(new InGameMenu(application, fboRegion));
+			application.setScreen(new InGameMenu(application, screenCap));
 		}
 		
 		this.time += delta;

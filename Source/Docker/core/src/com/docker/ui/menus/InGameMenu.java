@@ -3,7 +3,6 @@ package com.docker.ui.menus;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -19,12 +18,8 @@ public class InGameMenu extends AbstractMenu {
     private TextButton resumeButton = new TextButton("back", skin);
     private Label title = new Label("Pause",skin);
     
-    private TextureRegion background;
-    
-
     public InGameMenu(final Docker application, TextureRegion background) {
         super(application);
-        this.background = background;
         this.stage = new WorldStage(viewport);
         
         this.persistence = application.persistence;
@@ -46,6 +41,7 @@ public class InGameMenu extends AbstractMenu {
         table.add(resumeButton).size(100, 30).center().row();
         stage.addActor(table);
         Image img = new Image(background);
+        img.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
         img.setPosition(0f, 0f);
         img.setColor(1f, 1f, 1f, 0.5f);
 
