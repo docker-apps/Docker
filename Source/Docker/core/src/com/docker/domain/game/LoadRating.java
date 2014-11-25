@@ -1,6 +1,5 @@
 package com.docker.domain.game;
 
-import sun.security.x509.DeltaCRLIndicatorExtension;
 
 public class LoadRating {
 

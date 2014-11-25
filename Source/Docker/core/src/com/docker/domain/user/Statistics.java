@@ -1,8 +1,5 @@
 package com.docker.domain.user;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.utils.ObjectMap;
 import com.docker.technicalservices.Persistence;
 
@@ -80,25 +77,25 @@ public class Statistics {
 	}
 
     public void persistTotalScore(int totalScore, Persistence persistence) {
-        persistence.saveStatisticValue("totalScore", totalScore);
+        Persistence.saveStatisticValue("totalScore", totalScore);
     }
     public void persistTotalContainer(int totalContainer, Persistence persistence) {
-        persistence.saveStatisticValue("totalContainer", totalContainer);
+        Persistence.saveStatisticValue("totalContainer", totalContainer);
     }
     public void persistTotalWeight(int totalWeight, Persistence persistence) {
-        persistence.saveStatisticValue("totalWeight", totalWeight);
+        Persistence.saveStatisticValue("totalWeight", totalWeight);
     }
     public void persistTotalGames(int totalGames, Persistence persistence) {
-        persistence.saveStatisticValue("totalGames", totalGames);
+        Persistence.saveStatisticValue("totalGames", totalGames);
     }
     public void persistTotalShipsSuccessfullyLoaded(int totalShipsSuccessfullyLoaded, Persistence persistence) {
-        persistence.saveStatisticValue("totalShipsSuccessfullyLoaded", totalShipsSuccessfullyLoaded);
+        Persistence.saveStatisticValue("totalShipsSuccessfullyLoaded", totalShipsSuccessfullyLoaded);
     }
     public void persistTotalShipsCapsized(int totalShipsCapsized, Persistence persistence) {
-        persistence.saveStatisticValue("totalShipsCapsized", totalShipsCapsized);
+        Persistence.saveStatisticValue("totalShipsCapsized", totalShipsCapsized);
     }
     public void persistTotalShipsBroken(int totalShipsBroken, Persistence persistence) {
-        persistence.saveStatisticValue("totalShipsBroken", totalShipsBroken);
+        Persistence.saveStatisticValue("totalShipsBroken", totalShipsBroken);
     }
 
     public void persistStatistics(Persistence persistence, Statistics statistics) {
@@ -110,7 +107,7 @@ public class Statistics {
         map.put("totalShipsSuccessfullyLoaded", statistics.getTotalShipsSuccessfullyLoaded());
         map.put("totalShipsCapsized", statistics.getTotalShipsCapsized());
         map.put("totalShipsBroken", statistics.getTotalShipsBroken());
-        persistence.writeStatisticMap(map);
+        Persistence.writeStatisticMap(map);
     }
 
 }
