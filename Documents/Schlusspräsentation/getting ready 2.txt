@@ -1,0 +1,35 @@
+YM - Scroll bei Statistik oder anpassung auf Bildschirmgrösse
+YM - Menü schön machen
+EW - Statistik Highscore für Infinite Game und für Quick Game
+
+	quick game
+CM - Leben während des Spiels
+EW - Speichern der Werte in die Statistik
+RH - Fail Screen
+
+	careergame
+	--gleiche punkte wie quickgame
+	noch warten - career menü mit highscore per level
+RH - score screen mit highscore und gesamtpunkte
+EW - level freischaltung lösen
+
+YM - Lebenindex
+YM - animationen einfügen
+
+	infinite game
+YM - schiffwegfahrtsanimation.
+CM - endlose containergenerator
+CM - schiffgenerator
+
+
+(YM - Schiff ladehöhe index)
+
+ALLE - Sourcecode Javadoc (Jeder sein eigenes Zeug)
+
+RH - Anleitung
+RH - Projektmanagement
+EW - Zusammenfassung
+ALLE - Bug im Github für alle bekannten Probleme für die Zusammenfassung.
+CM - Test
+RH - Stick organisieren - Sourcecode
+YM - Klassendiagramm
