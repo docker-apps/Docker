@@ -1,7 +1,9 @@
 package com.docker.domain.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,6 +19,8 @@ import com.docker.domain.gameobject.Foreground;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 import com.docker.technicalservices.WorldStage;
+import com.docker.ui.menus.InGameMenu;
+import com.docker.ui.menus.ScoreScreen;
 
 public abstract class AbstractGame extends ScreenAdapter {
 
@@ -54,17 +58,29 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 			@Override
 			public boolean touchDown (int x, int y, int pointer, int button) {
-				return touchDownEvent(x, y, pointer, button);
+				boolean result = super.touchDown(x, y, pointer, button);
+				if(!result){
+					result = touchDownEvent(x, y, pointer, button);
+				}
+				return result;
 			}
 
 			@Override
 			public boolean touchDragged (int x, int y, int pointer) {
-				return touchDraggedEvent(x, y, pointer);
+				boolean result = super.touchDragged(x, y, pointer);
+				if(!result){
+					result = touchDraggedEvent(x, y, pointer);
+				}
+				return result;
 			}
 
 			@Override
 			public boolean touchUp (int x, int y, int pointer, int button) {
-				return touchUpEvent(x, y, pointer, button);
+				boolean result = super.touchUp(x, y, pointer, button);
+				if(!result){
+					result = touchUpEvent(x, y, pointer, button);
+				}
+				return result;
 			}
 		};		
 		background = new Background(this.stage.getWidth(), this.stage.getHeight());
@@ -163,6 +179,12 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE) ||
+				Gdx.input.isKeyPressed(Input.Keys.BACK))
+		{
+			application.setScreen(new InGameMenu(application));
+		}
+		
 		this.time += delta;
 
 		this.stage.act(Gdx.graphics.getDeltaTime());
@@ -173,8 +195,15 @@ public abstract class AbstractGame extends ScreenAdapter {
 		getLoadRating().calculateScore(getShip().getGrid());
 		getShip().setBreakValues(getLoadRating().getBreakValues());
 		this.foreground.setCapsizeValue(getLoadRating().getCapsizeValue());
+		if((!train.hasContainers() && !getCrane().isDeploying())|| lives <= 0 ){
+			gameOver();
+		}
 		if(showDebugInfo)
 			drawDebugInfo(this.stage.getBatch());
+		
+		
+		
+		
 	}
 
 	@Override
@@ -193,6 +222,11 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public int removeLive() {
 		this.lives--;
 		return this.lives;
+	}
+	
+	public void gameOver(){
+		getLoadRating().calculateScore(getShip().getGrid());
+		application.setScreen(new ScoreScreen(application, getLoadRating().getScore()));
 	}
 
 	public int getScore() {

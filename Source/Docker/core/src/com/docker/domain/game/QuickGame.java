@@ -15,6 +15,7 @@ public class QuickGame extends AbstractGame {
 		
 		setShip(level.getShip());
 		setTrain(level.getTrain());
+		setLives(level.getLifeCount());
 		setLoadRating(new LoadRating(getShip().getBreakThreshold(), getShip().getCapsizeThreshold(), 1));
 		getTrain().setSpeed(40);
 	}

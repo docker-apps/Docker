@@ -11,6 +11,7 @@ public class CareerGame extends AbstractGame {
 		this.setLives(level.getLifeCount());
 		this.setShip(level.getShip());
 		this.setTrain(level.getTrain());
+		this.setLives(level.getLifeCount());
 		setLoadRating(new LoadRating(ship.getBreakThreshold(), ship.getCapsizeThreshold(), 1));
 	}
 

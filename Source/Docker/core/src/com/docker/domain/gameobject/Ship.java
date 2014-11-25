@@ -132,11 +132,12 @@ public class Ship extends Actor {
 		int xGrid = (int) Math.floor((double) (x-xGridstart)/gridSize); 
         if(xGrid < 0){
         	xGrid = 0;
+        }else{
+        	float noSpace = this.gridWidth- (xGrid + containerLenght);
+        	if (noSpace < 0 ) {
+				xGrid = this.gridWidth-containerLenght;
+			}
         }
-        float noSpace = this.gridWidth- (xGrid + containerLenght);
-        if (noSpace < 0 ) {
-			xGrid = this.gridWidth-containerLenght;
-		}
 		return xGrid;
 	}
 	

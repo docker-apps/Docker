@@ -33,4 +33,11 @@ public class Docker extends Game {
 		if(history.size() > 0)
 			super.setScreen(history.pop());
 	}
+	
+	public void setMainmenu(){
+		while(history.size() > 0)
+			history.pop().dispose();
+		super.setScreen(new MainMenu(this));
+	}
+
 }
