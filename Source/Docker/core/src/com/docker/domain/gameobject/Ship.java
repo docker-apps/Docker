@@ -33,8 +33,6 @@ public class Ship extends Actor {
 	private TextureRegion bodyRight;
 	private TextureRegion tower;
 	private TextureRegion mast;
-	private TextureRegion indicatorLampWhite;
-	private TextureRegion indicatorLampRed;
 	private TextureRegion indicatorLampOn;
     private Boolean playContainerSound = true;
 
@@ -59,8 +57,6 @@ public class Ship extends Actor {
 		this.bodyRight = atlas.findRegion("ship_body_right");
 		this.tower = atlas.findRegion("ship_tower");
 		this.mast = atlas.findRegion("ship_mast");
-		this.indicatorLampWhite = atlas.findRegion("indicator_lamp_white");
-		this.indicatorLampRed = atlas.findRegion("indicator_lamp_red");
 		this.indicatorLampOn = atlas.findRegion("indicator_lamp_on");
 		
 		this.gridSize = this.bodyCenter.getRegionWidth();

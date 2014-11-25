@@ -60,7 +60,6 @@ public class Crane extends Actor {
 		float xDistance = Math.abs(this.getX() - x);
 		float yDistance = Math.abs(this.getY() - y);
 		float distance = (float) Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
-		float duration = distance / this.speed;
 		
 		// create a new Move-To Action
 		MoveToAction moveAction = new MoveToAction();
