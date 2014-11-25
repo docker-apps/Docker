@@ -42,8 +42,9 @@ public class Ship extends Actor {
 	private TextureRegion indicatorLampWhite;
 	private TextureRegion indicatorLampRed;
 	private TextureRegion indicatorLampOn;
-	
-	public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
+    private Boolean playContainerSound;
+
+    public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
 		super();
 		
 		if(gridWidth <= 1)
@@ -93,8 +94,10 @@ public class Ship extends Actor {
 			Vector2 realCoords = getRealCoord(gridCoords);
 			container.setPosition(realCoords.x, realCoords.y);
 			this.containers.add(container);
-			containerSound.play();
-			createTopLineAndGrid();
+            if (playContainerSound) {
+                containerSound.play();
+            }
+            createTopLineAndGrid();
 			return true;
 		}else{
 			return false;
@@ -382,5 +385,8 @@ public class Ship extends Actor {
 	public void setBreakValues(float[] breakValues) {
 		this.breakValues = breakValues;
 	}
-	
+
+    public void playContainerSound(Boolean playSound) {
+        this.playContainerSound = playSound;
+    }
 }

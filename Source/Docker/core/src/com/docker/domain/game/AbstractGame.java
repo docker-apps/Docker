@@ -18,6 +18,7 @@ import com.docker.domain.gameobject.Crane;
 import com.docker.domain.gameobject.Foreground;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
+import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.WorldStage;
 //import com.docker.ui.menus.InGameMenu;
 //import com.docker.ui.menus.ScoreScreen;
@@ -208,8 +209,14 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	@Override
 	public void show(){
-		backgroundMusic.play();
-		Gdx.input.setInputProcessor(this.stage);
+        if (Persistence.isMusicOn()) {
+            backgroundMusic.setVolume(Persistence.getVolume());
+            backgroundMusic.play();
+        }
+        if (!Persistence.isSoundOn()) {
+            getShip().playContainerSound(false);
+        }
+        Gdx.input.setInputProcessor(this.stage);
 		Gdx.input.setCatchBackKey(true);
 	}
 	@Override
