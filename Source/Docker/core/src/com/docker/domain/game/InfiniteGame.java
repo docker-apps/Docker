@@ -31,6 +31,7 @@ public class InfiniteGame extends AbstractGame{
 		gameMenuButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+            	//TODO:Ship create und ship abfahren
             	setShip(new Ship(6, 6, 2, 2, 0, 0));
             }
         });
@@ -43,5 +44,9 @@ public class InfiniteGame extends AbstractGame{
 		super.render(delta);
 		if(shipsRemaining <= 0)
 			super.gameOver();
+		//Like that can the button be at first position
+		this.stage.getBatch().begin();
+		gameMenuButton.draw(this.stage.getBatch(), 1);
+		this.stage.getBatch().end();
 	}
 }

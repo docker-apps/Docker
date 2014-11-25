@@ -20,8 +20,8 @@ import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.WorldStage;
-//import com.docker.ui.menus.InGameMenu;
-//import com.docker.ui.menus.ScoreScreen;
+import com.docker.ui.menus.InGameMenu;
+import com.docker.ui.menus.ScoreScreen;
 
 public abstract class AbstractGame extends ScreenAdapter {
 
@@ -183,7 +183,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE) ||
 				Gdx.input.isKeyPressed(Input.Keys.BACK))
 		{
-			//application.setScreen(new InGameMenu(application));
+			application.setScreen(new InGameMenu(application));
 		}
 		
 		this.time += delta;
@@ -233,7 +233,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	
 	public void gameOver(){
 		getLoadRating().calculateScore(getShip().getGrid());
-		//application.setScreen(new ScoreScreen(application, getLoadRating().getScore()));
+		application.setScreen(new ScoreScreen(application, getLoadRating().getScore()));
 	}
 
 	public int getScore() {
