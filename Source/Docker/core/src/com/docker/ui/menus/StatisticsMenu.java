@@ -33,17 +33,17 @@ public class StatisticsMenu extends AbstractMenu {
             }
         });
         setLabelMap();
-
-        table.add(title).padBottom(0).row();
-        loadStatistics(table);
-        table.add(backButton).bottom().row();
-        ScrollPane scrollpane = new ScrollPane(table);
+        
+        Table statisticsTable = new Table();
+        statisticsTable.add(title).padBottom(10).row();
+        loadStatistics(statisticsTable);
+        statisticsTable.add(backButton).bottom().padBottom(5).row();
+        ScrollPane scrollpane = new ScrollPane(statisticsTable);
         scrollpane.setPosition(0, 0);
         scrollpane.setSize(Docker.WIDTH, Docker.HEIGHT);
-        scrollpane.setScrollY(500);
+        scrollpane.setFlingTime(2);
         scrollpane.setupOverscroll(20, 30, 200);
-        this.stage = new Stage(viewport);
-        this.stage.addActor(scrollpane);
+        this.table.addActor(scrollpane);
     }
 
     private void loadStatistics(Table table) {
@@ -51,8 +51,8 @@ public class StatisticsMenu extends AbstractMenu {
         for (ObjectMap.Entry<String, Object> stringObjectEntry : statisticsMap) {
             Label l = new Label(labelMap.get(stringObjectEntry.key), skin);
             Label v = new Label(stringObjectEntry.value.toString(), skin);
-            table.add(l).width(300).left();
-            table.add(v).row().padBottom(0);
+            table.add(l).width(300).left().padBottom(5);
+            table.add(v).row().padBottom(5);
         }
     }
 

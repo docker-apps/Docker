@@ -30,8 +30,11 @@ public class Docker extends Game {
 	}
 	
 	public void setLastScreen(){
-		if(history.size() > 0)
+		if(history.size() > 0){
+			Screen old = this.getScreen();
 			super.setScreen(history.pop());
+			old.dispose();
+		}
 	}
 	
 	public void setMainmenu(){
