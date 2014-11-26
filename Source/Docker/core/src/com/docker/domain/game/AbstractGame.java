@@ -205,10 +205,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 		}
 		if(showDebugInfo)
 			drawDebugInfo(this.stage.getBatch());
-		
-		
-		
-		
 	}
 
 	@Override
