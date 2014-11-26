@@ -22,7 +22,7 @@ import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.WorldStage;
-import com.docker.ui.menus.InGameMenu;
+import com.docker.ui.menus.PauseMenu;
 import com.docker.ui.menus.ScoreScreen;
 
 public abstract class AbstractGame extends ScreenAdapter {
@@ -97,33 +97,74 @@ public abstract class AbstractGame extends ScreenAdapter {
         setCrane(new Crane(80, Docker.WIDTH/2, Docker.HEIGHT));
 	}
 
+	/**
+	 * This method gets called on any unhandled touchDown Event on the screen.
+	 * 
+	 * @param x the x-Position of the touch event
+	 * @param y the y-Position of the touch event
+	 * @param pointer the pointer for the event.
+	 * @param button the button, if one was pressed
+	 * @return
+	 */
 	public boolean touchDownEvent(int x, int y, int pointer, int button){
 		if(canPlayerAct())
 			previewPosition(x, y);
 		return true;
 	}
 
+	/**
+	 * This method gets called on any unhandled touchDragged event on the screen.
+	 * 
+	 * @param x the x-Position of the touch event
+	 * @param y the y-Position of the touch event
+	 * @param pointer the pointer for the event.
+	 * @return
+	 */
 	public boolean touchDraggedEvent(int x, int y, int pointer){
 		if(canPlayerAct())
 			previewPosition(x, y);
 		return true;
 	}
 
+	/**
+	 * This method gets called on any unhandled touchUp Event on the screen.
+	 * 
+	 * @param x the x-Position of the touch event
+	 * @param y the y-Position of the touch event
+	 * @param pointer the pointer for the event.
+	 * @param button the button, if one was pressed
+	 * @return
+	 */
 	public boolean touchUpEvent (int x, int y, int pointer, int button) {
 		if(canPlayerAct())
 			deployContainer(x, y);
 		return true;
 	}
 
+	/**
+	 * @return true if the player is allowed to do something (i.e. position a container)
+	 */
 	public boolean canPlayerAct(){
 		return !getCrane().isDeploying() && getTrain().hasContainers();
 	}
 
+	/**
+	 * Display a preview container on the ship.
+	 * 
+	 * @param x the x-position for the preview container
+	 * @param y the y-position for the preview container
+	 */
 	public void previewPosition(int x, int y){
 		Container container = getTrain().getFirstContainer();
 		getShip().setPreviewContainer(getXPosition(x, y, container), container);
 	}
 
+	/**
+	 * Deploy a container on the ship, to the designated coordinates.
+	 * 
+	 * @param x the x-Position to which the container should be deployed
+	 * @param y the y-Position to which the container should be deployed
+	 */
 	public void deployContainer(int x, int y){
 		Container container = getTrain().getFirstContainer();
 		Vector2 realCoords = getShip().getRealCoord(getXPosition(x, y, container), container);
@@ -147,6 +188,11 @@ public abstract class AbstractGame extends ScreenAdapter {
 		return fingerPos - (container.getLength() / 2) * container.getElementWidth();
 	}
 
+	/**
+	 * Draw debug Infos, such as the current Loadrating values.
+	 * 
+	 * @param batch
+	 */
 	protected void drawDebugInfo(Batch batch){
 		float capsizeValue = getLoadRating().getCapsizeValue();
 
@@ -185,9 +231,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE) ||
 				Gdx.input.isKeyJustPressed(Input.Keys.BACK))
 		{
-			TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
-			
-			application.setScreen(new InGameMenu(application, screenCap));
+			displayPauseScreen();
 		}
 		
 		this.time += delta;
@@ -207,6 +251,16 @@ public abstract class AbstractGame extends ScreenAdapter {
 			drawDebugInfo(this.stage.getBatch());
 	}
 
+	private void displayPauseScreen() {
+		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();			
+		application.setScreen(new PauseMenu(application, screenCap));
+	}
+	
+	@Override
+	public void pause(){
+		displayPauseScreen();
+	}
+
 	@Override
 	public void show(){
         if (Persistence.isMusicOn()) {
@@ -219,6 +273,7 @@ public abstract class AbstractGame extends ScreenAdapter {
         Gdx.input.setInputProcessor(this.stage);
 		Gdx.input.setCatchBackKey(true);
 	}
+	
 	@Override
 	public void dispose() {
 		this.backgroundMusic.dispose();
@@ -233,7 +288,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 	
 	public void gameOver(){
 		getLoadRating().calculateScore(getShip().getGrid());
-		application.setScreen(new ScoreScreen(application, getLoadRating().getScore()));
+		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
+		application.setScreen(new ScoreScreen(application, screenCap, getLoadRating().getScore()));
 	}
 
 	public int getScore() {
