@@ -3,34 +3,25 @@ package com.docker.domain.gameobject;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.GroupLayout.Alignment;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap.Filter;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.docker.Docker;
-import com.docker.domain.game.LoadRating;
 
 public class Ship extends Actor {
 	private int gridWidth;
@@ -45,13 +36,13 @@ public class Ship extends Actor {
 	private float yGridstart;
 	private float xGridstart;
 	private float[] breakValues;
-	private boolean isCapsizing = false;
 	private boolean isBreaking = false;
+	public boolean isTakingOff;
 	private boolean isStaticAnimationRunning = false;
 	private int breakPos;
 
-    private Sound containerSound;
-	
+	private Sound containerSound;
+
 	private TextureRegion bodyLeft;
 	private TextureRegion bodyCenter;
 	private TextureRegion bodyRight;
@@ -61,13 +52,14 @@ public class Ship extends Actor {
 	private TextureRegion bodyBrokenLeft;
 	private TextureRegion bodyBrokenRight;
 	private FrameBuffer fbo;
-	
+	private ShaderProgram snapshotShader;
+
 	public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
 		super();
-		
+
 		if(gridWidth <= 1)
 			throw new IllegalArgumentException();	
-		
+
 		this.setX(x);
 		this.setY(y);
 		this.gridWidth = gridWidth;
@@ -86,18 +78,18 @@ public class Ship extends Actor {
 		this.indicatorLampOn = atlas.findRegion("indicator_lamp_on");
 		this.bodyBrokenLeft = atlas.findRegion("ship_body_broken_left");
 		this.bodyBrokenRight = atlas.findRegion("ship_body_broken_right");
-		
+
 		this.gridSize = this.bodyCenter.getRegionWidth();
 
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-		
+
 		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
 		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
-		
+
 		containerSound = Gdx.audio.newSound(Gdx.files.internal("container_load.wav"));
 		createTopLineAndGrid();
 	}
-	
+
 	/**
 	 * Adds the Container if possible at the given X position
 	 * if returned false, it was not possible to set the Container
@@ -119,7 +111,7 @@ public class Ship extends Actor {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Sets a Preview Container, where the Container possible could be set.
 	 * 
@@ -140,7 +132,7 @@ public class Ship extends Actor {
 			previewContainer = null;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param x
@@ -149,16 +141,16 @@ public class Ship extends Actor {
 	 */
 	private int getXGrid(float x, int containerLenght) {
 		int xGrid = (int) Math.floor((double) (x-xGridstart)/gridSize); 
-        if(xGrid < 0){
-        	xGrid = 0;
-        }
-        float noSpace = this.gridWidth- (xGrid + containerLenght);
-        if (noSpace < 0 ) {
+		if(xGrid < 0){
+			xGrid = 0;
+		}
+		float noSpace = this.gridWidth- (xGrid + containerLenght);
+		if (noSpace < 0 ) {
 			xGrid = this.gridWidth-containerLenght;
 		}
 		return xGrid;
 	}
-	
+
 
 	/**
 	 * 
@@ -172,8 +164,8 @@ public class Ship extends Actor {
 		gridCoords.y = getYGrid((int) gridCoords.x, containerLenght);
 		return gridCoords; 
 	}
-	
-	
+
+
 	/**
 	 * Returns Coordinates where the Container will be places
 	 * If it returns null the Container can't be placed at this place.
@@ -190,7 +182,7 @@ public class Ship extends Actor {
 		}
 		return realCoords;
 	}
-	
+
 
 	/**
 	 * 
@@ -204,60 +196,124 @@ public class Ship extends Actor {
 		return realCoords;
 	}
 
-
 	/**
-	 * Method which will be called to make the ship sail away.
+	 * Creates a TextureRegion with the current image data of the whole ship.
 	 * 
-	 * @param container
-	 * @param ship
-	 * @param x
-	 * @param y
-	 */
-	public void takeOff(Container container, final Ship ship, final float x, float y){
-		// add the container to the crane
-		
-//		this.setContainer(container);
-		
-		// calculate the animation duration from the distance to the target and the cranes speed
-//		float xDistance = Math.abs(this.getX() - x);
-//		float yDistance = Math.abs(this.getY() - y);
-//		float distance = (float) Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
-//		float duration = distance / this.speed;
-		
-		// create a new Move-To Action
-//		MoveToAction moveAction = new MoveToAction();
-//		moveAction.setPosition(x, y);
-//		moveAction.setDuration(duration);
-		
-		// create an action which deploys the container to the ship
-//		Action completeAction = new Action(){
-//		    public boolean act( float delta ) {
-//		        // give the container to the ship here, preferrably to a grid coordinate
-//		    	ship.addContainer(x, removeContainer());
-//		    	return true;
-//		    }
-//		};
-		
-		// chain the two actions and add it to this actor
-//		SequenceAction actions = new SequenceAction(moveAction, completeAction);
-//		this.addAction(actions);
-	}
-	
-
-	/**
-	 * Can be called to check if the ship is taking off.
+	 * Do not call this in the draw() method.
 	 * 
 	 * @return
 	 */
-	public boolean isTakingOff(){
-		return this.getActions().size > 0;
+	private TextureRegion takeSnapshot(){
+		// init framebuffer and shader (needed to draw alpha correctly in the framebuffer
+		if(this.fbo == null){
+			fbo = new FrameBuffer(Format.RGBA8888, (int)getStage().getWidth(), (int)getStage().getHeight(), false);
+			fbo.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		}
+		if(this.snapshotShader == null){
+			String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+					+ "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
+					+ "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
+					+ "uniform mat4 u_projTrans;\n" //
+					+ "varying vec4 v_color;\n" //
+					+ "varying vec2 v_texCoords;\n" //
+					+ "\n" //
+					+ "void main()\n" //
+					+ "{\n" //
+					+ "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
+					+ "   v_color.a = v_color.a * (256.0/255.0);\n" //
+					+ "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
+					+ "   gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+					+ "}\n";
+			String fragmentShader = "#ifdef GL_ES\n" //
+					+ "#define LOWP lowp\n" //
+					+ "precision mediump float;\n" //
+					+ "#else\n" //
+					+ "#define LOWP \n" //
+					+ "#endif\n" //
+					+ "varying LOWP vec4 v_color;\n" //
+					+ "varying vec2 v_texCoords;\n" //
+					+ "uniform sampler2D u_texture;\n" //
+					+ "void main()\n"//
+					+ "{\n" //
+					+ "  vec4 initialColor = v_color * texture2D(u_texture, v_texCoords);\n" //
+					+ "  gl_FragColor = vec4(initialColor.rgb * initialColor.a, initialColor.a);\n" //
+					+ "}";
+			snapshotShader = new ShaderProgram(vertexShader, fragmentShader);
+			if (snapshotShader.isCompiled() == false) throw new IllegalArgumentException("Error compiling shader: " + snapshotShader.getLog());
+
+		}
+
+		fbo.begin();
+		Batch batch = this.getStage().getBatch();
+		Gdx.gl.glClearColor(0f, 0f, 0f, 0f); //transparent black
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); //clear the color buffer
+		batch.setShader(snapshotShader);
+		batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		batch.enableBlending();
+		batch.begin();
+		this.draw(batch, 1f);
+		//reset batch
+		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		batch.end();
+		snapshotShader.end();
+		fbo.end();
+
+		TextureRegion fboRegion = new TextureRegion(fbo.getColorBufferTexture());
+		fboRegion.flip(false, true);
+		return fboRegion;
 	}
-	
+
+	private void removeFromStage(){
+		this.clearActions();
+		this.clearListeners();
+		getStage().getRoot().removeActor(this);
+	}
+
+	/**
+	 * Makes the ship sail away to the left, out of the screen.
+	 * 
+	 * Initiates an animation and sets isTakingOff = true
+	 * 
+	 */
+	public void takeOff(){
+		this.previewContainer = null;
+		this.isTakingOff = true;
+		TextureRegion snapshot = this.takeSnapshot();
+
+		Image img = new Image(snapshot);
+
+		// create a new Move-To Action
+		MoveToAction moveAction = new MoveToAction();
+		moveAction.setPosition(img.getWidth()*-1, 0f);
+		moveAction.setDuration(5);
+		moveAction.setInterpolation(Interpolation.pow2In);
+
+		// create an action which deploys the container to the ship
+		Action completeAction = new Action(){
+			public boolean act( float delta ) {
+				removeFromStage();
+				return true;
+			}
+		};
+
+		// chain the two actions and add it to this actor
+		SequenceAction actions = new SequenceAction(moveAction, completeAction);
+		img.addAction(actions);
+		this.getStage().addActor(img);
+		this.isStaticAnimationRunning = true;
+	}
+
+
+	/**
+	 * Capsizes the ship. The direction is dependent on the capsizeValue.
+	 * 
+	 * Initiates an animation.
+	 * 
+	 * @param capsizeValue
+	 */
 	public void capsize(float capsizeValue){
-		this.isCapsizing = true;	
 		TextureRegion region = takeSnapshot();
-		
-		
+
 		Ship.addCapsizeAnimation(this, capsizeValue);
 
 		Image img = new Image(region);
@@ -265,7 +321,15 @@ public class Ship extends Actor {
 		this.getStage().addActor(img);
 		this.isStaticAnimationRunning = true;
 	}
-	
+
+	/**
+	 * Add a capsizing animation in form of an Action to the specified actor.
+	 * 
+	 * Can be used for the capsizing animation (of course) as well as for the breaking animation
+	 * 
+	 * @param actor The actor to which should be animated.
+	 * @param capsizeValue if positive, the ship will capsize to the left, if negative, to the right.
+	 */
 	private static void addCapsizeAnimation(Actor actor, float capsizeValue){
 		// define animation
 		MoveToAction moveAction = new MoveToAction();
@@ -281,36 +345,29 @@ public class Ship extends Actor {
 		rotateAction.setInterpolation(Interpolation.exp5Out);
 		actor.addAction(rotateAction);
 	}
-	
-	private TextureRegion takeSnapshot(){
-		fbo = new FrameBuffer(Format.RGBA8888, (int)Docker.WIDTH, (int)Docker.HEIGHT, false);
-		fbo.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		TextureRegion fboRegion = new TextureRegion(fbo.getColorBufferTexture());
-		fboRegion.flip(false, true);
 
-		fbo.begin();
-		Batch batch = this.getStage().getBatch();
-		batch.begin();
-		this.draw(batch, 1f);
-		batch.end();
-		fbo.end();
-		
-		return fboRegion;
-	}
-	
+
+	/**
+	 * Breaks the ship in half, at the specified position.
+	 * 
+	 * Initiates an animation and sets isBreaking = true
+	 * 
+	 * @param breakPosition The (x-Grid) position, at which the ship should break
+	 */
 	public void breakShip(int breakPosition){
 		float breakingXPos = this.xGridstart + this.gridSize*breakPosition;
 		this.isBreaking = true;
+		this.previewContainer = null;
 		TextureRegion fboRegion1 = takeSnapshot();
 		TextureRegion fboRegion2 = takeSnapshot();
-		
+
 		//left part
 		fboRegion1.setRegionWidth((int)breakingXPos);
 		Image img = new Image(fboRegion1);
 		img.setOrigin(breakingXPos, this.getY());
 		addCapsizeAnimation(img, -1);
 		this.getStage().addActor(img);
-		
+
 		//right part
 		fboRegion2.setRegionX((int)breakingXPos);
 		fboRegion2.setRegionWidth(fbo.getWidth() - (int)breakingXPos);
@@ -328,7 +385,7 @@ public class Ship extends Actor {
 		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
 		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
 	}
-	
+
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
 		if(isStaticAnimationRunning == false){
@@ -350,17 +407,17 @@ public class Ship extends Actor {
 			float bodyRightX = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*(this.gridWidth-2));
 			batch.draw(this.bodyRight, bodyRightX, this.getY());
 			batch.draw(this.tower, bodyRightX+this.bodyRight.getRegionWidth()-this.tower.getRegionWidth()-1, this.getY()+this.bodyRight.getRegionHeight());
-			
+
 			// draw preview Container
 			if (previewContainer != null) {
 				previewContainer.draw(batch, parentAlpha);
 			}
-			
+
 			// draw Containers
 			for (Container container : containers) {
 				container.draw(batch, parentAlpha);
 			}
-			
+
 			float lampsOffsetX = this.getX() + this.bodyLeft.getRegionWidth() - 
 					this.getElementWidth()/2-this.indicatorLampOn.getRegionWidth()/2;
 			float lampsOffsetY = this.getY()+34;
@@ -382,7 +439,7 @@ public class Ship extends Actor {
 			}
 		}	
 	}
-	
+
 	@Override
 	public float getWidth(){
 		return 
@@ -390,11 +447,11 @@ public class Ship extends Actor {
 				this.bodyCenter.getRegionWidth()*(this.gridWidth-2) + 
 				this.bodyRight.getRegionWidth();
 	}
-	
+
 	public float getElementWidth(){
 		return this.bodyCenter.getRegionWidth();
 	}
-	
+
 	/**
 	 * Returns on with GridY the Container fits, 
 	 * if result is negativ, it's not possible to Fit it in this GridX
@@ -412,7 +469,7 @@ public class Ship extends Actor {
 		}
 		return topline;
 	}
-	
+
 	public void createTopLineAndGrid(){
 		this.topLine = new int[gridWidth];
 		this.grid = new float[gridWidth][gridHeight];
@@ -431,7 +488,7 @@ public class Ship extends Actor {
 			}
 		}
 	} 
-	
+
 	public float[][] getGrid(){
 		return this.grid;
 	}
@@ -479,5 +536,17 @@ public class Ship extends Actor {
 	public void setBreakValues(float[] breakValues) {
 		this.breakValues = breakValues;
 	}
-	
+
+	public boolean isBreaking() {
+		return isBreaking;
+	}
+
+	public boolean isTakingOff() {
+		return isTakingOff;
+	}
+
+	public boolean isStaticAnimationRunning() {
+		return isStaticAnimationRunning;
+	}
+
 }
