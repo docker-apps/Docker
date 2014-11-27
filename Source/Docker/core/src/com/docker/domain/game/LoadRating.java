@@ -7,7 +7,6 @@ public class LoadRating {
 	private float breakThreshold; //test with 5
 	private float capsizeThreshold; //test with 5
 	private float[] breakValues;
-	private float breakValueSum;
 	private float capsizeValue;
 	private float handicapFactor;
 	private int score;
@@ -23,6 +22,10 @@ public class LoadRating {
 		
 	}
 
+	/**
+	 * Calculates the load rating from a given loadTable and writes the calculated values into the breakValue, capsizeValue, and beautyValue
+	 * @param loadTable
+	 */
 	public void calculate(float[][] loadTable){
 		this.setLoadTable(loadTable);
 		this.calculateLoadDelta();
@@ -31,10 +34,13 @@ public class LoadRating {
 		this.calculateBeauty();
 	}
 	
+	/**
+	 * Calculates the score from a given loadTable, includes the calculate() method
+	 * @param loadTable
+	 */
 	public void calculateScore(float[][] loadTable){
 		this.calculate(loadTable);
 		float tempscore;
-		float tempBreak;
 		float tempCapsize;
 		float tempBeauty;
 		float factor;
@@ -54,8 +60,8 @@ public class LoadRating {
 		score = (int)Math.round(tempscore*handicapFactor);
 	}
 	
-	/*
-	 * returns a value which could be negative or positive, |values| larger than 1 mean
+	/**
+	 * writes a value into capsizeValue which could be negative or positive, |values| larger than 1 mean
 	 * the ship will capsize. If the Values are positive there is more weight on the
 	 * leftern half of the ship, if it is negative there is more weight on the 
 	 * rightern half.
@@ -76,14 +82,12 @@ public class LoadRating {
 		
 	}
 	
-	/*
-	 * returns an array of values which are positive, values larger than 1 mean
+	/**
+	 * writes an array of values into breakValues which are positive, values larger than 1 mean
 	 * the ship will burst.
 	 */
 	private void calculateBreak() {
 		breakValues = new float[loadTable.length];
-		breakValueSum = 0;
-		
 		for (int i = 0; i < breakValues.length; i++) {
 			if(i==0){
 				breakValues[i] = loadDeltas[i]/breakThreshold;
@@ -96,10 +100,12 @@ public class LoadRating {
 					breakValues[i] = loadDeltas[i]/breakThreshold;
 				}
 			}
-			breakValueSum += breakValues[i];
 		}
 	}
 	
+	/**
+	 * writes an integer into beautyValue which reaches from 10 to 0. 10 is the highest value and 0 the lowest.
+	 */
 	private void calculateBeauty(){
 		beauty = 10;
 		int[] holes = new int[loadTable[0].length];
@@ -126,6 +132,9 @@ public class LoadRating {
 		}
 	}
 
+	/**
+	 * calculates the loadDelta between the columns of the loadTable. The delta values will be written into the loadDeltas array.
+	 */
 	private void calculateLoadDelta(){
 		loadSums = new float[loadTable.length];
 		loadDeltas = new float[loadTable.length-1];
@@ -142,26 +151,50 @@ public class LoadRating {
 		}
 	}
 	
+	/**
+	 * returns the score
+	 * @return score
+	 */
 	public int getScore() {
 		return score;
 	}
 	
+	/**
+	 * returns the capsizeValue
+	 * @return capsizeValue
+	 */
 	public float getCapsizeValue() {
 		return capsizeValue;
 	}
 	
+	/**
+	 * returns the breakValues
+	 * @return breakValues
+	 */
 	public float[] getBreakValues(){
 		return breakValues;
 	}
 
+	/**
+	 * sets the new loadTable
+	 * @param loadTable
+	 */
 	private void setLoadTable(float[][] loadTable) {
 		this.loadTable = loadTable;
 	}
 
+	/**
+	 * returns an array of the loadSums;
+	 * @return loadSums
+	 */
 	public float[] getLoadSums() {
 		return loadSums;
 	}
 
+	/**
+	 * sets an array of the loadSums;
+	 * @param loadSums
+	 */
 	public void setLoadSums(float[] loadSums) {
 		this.loadSums = loadSums;
 	}

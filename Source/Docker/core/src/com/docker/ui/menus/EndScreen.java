@@ -10,7 +10,7 @@ import com.docker.Docker;
 public class EndScreen extends AbstractMenu {
 
 	private TextButton endGameButton = new TextButton("endgame", skin);
-    private Label title = new Label("Score",skin);
+    private Label title = new Label("The Game Is Over!!!",skin);
     
 
     public EndScreen(final Docker application, TextureRegion background, int score, int highscore) {

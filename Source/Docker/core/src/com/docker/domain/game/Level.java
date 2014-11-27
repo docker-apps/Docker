@@ -43,6 +43,11 @@ public class Level {
         this.trainSpeed = trainSpeed;
 	}
 
+	/**
+	 * Loads the level from persistence with the given id
+	 * @param id
+	 * @return level
+	 */
     public static Level loadLevel(String id){
         Level level = parseLevel(Persistence.getLevel(id));
         if (level != null) {
@@ -52,14 +57,19 @@ public class Level {
         return null;
 	}
 	
+    /**
+     * Loads a random level with the hardcoded parameters.
+     * @return level
+     */
 	public static Level loadLevel(){
 		Level level = new Level(new LinkedList<Integer>(), new LinkedList<Integer>(), 5, 10, 3, 5, 20, 60, 15);
 		level.generateRandomLevel();
 		return level;
 	}
 	
-	//persistence method
-
+	/**
+	 * Generates a predefined level with the given class variables. 
+	 */
 	private void generateSpecifiedLevel(){
 		//ship does not need carryingCapacity
 		this.ship = new Ship(shipLength, shipHeight, capsizeThreshold, breakThreshold, 0, 0);
@@ -72,6 +82,9 @@ public class Level {
 		this.initTrainPosition();
 	}
 	
+	/**
+	 * Generates a random level with the given class variables.
+	 */
 	private void generateRandomLevel(){
 		LinkedList<Container> allContainers = new LinkedList<Container>();
 		int line = shipLength;
@@ -120,6 +133,11 @@ public class Level {
 		this.initShipPosition();
 	}
 	
+	/**
+	 * Generates a random weight for the container, depending on the length of it.
+	 * @param containerLength
+	 * @return randomWeight (1-3 if container length is 1, or 1-6 if container length is between 2 and 4)
+	 */
 	private int generateRandomWeight(int containerLength){
 		//one-size container have a weight from 1 to 3
 		//1-2 80%, 3 20%
@@ -137,6 +155,11 @@ public class Level {
 		return MAXCONTAINERWEIGHT;
 	}
 
+	/**
+	 * Parses level from persistence and returns a new level.
+	 * @param level
+	 * @return level
+	 */
     private static Level parseLevel(JsonValue level) {
         if (level!= null) {
             List<Integer> containerLengths = new ArrayList<Integer>();
@@ -154,12 +177,18 @@ public class Level {
         return null;
     }
     
+    /**
+     * Initializes the position of the ship.
+     */
     private void initShipPosition(){
     	this.ship.setPosition(
     			(Docker.WIDTH-ship.getWidth())/2-20f,
     			10f);
     }
     
+    /**
+     * Initializes the position of the train.
+     */
     private void initTrainPosition(){
     	this.train.setPosition(0f, Docker.HEIGHT-23);
     }
