@@ -23,9 +23,9 @@ public class QuickGame extends AbstractGame {
 	public void render(float delta) {
 		super.render(delta);
 		
-		if(isGameOver() && !isScoreScreen()){
+		if(isGameOver() && !isEndScreen()){
 //			Add overlay Code here with Button and Score screen
-			setScoreScreen(true);
+			setEndScreen(true);
 		}
 	}
 

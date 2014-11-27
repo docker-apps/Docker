@@ -23,7 +23,7 @@ import com.docker.domain.gameobject.Train;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.WorldStage;
 import com.docker.ui.menus.PauseMenu;
-import com.docker.ui.menus.ScoreScreen;
+import com.docker.ui.menus.EndScreen;
 
 public abstract class AbstractGame extends ScreenAdapter {
 
@@ -41,7 +41,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	protected Crane crane;
 	protected LoadRating loadRating;
 	protected boolean gameOver;
-	protected boolean scoreScreen;
+	protected boolean endScreen;
 	protected Music backgroundMusic;
 	protected Foreground foreground;
 	protected Background background;
@@ -296,8 +296,25 @@ public abstract class AbstractGame extends ScreenAdapter {
 	
 	public void gameOver(){
 		getLoadRating().calculateScore(getShip().getGrid());
+		float[] breakArray = getLoadRating().getBreakValues();
+		boolean burst = false;
+		int burstpos = 0;
+		for (int i = 0; i < breakArray.length; i++) {
+			if(breakArray[i]>=1){
+				burst = true;
+				burstpos = i;
+			}
+		}
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
-		application.setScreen(new ScoreScreen(application, screenCap, getLoadRating().getScore()));
+		if(getLoadRating().getCapsizeValue()>=1 || getLoadRating().getCapsizeValue()<=-1){
+			ship.capsize(getLoadRating().getCapsizeValue());
+			application.setScreen(new EndScreen(application, screenCap));
+		}else if(burst){
+			ship.breakShip(burstpos);
+			application.setScreen(new EndScreen(application, screenCap));
+		}else{
+			application.setScreen(new EndScreen(application, screenCap, getLoadRating().getScore(), 3000));
+		}
 	}
 
 	public int getScore() {
@@ -368,12 +385,12 @@ public abstract class AbstractGame extends ScreenAdapter {
 		this.gameOver = gameOver;
 	}
 
-	public boolean isScoreScreen() {
-		return scoreScreen;
+	public boolean isEndScreen() {
+		return endScreen;
 	}
 
-	public void setScoreScreen(boolean scoreScreen) {
-		this.scoreScreen = scoreScreen;
+	public void setEndScreen(boolean endScreen) {
+		this.endScreen = endScreen;
 	}
 
 	public WorldStage getStage() {
