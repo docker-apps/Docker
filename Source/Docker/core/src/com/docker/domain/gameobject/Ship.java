@@ -2,6 +2,7 @@ package com.docker.domain.gameobject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.docker.Docker;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -326,6 +328,14 @@ public class Ship extends Actor {
 		this.getStage().addActor(img);
 		this.isStaticAnimationRunning = true;
 	}
+	
+	
+	public static Ship getRandomShip() {
+		int width = 5 + (int)(Math.random() * ((10 - 5) + 1));
+		 Ship ship = new Ship(width, 5, 5, 5, 0f, 0f);
+		 ship.setPosition((Docker.WIDTH-ship.getWidth())/2-20f, 10f);
+		return ship;
+	}
 
 	/**
 	 * Add a capsizing animation in form of an Action to the specified actor.
@@ -557,4 +567,5 @@ public class Ship extends Actor {
     public void playContainerSound(Boolean playSound) {
         this.playContainerSound = playSound;
     }
+
 }
