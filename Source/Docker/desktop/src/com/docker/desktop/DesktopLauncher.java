@@ -2,6 +2,7 @@ package com.docker.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.docker.Docker;
 
 public class DesktopLauncher {
@@ -10,7 +11,7 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height= 720;
 		// Diese Zeile nur einkommentieren, wenn sich bilddateien geändert haben.
-		//TexturePacker.process("../../../Documents/Grafik/deploy", "../android/assets/img", "docker");
+		TexturePacker.process("../../../Documents/Grafik/deploy", "../android/assets/img", "docker");
 
 		
 		new LwjglApplication(new Docker(), config);

@@ -1,6 +1,7 @@
 package com.docker.domain.gameobject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -48,8 +49,7 @@ public class Train extends Actor {
 	}
 	
 	public Train(Queue<Container> containerList, float speed){
-		this(speed, 0, 0);
-		this.containers = containerList;
+		this(containerList, speed, 0, 0);
 	}
 	
 	public Train(Queue<Container> containerList, float speed, float x, float y){
@@ -89,8 +89,12 @@ public class Train extends Actor {
                 container.setX((container.getWidth()*-1) - PLATFORM_OFFSET);
             }
         }
-        if (!toRemove.isEmpty()) containers.removeAll(toRemove);
-        // leben abziehen
+        if (!toRemove.isEmpty()){
+        	for (Container container : toRemove) {
+        		container.destroy(this.getStage());
+				containers.remove(container);
+			}
+        }
     }
 	
 	public boolean hasContainers(){

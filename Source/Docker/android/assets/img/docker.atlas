@@ -102,42 +102,42 @@ container_base_right
   orig: 21, 21
   offset: 0, 0
   index: -1
-container_explosion_
+container_explosion
   rotate: false
   xy: 674, 105
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: 1
-container_explosion_
+container_explosion
   rotate: false
   xy: 699, 105
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: 2
-container_explosion_
+container_explosion
   rotate: false
   xy: 724, 105
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: 3
-container_explosion_
+container_explosion
   rotate: false
   xy: 749, 105
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: 4
-container_explosion_
+container_explosion
   rotate: false
   xy: 774, 105
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: 5
-container_explosion_
+container_explosion
   rotate: false
   xy: 799, 105
   size: 21, 21

@@ -233,9 +233,14 @@ public abstract class AbstractGame extends ScreenAdapter {
 		{
 			displayPauseScreen();
 		}
-		if(Gdx.input.isKeyJustPressed(Keys.D)){		//this is just for us
+		// some useful debug commands
+		if(Gdx.input.isKeyJustPressed(Keys.D)){
 			this.showDebugInfo = !this.showDebugInfo;
 		}
+		if(Gdx.input.isKeyJustPressed(Keys.T))
+			this.getTrain().setSpeed(this.getTrain().getSpeed()*2);
+		else if(Gdx.input.isKeyJustPressed(Keys.R))
+			this.getTrain().setSpeed(this.getTrain().getSpeed()/2);
 		
 		this.time += delta;
 

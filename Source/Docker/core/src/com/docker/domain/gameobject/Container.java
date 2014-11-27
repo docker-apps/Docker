@@ -2,10 +2,14 @@ package com.docker.domain.gameobject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 
 public class Container extends Actor {
 
@@ -25,7 +29,6 @@ public class Container extends Actor {
 	private TextureRegion baseFront;
 	private TextureRegion number;
 	private TextureRegion label;
-
 	
 
 	/**
@@ -52,7 +55,7 @@ public class Container extends Actor {
 		this.baseFront = atlas.findRegion("container_base_front");
 		this.number = atlas.findRegions("nr").get(this.weight-1);
 		this.label = atlas.findRegions("label").get(this.length > 1 ? 0 : 1);
-
+		
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
 	
@@ -77,6 +80,13 @@ public class Container extends Actor {
 		this(container.getWeight(), container.getLength(), container.getColor(), container.getX(), container.getY());
 	}
 
+	public void destroy(Stage stage){
+		for (int i = 0; i < this.length; i++) {
+			ContainerExplosion explosion = new ContainerExplosion(this.getX()+i*this.getElementWidth(), this.getY());
+			stage.addActor(explosion);
+		}
+	}
+	
 	@Override
 	public void act(float delta) {
 		super.act(delta);
@@ -166,6 +176,35 @@ public class Container extends Actor {
 			return BLUE;
 		default:
 			return YELLOW;
+		}
+	}
+	
+	private class ContainerExplosion extends Actor{
+		private Array<AtlasRegion> explosion;
+		private Animation explosionAnimation;
+		private float stateTime;
+		
+		public ContainerExplosion(float x, float y){
+			this.setX(x);
+			this.setY(y);
+			this.stateTime = 0f;
+			
+			TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));	
+			this.explosion = atlas.findRegions("container_explosion");
+			this.explosionAnimation = new Animation(0.05f, explosion);
+
+		}
+		
+		@Override
+		public void act(float delta){
+			if(this.explosionAnimation.isAnimationFinished(stateTime))
+				this.remove();
+		}
+		
+		@Override
+		public void draw(Batch batch, float delta){
+			this.stateTime += Gdx.graphics.getDeltaTime();
+			batch.draw(this.explosionAnimation.getKeyFrame(stateTime), this.getX(), this.getY());
 		}
 	}
 }
