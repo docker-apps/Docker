@@ -17,18 +17,24 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.docker.Docker;
 
 public class Foreground extends Actor {
-	public static float DEFAULT_WATERLEVEL = 20;
+	private static float DEFAULT_WATERLEVEL = 20;
+	private static float LIFE_PADDING = 5;
 	
 	private float waterLevel;
 	private float capsizeValue;
 	private float bubbleXOffset;
+	private int remainingLives;
+	private int remainingShips;
 	
 	private TextureRegion dock;
 	private TextureRegion waterLevelBase;
 	private TextureRegion waterLevelMarkings;
 	private TextureRegion waterLevelBubble;
+	private TextureRegion liveContainer;
+	private TextureRegion liveSaver;
 	private Array<AtlasRegion> waterMovement;
 	private Array<AtlasRegion> shipReflection;
 	private Animation waterMovementAnimation;
@@ -36,6 +42,7 @@ public class Foreground extends Actor {
 	private List<Vector2> waterMovementPositions;
 	private ShapeRenderer shapeRenderer;
 	private float stateTime;
+
 	
 	/**
 	 * @param width The width over which the foreground spans. Usually equals the stages/screens width.
@@ -50,6 +57,8 @@ public class Foreground extends Actor {
 		this.shapeRenderer = new ShapeRenderer();
 		this.stateTime = 0f;
 		this.bubbleXOffset = 0f;
+		this.remainingLives = 0;
+		this.remainingShips = 0;
 		
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
 		this.dock = atlas.findRegion("fg_dock");
@@ -58,6 +67,8 @@ public class Foreground extends Actor {
 		this.waterLevelBubble = atlas.findRegion("water_level_bubble");
 		this.waterMovement = atlas.findRegions("fg_water_movement");
 		this.shipReflection = atlas.findRegions("fg_ship_reflection");
+		this.liveContainer = atlas.findRegion("live_container");
+		this.liveSaver = atlas.findRegion("live_saver");
 		
 		this.waterMovementAnimation = new Animation(0.2f, this.waterMovement);
 		this.waterMovementAnimation.setPlayMode(PlayMode.LOOP_PINGPONG);
@@ -154,7 +165,18 @@ public class Foreground extends Actor {
 				position.x = rand.nextFloat()*this.getWidth();
 				position.y = (this.getWaterLevel()-2);
 			}
-		}		
+		}
+		
+		//draw lives & ships
+		for (int i = 0; i < this.remainingLives; i++) {
+			float xOffset = (liveContainer.getRegionWidth()+LIFE_PADDING)*(i+1);
+			batch.draw(this.liveContainer, this.getWidth()-xOffset, Docker.HEIGHT-49);
+		}
+		float xOffset = LIFE_PADDING;
+		for (int i = 0; i < this.remainingShips; i++) {
+			batch.draw(this.liveSaver, xOffset, Docker.HEIGHT-49);
+			xOffset += (liveSaver.getRegionWidth()+LIFE_PADDING);
+		}
 	}
 
 	/**
@@ -173,5 +195,21 @@ public class Foreground extends Actor {
 	
 	public void setCapsizeValue(float capsizeValue){
 		this.capsizeValue = capsizeValue;
+	}
+
+	public int getRemainingLives() {
+		return remainingLives;
+	}
+
+	public void setRemainingLives(int lives) {
+		this.remainingLives = lives;
+	}
+
+	public int getRemainingShips() {
+		return remainingShips;
+	}
+
+	public void setRemainingShips(int ships) {
+		this.remainingShips = ships;
 	}
 }

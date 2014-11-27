@@ -38,7 +38,7 @@ public class LoadRating {
 		float tempCapsize;
 		float tempBeauty;
 		float factor;
-		System.out.println(breakValueSum+" "+breakThreshold+" "+capsizeThreshold+" "+capsizeValue);
+		
 		factor = 1;//(breakThreshold-breakValueSum)/breakThreshold;
 		//tempBreak = 300*(breakThreshold-breakValueSum)/breakThreshold;
 		if(1 > Math.abs(capsizeValue)){

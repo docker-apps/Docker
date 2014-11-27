@@ -215,6 +215,7 @@ public class Ship extends Actor {
 			fbo.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		}
 		if(this.snapshotShader == null){
+			// No idea how this shader works, but it is needed to blend alpha values correctly.
 			String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
 					+ "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
 					+ "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //

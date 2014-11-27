@@ -12,7 +12,7 @@ public class InfiniteGame extends AbstractGame{
 
 	private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 	private TextButton gameMenuButton = new TextButton("Play", skin);
-	private int shipsRemaining;
+	private int remainingShips;
 
 	public InfiniteGame(final Docker application) {
 		super(application);
@@ -21,7 +21,7 @@ public class InfiniteGame extends AbstractGame{
 		setShip(level.getShip());
 		setTrain(level.getTrain());
 		setLives(level.getLifeCount());
-		shipsRemaining = 3;
+		setRemainingShips(3);
 		setLoadRating(new LoadRating(getShip().getBreakThreshold(), getShip().getCapsizeThreshold(), 1));
 		
 
@@ -39,11 +39,20 @@ public class InfiniteGame extends AbstractGame{
 	@Override
 	public void render(float delta) {
 		super.render(delta);
-		if(shipsRemaining <= 0)
+		if(getRemainingShips() <= 0)
 			super.gameOver();
 		//Like that can the button be at first position
 		this.stage.getBatch().begin();
 		gameMenuButton.draw(this.stage.getBatch(), 1);
 		this.stage.getBatch().end();
+	}
+
+	public int getRemainingShips() {
+		return remainingShips;
+	}
+
+	public void setRemainingShips(int remainingShips) {
+		this.remainingShips = remainingShips;
+		this.foreground.setRemainingShips(remainingShips);
 	}
 }

@@ -6,35 +6,35 @@ filter: Nearest,Nearest
 repeat: none
 bg_bird
   rotate: false
-  xy: 102, 9
+  xy: 992, 122
   size: 7, 4
   orig: 7, 4
   offset: 0, 0
   index: 1
 bg_bird
   rotate: false
-  xy: 102, 2
+  xy: 864, 111
   size: 7, 3
   orig: 7, 3
   offset: 0, 0
   index: 2
 bg_bird
   rotate: false
-  xy: 158, 26
+  xy: 1003, 123
   size: 7, 3
   orig: 7, 3
   offset: 0, 0
   index: 4
 bg_bird
   rotate: false
-  xy: 169, 31
+  xy: 875, 111
   size: 7, 3
   orig: 7, 3
   offset: 0, 0
   index: 5
 bg_bird
   rotate: false
-  xy: 687, 91
+  xy: 979, 116
   size: 7, 2
   orig: 7, 2
   offset: 0, 0
@@ -102,44 +102,86 @@ container_base_right
   orig: 21, 21
   offset: 0, 0
   index: -1
+container_explosion_
+  rotate: false
+  xy: 674, 105
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: 1
+container_explosion_
+  rotate: false
+  xy: 699, 105
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: 2
+container_explosion_
+  rotate: false
+  xy: 724, 105
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: 3
+container_explosion_
+  rotate: false
+  xy: 749, 105
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: 4
+container_explosion_
+  rotate: false
+  xy: 774, 105
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: 5
+container_explosion_
+  rotate: false
+  xy: 799, 105
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: 6
 crane_body
   rotate: false
-  xy: 674, 109
+  xy: 824, 109
   size: 21, 17
   orig: 21, 17
   offset: 0, 0
   index: -1
 crane_cable
   rotate: false
-  xy: 724, 88
+  xy: 636, 24
   size: 5, 30
   orig: 5, 30
   offset: 0, 0
   index: -1
 crane_extension_left
   rotate: false
-  xy: 674, 97
+  xy: 849, 118
   size: 21, 8
   orig: 21, 8
   offset: 0, 0
   index: -1
 crane_extension_left_outer
   rotate: false
-  xy: 699, 110
+  xy: 874, 118
   size: 21, 8
   orig: 21, 8
   offset: 0, 0
   index: -1
 crane_extension_right
   rotate: false
-  xy: 699, 98
+  xy: 899, 118
   size: 21, 8
   orig: 21, 8
   offset: 0, 0
   index: -1
 crane_extension_right_outer
   rotate: false
-  xy: 118, 26
+  xy: 924, 118
   size: 21, 8
   orig: 21, 8
   offset: 0, 0
@@ -174,84 +216,98 @@ fg_water_movement
   index: 1
 fg_water_movement
   rotate: false
-  xy: 730, 125
+  xy: 118, 33
   size: 22, 1
   orig: 22, 1
   offset: 0, 0
   index: 2
 fg_water_movement
   rotate: false
-  xy: 143, 33
+  xy: 674, 92
   size: 22, 1
   orig: 22, 1
   offset: 0, 0
   index: 3
 fg_water_movement
   rotate: false
-  xy: 756, 125
+  xy: 705, 100
   size: 22, 1
   orig: 22, 1
   offset: 0, 0
   index: 4
 indicator_lamp_on
   rotate: false
-  xy: 674, 89
+  xy: 979, 122
   size: 9, 4
   orig: 9, 4
   offset: 0, 0
   index: -1
 label
   rotate: false
-  xy: 143, 26
+  xy: 849, 111
   size: 11, 3
   orig: 11, 3
   offset: 0, 0
   index: 1
 label
   rotate: false
-  xy: 773, 114
+  xy: 113, 2
   size: 3, 7
   orig: 3, 7
   offset: 0, 0
   index: 2
+live_container
+  rotate: false
+  xy: 102, 13
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
+live_saver
+  rotate: false
+  xy: 627, 72
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
 nr
   rotate: false
-  xy: 743, 111
+  xy: 627, 58
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 1
 nr
   rotate: false
-  xy: 743, 97
+  xy: 637, 58
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 2
 nr
   rotate: false
-  xy: 753, 111
+  xy: 642, 73
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 3
 nr
   rotate: false
-  xy: 753, 97
+  xy: 949, 116
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 4
 nr
   rotate: false
-  xy: 763, 111
+  xy: 959, 116
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 5
 nr
   rotate: false
-  xy: 763, 97
+  xy: 969, 116
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
@@ -307,7 +363,7 @@ ship_breakpoint_right
   index: -1
 ship_mast
   rotate: false
-  xy: 733, 92
+  xy: 645, 25
   size: 6, 29
   orig: 6, 29
   offset: 0, 0
@@ -321,7 +377,7 @@ ship_tower
   index: -1
 train_platform_center
   rotate: false
-  xy: 699, 122
+  xy: 674, 97
   size: 27, 4
   orig: 27, 4
   offset: 0, 0
@@ -349,7 +405,7 @@ train_platform_single
   index: -1
 train_wheel
   rotate: false
-  xy: 102, 17
+  xy: 102, 2
   size: 7, 7
   orig: 7, 7
   offset: 0, 0
@@ -363,7 +419,7 @@ water_level_base
   index: -1
 water_level_bubble
   rotate: false
-  xy: 180, 30
+  xy: 636, 16
   size: 5, 4
   orig: 5, 4
   offset: 0, 0

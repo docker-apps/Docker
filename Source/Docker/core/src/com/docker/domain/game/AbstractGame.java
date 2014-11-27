@@ -31,7 +31,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	protected WorldStage stage;
 	protected ExtendViewport viewport;
 	protected BitmapFont font;
-	protected boolean showDebugInfo = true;	
+	protected boolean showDebugInfo = false;	
 
 	protected int score;
 	protected double time;
@@ -43,8 +43,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 	protected boolean gameOver;
 	protected boolean scoreScreen;
 	protected Music backgroundMusic;
-	private Foreground foreground;
-	private Background background;
+	protected Foreground foreground;
+	protected Background background;
 
 	public AbstractGame(Docker application){
 		this.application = application;
@@ -233,6 +233,9 @@ public abstract class AbstractGame extends ScreenAdapter {
 		{
 			displayPauseScreen();
 		}
+		if(Gdx.input.isKeyJustPressed(Keys.D)){		//this is just for us
+			this.showDebugInfo = !this.showDebugInfo;
+		}
 		
 		this.time += delta;
 
@@ -314,6 +317,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	public void setLives(int lives) {
 		this.lives = lives;
+		this.foreground.setRemainingLives(lives);
 	}
 
 	public Ship getShip() {
