@@ -29,7 +29,8 @@ public class InfiniteGame extends AbstractGame{
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	//TODO:Ship create und ship abfahren
-            	setShip(new Ship(6, 6, 2, 2, 0, 0));
+            	getShip().remove();
+            	setShip(Ship.getRandomShip());
             }
         });
 		gameMenuButton.setPosition(50, 50);
