@@ -41,7 +41,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 	protected Crane crane;
 	protected LoadRating loadRating;
 	protected boolean gameOver;
-	protected boolean endScreen;
 	protected Music backgroundMusic;
 	protected Foreground foreground;
 	protected Background background;
@@ -145,7 +144,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @return true if the player is allowed to do something (i.e. position a container)
 	 */
 	public boolean canPlayerAct(){
-		return !getCrane().isDeploying() && getTrain().hasContainers();
+		return !getCrane().isDeploying() && getTrain().hasContainers() && !isGameOver();
 	}
 
 	/**
@@ -228,6 +227,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		this.time += delta;
+		
 		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE) ||
 				Gdx.input.isKeyJustPressed(Input.Keys.BACK))
 		{
@@ -241,9 +242,11 @@ public abstract class AbstractGame extends ScreenAdapter {
 			this.getTrain().setSpeed(this.getTrain().getSpeed()*2);
 		else if(Gdx.input.isKeyJustPressed(Keys.R))
 			this.getTrain().setSpeed(this.getTrain().getSpeed()/2);
-		
-		this.time += delta;
 
+		// if game is over and the ship has no more animations running, display the end screen
+		if(this.isGameOver() && this.getShip().isSunken()){
+			this.displayEndScreen();
+		}
 		this.stage.act(Gdx.graphics.getDeltaTime());
 
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -252,7 +255,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 		getLoadRating().calculateScore(getShip().getGrid());
 		getShip().setBreakValues(getLoadRating().getBreakValues());
 		this.foreground.setCapsizeValue(getLoadRating().getCapsizeValue());
-		if((!train.hasContainers() && !getCrane().isDeploying())|| lives <= 0 ){
+		if(!isGameOver() && (!train.hasContainers() && !getCrane().isDeploying()) || lives <= 0 ){
 			gameOver();
 		}
 		if(showDebugInfo)
@@ -305,16 +308,21 @@ public abstract class AbstractGame extends ScreenAdapter {
 				burstpos = i;
 			}
 		}
-		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
-		if(getLoadRating().getCapsizeValue()>=1 || getLoadRating().getCapsizeValue()<=-1){
+		if(Math.abs(getLoadRating().getCapsizeValue()) >=1){
 			ship.capsize(getLoadRating().getCapsizeValue());
-			application.setScreen(new EndScreen(application, screenCap));
+			this.setGameOver(true);
 		}else if(burst){
 			ship.breakShip(burstpos);
-			application.setScreen(new EndScreen(application, screenCap));
+			this.setGameOver(true);
 		}else{
-			application.setScreen(new EndScreen(application, screenCap, getLoadRating().getScore(), 3000));
+			displayEndScreen();
 		}
+	}
+	
+	public void displayEndScreen(){
+		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
+		//application.setScreen(new EndScreen(application, screenCap));
+		application.setScreen(new EndScreen(application, screenCap, getLoadRating().getScore(), 3000));
 	}
 
 	public int getScore() {
@@ -383,14 +391,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
-	}
-
-	public boolean isEndScreen() {
-		return endScreen;
-	}
-
-	public void setEndScreen(boolean endScreen) {
-		this.endScreen = endScreen;
 	}
 
 	public WorldStage getStage() {

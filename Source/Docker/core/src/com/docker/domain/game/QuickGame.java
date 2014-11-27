@@ -19,16 +19,6 @@ public class QuickGame extends AbstractGame {
 		setLoadRating(new LoadRating(getShip().getBreakThreshold(), getShip().getCapsizeThreshold(), 1));
 	}
 
-	@Override
-	public void render(float delta) {
-		super.render(delta);
-		
-		if(isGameOver() && !isEndScreen()){
-//			Add overlay Code here with Button and Score screen
-			setEndScreen(true);
-		}
-	}
-
 	public double getTimeLeft() {
 		return timeLeft;
 	}

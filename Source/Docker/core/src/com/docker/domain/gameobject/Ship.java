@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.docker.Docker;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -41,6 +42,7 @@ public class Ship extends Actor {
 	private boolean isBreaking = false;
 	public boolean isTakingOff;
 	private boolean isStaticAnimationRunning = false;
+	private boolean isSunken = false;
 	private int breakPos;
 
 	private Sound containerSound;
@@ -290,13 +292,11 @@ public class Ship extends Actor {
 
 		Image img = new Image(snapshot);
 
-		// create a new Move-To Action
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(img.getWidth()*-1, 0f);
 		moveAction.setDuration(5);
 		moveAction.setInterpolation(Interpolation.pow2In);
 
-		// create an action which deploys the container to the ship
 		Action completeAction = new Action(){
 			public boolean act( float delta ) {
 				removeFromStage();
@@ -322,12 +322,11 @@ public class Ship extends Actor {
 	public void capsize(float capsizeValue){
 		TextureRegion region = takeSnapshot();
 
-		Ship.addCapsizeAnimation(this, capsizeValue);
+		this.startCapsizeAnimation(this, capsizeValue);
 
 		Image img = new Image(region);
-		addCapsizeAnimation(img, capsizeValue);
+		startCapsizeAnimation(img, capsizeValue);
 		this.getStage().addActor(img);
-		this.isStaticAnimationRunning = true;
 	}
 	
 	
@@ -346,20 +345,36 @@ public class Ship extends Actor {
 	 * @param actor The actor to which should be animated.
 	 * @param capsizeValue if positive, the ship will capsize to the left, if negative, to the right.
 	 */
-	private static void addCapsizeAnimation(Actor actor, float capsizeValue){
-		// define animation
+	private void startCapsizeAnimation(Actor actor, float capsizeValue){
+		this.setStaticAnimationRunning(true);
+		
+		float duration = 6;
+		
 		MoveToAction moveAction = new MoveToAction();
-		moveAction.setPosition(actor.getX(), actor.getY()-actor.getWidth());
-		moveAction.setDuration(8);
+		moveAction.setPosition(actor.getX(), actor.getY()-this.getWidth());
+		moveAction.setDuration(duration*0.75f);
 		moveAction.setInterpolation(Interpolation.exp5In);
 		actor.addAction(moveAction);
-
+		
 		actor.setOrigin(actor.getWidth()/2-actor.getWidth()/6*Math.signum(capsizeValue), 10);
 		RotateByAction rotateAction = new RotateByAction();
 		rotateAction.setAmount(90*Math.signum(capsizeValue));
-		rotateAction.setDuration(10);
+		rotateAction.setDuration(duration);
 		rotateAction.setInterpolation(Interpolation.exp5Out);
-		actor.addAction(rotateAction);
+		
+		ParallelAction sinkingAction = new ParallelAction(moveAction, rotateAction);
+		
+		// set the sunken flag
+		Action completeAction = new Action(){
+			public boolean act( float delta ) {
+				setSunken(true);
+				return true;
+			};
+		};
+		
+		SequenceAction actions = new SequenceAction(sinkingAction, completeAction);
+
+		actor.addAction(actions);
 	}
 
 
@@ -381,7 +396,7 @@ public class Ship extends Actor {
 		fboRegion1.setRegionWidth((int)breakingXPos);
 		Image img = new Image(fboRegion1);
 		img.setOrigin(breakingXPos, this.getY());
-		addCapsizeAnimation(img, -1);
+		startCapsizeAnimation(img, -1);
 		this.getStage().addActor(img);
 
 		//right part
@@ -390,9 +405,8 @@ public class Ship extends Actor {
 		Image img2 = new Image(fboRegion2);
 		img2.setPosition(breakingXPos, 0);
 		img2.setOrigin(breakingXPos, this.getY());
-		addCapsizeAnimation(img2, 1);
+		startCapsizeAnimation(img2, 1);
 		this.getStage().addActor(img2);
-		this.isStaticAnimationRunning = true;
 	}
 
 	@Override
@@ -564,9 +578,21 @@ public class Ship extends Actor {
 	public boolean isStaticAnimationRunning() {
 		return isStaticAnimationRunning;
 	}
+	
+	public void setStaticAnimationRunning(boolean isStaticAnimationRunning){
+		this.isStaticAnimationRunning = isStaticAnimationRunning;
+	}
 
     public void playContainerSound(Boolean playSound) {
         this.playContainerSound = playSound;
     }
+
+	public boolean isSunken() {
+		return isSunken;
+	}
+
+	public void setSunken(boolean isSunken) {
+		this.isSunken = isSunken;
+	}
 
 }
