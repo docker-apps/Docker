@@ -245,7 +245,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 		// if game is over and the ship has no more animations running, display the end screen
 		if(this.isGameOver() && this.getShip().isSunken()){
-			this.displayEndScreen();
+			this.displayEndScreen(this.getShip().isSunken());
 		}
 		this.stage.act(Gdx.graphics.getDeltaTime());
 
@@ -324,18 +324,22 @@ public abstract class AbstractGame extends ScreenAdapter {
 		}else{
             Integer totalShipsSuccessfullyLoaded = (Integer) Persistence.getStatisticsMap().get("totalShipsSuccessfullyLoaded");
             Persistence.saveStatisticValue("totalShipsSuccessfullyLoaded", totalShipsSuccessfullyLoaded + 1);
-			displayEndScreen();
+			displayEndScreen(false);
 		}
 	}
 
-    public void displayEndScreen(){
+    public void displayEndScreen(boolean isSunken){
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
-        Integer highscore = Persistence.getHighscore();
-        int gameScore = getLoadRating().getScore();
-        int newHighscore = highscore + gameScore;
-        Persistence.setHighscore(newHighscore);
-        application.setScreen(new EndScreen(application, screenCap, gameScore, newHighscore));
+        if(!isSunken){
+        	Integer highscore = Persistence.getHighscore();
+        	int gameScore = getLoadRating().getScore();
+        	int newHighscore = highscore + gameScore;
+        	Persistence.setHighscore(newHighscore);
+        	application.setScreen(new EndScreen(application, screenCap, gameScore, newHighscore));
+        }else{
+        	application.setScreen(new EndScreen(application, screenCap));
+        }
     }
 
 	public int getScore() {
