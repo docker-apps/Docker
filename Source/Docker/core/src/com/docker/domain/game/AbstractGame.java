@@ -299,6 +299,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 	
 	public void gameOver(){
 		getLoadRating().calculateScore(getShip().getGrid());
+        Integer totalGames = (Integer) Persistence.getStatisticsMap().get("totalGames");
+        Persistence.saveStatisticValue("totalGames", totalGames + 1);
 		float[] breakArray = getLoadRating().getBreakValues();
 		boolean burst = false;
 		int burstpos = 0;
@@ -311,20 +313,30 @@ public abstract class AbstractGame extends ScreenAdapter {
 		}
 		if(Math.abs(getLoadRating().getCapsizeValue()) >=1){
 			ship.capsize(getLoadRating().getCapsizeValue());
+            Integer totalShipsCapsized = (Integer) Persistence.getStatisticsMap().get("totalShipsCapsized");
+            Persistence.saveStatisticValue("totalShipsCapsized", totalShipsCapsized + 1);
 			this.setGameOver(true);
 		}else if(burst){
 			ship.breakShip(burstpos);
+            Integer totalShipsBroken = (Integer) Persistence.getStatisticsMap().get("totalShipsBroken");
+            Persistence.saveStatisticValue("totalShipsBroken", totalShipsBroken + 1);
 			this.setGameOver(true);
 		}else{
+            Integer totalShipsSuccessfullyLoaded = (Integer) Persistence.getStatisticsMap().get("totalShipsSuccessfullyLoaded");
+            Persistence.saveStatisticValue("totalShipsSuccessfullyLoaded", totalShipsSuccessfullyLoaded + 1);
 			displayEndScreen();
 		}
 	}
-	
-	public void displayEndScreen(){
+
+    public void displayEndScreen(){
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
-		application.setScreen(new EndScreen(application, screenCap, getLoadRating().getScore(), 3000));
-	}
+        Integer highscore = Persistence.getHighscore();
+        int gameScore = getLoadRating().getScore();
+        int newHighscore = highscore + gameScore;
+        Persistence.setHighscore(newHighscore);
+        application.setScreen(new EndScreen(application, screenCap, gameScore, newHighscore));
+    }
 
 	public int getScore() {
 		return score;

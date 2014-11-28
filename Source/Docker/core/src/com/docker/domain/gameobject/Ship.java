@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.docker.technicalservices.Persistence;
 
 public class Ship extends Actor {
 	private int gridWidth;
@@ -112,6 +113,10 @@ public class Ship extends Actor {
             if (playContainerSound) {
                 containerSound.play();
             }
+            Integer totalContainer = (Integer) Persistence.getStatisticsMap().get("totalContainer");
+            Persistence.saveStatisticValue("totalContainer", totalContainer+1);
+            Integer totalWeight = (Integer) Persistence.getStatisticsMap().get("totalWeight");
+            Persistence.saveStatisticValue("totalWeight", totalWeight + container.getWeight());
             createTopLineAndGrid();
 			return true;
 		}else{

@@ -107,7 +107,7 @@ public class Persistence {
      * set the new game highscore
      * @param highscore
      */
-    public void setHighscore(Integer highscore) {
+    public static void setHighscore(Integer highscore) {
         prefs.putInteger("highscore", highscore);
         prefs.flush();
     }
