@@ -273,6 +273,7 @@ public class Ship extends Actor {
 	}
 
 	private void removeFromStage(){
+		this.fbo.dispose();
 		this.clearActions();
 		this.clearListeners();
 		getStage().getRoot().removeActor(this);
@@ -385,7 +386,8 @@ public class Ship extends Actor {
 	 * @param breakPosition The (x-Grid) position, at which the ship should break
 	 */
 	public void breakShip(int breakPosition){
-		float breakingXPos = this.xGridstart + this.gridSize*breakPosition;
+		this.breakPos = breakPosition;
+		float breakingXPos = this.xGridstart + this.gridSize*(breakPosition+1);
 		this.isBreaking = true;
 		this.previewContainer = null;
 		TextureRegion fboRegion1 = takeSnapshot();
@@ -423,10 +425,10 @@ public class Ship extends Actor {
 			batch.draw(this.mast, this.getX()+this.bodyLeft.getRegionWidth()-this.getElementWidth()-this.mast.getRegionWidth()-1, this.getY()+this.bodyLeft.getRegionHeight());
 			for (int i = 0; i < this.gridWidth-2; i++) {
 				float xPos = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*i);
-				if(isBreaking && i == this.breakPos+1){
+				if(isBreaking && i == this.breakPos-1){
 					batch.draw(this.bodyBrokenLeft, xPos, this.getY());
 				}
-				else if(isBreaking && i == this.breakPos+2){
+				else if(isBreaking && i == this.breakPos){
 					batch.draw(this.bodyBrokenRight, xPos, this.getY());
 				}
 				else{

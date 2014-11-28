@@ -306,6 +306,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 			if(breakArray[i]>=1){
 				burst = true;
 				burstpos = i;
+				break;
 			}
 		}
 		if(Math.abs(getLoadRating().getCapsizeValue()) >=1){
