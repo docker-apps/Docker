@@ -18,7 +18,7 @@ public class SettingsMenu extends AbstractMenu {
     private TextButton backButton = new TextButton("back", skin);
     private CheckBox soundCheckBox = new CheckBox("",skin);
     private CheckBox musicCheckBox = new CheckBox("", skin);
-    private Label title = new Label("Settings",skin);
+    private Label title = new Label("Settings", skin, "title");
     private Label volumeValue = new Label("", skin);
     Slider volumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
     

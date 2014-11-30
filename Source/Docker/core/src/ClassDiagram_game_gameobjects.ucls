@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.7" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+<class-diagram version="1.1.6" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="com.docker.domain.game.QuickGame" project="docker-core" 
     file="/docker-core/src/com/docker/domain/game/QuickGame.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="397" y="723"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
@@ -13,8 +13,8 @@
   <class id="2" language="java" name="com.docker.domain.gameobject.Crane" project="docker-core" 
     file="/docker-core/src/com/docker/domain/gameobject/Crane.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="680" y="384"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
@@ -22,8 +22,8 @@
   <enumeration id="3" language="java" name="com.docker.domain.game.LoadRating.Capsized" project="docker-core" 
     file="/docker-core/src/com/docker/domain/game/LoadRating.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="101" y="308"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
@@ -31,8 +31,8 @@
   <class id="4" language="java" name="com.docker.domain.game.Level" project="docker-core" 
     file="/docker-core/src/com/docker/domain/game/Level.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1363" y="681"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
@@ -40,8 +40,8 @@
   <class id="5" language="java" name="com.docker.domain.game.LoadRating" project="docker-core" 
     file="/docker-core/src/com/docker/domain/game/LoadRating.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="103" y="104"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
@@ -49,8 +49,8 @@
   <class id="6" language="java" name="com.docker.domain.gameobject.Ship" project="docker-core" 
     file="/docker-core/src/com/docker/domain/gameobject/Ship.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1359" y="260"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
@@ -58,8 +58,8 @@
   <class id="7" language="java" name="com.docker.domain.gameobject.Train" project="docker-core" 
     file="/docker-core/src/com/docker/domain/gameobject/Train.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="630" y="679"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
@@ -67,8 +67,8 @@
   <class id="8" language="java" name="com.docker.domain.game.AbstractGame" project="docker-core" 
     file="/docker-core/src/com/docker/domain/game/AbstractGame.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="344" y="223"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
@@ -76,8 +76,8 @@
   <class id="9" language="java" name="com.docker.domain.game.CareerGame" project="docker-core" 
     file="/docker-core/src/com/docker/domain/game/CareerGame.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="94" y="480"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
@@ -85,146 +85,146 @@
   <class id="10" language="java" name="com.docker.domain.gameobject.Container" project="docker-core" 
     file="/docker-core/src/com/docker/domain/gameobject/Container.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1012" y="466"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <association id="11">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="12" name="ship">        
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="12" name="train">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="13" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="14">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="15" name="crane">        
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="15" name="container">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="16" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="17">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="18" name="ship">        
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="18" name="previewContainer">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="19" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="20">    
+  <generalization id="20">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="21">    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="21" name="loadRating">        
+      <attribute id="22" name="loadRating">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="22" minimum="0" maximum="1">        
+      <multiplicity id="23" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="23">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="24" name="train">        
+  <association id="24">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="25" name="containers">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="25" minimum="0" maximum="1">        
+      <multiplicity id="26" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="26">    
+  <generalization id="27">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="8"/>  
   </generalization>  
-  <association id="27">    
+  <association id="28">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="28" name="containers">        
+      <attribute id="29" name="containers">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="29" minimum="0" maximum="2147483647">        
+      <multiplicity id="30" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="30">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="31" name="containers">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="32" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="33">    
+  <nesting id="31">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="3"/>  
+  </nesting>  
+  <association id="32">    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="34" name="train">        
+      <attribute id="33" name="ship">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="35" minimum="0" maximum="1">        
+      <multiplicity id="34" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="35">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="36" name="crane">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="38">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="39" name="train">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="40" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="36">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="37">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="38" name="previewContainer">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="39" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="40">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="3"/>  
-  </nesting>  
   <association id="41">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="42" name="container">        
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="42" name="ship">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="43" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-    sort-features="false" accessors="true" visibility="true">    
+    accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="false" private="false" static="true"/>    
     <operations public="true" package="true" protected="false" private="false" static="true"/>  
   </classifier-display>  

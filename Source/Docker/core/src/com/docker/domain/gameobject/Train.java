@@ -26,6 +26,8 @@ public class Train extends Actor {
 	private TextureRegion wheel;
 	private float stateTime;
 	
+	private boolean indestructible = false;
+	
 	/**
 	 * @param speed Speed at which the train moves rightward
 	 * @param x Initial Position on the x-plane
@@ -77,7 +79,7 @@ public class Train extends Actor {
 
             if (lastX == 0 || fits(container, lastX) || !toRemove.isEmpty()) {
                 container.setY(this.getY());
-                if (xPos + container.getWidth() < this.getStage().getWidth()) {
+                if (isIndestructible() || xPos + container.getWidth() < this.getStage().getWidth()) {
                     xPos = speed*delta + container.getX();
                     container.setX(xPos);
                     lastX = xPos;
@@ -157,5 +159,13 @@ public class Train extends Actor {
 	 */
 	public void setSpeed(float speed) {
 		this.speed = speed;
+	}
+
+	public boolean isIndestructible() {
+		return indestructible;
+	}
+
+	public void setIndestructible(boolean indestructible) {
+		this.indestructible = indestructible;
 	}
 }

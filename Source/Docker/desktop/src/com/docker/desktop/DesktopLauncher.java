@@ -12,6 +12,7 @@ public class DesktopLauncher {
 		config.height= 720;
 		// Diese Zeile nur einkommentieren, wenn sich bilddateien geändert haben.
 		TexturePacker.process("../../../Documents/Grafik/deploy", "../android/assets/img", "docker");
+		TexturePacker.process("../../../Documents/Grafik/deploy_ui", "../android/assets/ui", "dockerskin");
 
 		
 		new LwjglApplication(new Docker(), config);

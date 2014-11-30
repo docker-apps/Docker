@@ -16,9 +16,8 @@ import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
 
 public class StatisticsMenu extends AbstractMenu {
-    private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
     private TextButton backButton = new TextButton("back", skin);
-    private Label title = new Label("Statistics",skin);
+    private Label title = new Label("Statistics",skin, "title");
 
     private static Map<String,String> labelMap = new HashMap<String, String>();
 
@@ -42,6 +41,7 @@ public class StatisticsMenu extends AbstractMenu {
         scrollpane.setSize(Docker.WIDTH, Docker.HEIGHT);
         scrollpane.setFlingTime(2);
         scrollpane.setupOverscroll(20, 30, 200);
+        scrollpane.setFadeScrollBars(false);
         this.table.addActor(scrollpane);
     }
 

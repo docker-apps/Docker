@@ -12,7 +12,7 @@ import com.docker.domain.game.QuickGame;
  *
  */
 public class GameMenu extends AbstractMenu {
-    private Label title = new Label("game menu",skin);
+    private Label title = new Label("Game Modes",skin, "title");
     private TextButton careerGameButton = new TextButton("Career game", skin);
     private TextButton quickGameButton = new TextButton("Quick game", skin);
     private TextButton infiniteGameButton = new TextButton("Infinite game", skin);

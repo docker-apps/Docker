@@ -1,0 +1,59 @@
+
+dockerskin.png
+size: 256,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+docker_title
+  rotate: false
+  xy: 2, 26
+  size: 189, 36
+  orig: 189, 36
+  offset: 0, 0
+  index: -1
+livesaver_off
+  rotate: false
+  xy: 2, 10
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+livesaver_on
+  rotate: false
+  xy: 18, 10
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+slider_pointer
+  rotate: false
+  xy: 193, 38
+  size: 13, 24
+  orig: 13, 24
+  offset: 0, 0
+  index: -1
+slider_rail
+  rotate: false
+  xy: 2, 2
+  size: 16, 6
+  split: 7, 8, 0, 7
+  pad: 7, 8, -1, -1
+  orig: 16, 6
+  offset: 0, 0
+  index: -1
+yellow_button
+  rotate: false
+  xy: 208, 48
+  size: 14, 14
+  split: 4, 4, 4, 4
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+yellow_button_pressed
+  rotate: false
+  xy: 34, 10
+  size: 14, 14
+  split: 4, 4, 4, 4
+  orig: 14, 14
+  offset: 0, 0
+  index: -1

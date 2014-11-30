@@ -1,13 +1,26 @@
 package com.docker.ui.menus;
 
+import java.awt.Font;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.Docker;
 import com.docker.technicalservices.WorldStage;
@@ -21,7 +34,7 @@ import com.docker.technicalservices.WorldStage;
 public class AbstractMenu implements Screen {
 	Docker application;
 	
-    protected Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+    protected Skin skin;
 
     protected WorldStage stage;
     protected ExtendViewport viewport;
@@ -30,6 +43,7 @@ public class AbstractMenu implements Screen {
     public AbstractMenu(final Docker application){
     	this.application = application;
 		
+    	this.skin = AbstractMenu.getDockerSkin();
 		this.viewport = new ExtendViewport(Docker.WIDTH, Docker.HEIGHT);
 		this.stage = new WorldStage(viewport);
 		this.table = new Table();
@@ -38,9 +52,19 @@ public class AbstractMenu implements Screen {
         stage.addActor(table);
     }
     
-    public AbstractMenu(final Docker application, TextureRegion background){
+    public AbstractMenu(final Docker application, Actor background){
     	this(application);
     	this.setBackground(background);
+    }
+    
+    public AbstractMenu(final Docker application, TextureRegion background){
+    	this(application);
+
+        Image bg = new Image(background);
+        bg.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
+        bg.setPosition(0f, 0f);
+        bg.setColor(1f, 1f, 1f, 0.5f);
+    	this.setBackground(bg);
     }
     
     /**
@@ -62,17 +86,22 @@ public class AbstractMenu implements Screen {
         }
     }
     
+    public void openNewMenu(AbstractMenu menu){
+        this.application.setScreen(menu);
+        menu.setBackground(getBackground());
+    }
+    
     /**
      * Sets the Background to be displayed in the Menu
      * 
      * @param texture the texture to be displayed as a background.
      */
-    public void setBackground(TextureRegion texture){
-        Image bg = new Image(texture);
-        bg.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
-        bg.setPosition(0f, 0f);
-        bg.setColor(1f, 1f, 1f, 0.5f);
+    public void setBackground(Actor bg){
         this.stage.setBackground(bg);
+    }
+    
+    public Actor getBackground(){
+    	return this.stage.getBackground();
     }
 
     @Override
@@ -122,4 +151,40 @@ public class AbstractMenu implements Screen {
         skin.dispose();
 	}
 
+	public static Skin getDockerSkin(){
+		Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+		skin.add("default", new BitmapFont(Gdx.files.internal("ui/rokkitt.fnt")));
+		skin.add("big", new BitmapFont(Gdx.files.internal("ui/rokkitt_32.fnt")));
+
+		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("ui/dockerskin.atlas"));
+		skin.addRegions(atlas);
+		
+		TextButtonStyle textButtonStyle = new TextButtonStyle();
+		textButtonStyle.up = skin.getDrawable("yellow_button");
+		textButtonStyle.down = skin.getDrawable("yellow_button_pressed");
+		textButtonStyle.font = skin.getFont("default");
+		skin.add("default", textButtonStyle);
+		
+		LabelStyle labelStyle = new LabelStyle();
+		labelStyle.font = skin.getFont("default");
+		skin.add("default", labelStyle);
+		
+		LabelStyle labelStyleTitle = new LabelStyle();
+		labelStyleTitle.font = skin.getFont("big");
+		labelStyleTitle.fontColor = new Color(0f, 0.165f, 0.322f, 1);
+		skin.add("title", labelStyleTitle);
+		
+		CheckBoxStyle checkBoxStyle = new CheckBoxStyle();
+		checkBoxStyle.checkboxOn = skin.getDrawable("livesaver_on");
+		checkBoxStyle.checkboxOff = skin.getDrawable("livesaver_off");
+		checkBoxStyle.font = skin.getFont("default");
+		skin.add("default", checkBoxStyle);
+		
+		SliderStyle sliderStyle = new SliderStyle();
+		sliderStyle.knob = skin.getDrawable("slider_pointer");
+		sliderStyle.background = skin.getDrawable("slider_rail");
+		skin.add("default-horizontal", sliderStyle);
+		
+		return skin;
+	}
 }
