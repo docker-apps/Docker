@@ -13,6 +13,11 @@ import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 
+/**
+ * Level class which loads levels from persistence or generates random level with specified input
+ * @author it-monkey
+ *
+ */
 public class Level {
 	private List<Integer> containerLengths;
 	private List<Integer> containerWeights;
@@ -28,7 +33,7 @@ public class Level {
 	private int time;
     private int trainSpeed;
 	
-	public Level(List<Integer> containerLengths,
+	private Level(List<Integer> containerLengths,
 			List<Integer> containerWeights, int shipHeight, int shipLength,
 			int lifeCount, int breakThreshold, int capsizeThreshold, int time, int trainSpeed) {
 		super();
@@ -58,7 +63,7 @@ public class Level {
 	}
 	
     /**
-     * Loads a random level with the hardcoded parameters.
+     * Loads a random level with the hard coded parameters.
      * @return level
      */
 	public static Level loadLevel(){
@@ -193,29 +198,58 @@ public class Level {
     	this.train.setPosition(0f, Docker.HEIGHT-23);
     }
 
+    /**
+     * simple getter
+     * @return ship
+     */
 	public Ship getShip(){
 		return ship;
 	}
+	
+	/**
+	 * simple getter
+	 * @return train
+	 */
 	public Train getTrain(){
 		return train;
 	}
 	
+	/**
+	 * simple getter
+	 * @return lifeCount
+	 */
 	public int getLifeCount(){
 		return lifeCount;
 	}	
 	
+	/**
+	 * simple getter
+	 * @return breakThreshold
+	 */
 	public int getBreakThreshold(){
 		return breakThreshold;
 	}
 	
+	/**
+	 * simple getter
+	 * @return capsizeThreshold
+	 */
 	public int getCapsizeThreshold(){
 		return capsizeThreshold;
 	}
 	
+	/**
+	 * simple getter
+	 * @return time
+	 */
 	public int getTime(){
 		return time;
 	}
 
+	/**
+	 * simple getter
+	 * @return trainSpeed
+	 */
     public int getTrainSpeed() {
         return trainSpeed;
     }
