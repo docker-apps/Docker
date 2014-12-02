@@ -13,9 +13,9 @@ import com.docker.domain.game.QuickGame;
  */
 public class GameMenu extends AbstractMenu {
     private Label title = new Label("Game Modes",skin, "title");
-    private TextButton careerGameButton = new TextButton("Career game", skin);
-    private TextButton quickGameButton = new TextButton("Quick game", skin);
-    private TextButton infiniteGameButton = new TextButton("Infinite game", skin);
+    private TextButton careerGameButton = new TextButton("Career Game", skin);
+    private TextButton quickGameButton = new TextButton("Quick Game", skin);
+    private TextButton infiniteGameButton = new TextButton("Infinite Game", skin);
     private TextButton backButton = new TextButton("Back", skin);
 
 
@@ -31,7 +31,7 @@ public class GameMenu extends AbstractMenu {
         careerGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.setScreen(new CareerMenu(application));
+                openNewMenu(new CareerMenu(application));
             }
         });
         quickGameButton.addListener(new ClickListener() {

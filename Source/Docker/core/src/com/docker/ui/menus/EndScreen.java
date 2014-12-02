@@ -9,7 +9,7 @@ import com.docker.Docker;
 
 public class EndScreen extends AbstractMenu {
 
-	private TextButton endGameButton = new TextButton("endgame", skin);
+	private TextButton endGameButton = new TextButton("Exit", skin);
     private Label title = new Label("The Game Is Over!!!",skin);
     
 
