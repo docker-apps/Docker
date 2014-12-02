@@ -84,7 +84,7 @@ public class Train extends Actor {
                     container.setX(xPos);
                     lastX = xPos;
                 } else {
-                    toRemove.add(container);
+//                    toRemove.add(container);
                 }
             } else {
                 container.setX((container.getWidth()*-1) - PLATFORM_OFFSET);
@@ -146,6 +146,14 @@ public class Train extends Actor {
 			}
 		}
 	}
+    
+    /**
+     * 
+     * @return the size of the Container list
+     */
+    public int getContainerListSize(){
+    	return containers.size();
+    }
 
 	/**
 	 * @return  the speed at which the train moves rightward.

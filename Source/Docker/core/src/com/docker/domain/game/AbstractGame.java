@@ -248,7 +248,14 @@ public abstract class AbstractGame extends ScreenAdapter {
 			this.displayEndScreen(this.getShip().isSunken());
 		}
 		this.stage.act(Gdx.graphics.getDeltaTime());
-
+		
+		if(this.getTrain().getFirstContainer().getX() + this.getTrain().getFirstContainer().getWidth() >= stage.getWidth()){
+			this.getTrain().getFirstContainer().destroy(stage);
+			this.getTrain().removeContainer();
+			lives--;
+			foreground.setRemainingLives(lives);
+		}
+		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();
 

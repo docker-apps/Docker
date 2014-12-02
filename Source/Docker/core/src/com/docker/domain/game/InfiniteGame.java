@@ -7,10 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Ship;
+import com.docker.ui.menus.AbstractMenu;
 
 public class InfiniteGame extends AbstractGame{
 
-	private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+	private Skin skin = AbstractMenu.getDockerSkin();
 	private TextButton gameMenuButton = new TextButton("Play", skin);
 	private int remainingShips;
 
@@ -42,6 +43,8 @@ public class InfiniteGame extends AbstractGame{
 		super.render(delta);
 		if(getRemainingShips() <= 0)
 			super.gameOver();
+		if(train.getContainerListSize()<= 5)
+			train.addContainer(Level.createRandomContainer());
 		//Like that can the button be at first position
 		this.stage.getBatch().begin();
 		gameMenuButton.draw(this.stage.getBatch(), 1);

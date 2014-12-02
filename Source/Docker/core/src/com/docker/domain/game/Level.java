@@ -23,8 +23,8 @@ public class Level {
 	private List<Integer> containerWeights;
 	private int shipHeight;
 	private int shipLength;
-	private final int MAXCONTAINERLENGTH = 4;
-	private final int MAXCONTAINERWEIGHT = 6;
+	private final static int MAXCONTAINERLENGTH = 4;
+	private final static int MAXCONTAINERWEIGHT = 6;
 	private Train train;
 	private Ship ship;
 	private int lifeCount;
@@ -99,29 +99,29 @@ public class Level {
 			while(line>0){
 				containerLength = (int)(Math.random()*(MAXCONTAINERLENGTH))+1;
 				if(line-containerLength > 2) {
-					allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
+					allContainers.add(new Container(generateRandomWeight(containerLength), containerLength));
 					line -= containerLength;
 				}
 				else {
 					switch (line-containerLength) {
 					case 2:
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
-						allContainers.add(new Container(this.generateRandomWeight(1), 1));
-						allContainers.add(new Container(this.generateRandomWeight(1), 1));
+						allContainers.add(new Container(generateRandomWeight(containerLength), containerLength));
+						allContainers.add(new Container(generateRandomWeight(1), 1));
+						allContainers.add(new Container(generateRandomWeight(1), 1));
 						line = 0;
 						break;
 					case 1:
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
-						allContainers.add(new Container(this.generateRandomWeight(1), 1));
+						allContainers.add(new Container(generateRandomWeight(containerLength), containerLength));
+						allContainers.add(new Container(generateRandomWeight(1), 1));
 						line = 0;				
 						break;
 					case 0:
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
+						allContainers.add(new Container(generateRandomWeight(containerLength), containerLength));
 						line = 0;	
 						break;
 					default:
 						containerLength = line;
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
+						allContainers.add(new Container(generateRandomWeight(containerLength), containerLength));
 						line = 0;
 						break;
 					}
@@ -143,7 +143,7 @@ public class Level {
 	 * @param containerLength
 	 * @return randomWeight (1-3 if container length is 1, or 1-6 if container length is between 2 and 4)
 	 */
-	private int generateRandomWeight(int containerLength){
+	private static int generateRandomWeight(int containerLength){
 		//one-size container have a weight from 1 to 3
 		//1-2 80%, 3 20%
 		if(containerLength == 1 && (int)(Math.random()*10)<8) {
@@ -180,6 +180,16 @@ public class Level {
                     level.getInt("capsizeThreshold"), 0, trainSpeed);
         }
         return null;
+    }
+    
+    /**
+     * 
+     * @return a random created Container
+     */
+    public static Container createRandomContainer(){
+		int containerLength = (int)(Math.random()*(MAXCONTAINERLENGTH))+1;
+    	Container container = new Container(generateRandomWeight(containerLength), containerLength);
+    	return container;
     }
     
     /**
