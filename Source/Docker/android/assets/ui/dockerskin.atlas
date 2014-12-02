@@ -6,28 +6,42 @@ filter: Nearest,Nearest
 repeat: none
 docker_title
   rotate: false
-  xy: 2, 26
+  xy: 2, 22
   size: 189, 36
   orig: 189, 36
   offset: 0, 0
   index: -1
 livesaver_off
   rotate: false
-  xy: 2, 10
+  xy: 240, 18
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 livesaver_on
   rotate: false
-  xy: 18, 10
+  xy: 240, 2
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
+ship_button_down
+  rotate: false
+  xy: 193, 35
+  size: 45, 23
+  orig: 45, 23
+  offset: 0, 0
+  index: -1
+ship_button_up
+  rotate: false
+  xy: 193, 10
+  size: 45, 23
+  orig: 45, 23
+  offset: 0, 0
+  index: -1
 slider_pointer
   rotate: false
-  xy: 193, 38
+  xy: 240, 34
   size: 13, 24
   orig: 13, 24
   offset: 0, 0
@@ -42,7 +56,7 @@ slider_rail
   index: -1
 yellow_button
   rotate: false
-  xy: 208, 48
+  xy: 19, 6
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14
@@ -50,7 +64,7 @@ yellow_button
   index: -1
 yellow_button_pressed
   rotate: false
-  xy: 34, 10
+  xy: 35, 6
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -181,6 +182,11 @@ public class AbstractMenu implements Screen {
 		sliderStyle.knob = skin.getDrawable("slider_pointer");
 		sliderStyle.background = skin.getDrawable("slider_rail");
 		skin.add("default-horizontal", sliderStyle);
+		
+		ButtonStyle shipButtonStyle = new ButtonStyle();
+		shipButtonStyle.up = skin.getDrawable("ship_button_up");
+		shipButtonStyle.down = skin.getDrawable("ship_button_down");
+		skin.add("ship-button", shipButtonStyle);
 		
 		return skin;
 	}

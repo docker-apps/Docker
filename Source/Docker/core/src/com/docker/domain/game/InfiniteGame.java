@@ -1,8 +1,10 @@
 package com.docker.domain.game;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Ship;
@@ -12,7 +14,7 @@ import com.docker.ui.menus.AbstractMenu;
 public class InfiniteGame extends AbstractGame{
 
 	private Skin skin = AbstractMenu.getDockerSkin();
-	private TextButton gameMenuButton = new TextButton("Play", skin);
+	private Button gameMenuButton;
 	private int remainingShips;
 	private boolean newShip = false;
 
@@ -26,7 +28,7 @@ public class InfiniteGame extends AbstractGame{
 		setRemainingShips(3);
 		setLoadRating(new LoadRating(getShip().getBreakThreshold(), getShip().getCapsizeThreshold(), 1));
 		
-
+		gameMenuButton = new Button(skin.get("ship-button", ButtonStyle.class));
 		gameMenuButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -35,7 +37,7 @@ public class InfiniteGame extends AbstractGame{
             	newShip = true;
             }
         });
-		gameMenuButton.setPosition(50, 50);
+		gameMenuButton.setPosition(10, getStage().getHeight() - gameMenuButton.getHeight() - 60);
 		this.stage.addActor(gameMenuButton);	
 	}
 	

@@ -145,7 +145,7 @@ public class Ship extends Actor {
 			if (gridCoords.y < gridHeight) {
 				previewContainer.setColor(new Color(1f, 1f, 1f, 0.5f));
 			}
-			if(gridCoords.y >= gridHeight-1 || gridCoords.x == 0 || gridCoords.x + container.getLength() == gridWidth)
+			if(gridCoords.y >= gridHeight-1 || x < xGridstart || x > xGridstart + gridSize * gridWidth)
 				this.gridBoundsAlpha = 1f;
 			Vector2 realCoords = getRealCoord(gridCoords);
 			previewContainer.setPosition(realCoords.x, realCoords.y);

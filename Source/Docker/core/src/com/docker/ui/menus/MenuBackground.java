@@ -212,7 +212,7 @@ public class MenuBackground extends Actor {
 		
 		batch.draw(harbor, this.getWidth() - this.harbor.getRegionWidth(), 70f);
 		
-		batch.draw(miniShipAnimation.getKeyFrame(stateTime), this.miniShipXPos, 55f);
+		batch.draw(miniShipAnimation.getKeyFrame(stateTime), this.miniShipXPos, 57f);
 		
 		this.train.draw(batch, parentAlpha);
 
