@@ -3,6 +3,12 @@ package com.docker.ui.menus;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -21,7 +27,7 @@ public class StatisticsMenu extends AbstractMenu {
 
     public StatisticsMenu(final Docker application) {
     	super(application);
-
+    	
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -34,7 +40,7 @@ public class StatisticsMenu extends AbstractMenu {
         statisticsTable.add(title).fillX().padBottom(10).colspan(2).row();
         loadStatistics(statisticsTable);
         statisticsTable.add(backButton).bottom().padBottom(5).row();
-        ScrollPane scrollpane = new ScrollPane(statisticsTable);
+        ScrollPane scrollpane = new StatisticsScrollPane(statisticsTable);
         scrollpane.setPosition(0, 0);
         scrollpane.setSize(Docker.WIDTH, Docker.HEIGHT);
         scrollpane.setFlingTime(2);
@@ -62,5 +68,30 @@ public class StatisticsMenu extends AbstractMenu {
         labelMap.put("totalShipsSuccessfullyLoaded", "Total Ships Loaded");
         labelMap.put("totalShipsCapsized", "Total Ships Capsized");
         labelMap.put("totalShipsBroken", "Total Ships Broken");
+    }
+    
+    private class StatisticsScrollPane extends ScrollPane{
+    	
+    	ShapeRenderer shapeRenderer = new ShapeRenderer();
+    	
+    	public StatisticsScrollPane(Actor actor){
+    		super(actor);
+    	}
+    	
+    	@Override
+        public void draw(Batch batch, float parentAlpha){
+        	batch.end();
+    		Gdx.gl.glEnable(GL30.GL_BLEND);
+    	    Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+    		shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
+    		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+    		shapeRenderer.begin(ShapeType.Filled);
+    		shapeRenderer.setColor(0f, 0f, 0f, 0.4f);
+    		shapeRenderer.rect(0f, 0f, this.getStage().getWidth(), this.getStage().getHeight());
+    		shapeRenderer.end();
+    		batch.begin();
+    		
+    		super.draw(batch, parentAlpha);
+        }
     }
 }

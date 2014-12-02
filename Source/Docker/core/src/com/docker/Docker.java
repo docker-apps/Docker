@@ -51,7 +51,8 @@ public class Docker extends Game {
 		if(history.size() > 0){
 			Screen old = this.getScreen();
 			super.setScreen(history.pop());
-			old.dispose();
+			// temporarly removed, as the application crashes here.
+			//old.dispose();
 		}
 	}
 	

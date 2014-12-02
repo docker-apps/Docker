@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -205,14 +206,6 @@ public class MenuBackground extends Actor {
 					position.y, 
 					frame.getRegionWidth() / Math.max(1f, (float) Math.exp(position.y/100)),
 					frame.getRegionHeight());
-			/*if(position.y > 0){
-				position.add(0, -0.05f);
-			}
-			else{
-				Random rand = new Random();
-				position.x = rand.nextFloat()*this.getWidth();
-				position.y = (getHorizonHeight() -2);
-			}*/
 		}
 		
 		batch.draw(this.skyline, this.getWidth()-this.skyline.getRegionWidth()-10f, this.getHorizonHeight() + 1);
@@ -222,9 +215,9 @@ public class MenuBackground extends Actor {
 		batch.draw(miniShipAnimation.getKeyFrame(stateTime), this.miniShipXPos, 55f);
 		
 		this.train.draw(batch, parentAlpha);
-		
-		float aqueductWidth = this.aqueductElement.getRegionWidth();
+
 		// draw aqueduct
+		float aqueductWidth = this.aqueductElement.getRegionWidth();
 		for (int i = 0; i < this.getWidth()/aqueductWidth+1; i++) {
 			batch.draw(this.aqueductElement, aqueductOffset + aqueductWidth*i, 0f);
 		}
