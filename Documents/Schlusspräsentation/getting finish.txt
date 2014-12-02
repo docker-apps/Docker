@@ -30,9 +30,6 @@ EW - alle labels anpassen
 EW - levelauswahl hintergrund
 CM - wegfahrtsanimation quickgame und careergame
 EW - statistik schöner machen
-(YM - Schiff ladehöhe index)
-YM - button infinite mode ship los
-YM - Animation smoother machen
 
 - javadoc
 
