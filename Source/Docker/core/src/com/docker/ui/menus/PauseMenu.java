@@ -19,17 +19,17 @@ public class PauseMenu extends AbstractMenu {
     public PauseMenu(final Docker application, TextureRegion background) {
         super(application, background);
         
-        this.persistence = application.getPersistence();
+        this.persistence = application.persistence;
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.returnToLastScreen();
+                application.setLastScreen();
             }
         });
         endGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.returnToMainmenu();
+                application.setMainmenu();
             }
         });
 

@@ -77,7 +77,7 @@ public class AbstractMenu implements Screen {
     public void lastScreenOnReturn(){
     	if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ||
                 Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
-            application.returnToLastScreen();
+            application.setLastScreen();
         }
     }
     

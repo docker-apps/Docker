@@ -1,0 +1,46 @@
+Präsentation
+RH - Kurzbeschrieb
+RH - Spieltypen beschreiben
+RH - Verfügbarkeit (Geräte)
+	- Android
+	- später als PC-Spiel
+	- später als Browser-Game
+
+EW - Demo (möglichst ausführlich)
+	Gametypen
+	Statistik
+	Settings
+
+CM - Geplante Erweiterungen
+	mehr level packete
+	andere schiffstypen
+	social media anbindung
+	in-app käufe
+	werbefreie premium version
+	achievements
+	schon bald im play store
+	
+
+CM - refactoring abstract game (game over)
+CM - loadrating calculation of burstposition doesburst doescapsize
+CM - finishing infinite game sink animations
+EW - advertisements
+EW - creditsbutton im settings menü
+EW - alle labels anpassen
+EW - levelauswahl hintergrund
+CM - wegfahrtsanimation quickgame und careergame
+EW - statistik schöner machen
+(YM - Schiff ladehöhe index)
+YM - button infinite mode ship los
+YM - Animation smoother machen
+
+- javadoc
+
+RH - Anleitung
+RH - Projektmanagement
+EW - Zusammenfassung
+ALLE - Bug im Github für alle bekannten Probleme für die Zusammenfassung.
+CM - Test
+RH - Stick organisieren - senden, dependencies dokumentieren - Sourcecode
+Berechtigungen für Github freischalten.
+YM - Klassendiagramm
