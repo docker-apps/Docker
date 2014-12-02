@@ -15,7 +15,7 @@ import com.docker.technicalservices.Persistence;
 public class SettingsMenu extends AbstractMenu {
     Persistence persistence;
 
-    private TextButton backButton = new TextButton("back", skin);
+    private TextButton backButton = new TextButton("Back", skin);
     private CheckBox soundCheckBox = new CheckBox("",skin);
     private CheckBox musicCheckBox = new CheckBox("", skin);
     private Label title = new Label("Settings", skin, "title");
@@ -57,13 +57,13 @@ public class SettingsMenu extends AbstractMenu {
         volumeSlider.setValue(Persistence.getVolume());
         soundCheckBox.setChecked(Persistence.isSoundOn());
         musicCheckBox.setChecked(Persistence.isMusicOn());
-        table.add(title).left().padBottom(15).row().padBottom(10);
-        table.add(new Label("sound", skin)).width(100).left();
+        table.add(title).left().padBottom(15).colspan(2).row().padBottom(10);
+        table.add(new Label("Sound", skin)).width(100).left();
         table.add(soundCheckBox).width(100).left().row().padBottom(10);
-        table.add(new Label("music", skin)).width(100).left();
+        table.add(new Label("Music", skin)).width(100).left();
         table.add(musicCheckBox).width(100).row().padBottom(10);
 
-        table.add(new Label("volume", skin)).width(100).left();
+        table.add(new Label("Volume", skin)).width(100).left();
         table.add(volumeSlider).width(100);
         table.add(volumeValue).center().width(50).row().padBottom(10);
         table.add(backButton).size(100, 30).left().row();

@@ -14,7 +14,7 @@ import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
 
 public class StatisticsMenu extends AbstractMenu {
-    private TextButton backButton = new TextButton("back", skin);
+    private TextButton backButton = new TextButton("Back", skin);
     private Label title = new Label("Statistics",skin, "title");
 
     private static Map<String,String> labelMap = new HashMap<String, String>();
@@ -31,7 +31,7 @@ public class StatisticsMenu extends AbstractMenu {
         setLabelMap();
         
         Table statisticsTable = new Table();
-        statisticsTable.add(title).padBottom(10).row();
+        statisticsTable.add(title).fillX().padBottom(10).colspan(2).row();
         loadStatistics(statisticsTable);
         statisticsTable.add(backButton).bottom().padBottom(5).row();
         ScrollPane scrollpane = new ScrollPane(statisticsTable);
@@ -54,12 +54,13 @@ public class StatisticsMenu extends AbstractMenu {
     }
 
     public void setLabelMap() {
-        labelMap.put("totalScore", "total highscore");
-        labelMap.put("totalContainer", "total containers loaded");
-        labelMap.put("totalWeight", "total weight");
-        labelMap.put("totalGames", "total games played");
-        labelMap.put("totalShipsSuccessfullyLoaded", "total ships successfully loaded");
-        labelMap.put("totalShipsCapsized", "total ships capsized");
-        labelMap.put("totalShipsBroken", "total ships broken");
+        labelMap.put("totalQuickScore", "Quick Game Highscore");
+        labelMap.put("totalInfiniteScore", "Infinite Game Highscore");
+        labelMap.put("totalContainer", "Total Containers Loaded");
+        labelMap.put("totalWeight", "Total Weight");
+        labelMap.put("totalGames", "Total Games Played");
+        labelMap.put("totalShipsSuccessfullyLoaded", "Total Ships Loaded");
+        labelMap.put("totalShipsCapsized", "Total Ships Capsized");
+        labelMap.put("totalShipsBroken", "Total Ships Broken");
     }
 }
