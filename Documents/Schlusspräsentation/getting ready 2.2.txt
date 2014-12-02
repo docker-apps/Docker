@@ -1,4 +1,0 @@
-
-(YM - Schiff ladehöhe index)
-YM - button infinite mode ship los
-YM - Animation smoother machen
