@@ -259,7 +259,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 		}
 		this.stage.act(Gdx.graphics.getDeltaTime());
 		
-		if(this.getTrain().getFirstContainer().getX() + this.getTrain().getFirstContainer().getWidth() >= stage.getWidth()){
+		if(this.getTrain().hasContainers() &&
+				this.getTrain().getFirstContainer().getX() + this.getTrain().getFirstContainer().getWidth() >= stage.getWidth()){
 			this.getTrain().getFirstContainer().destroy(stage);
 			this.getTrain().removeContainer();
 			lives--;
