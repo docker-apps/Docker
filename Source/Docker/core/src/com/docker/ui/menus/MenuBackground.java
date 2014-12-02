@@ -6,7 +6,6 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -108,7 +107,7 @@ public class MenuBackground extends Actor {
 					rand.nextFloat()*this.getHeight());
 		}
 		else{
-			this.cloudPosition.add(this.CLOUD_SPEED, 0);
+			this.cloudPosition.add(CLOUD_SPEED, 0);
 		}
 		
 		this.train.act(delta);
