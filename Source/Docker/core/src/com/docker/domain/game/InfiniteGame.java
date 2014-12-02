@@ -1,12 +1,12 @@
 package com.docker.domain.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Ship;
+import com.docker.technicalservices.Persistence;
 import com.docker.ui.menus.AbstractMenu;
 
 public class InfiniteGame extends AbstractGame{
@@ -51,7 +51,17 @@ public class InfiniteGame extends AbstractGame{
 		this.stage.getBatch().end();
 	}
 
-	public int getRemainingShips() {
+    @Override
+    public Integer endGame(Integer gameScore) {
+        Integer highscore = Persistence.getInfiniteHighscore();
+        if (highscore < gameScore) {
+            Persistence.setInfiniteHighscore(gameScore);
+            return gameScore;
+        }
+        return highscore;
+    }
+
+    public int getRemainingShips() {
 		return remainingShips;
 	}
 

@@ -335,15 +335,16 @@ public abstract class AbstractGame extends ScreenAdapter {
 		}
 	}
 
+    public abstract Integer endGame(Integer gameScore);
+
     public void displayEndScreen(boolean isSunken){
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
         if(!isSunken){
-        	Integer highscore = Persistence.getHighscore();
-        	int gameScore = getLoadRating().getScore();
-        	int newHighscore = highscore + gameScore;
-        	Persistence.setHighscore(newHighscore);
-        	application.setScreen(new EndScreen(application, screenCap, gameScore, newHighscore));
+            Integer gameScore = getLoadRating().getScore();
+
+            Integer highscore = endGame(gameScore);
+            application.setScreen(new EndScreen(application, screenCap, gameScore, highscore));
         }else{
         	application.setScreen(new EndScreen(application, screenCap));
         }

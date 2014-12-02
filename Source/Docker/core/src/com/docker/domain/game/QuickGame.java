@@ -1,6 +1,7 @@
 package com.docker.domain.game;
 
 import com.docker.Docker;
+import com.docker.technicalservices.Persistence;
 
 public class QuickGame extends AbstractGame {
 	private static final double GAME_DURATION = 60;
@@ -19,7 +20,17 @@ public class QuickGame extends AbstractGame {
 		setLoadRating(new LoadRating(getShip().getBreakThreshold(), getShip().getCapsizeThreshold(), 1));
 	}
 
-	public double getTimeLeft() {
+    @Override
+    public Integer endGame(Integer gameScore) {
+        Integer highscore = Persistence.getQuickHighscore();
+        if (highscore < gameScore) {
+            Persistence.setQuickHighscore(gameScore);
+            return gameScore;
+        }
+        return highscore;
+    }
+
+    public double getTimeLeft() {
 		return timeLeft;
 	}
 

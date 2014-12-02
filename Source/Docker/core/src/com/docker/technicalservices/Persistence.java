@@ -97,18 +97,33 @@ public class Persistence {
     }
 
     /**
-     * @return highest score of the game
+     * @return highest score of the quick game
      */
-    public static Integer getHighscore() {
-        return prefs.getInteger("highscore", 0);
+    public static Integer getQuickHighscore() {
+        return prefs.getInteger("quickHighscore", 0);
     }
 
     /**
-     * set the new game highscore
-     * @param highscore
+     * set the new quick game highscore
+     * @param highscore new high score
      */
-    public static void setHighscore(Integer highscore) {
-        prefs.putInteger("highscore", highscore);
+    public static void setQuickHighscore(Integer highscore) {
+        prefs.putInteger("quickHighscore", highscore);
+        prefs.flush();
+    }
+    /**
+     * @return highest score of the infinite game
+     */
+    public static Integer getInfiniteHighscore() {
+        return prefs.getInteger("infiniteHighscore", 0);
+    }
+
+    /**
+     * set the new infinite game highscore
+     * @param highscore new high score
+     */
+    public static void setInfiniteHighscore(Integer highscore) {
+        prefs.putInteger("infiniteHighscore", highscore);
         prefs.flush();
     }
 
