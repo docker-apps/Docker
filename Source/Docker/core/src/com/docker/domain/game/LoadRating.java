@@ -1,6 +1,10 @@
 package com.docker.domain.game;
 
-
+/**
+ * Load rating which calculates the load balance and score of the game
+ * @author it-monkey
+ *
+ */
 public class LoadRating {
 
 	private float[][] loadTable;
@@ -10,11 +14,16 @@ public class LoadRating {
 	private float capsizeValue;
 	private float handicapFactor;
 	private int score;
-	public enum Capsized {LEFT, RIGHT, NONE};
 	private float[] loadDeltas;
 	private float[] loadSums;
 	private int beauty;
 	
+	/**
+	 * Constructor for the Loadrating class
+	 * @param breakValue Value when the ship will break 0 might be to low, use 5 or 6
+	 * @param capsizeValue Value when the ship will capsize 0 might be to low, use 7 or 8
+	 * @param handicapFactor Value which multiplies the score with a specific factor
+	 */
 	public LoadRating(float breakValue, float capsizeValue, float handicapFactor){
 		this.breakThreshold = breakValue;
 		this.capsizeThreshold = capsizeValue;
@@ -24,7 +33,7 @@ public class LoadRating {
 
 	/**
 	 * Calculates the load rating from a given loadTable and writes the calculated values into the breakValue, capsizeValue, and beautyValue
-	 * @param loadTable
+	 * @param loadTable two dimensional array of the weight on each position of the ship
 	 */
 	public void calculate(float[][] loadTable){
 		this.setLoadTable(loadTable);
@@ -36,7 +45,7 @@ public class LoadRating {
 	
 	/**
 	 * Calculates the score from a given loadTable, includes the calculate() method
-	 * @param loadTable
+	 * @param loadTable two dimensional array of the weight on each position of the ship
 	 */
 	public void calculateScore(float[][] loadTable){
 		this.calculate(loadTable);

@@ -258,7 +258,14 @@ public abstract class AbstractGame extends ScreenAdapter {
 			this.displayEndScreen(this.getShip().isSunken());
 		}
 		this.stage.act(Gdx.graphics.getDeltaTime());
-
+		
+		if(this.getTrain().getFirstContainer().getX() + this.getTrain().getFirstContainer().getWidth() >= stage.getWidth()){
+			this.getTrain().getFirstContainer().destroy(stage);
+			this.getTrain().removeContainer();
+			lives--;
+			foreground.setRemainingLives(lives);
+		}
+		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();
 
@@ -346,6 +353,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 		}
 	}
 
+    public abstract Integer endGame(Integer gameScore);
+
     /**
      * Switches to the endscreen and effectively finishes the game.
      * 
@@ -355,11 +364,10 @@ public abstract class AbstractGame extends ScreenAdapter {
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
         if(!isSunken){
-        	Integer highscore = Persistence.getHighscore();
-        	int gameScore = getLoadRating().getScore();
-        	int newHighscore = highscore + gameScore;
-        	Persistence.setHighscore(newHighscore);
-        	application.setScreen(new EndScreen(application, screenCap, gameScore, newHighscore));
+            Integer gameScore = getLoadRating().getScore();
+
+            Integer highscore = endGame(gameScore);
+            application.setScreen(new EndScreen(application, screenCap, gameScore, highscore));
         }else{
         	application.setScreen(new EndScreen(application, screenCap));
         }

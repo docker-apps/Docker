@@ -1,8 +1,6 @@
 package com.docker.domain.gameobject;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -25,7 +23,7 @@ public class Train extends Actor {
 	private TextureRegion platform_right;
 	private TextureRegion wheel;
 	private float stateTime;
-	
+
 	private boolean indestructible = false;
 	
 	/**
@@ -56,11 +54,18 @@ public class Train extends Actor {
 	public Train(Queue<Container> containerList, float speed, float x, float y){
 		this(speed, x, y);
 		this.containers = containerList;
-	}
+        float lastX = 0f;
+        for (Container container : containerList) {
+            lastX = lastX-container.getWidth() - PADDING;
+            container.setX(lastX);
+        }
+    }
 
 	public void addContainer(Container container){
-		this.containers.add(container);
-	}
+        Container lastContainer = getLastContainer();
+        container.setX(lastContainer.getX() - container.getWidth() - PADDING);
+        this.containers.add(container);
+    }
 
 	public Container removeContainer(){
 		return containers.remove();
@@ -72,40 +77,30 @@ public class Train extends Actor {
 	@Override
 	public void act(float delta){
 		this.stateTime += delta;
-        List<Container> toRemove = new ArrayList<Container>();
-        float lastX = 0f;
 		for (Container container : this.containers) {
             float xPos = container.getX();
-
-            if (lastX == 0 || fits(container, lastX) || !toRemove.isEmpty()) {
-                container.setY(this.getY());
-                if (isIndestructible() || xPos + container.getWidth() < this.getStage().getWidth()) {
-                    xPos = speed*delta + container.getX();
-                    container.setX(xPos);
-                    lastX = xPos;
-                } else {
-                    toRemove.add(container);
-                }
-            } else {
-                container.setX((container.getWidth()*-1) - PLATFORM_OFFSET);
+            container.setY(this.getY());
+            if (isIndestructible() || xPos + container.getWidth() < this.getStage().getWidth()) {
+                xPos = speed*delta + container.getX();
+                container.setX(xPos);
             }
         }
-        if (!toRemove.isEmpty()){
-        	for (Container container : toRemove) {
-        		container.destroy(this.getStage());
-				containers.remove(container);
-			}
-        }
     }
-	
-	public boolean hasContainers(){
+
+    private Container getLastContainer() {
+        Container lastContainer = getFirstContainer();
+        for (Container container : containers) {
+            float xPos = container.getX();
+            if (xPos <= lastContainer.getX()) {
+               lastContainer = container;
+            }
+        }
+        return lastContainer;
+    }
+
+    public boolean hasContainers(){
 		return this.containers.size() > 0;
 	}
-
-    private boolean fits(Container container, float lastX) {
-        float fit = container.getWidth() + container.getX() + PADDING;
-        return Math.round(fit) < lastX;
-    }
 
     @Override
 	public void draw (Batch batch, float parentAlpha) {
@@ -146,6 +141,14 @@ public class Train extends Actor {
 			}
 		}
 	}
+    
+    /**
+     * 
+     * @return the size of the Container list
+     */
+    public int getContainerListSize(){
+    	return containers.size();
+    }
 
 	/**
 	 * @return  the speed at which the train moves rightward.

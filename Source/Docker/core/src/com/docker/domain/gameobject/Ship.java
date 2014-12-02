@@ -305,6 +305,7 @@ public class Ship extends Actor {
 		Action completeAction = new Action(){
 			public boolean act( float delta ) {
 				removeFromStage();
+				isTakingOff = false;
 				return true;
 			}
 		};

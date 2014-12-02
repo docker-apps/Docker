@@ -13,13 +13,18 @@ import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 
+/**
+ * Level class which loads levels from persistence or generates random level with specified input
+ * @author it-monkey
+ *
+ */
 public class Level {
 	private List<Integer> containerLengths;
 	private List<Integer> containerWeights;
 	private int shipHeight;
 	private int shipLength;
-	private final int MAXCONTAINERLENGTH = 4;
-	private final int MAXCONTAINERWEIGHT = 6;
+	private final static int MAXCONTAINERLENGTH = 4;
+	private final static int MAXCONTAINERWEIGHT = 6;
 	private Train train;
 	private Ship ship;
 	private int lifeCount;
@@ -28,7 +33,7 @@ public class Level {
 	private int time;
     private int trainSpeed;
 	
-	public Level(List<Integer> containerLengths,
+	private Level(List<Integer> containerLengths,
 			List<Integer> containerWeights, int shipHeight, int shipLength,
 			int lifeCount, int breakThreshold, int capsizeThreshold, int time, int trainSpeed) {
 		super();
@@ -58,7 +63,7 @@ public class Level {
 	}
 	
     /**
-     * Loads a random level with the hardcoded parameters.
+     * Loads a random level with the hard coded parameters.
      * @return level
      */
 	public static Level loadLevel(){
@@ -94,29 +99,29 @@ public class Level {
 			while(line>0){
 				containerLength = (int)(Math.random()*(MAXCONTAINERLENGTH))+1;
 				if(line-containerLength > 2) {
-					allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
+					allContainers.add(new Container(generateRandomWeight(containerLength), containerLength));
 					line -= containerLength;
 				}
 				else {
 					switch (line-containerLength) {
 					case 2:
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
-						allContainers.add(new Container(this.generateRandomWeight(1), 1));
-						allContainers.add(new Container(this.generateRandomWeight(1), 1));
+						allContainers.add(new Container(generateRandomWeight(containerLength), containerLength));
+						allContainers.add(new Container(generateRandomWeight(1), 1));
+						allContainers.add(new Container(generateRandomWeight(1), 1));
 						line = 0;
 						break;
 					case 1:
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
-						allContainers.add(new Container(this.generateRandomWeight(1), 1));
+						allContainers.add(new Container(generateRandomWeight(containerLength), containerLength));
+						allContainers.add(new Container(generateRandomWeight(1), 1));
 						line = 0;				
 						break;
 					case 0:
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
+						allContainers.add(new Container(generateRandomWeight(containerLength), containerLength));
 						line = 0;	
 						break;
 					default:
 						containerLength = line;
-						allContainers.add(new Container(this.generateRandomWeight(containerLength), containerLength));
+						allContainers.add(new Container(generateRandomWeight(containerLength), containerLength));
 						line = 0;
 						break;
 					}
@@ -138,7 +143,7 @@ public class Level {
 	 * @param containerLength
 	 * @return randomWeight (1-3 if container length is 1, or 1-6 if container length is between 2 and 4)
 	 */
-	private int generateRandomWeight(int containerLength){
+	private static int generateRandomWeight(int containerLength){
 		//one-size container have a weight from 1 to 3
 		//1-2 80%, 3 20%
 		if(containerLength == 1 && (int)(Math.random()*10)<8) {
@@ -178,6 +183,16 @@ public class Level {
     }
     
     /**
+     * 
+     * @return a random created Container
+     */
+    public static Container createRandomContainer(){
+		int containerLength = (int)(Math.random()*(MAXCONTAINERLENGTH))+1;
+    	Container container = new Container(generateRandomWeight(containerLength), containerLength);
+    	return container;
+    }
+    
+    /**
      * Initializes the position of the ship.
      */
     private void initShipPosition(){
@@ -193,29 +208,58 @@ public class Level {
     	this.train.setPosition(0f, Docker.HEIGHT-23);
     }
 
+    /**
+     * simple getter
+     * @return ship
+     */
 	public Ship getShip(){
 		return ship;
 	}
+	
+	/**
+	 * simple getter
+	 * @return train
+	 */
 	public Train getTrain(){
 		return train;
 	}
 	
+	/**
+	 * simple getter
+	 * @return lifeCount
+	 */
 	public int getLifeCount(){
 		return lifeCount;
 	}	
 	
+	/**
+	 * simple getter
+	 * @return breakThreshold
+	 */
 	public int getBreakThreshold(){
 		return breakThreshold;
 	}
 	
+	/**
+	 * simple getter
+	 * @return capsizeThreshold
+	 */
 	public int getCapsizeThreshold(){
 		return capsizeThreshold;
 	}
 	
+	/**
+	 * simple getter
+	 * @return time
+	 */
 	public int getTime(){
 		return time;
 	}
 
+	/**
+	 * simple getter
+	 * @return trainSpeed
+	 */
     public int getTrainSpeed() {
         return trainSpeed;
     }
