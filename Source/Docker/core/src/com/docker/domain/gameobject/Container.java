@@ -11,13 +11,30 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * @author HAL9000
+ *	
+ * A container. In Docker, everything is about containers.
+ */
 public class Container extends Actor {
 
 	private static final float LABEL_TRANSPARENCY = 0.8f;
 
+	/**
+	 * The Color Value to tint red Containers with. Always use these Colors for Containers.
+	 */
 	public final static Color RED = new Color(1f, 0.2f, 0.15f, 1f);
+	/**
+	 * The Color Value to tint green Containers with. Always use these Colors for Containers.
+	 */
 	public final static Color GREEN = new Color(0.5f, 1f, 0.15f, 1f);
+	/**
+	 * The Color Value to tint blue Containers with. Always use these Colors for Containers.
+	 */
 	public final static Color BLUE = new Color(0.15f, 0.5f, 1f, 1f);
+	/**
+	 * The Color Value to tint yellow Containers with. Always use these Colors for Containers.
+	 */
 	public final static Color YELLOW = new Color(1f, 1f, 0f, 1f);
 
 	private int weight;
@@ -72,14 +89,29 @@ public class Container extends Actor {
        this.setY(y);
 	}
 	
+	/**
+	 * @param weight the container's weight value.
+	 * @param length the container's length (not in pixels but in amount of elements)
+	 */
 	public Container(int weight, int length){
 		this(weight, length, getRandomColor());
 	}
 
+	/**
+	 * Create a new Container from an existing container.
+	 * All attributes, as the weight, length, color and position will be copied.
+	 * 
+	 * @param container the container on which to base the new container on.
+	 */
 	public Container(Container container) {
 		this(container.getWeight(), container.getLength(), container.getColor(), container.getX(), container.getY());
 	}
 
+	/**
+	 * Creates a destroying (explosion) animation at the containers position.
+	 * 
+	 * @param stage the stage in which the explosion should be shown.
+	 */
 	public void destroy(Stage stage){
 		for (int i = 0; i < this.length; i++) {
 			ContainerExplosion explosion = new ContainerExplosion(this.getX()+i*this.getElementWidth(), this.getY());
@@ -157,10 +189,16 @@ public class Container extends Actor {
 	public float getElementHeight(){
 		return baseLeft.getRegionHeight();
 	}
+	/**
+	 * @return the weight of the container
+	 */
 	public int getWeight() {
 		return weight;
 	}
 
+	/**
+	 * @param weight the weight of the container
+	 */
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}

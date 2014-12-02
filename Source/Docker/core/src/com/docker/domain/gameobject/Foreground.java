@@ -19,6 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.docker.Docker;
 
+/**
+ * @author HAL9000
+ *
+ * The Foreground is the foremost graphical plane displayed during the game.
+ */
 public class Foreground extends Actor {
 	private static float DEFAULT_WATERLEVEL = 20;
 	private static float LIFE_PADDING = 5;
@@ -86,6 +91,11 @@ public class Foreground extends Actor {
 		}
 	}
 	
+	/**
+	 * Get an Foreground instance with the default water level.
+	 * 
+	 * @param width The width over which the foreground spans. Usually equals the stages/screens width.
+	 */
 	public Foreground(float width){
 		this(width, DEFAULT_WATERLEVEL);
 	}
@@ -193,22 +203,39 @@ public class Foreground extends Actor {
 		this.waterLevel = waterLevel;
 	}
 	
+	/**
+	 * The CapsizeValue is displayed by the water level.
+	 * 
+	 * @param capsizeValue the current capsizeValue from the loadRating.
+	 */
 	public void setCapsizeValue(float capsizeValue){
 		this.capsizeValue = capsizeValue;
 	}
 
+	/**
+	 * @return the amount of remaining lives to display.
+	 */
 	public int getRemainingLives() {
 		return remainingLives;
 	}
 
+	/**
+	 * @param lives the amount of remaining lives to display.
+	 */
 	public void setRemainingLives(int lives) {
 		this.remainingLives = lives;
 	}
 
+	/**
+	 * @return the amount of remaining ships to display.
+	 */
 	public int getRemainingShips() {
 		return remainingShips;
 	}
 
+	/**
+	 * @param ships the amount of remaining ships to display.
+	 */
 	public void setRemainingShips(int ships) {
 		this.remainingShips = ships;
 	}

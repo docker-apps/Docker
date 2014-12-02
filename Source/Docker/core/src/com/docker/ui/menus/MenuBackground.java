@@ -23,6 +23,11 @@ import com.badlogic.gdx.utils.Array;
 import com.docker.domain.game.Level;
 import com.docker.domain.gameobject.Train;
 
+/**
+ * @author HAL9000
+ *
+ * The Background to display in the Menus.
+ */
 public class MenuBackground extends Actor {
 	private float stateTime;
 	
@@ -53,6 +58,10 @@ public class MenuBackground extends Actor {
 	
 	private Train train;
 
+	/**
+	 * @param width the width of the Background. Usually equals the width of the screen.
+	 * @param height the height of the Background. Usually equals the height of the screen.
+	 */
 	public MenuBackground(float width, float height){
 		this.setWidth(width);
 		this.setHeight(height);

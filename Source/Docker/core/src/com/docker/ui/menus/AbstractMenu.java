@@ -146,6 +146,9 @@ public class AbstractMenu implements Screen {
         skin.dispose();
 	}
 
+	/**
+	 * @return the custom skin used by docker.
+	 */
 	public static Skin getDockerSkin(){
 		Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 		skin.add("default", new BitmapFont(Gdx.files.internal("ui/rokkitt.fnt")));
