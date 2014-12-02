@@ -7,13 +7,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -57,6 +61,9 @@ public class Ship extends Actor {
 	private TextureRegion bodyBrokenRight;
 	private FrameBuffer fbo;
 	private ShaderProgram snapshotShader;
+	
+	private float gridBoundsAlpha = 0f;
+	private float gridBoundsDecay = 1f;
 
     private Boolean playContainerSound = true;
 
@@ -138,6 +145,8 @@ public class Ship extends Actor {
 			if (gridCoords.y < gridHeight) {
 				previewContainer.setColor(new Color(1f, 1f, 1f, 0.5f));
 			}
+			if(gridCoords.y >= gridHeight-1 || gridCoords.x == 0 || gridCoords.x + container.getLength() == gridWidth)
+				this.gridBoundsAlpha = 1f;
 			Vector2 realCoords = getRealCoord(gridCoords);
 			previewContainer.setPosition(realCoords.x, realCoords.y);
 		}else{
@@ -421,6 +430,8 @@ public class Ship extends Actor {
 		super.act(delta);
 		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
 		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
+		
+		this.gridBoundsAlpha = Math.max(0f, this.gridBoundsAlpha - this.gridBoundsDecay * delta);
 	}
 
 	@Override
@@ -449,6 +460,9 @@ public class Ship extends Actor {
 			if (previewContainer != null) {
 				previewContainer.draw(batch, parentAlpha);
 			}
+			
+			if(this.gridBoundsAlpha > 0f)
+				batch.draw(this.getGridBoundsTexture(), xGridstart, yGridstart);
 
 			// draw Containers
 			for (Container container : containers) {
@@ -524,7 +538,21 @@ public class Ship extends Actor {
 				lenght--;
 			}
 		}
-	} 
+	}
+	
+	/**
+	 * @return the texture to display the grid's dimensions.
+	 */
+	public Texture getGridBoundsTexture(){
+		int width = gridWidth * gridSize;
+		int height = gridHeight * gridSize;
+		Pixmap pixmap = new Pixmap(width, height, Format.RGBA8888);
+		
+		pixmap.setColor(1f, .5f, .1f, this.gridBoundsAlpha);
+		pixmap.drawRectangle(0, 0, width, height);
+		
+		return new Texture(pixmap);
+	}
 
 	public float[][] getGrid(){
 		return this.grid;
