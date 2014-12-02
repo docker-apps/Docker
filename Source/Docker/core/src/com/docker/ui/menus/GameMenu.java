@@ -25,7 +25,7 @@ public class GameMenu extends AbstractMenu {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.setLastScreen();
+                application.returnToLastScreen();
             }
         });
         careerGameButton.addListener(new ClickListener() {
