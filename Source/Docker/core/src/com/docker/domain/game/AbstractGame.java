@@ -25,6 +25,13 @@ import com.docker.technicalservices.WorldStage;
 import com.docker.ui.menus.PauseMenu;
 import com.docker.ui.menus.EndScreen;
 
+/**
+ * @author HAL9000
+ *
+ * Abstraction for all Game classes.
+ *
+ * Encompasses all functions and attributes which are shared by all Game Modes.
+ */
 public abstract class AbstractGame extends ScreenAdapter {
 
 	protected Docker application;
@@ -45,7 +52,10 @@ public abstract class AbstractGame extends ScreenAdapter {
 	protected Foreground foreground;
 	protected Background background;
 
-	public AbstractGame(Docker application){
+	/**
+	 * @param application the reference to the main docker application object.
+	 */
+	public AbstractGame(final Docker application){
 		this.application = application;
 
 		this.score = 0;
@@ -103,7 +113,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @param y the y-Position of the touch event
 	 * @param pointer the pointer for the event.
 	 * @param button the button, if one was pressed
-	 * @return
+	 * @return whether the input was processed 
 	 */
 	public boolean touchDownEvent(int x, int y, int pointer, int button){
 		if(canPlayerAct())
@@ -117,7 +127,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @param x the x-Position of the touch event
 	 * @param y the y-Position of the touch event
 	 * @param pointer the pointer for the event.
-	 * @return
+	 * @return whether the input was processed 
 	 */
 	public boolean touchDraggedEvent(int x, int y, int pointer){
 		if(canPlayerAct())
@@ -132,7 +142,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @param y the y-Position of the touch event
 	 * @param pointer the pointer for the event.
 	 * @param button the button, if one was pressed
-	 * @return
+	 * @return whether the input was processed 
 	 */
 	public boolean touchUpEvent (int x, int y, int pointer, int button) {
 		if(canPlayerAct())
@@ -292,11 +302,19 @@ public abstract class AbstractGame extends ScreenAdapter {
 		this.font.dispose();
 	}
 
+	/**
+	 * Subtracts a live
+	 * 
+	 * @return the remaining amount of lives.
+	 */
 	public int removeLive() {
 		this.lives--;
 		return this.lives;
 	}
 	
+	/**
+	 * Gets called when the game is over (wether the player lost or won the game).
+	 */
 	public void gameOver(){
 		getLoadRating().calculateScore(getShip().getGrid());
         Integer totalGames = (Integer) Persistence.getStatisticsMap().get("totalGames");
@@ -328,6 +346,11 @@ public abstract class AbstractGame extends ScreenAdapter {
 		}
 	}
 
+    /**
+     * Switches to the endscreen and effectively finishes the game.
+     * 
+     * @param isSunken whether the ship has sunken, respectively whether the player has lost the game or not. 
+     */
     public void displayEndScreen(boolean isSunken){
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
@@ -342,94 +365,180 @@ public abstract class AbstractGame extends ScreenAdapter {
         }
     }
 
+	/**
+	 * @return the current score
+	 */
 	public int getScore() {
 		return score;
 	}
 
+	/**
+	 * @param score the current score
+	 */
 	public void setScore(int score) {
 		this.score = score;
 	}
 
+	/**
+	 * @return the amount of time that has passed since the game was started.
+	 */
 	public double getTime() {
 		return time;
 	}
 
+
+	/**
+	 * @param time  the amount of time that has passed since the game was started.
+	 */
 	public void setTime(double time) {
 		this.time = time;
 	}
 
+	/**
+	 * @return the amount of remaining lives
+	 */
 	public int getLives() {
 		return lives;
 	}
 
+	/**
+	 * Note that the game will likely end if the amount of remaing lives equals zero.
+	 * 
+	 * @param lives the amount of remaining lives
+	 */
 	public void setLives(int lives) {
 		this.lives = lives;
 		this.foreground.setRemainingLives(lives);
 	}
 
+	/**
+	 * @return the current ship, to which containers can be deployed
+	 */
 	public Ship getShip() {
 		return ship;
 	}
 
+	/**
+	 * Adds the ship immediately to the stage.
+	 * 
+	 * @param ship the current ship, to which containers can be deployed
+	 */
 	public void setShip(Ship ship) {
 		this.ship = ship;
 		this.stage.addActor(ship);
 	}
 
+	/**
+	 * @return the current train, from which containers can be retrieved.
+	 */
 	public Train getTrain() {
 		return train;
 	}
 
+	/**
+	 * Adds the train immediately to the stage.
+	 * 
+	 * @param train the current train, from which containers can be retrieved.
+	 */
 	public void setTrain(Train train) {
 		this.train = train;
 		this.stage.addActor(train);
 	}
 
+	/**
+	 * @return the crane which containers will be deployed with.
+	 */
 	public Crane getCrane() {
 		return crane;
 	}
 
+	/**
+	 * Adds the crane immediately to the stage.
+	 * 
+	 * @param crane the crane which containers will be deployed with.
+	 */
 	public void setCrane(Crane crane) {
 		this.crane = crane;
 		this.stage.addActor(crane);
 	}
 
+	/**
+	 * @return the LoadRating Object responsible to calculate all kinds of values.
+	 */
 	public LoadRating getLoadRating() {
 		return loadRating;
 	}
 
+	/**
+	 * @param loadRating the LoadRating Object responsible to calculate all kinds of values.
+	 */
 	public void setLoadRating(LoadRating loadRating) {
 		this.loadRating = loadRating;
 	}
 
+	/**
+	 * @return whether the game is over (regardless of whether the player has lost or won the game)
+	 */
 	public boolean isGameOver() {
 		return gameOver;
 	}
 
+	/**
+	 * Note that the game will not be finished immediately if gameOver is set to true.
+	 * The player shouldn't be able to execute any more actions though. The endscreen will be displayed 
+	 * after all animations (sinking, breaking) are finished.
+	 * 
+	 * @param gameOver whether the game is over (regardless of whether the player has lost or won the game)
+	 */
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
 
+	/**
+	 * @return the stage used by the game, containing all actors.
+	 */
 	public WorldStage getStage() {
 		return stage;
 	}
 
+	/**
+	 * Sets the stage used by the game. Note that if you set a new stage,
+	 * the old one will be discarded, including all its actors.
+	 * 
+	 * @param stage the stage used by the game
+	 */
 	public void setStage(WorldStage stage) {
+		this.stage.dispose();
 		this.stage = stage;
 	}
 
+	/**
+	 * @return the viewport used by the stage.
+	 */
 	public ExtendViewport getViewport() {
 		return viewport;
 	}
 
+	/**
+	 * Sets the current viewport and applies it to the stage as well.
+	 * 
+	 * @param viewport the viewport used by the stage. 
+	 */
 	public void setViewport(ExtendViewport viewport) {
 		this.viewport = viewport;
+		this.getStage().setViewport(viewport);
 	}
 
+	/**
+	 * @return whether to display Debug Information, such as the current LoadRating values.
+	 */
 	public boolean isShowDebugInfo() {
 		return showDebugInfo;
 	}
 
+	/**
+	 * @param showDebugInfo whether to display Debug Information, such as the current LoadRating values.
+	 */
 	public void setShowDebugInfo(boolean showDebugInfo) {
 		this.showDebugInfo = showDebugInfo;
 	}

@@ -19,7 +19,7 @@ public class EndScreen extends AbstractMenu {
         endGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.setMainmenu();
+                application.returnToMainmenu();
             }
         });
         table.add(title).left().padBottom(15).row().padBottom(10);
@@ -36,7 +36,7 @@ public class EndScreen extends AbstractMenu {
         endGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.setMainmenu();
+                application.returnToMainmenu();
             }
         });
         table.add(title).left().padBottom(15).row().padBottom(10);

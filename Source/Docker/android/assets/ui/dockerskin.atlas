@@ -35,10 +35,9 @@ slider_pointer
 slider_rail
   rotate: false
   xy: 2, 2
-  size: 16, 6
-  split: 7, 8, 0, 7
-  pad: 7, 8, -1, -1
-  orig: 16, 6
+  size: 15, 6
+  split: 7, 7, 0, 7
+  orig: 15, 6
   offset: 0, 0
   index: -1
 yellow_button

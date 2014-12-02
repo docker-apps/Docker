@@ -26,11 +26,11 @@ public class SettingsMenu extends AbstractMenu {
     public SettingsMenu(final Docker application) {
         super(application);
         
-        this.persistence = application.persistence;
+        this.persistence = application.getPersistence();
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.setLastScreen();
+                application.returnToLastScreen();
             }
         });
         soundCheckBox.addListener(new ClickListener() {
@@ -52,6 +52,7 @@ public class SettingsMenu extends AbstractMenu {
             public void changed(ChangeEvent event, Actor actor) {
                 Slider slider = (Slider) actor;
                 Persistence.setVolume(slider.getValue());
+                volumeValue.setText(""+slider.getValue());
             }
         });
         volumeSlider.setValue(Persistence.getVolume());

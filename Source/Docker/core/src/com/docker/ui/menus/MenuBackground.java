@@ -90,7 +90,7 @@ public class MenuBackground extends Actor {
 		}
 		
 		this.train = Level.loadLevel().getTrain();
-		this.train.setPosition(20f, this.aqueductElement.getRegionHeight()+8);
+		this.train.setPosition(20f, this.aqueductElement.getRegionHeight()+7);
 		this.train.setIndestructible(true);
 		this.train.setSpeed(TRAIN_SPEED);
 	}
