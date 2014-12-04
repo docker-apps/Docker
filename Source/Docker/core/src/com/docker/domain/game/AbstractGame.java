@@ -47,10 +47,13 @@ public abstract class AbstractGame extends ScreenAdapter {
 	protected Train train;
 	protected Crane crane;
 	protected LoadRating loadRating;
-	protected boolean gameOver;
 	protected Music backgroundMusic;
 	protected Foreground foreground;
 	protected Background background;
+
+	protected boolean gameOver;
+	protected boolean gameLost;
+	protected double endScreenTimer = 3f;
 
 	/**
 	 * @param application the reference to the main docker application object.
@@ -253,10 +256,14 @@ public abstract class AbstractGame extends ScreenAdapter {
 		else if(Gdx.input.isKeyJustPressed(Keys.R))
 			this.getTrain().setSpeed(this.getTrain().getSpeed()/2);
 
-		// if game is over and the ship has no more animations running, display the end screen
-		if(this.isGameOver() && this.getShip().isSunken()){
-			this.displayEndScreen(this.getShip().isSunken());
+		// if game is over decrease the endScreenTimer until it's zero, then display the endscreen
+		if(this.isGameOver()){
+			if(this.endScreenTimer > 0f)
+				this.endScreenTimer -= delta;
+			else
+				this.displayEndScreen(this.isGameLost());
 		}
+		
 		this.stage.act(Gdx.graphics.getDeltaTime());
 		
 		if(this.getTrain().hasContainers() &&
@@ -270,12 +277,14 @@ public abstract class AbstractGame extends ScreenAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();
 
+		// calculate and apply the loadrating, then check if game is over.
 		getLoadRating().calculateScore(getShip().getGrid());
 		getShip().setBreakValues(getLoadRating().getBreakValues());
 		this.foreground.setCapsizeValue(getLoadRating().getCapsizeValue());
-		if(!isGameOver() && (!train.hasContainers() && !getCrane().isDeploying()) || lives <= 0 ){
+		if(!isGameOver() && ((!train.hasContainers() && !getCrane().isDeploying()) || lives <= 0 )){
 			gameOver();
 		}
+		
 		if(showDebugInfo)
 			drawDebugInfo(this.stage.getBatch());
 	}
@@ -327,31 +336,43 @@ public abstract class AbstractGame extends ScreenAdapter {
 		getLoadRating().calculateScore(getShip().getGrid());
         Integer totalGames = (Integer) Persistence.getStatisticsMap().get("totalGames");
         Persistence.saveStatisticValue("totalGames", totalGames + 1);
-		float[] breakArray = getLoadRating().getBreakValues();
-		boolean burst = false;
-		int burstpos = 0;
-		for (int i = 0; i < breakArray.length; i++) {
-			if(breakArray[i]>=1){
-				burst = true;
-				burstpos = i;
-				break;
-			}
-		}
-		if(Math.abs(getLoadRating().getCapsizeValue()) >=1){
-			ship.capsize(getLoadRating().getCapsizeValue());
-            Integer totalShipsCapsized = (Integer) Persistence.getStatisticsMap().get("totalShipsCapsized");
-            Persistence.saveStatisticValue("totalShipsCapsized", totalShipsCapsized + 1);
-			this.setGameOver(true);
-		}else if(burst){
-			ship.breakShip(burstpos);
-            Integer totalShipsBroken = (Integer) Persistence.getStatisticsMap().get("totalShipsBroken");
-            Persistence.saveStatisticValue("totalShipsBroken", totalShipsBroken + 1);
-			this.setGameOver(true);
-		}else{
-            Integer totalShipsSuccessfullyLoaded = (Integer) Persistence.getStatisticsMap().get("totalShipsSuccessfullyLoaded");
-            Persistence.saveStatisticValue("totalShipsSuccessfullyLoaded", totalShipsSuccessfullyLoaded + 1);
-			displayEndScreen(false);
-		}
+        
+        if(this.lives <= 0){
+        	this.endScreenTimer = 1.5f;
+        	this.setGameOver(true);
+        	this.setGameLost(true);
+        }
+        else{
+
+        	float[] breakArray = getLoadRating().getBreakValues();
+        	boolean burst = false;
+        	int burstpos = 0;
+        	for (int i = 0; i < breakArray.length; i++) {
+        		if(breakArray[i]>=1){
+        			burst = true;
+        			burstpos = i;
+        			break;
+        		}
+        	}
+        	if(Math.abs(getLoadRating().getCapsizeValue()) >=1){
+        		ship.capsize(getLoadRating().getCapsizeValue());
+        		Integer totalShipsCapsized = (Integer) Persistence.getStatisticsMap().get("totalShipsCapsized");
+        		Persistence.saveStatisticValue("totalShipsCapsized", totalShipsCapsized + 1);
+        		this.setGameOver(true);
+        		this.setGameLost(true);
+        	}else if(burst){
+        		ship.breakShip(burstpos);
+        		Integer totalShipsBroken = (Integer) Persistence.getStatisticsMap().get("totalShipsBroken");
+        		Persistence.saveStatisticValue("totalShipsBroken", totalShipsBroken + 1);
+        		this.setGameOver(true);
+        		this.setGameLost(true);
+        	}else{
+        		Integer totalShipsSuccessfullyLoaded = (Integer) Persistence.getStatisticsMap().get("totalShipsSuccessfullyLoaded");
+        		Persistence.saveStatisticValue("totalShipsSuccessfullyLoaded", totalShipsSuccessfullyLoaded + 1);
+        		this.setGameOver(true);
+        		this.setGameLost(false);
+        	}
+        }
 	}
 
     public abstract Integer endGame(Integer gameScore);
@@ -359,12 +380,12 @@ public abstract class AbstractGame extends ScreenAdapter {
     /**
      * Switches to the endscreen and effectively finishes the game.
      * 
-     * @param isSunken whether the ship has sunken, respectively whether the player has lost the game or not. 
+     * @param isGameLost whether the player has lost the game or not. 
      */
-    public void displayEndScreen(boolean isSunken){
+    public void displayEndScreen(boolean isGameLost){
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
-        if(!isSunken){
+        if(!isGameLost){
             Integer gameScore = getLoadRating().getScore();
 
             Integer highscore = endGame(gameScore);
@@ -550,5 +571,19 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 */
 	public void setShowDebugInfo(boolean showDebugInfo) {
 		this.showDebugInfo = showDebugInfo;
+	}
+
+	/**
+	 * @return whether the player has lost the game or not.
+	 */
+	public boolean isGameLost() {
+		return gameLost;
+	}
+
+	/**
+	 * @param gameLost whether the player has lost teh game.
+	 */
+	public void setGameLost(boolean gameLost) {
+		this.gameLost = gameLost;
 	}
 }
