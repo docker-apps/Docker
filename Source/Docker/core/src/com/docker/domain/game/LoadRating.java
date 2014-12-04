@@ -183,6 +183,20 @@ public class LoadRating {
 	public float[] getBreakValues(){
 		return breakValues;
 	}
+	
+	/**
+	 * returns -1 if the Ship doesn't break
+	 * @return burstposition
+	 */
+	public int doesBreak(){
+		int burstpos = -1;
+		for (int i = 0; i < breakValues.length; i++) {
+			if(breakValues[i]>=1){
+				burstpos = i;
+			}
+		}
+		return burstpos;
+	}
 
 	/**
 	 * sets the new loadTable

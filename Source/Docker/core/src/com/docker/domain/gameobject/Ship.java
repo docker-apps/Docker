@@ -315,6 +315,7 @@ public class Ship extends Actor {
 			public boolean act( float delta ) {
 				removeFromStage();
 				isTakingOff = false;
+				isStaticAnimationRunning = false;
 				return true;
 			}
 		};
@@ -383,6 +384,7 @@ public class Ship extends Actor {
 		Action completeAction = new Action(){
 			public boolean act( float delta ) {
 				setSunken(true);
+				isStaticAnimationRunning = false;
 				return true;
 			};
 		};

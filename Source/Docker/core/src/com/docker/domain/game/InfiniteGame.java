@@ -1,9 +1,9 @@
 package com.docker.domain.game;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
@@ -15,7 +15,6 @@ public class InfiniteGame extends AbstractGame{
 
 	private Skin skin = AbstractMenu.getDockerSkin();
 	private Button gameMenuButton;
-	private int remainingShips;
 	private boolean newShip = false;
 
 	public InfiniteGame(final Docker application) {
@@ -33,31 +32,29 @@ public class InfiniteGame extends AbstractGame{
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	//TODO:Ship check break and sink
-            	getShip().takeOff();
+            	checkShipCondition();
             	newShip = true;
+            	
             }
         });
 		gameMenuButton.setPosition(10, getStage().getHeight() - gameMenuButton.getHeight() - 60);
 		this.stage.addActor(gameMenuButton);	
 	}
 	
-	@Override
-	public boolean canPlayerAct() {
-		if(getShip().isTakingOff){
-			return false;
-		}
-		return super.canPlayerAct();
-	}
+
 	
 	@Override
 	public void render(float delta) {
 		super.render(delta);
-		if(getRemainingShips() <= 0)
-			super.gameOver();
-		if(!getShip().isTakingOff() && newShip){
+		if(newShip && !getShip().isStaticAnimationRunning()){
         	getShip().remove();
         	setShip(Ship.getRandomShip());
         	newShip = false;
+		}
+		if(getCrane().isDeploying()){
+			gameMenuButton.setTouchable(Touchable.disabled);
+		}else{
+			gameMenuButton.setTouchable(Touchable.enabled);
 		}
 		if(train.getContainerListSize()<= 5)
 			train.addContainer(Level.createRandomContainer());
@@ -77,12 +74,9 @@ public class InfiniteGame extends AbstractGame{
         return highscore;
     }
 
-    public int getRemainingShips() {
-		return remainingShips;
-	}
-
+    @Override
 	public void setRemainingShips(int remainingShips) {
-		this.remainingShips = remainingShips;
+		super.setRemainingShips(remainingShips);
 		this.foreground.setRemainingShips(remainingShips);
 	}
 }
