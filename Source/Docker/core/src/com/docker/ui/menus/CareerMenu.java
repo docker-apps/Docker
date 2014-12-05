@@ -2,6 +2,11 @@ package com.docker.ui.menus;
 
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -28,17 +33,16 @@ public class CareerMenu extends AbstractMenu {
             }
         });
         Table careerTable = new Table();
-        careerTable.setFillParent(true);
-        careerTable.add(title).padBottom(10).colspan(2).row();
+        careerTable.add(title).center().padBottom(10).colspan(3).row();
         addLevelButtons(careerTable);
-        ScrollPane scrollpane = new ScrollPane(careerTable);
+        careerTable.row();
+        careerTable.add(backButton).left().padBottom(5).row();
+        ScrollPane scrollpane = new CareerScrollPane(careerTable);
         scrollpane.setPosition(0, 0);
         scrollpane.setSize(Docker.WIDTH, Docker.HEIGHT);
         scrollpane.setFlingTime(2);
         scrollpane.setupOverscroll(20, 30, 200);
         scrollpane.setFadeScrollBars(false);
-        careerTable.row();
-        careerTable.add(backButton).width(80);
         this.table.addActor(scrollpane);
 
     }
@@ -65,6 +69,29 @@ public class CareerMenu extends AbstractMenu {
                 table.row();
             }
             i++;
+        }
+    }
+    private class CareerScrollPane extends ScrollPane{
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+
+        public CareerScrollPane(Actor actor){
+            super(actor);
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha){
+            batch.end();
+            Gdx.gl.glEnable(GL30.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+            shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
+            shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(0f, 0f, 0f, 0.4f);
+            shapeRenderer.rect(0f, 0f, this.getStage().getWidth(), this.getStage().getHeight());
+            shapeRenderer.end();
+            batch.begin();
+
+            super.draw(batch, parentAlpha);
         }
     }
 }

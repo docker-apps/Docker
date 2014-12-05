@@ -37,7 +37,7 @@ public class StatisticsMenu extends AbstractMenu {
         setLabelMap();
         
         Table statisticsTable = new Table();
-        statisticsTable.add(title).fillX().padBottom(10).colspan(2).row();
+        statisticsTable.add(title).center().padBottom(10).colspan(2).row();
         loadStatistics(statisticsTable);
         statisticsTable.add(backButton).bottom().padBottom(5).row();
         ScrollPane scrollpane = new StatisticsScrollPane(statisticsTable);
