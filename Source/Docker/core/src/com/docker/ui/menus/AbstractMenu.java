@@ -5,14 +5,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -103,7 +107,7 @@ public class AbstractMenu implements Screen {
     @Override
 	public void render(float delta) {
     	handleInput();
-    	
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
@@ -173,8 +177,8 @@ public class AbstractMenu implements Screen {
 		skin.add("title", labelStyleTitle);
 		
 		CheckBoxStyle checkBoxStyle = new CheckBoxStyle();
-		checkBoxStyle.checkboxOn = skin.getDrawable("livesaver_on");
-		checkBoxStyle.checkboxOff = skin.getDrawable("livesaver_off");
+		checkBoxStyle.checkboxOn = skin.getDrawable("livesaver_off");
+		checkBoxStyle.checkboxOff = skin.getDrawable("livesaver_on");
 		checkBoxStyle.font = skin.getFont("default");
 		skin.add("default", checkBoxStyle);
 		
@@ -190,4 +194,28 @@ public class AbstractMenu implements Screen {
 		
 		return skin;
 	}
+
+    public class AbstractScrollPane extends ScrollPane {
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+
+        public AbstractScrollPane(Actor actor){
+            super(actor);
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha){
+            batch.end();
+            Gdx.gl.glEnable(GL30.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+            shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
+            shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(0f, 0f, 0f, 0.4f);
+            shapeRenderer.rect(0f, 0f, this.getStage().getWidth(), this.getStage().getHeight());
+            shapeRenderer.end();
+            batch.begin();
+
+            super.draw(batch, parentAlpha);
+        }
+    }
 }

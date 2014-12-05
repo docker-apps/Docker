@@ -37,7 +37,7 @@ public class CareerMenu extends AbstractMenu {
         addLevelButtons(careerTable);
         careerTable.row();
         careerTable.add(backButton).left().padBottom(5).row();
-        ScrollPane scrollpane = new CareerScrollPane(careerTable);
+        ScrollPane scrollpane = new AbstractScrollPane(careerTable);
         scrollpane.setPosition(0, 0);
         scrollpane.setSize(Docker.WIDTH, Docker.HEIGHT);
         scrollpane.setFlingTime(2);
@@ -71,27 +71,5 @@ public class CareerMenu extends AbstractMenu {
             i++;
         }
     }
-    private class CareerScrollPane extends ScrollPane{
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-        public CareerScrollPane(Actor actor){
-            super(actor);
-        }
-
-        @Override
-        public void draw(Batch batch, float parentAlpha){
-            batch.end();
-            Gdx.gl.glEnable(GL30.GL_BLEND);
-            Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
-            shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
-            shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(0f, 0f, 0f, 0.4f);
-            shapeRenderer.rect(0f, 0f, this.getStage().getWidth(), this.getStage().getHeight());
-            shapeRenderer.end();
-            batch.begin();
-
-            super.draw(batch, parentAlpha);
-        }
-    }
 }

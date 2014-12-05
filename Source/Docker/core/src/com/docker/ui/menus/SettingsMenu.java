@@ -18,6 +18,7 @@ public class SettingsMenu extends AbstractMenu {
     Persistence persistence;
 
     private TextButton backButton = new TextButton("Back", skin);
+    private TextButton creditsButton = new TextButton("Credits", skin);
     private CheckBox soundCheckBox = new CheckBox("",skin);
     private CheckBox musicCheckBox = new CheckBox("", skin);
     private Label title = new Label("Settings", skin, "title");
@@ -33,6 +34,12 @@ public class SettingsMenu extends AbstractMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 application.returnToLastScreen();
+            }
+        });
+        creditsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                openNewMenu(new CreditsMenu(application));
             }
         });
         soundCheckBox.addListener(new ClickListener() {
@@ -63,12 +70,13 @@ public class SettingsMenu extends AbstractMenu {
         table.add(new Label("Sound", skin)).width(100).left();
         table.add(soundCheckBox).width(100).left().row().padBottom(10);
         table.add(new Label("Music", skin)).width(100).left();
-        table.add(musicCheckBox).width(100).row().padBottom(10);
+        table.add(musicCheckBox).width(100).left().row().padBottom(10);
 
         table.add(new Label("Volume", skin)).width(100).left();
         table.add(volumeSlider).width(120);
         table.add(volumeValue).center().width(50).row().padBottom(10);
-        table.add(backButton).size(100, 30).left().row();
+        table.add(backButton).size(100, 30).left();
+        table.add(creditsButton).size(100, 30).right().row();
     }
 
     private void setCheckBoxLabel(CheckBox checkBox) {
