@@ -68,9 +68,22 @@ public class Train extends Actor {
     }
 
 	public Container removeContainer(){
-		return containers.remove();
+        Container container = containers.remove();
+        if (container.getX() < 0) {
+            moveAllContainers();
+        }
+        return container;
 	}
-	public Container getFirstContainer(){
+
+    private void moveAllContainers() {
+        Float x = PADDING;
+        for (Container container : containers) {
+            x = x - container.getWidth()- PADDING;
+            container.setX(x);
+        }
+    }
+
+    public Container getFirstContainer(){
 		return containers.peek();
 	}
 
