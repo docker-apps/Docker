@@ -51,6 +51,6 @@ public class GameMenu extends AbstractMenu {
         table.add(careerGameButton).size(150, 35).padBottom(5).row();
         table.add(quickGameButton).size(150, 35).padBottom(5).row();
         table.add(infiniteGameButton).size(150, 35).padBottom(5).row();
-        table.add(backButton).size(100, 35).left();
+        table.add(backButton).size(100, 30).center();
     }
 }

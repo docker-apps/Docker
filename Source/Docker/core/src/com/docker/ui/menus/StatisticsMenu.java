@@ -15,6 +15,7 @@ import com.docker.technicalservices.Persistence;
 
 public class StatisticsMenu extends AbstractMenu {
     private TextButton backButton = new TextButton("Back", skin);
+    private TextButton resetButton = new TextButton("Reset", skin);
     private Label title = new Label("Statistics",skin, "title");
 
     private static Map<String,String> labelMap = new HashMap<String, String>();
@@ -28,12 +29,29 @@ public class StatisticsMenu extends AbstractMenu {
                 application.returnToLastScreen();
             }
         });
+        resetButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (resetButton.getText().toString().equals("Reset")) {
+                    resetButton.setText("Really?");
+                } else {
+                    resetButton.setText("Reset");
+                    Persistence.resetStatistics();
+                    openNewMenu(new StatisticsMenu(application));
+                }
+            }
+        });
         setLabelMap();
         
         Table statisticsTable = new Table();
+        statisticsTable.debug();
+        table.debug();
         statisticsTable.add(title).center().padBottom(10).colspan(2).row();
         loadStatistics(statisticsTable);
-        statisticsTable.add(backButton).bottom().padBottom(5).row();
+        Table buttonTable = new Table();
+        buttonTable.add(backButton).size(100,30).expandX().center();
+        buttonTable.add(resetButton).size(100,30).expandX().center();
+        statisticsTable.add(buttonTable).fillX().colspan(2).padBottom(5);
         ScrollPane scrollpane = new AbstractScrollPane(statisticsTable);
         scrollpane.setPosition(0, 0);
         scrollpane.setSize(stage.getWidth(), stage.getHeight());
@@ -45,6 +63,14 @@ public class StatisticsMenu extends AbstractMenu {
 
     private void loadStatistics(Table table) {
         ObjectMap<String, Object> statisticsMap = Persistence.getStatisticsMap();
+        Label h1 = new Label(labelMap.get("totalQuickScore"), skin);
+        Label v1 = new Label(Persistence.getQuickHighscore().toString(), skin);
+        table.add(h1).width(300).left().padBottom(5);
+        table.add(v1).row().padBottom(5);
+        Label h2 = new Label(labelMap.get("totalInfiniteScore"), skin);
+        Label v2 = new Label(Persistence.getInfiniteHighscore().toString(), skin);
+        table.add(h2).width(300).left().padBottom(5);
+        table.add(v2).row().padBottom(5);
         for (ObjectMap.Entry<String, Object> stringObjectEntry : statisticsMap) {
             Label l = new Label(labelMap.get(stringObjectEntry.key), skin);
             Label v = new Label(stringObjectEntry.value.toString(), skin);

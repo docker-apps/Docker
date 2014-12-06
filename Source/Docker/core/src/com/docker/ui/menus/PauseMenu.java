@@ -14,7 +14,7 @@ public class PauseMenu extends AbstractMenu {
     
     private TextButton endGameButton = new TextButton("Exit", skin);
     private TextButton resumeButton = new TextButton("Resume", skin);
-    private Label title = new Label("Pause",skin);
+    private Label title = new Label("Pause",skin, "title");
     
     public PauseMenu(final Docker application, TextureRegion background) {
         super(application, background);
@@ -33,7 +33,7 @@ public class PauseMenu extends AbstractMenu {
             }
         });
 
-        table.add(title).left().padBottom(15).row().padBottom(10);
+        table.add(title).center().padBottom(15).row().padBottom(10);
         table.add(resumeButton).size(100, 30).center().row();
         table.add(endGameButton).size(100, 30).left().row();
         stage.addActor(table);

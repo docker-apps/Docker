@@ -29,6 +29,7 @@ public class Persistence {
         localDir = Gdx.files.getLocalStoragePath();
         //default prefs
         prefs.putBoolean("1", true);
+        prefs.flush();
     }
 
     /**
@@ -222,6 +223,17 @@ public class Persistence {
         ObjectMap<String, Object> statisticsMap = getStatisticsMap();
         statisticsMap.put(key, value);
         writeStatisticMap(statisticsMap);
+    }
+
+    public static void resetStatistics() {
+        ObjectMap<String, Object> statisticsMap = getStatisticsMap();
+        ObjectMap<String, Object> resetMap = new ObjectMap<String, Object>();
+        for (String key : statisticsMap.keys()) {
+            resetMap.put(key, 0);
+        }
+        writeStatisticMap(resetMap);
+        setQuickHighscore(0);
+        setInfiniteHighscore(0);
     }
 
     public static float getVolume() {

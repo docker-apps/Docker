@@ -8,10 +8,6 @@
 		"class": "java.lang.Integer",
 		"value": 0
 	},
-	"totalScore": {
-		"class": "java.lang.Integer",
-		"value": 0
-	},
 	"totalGames": {
 		"class": "java.lang.Integer",
 		"value": 0

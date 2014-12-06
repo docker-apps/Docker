@@ -36,7 +36,7 @@ public class CareerMenu extends AbstractMenu {
         careerTable.add(title).center().padBottom(10).colspan(3).row();
         addLevelButtons(careerTable);
         careerTable.row();
-        careerTable.add(backButton).left().padBottom(5).row();
+        careerTable.add(backButton).left().size(100, 30).padBottom(5).row();
         ScrollPane scrollpane = new AbstractScrollPane(careerTable);
         scrollpane.setPosition(0, 0);
         scrollpane.setSize(this.stage.getWidth(), this.stage.getHeight());

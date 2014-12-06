@@ -66,7 +66,7 @@ public class SettingsMenu extends AbstractMenu {
         volumeSlider.setValue(Persistence.getVolume());
         soundCheckBox.setChecked(Persistence.isSoundOn());
         musicCheckBox.setChecked(Persistence.isMusicOn());
-        table.add(title).center().padBottom(15).colspan(2).row().padBottom(10);
+        table.add(title).center().padBottom(15).colspan(3).row().padBottom(10);
         table.add(new Label("Sound", skin)).width(100).left();
         table.add(soundCheckBox).width(100).left().row().padBottom(10);
         table.add(new Label("Music", skin)).width(100).left();
@@ -76,7 +76,7 @@ public class SettingsMenu extends AbstractMenu {
         table.add(volumeSlider).width(120);
         table.add(volumeValue).center().width(50).row().padBottom(10);
         table.add(backButton).size(100, 30).left();
-        table.add(creditsButton).size(100, 30).right().row();
+        table.add(creditsButton).size(100, 30).colspan(2).center().row();
     }
 
     private void setCheckBoxLabel(CheckBox checkBox) {
