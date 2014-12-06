@@ -265,6 +265,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 				this.getTrain().getFirstContainer().destroy(stage);
 				this.getTrain().removeContainer();
 				lives--;
+				Gdx.input.vibrate(400);
 				foreground.setRemainingLives(lives);
 			}
 		}
