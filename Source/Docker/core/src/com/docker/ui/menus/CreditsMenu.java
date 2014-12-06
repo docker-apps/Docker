@@ -32,7 +32,7 @@ public class CreditsMenu extends AbstractMenu {
         creditsTable.add(backButton).left().padBottom(5).row();
         ScrollPane scrollpane = new AbstractScrollPane(creditsTable);
         scrollpane.setPosition(0, 0);
-        scrollpane.setSize(Docker.WIDTH, Docker.HEIGHT);
+        scrollpane.setSize(this.stage.getWidth(), this.stage.getHeight());
         scrollpane.setFlingTime(2);
         scrollpane.setupOverscroll(20, 30, 200);
         scrollpane.setFadeScrollBars(false);

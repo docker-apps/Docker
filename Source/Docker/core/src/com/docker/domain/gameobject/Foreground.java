@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.docker.Docker;
 
@@ -27,7 +28,8 @@ import com.docker.Docker;
 public class Foreground extends Actor {
 	private static float DEFAULT_WATERLEVEL = 20;
 	private static float LIFE_PADDING = 5;
-	
+
+	private Stage stage;
 	private float waterLevel;
 	private float capsizeValue;
 	private float bubbleXOffset;
@@ -53,11 +55,11 @@ public class Foreground extends Actor {
 	 * @param width The width over which the foreground spans. Usually equals the stages/screens width.
 	 * @param waterLevel The height of the water plane.
 	 */
-	public Foreground(float width, float waterLevel) {
+	public Foreground(Stage stage, float waterLevel) {
 		super();
+		this.stage = stage;
 		this.setX(0);
 		this.setY(0);
-		this.setWidth(width);
 		this.setWaterLevel(waterLevel);
 		this.shapeRenderer = new ShapeRenderer();
 		this.stateTime = 0f;
@@ -96,8 +98,8 @@ public class Foreground extends Actor {
 	 * 
 	 * @param width The width over which the foreground spans. Usually equals the stages/screens width.
 	 */
-	public Foreground(float width){
-		this(width, DEFAULT_WATERLEVEL);
+	public Foreground(Stage stage){
+		this(stage, DEFAULT_WATERLEVEL);
 	}
 	
 	@Override
@@ -180,11 +182,11 @@ public class Foreground extends Actor {
 		//draw lives & ships
 		for (int i = 0; i < this.remainingLives; i++) {
 			float xOffset = (liveContainer.getRegionWidth()+LIFE_PADDING)*(i+1);
-			batch.draw(this.liveContainer, this.getWidth()-xOffset, Docker.HEIGHT-49);
+			batch.draw(this.liveContainer, this.getWidth()-xOffset, this.getHeight()-51);
 		}
 		float xOffset = LIFE_PADDING;
 		for (int i = 0; i < this.remainingShips; i++) {
-			batch.draw(this.liveSaver, xOffset, Docker.HEIGHT-49);
+			batch.draw(this.liveSaver, xOffset, this.getHeight()-51);
 			xOffset += (liveSaver.getRegionWidth()+LIFE_PADDING);
 		}
 	}
@@ -238,5 +240,21 @@ public class Foreground extends Actor {
 	 */
 	public void setRemainingShips(int ships) {
 		this.remainingShips = ships;
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+	
+	public float getWidth(){
+		return this.stage.getWidth();
+	}
+	
+	public float getHeight(){
+		return this.stage.getHeight();
 	}
 }

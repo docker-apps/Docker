@@ -103,12 +103,12 @@ public abstract class AbstractGame extends ScreenAdapter {
 		background = new Background(this.stage.getWidth(), this.stage.getHeight());
 		background.toBack();
 		this.stage.setBackground(background);
-		foreground = new Foreground(this.stage.getWidth());
+		foreground = new Foreground(this.stage);
 		foreground.toFront();
 		this.stage.setForeground(foreground);
 		
 		// crane is basically the same in every game. Remove from abstraction if cranespeed becomes configurable.
-        setCrane(new Crane(80, Docker.WIDTH/2, Docker.HEIGHT));
+		setCrane(new Crane(100, stage.getWidth() / 2, stage.getHeight()));
 	}
 
 	/**
@@ -445,6 +445,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public void setShip(Ship ship) {
 		this.ship = ship;
 		this.stage.addActor(ship);
+		this.ship.setPosition((this.stage.getWidth()-ship.getWidth())/2-20f, 10f);
 	}
 
 	/**
@@ -462,6 +463,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public void setTrain(Train train) {
 		this.train = train;
 		this.stage.addActor(train);
+		this.train.setY(this.stage.getHeight()-26);
 	}
 
 	/**
