@@ -17,6 +17,7 @@ public class LoadRating {
 	private float[] loadDeltas;
 	private float[] loadSums;
 	private int beauty;
+	private int notSet;
 	
 	/**
 	 * Constructor for the Loadrating class
@@ -54,18 +55,20 @@ public class LoadRating {
 		float tempBeauty;
 		float factor;
 		
+		int set = loadTable.length*loadTable[0].length - notSet;
+		int maxscore = set*50;
 		factor = 1;//(breakThreshold-breakValueSum)/breakThreshold;
 		//tempBreak = 300*(breakThreshold-breakValueSum)/breakThreshold;
 		if(1 > Math.abs(capsizeValue)){
 			factor = factor*((1-Math.abs(capsizeValue*3/6))/1);
-			tempCapsize = 450*((1-Math.abs(capsizeValue*3/6))/1);
+			tempCapsize = (((float)maxscore)*0.15f)*((1-Math.abs(capsizeValue*3/6))/1);
 		}else{
 			factor = factor*0;
 			tempCapsize = 0;
 		}
 		factor = factor*(float)beauty/10;
-		tempBeauty = 45*beauty;
-		tempscore = /*tempBreak +*/ tempCapsize + tempBeauty + factor*2100;
+		tempBeauty = ((float)maxscore)*0.15f/10*beauty;
+		tempscore = /*tempBreak +*/ tempCapsize + tempBeauty + factor*((float)maxscore)*0.70f;
 		score = (int)Math.round(tempscore*handicapFactor);
 	}
 	
@@ -117,6 +120,7 @@ public class LoadRating {
 	 */
 	private void calculateBeauty(){
 		beauty = 10;
+		notSet = 0;
 		int[] holes = new int[loadTable[0].length];
 		
 		for (int i = loadTable[0].length-1; i >= 0; i--) {
@@ -138,6 +142,7 @@ public class LoadRating {
 			
 			if(beauty < 0)
 				beauty = 0;
+			notSet += holes[i];
 		}
 	}
 
