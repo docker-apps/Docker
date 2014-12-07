@@ -262,7 +262,7 @@ public class Ship extends Actor {
 					+ "  gl_FragColor = vec4(initialColor.rgb * initialColor.a, initialColor.a);\n" //
 					+ "}";
 			snapshotShader = new ShaderProgram(vertexShader, fragmentShader);
-			if (snapshotShader.isCompiled() == false) throw new IllegalArgumentException("Error compiling shader: " + snapshotShader.getLog());
+			if (!snapshotShader.isCompiled()) throw new IllegalArgumentException("Error compiling shader: " + snapshotShader.getLog());
 
 		}
 
@@ -386,7 +386,7 @@ public class Ship extends Actor {
 				setSunken(true);
 				isStaticAnimationRunning = false;
 				return true;
-			};
+			}
 		};
 		
 		SequenceAction actions = new SequenceAction(sinkingAction, completeAction);
@@ -438,7 +438,7 @@ public class Ship extends Actor {
 
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
-		if(isStaticAnimationRunning == false){
+		if(!isStaticAnimationRunning){
 			// draw ship
 			batch.draw(this.bodyLeft, this.getX(), this.getY());
 			batch.draw(this.mast, this.getX()+this.bodyLeft.getRegionWidth()-this.getElementWidth()-this.mast.getRegionWidth()-1, this.getY()+this.bodyLeft.getRegionHeight());

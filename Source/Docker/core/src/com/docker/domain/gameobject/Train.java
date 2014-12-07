@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+/**
+ * The train trasports the container of the game. it knows all the container positions and updates them
+ */
 public class Train extends Actor {
 	private static final float PADDING = 11f;
 	private static final float PLATFORM_OFFSET = 6f;
@@ -46,11 +49,21 @@ public class Train extends Actor {
 		this.platform_right = atlas.findRegion("train_platform_right");
 		this.wheel = atlas.findRegion("train_wheel");
 	}
-	
+
+    /**
+     * @param containerList containers that the train transports
+     * @param speed Speed at which the train moves rightward
+     */
 	public Train(Queue<Container> containerList, float speed){
 		this(containerList, speed, 0, 0);
 	}
-	
+
+    /**
+     * @param containerList containers that the train transports
+     * @param speed Speed at which the train moves rightward
+     * @param x Initial Position on the x-plane
+     * @param y Position on the y-plane
+     */
 	public Train(Queue<Container> containerList, float speed, float x, float y){
 		this(speed, x, y);
 		this.containers = containerList;
@@ -61,12 +74,21 @@ public class Train extends Actor {
         }
     }
 
+    /**
+     * adds a container to the train with the correct position at the end of the train
+     * @param container the container to add
+     */
 	public void addContainer(Container container){
         Container lastContainer = getLastContainer();
         container.setX(lastContainer.getX() - container.getWidth() - PADDING);
         this.containers.add(container);
     }
 
+    /**
+     * removes the foremost container from the train
+     * moves all container to the edge of the display if the removed container wasn't fully displayed
+     * @return the removed container
+     */
 	public Container removeContainer(){
         Container container = containers.remove();
         if (container.getX() < 0) {
@@ -75,6 +97,9 @@ public class Train extends Actor {
         return container;
 	}
 
+    /**
+     * move containers to the left edge of the display
+     */
     private void moveAllContainers() {
         Float x = PADDING;
         for (Container container : containers) {
@@ -83,10 +108,18 @@ public class Train extends Actor {
         }
     }
 
+    /**
+     * returns the first Container without removing it from the train
+     * @return the first container
+     */
     public Container getFirstContainer(){
 		return containers.peek();
 	}
 
+    /**
+     * moves the containers in the given speed
+     * @param delta delta
+     */
 	@Override
 	public void act(float delta){
 		this.stateTime += delta;
@@ -100,6 +133,9 @@ public class Train extends Actor {
         }
     }
 
+    /**
+     * @return the last container in the train
+     */
     private Container getLastContainer() {
         Container lastContainer = getFirstContainer();
         for (Container container : containers) {
@@ -111,6 +147,10 @@ public class Train extends Actor {
         return lastContainer;
     }
 
+    /**
+     * checks if there are containers on the train
+     * @return true if train has containers
+     */
     public boolean hasContainers(){
 		return this.containers.size() > 0;
 	}
@@ -156,7 +196,6 @@ public class Train extends Actor {
 	}
     
     /**
-     * 
      * @return the size of the Container list
      */
     public int getContainerListSize(){

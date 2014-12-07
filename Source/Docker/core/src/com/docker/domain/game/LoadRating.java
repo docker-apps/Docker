@@ -137,7 +137,7 @@ public class LoadRating {
 				beauty -= holes[i]*count;
 				count++;
 			}
-			if(holes[i] != loadTable.length && a == false)
+			if(holes[i] != loadTable.length && !a)
 				a = true;
 			
 			if(beauty < 0)

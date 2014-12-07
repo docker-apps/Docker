@@ -8,7 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 
-
+/**
+ * displays the credits for the programmer and music
+ */
 public class CreditsMenu extends AbstractMenu {
     private Label title = new Label("Credits", skin, "title");
     private TextButton backButton = new TextButton("Back", skin);

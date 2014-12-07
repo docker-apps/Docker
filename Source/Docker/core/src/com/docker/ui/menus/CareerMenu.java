@@ -2,11 +2,6 @@ package com.docker.ui.menus;
 
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -19,6 +14,9 @@ import com.docker.Docker;
 import com.docker.domain.game.CareerGame;
 import com.docker.technicalservices.Persistence;
 
+/**
+ * menu with a overview of all levels (locked and unlocked)
+ */
 public class CareerMenu extends AbstractMenu {
     private Label title = new Label("Career Game",skin, "title");
     private TextButton backButton = new TextButton("Back", skin);
@@ -47,6 +45,11 @@ public class CareerMenu extends AbstractMenu {
 
     }
 
+    /**
+     * get all Levels and create buttons
+     * set the buttons to inactive if the level isn't unlocked
+     * @param table the table to add to buttons to
+     */
     private void addLevelButtons(Table table) {
         List<JsonValue> allLevels = Persistence.getAllLevels();
         int i = 1;

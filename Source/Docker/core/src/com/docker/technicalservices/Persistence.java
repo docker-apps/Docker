@@ -15,6 +15,8 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.ObjectMap;
 
 /**
+ * handles persistance of:
+ *
  * - Settings
  * - Statistics
  * - Levels
@@ -92,6 +94,11 @@ public class Persistence {
         return prefs.getInteger(levelId+"Score");
     }
 
+    /**
+     * level score is saved as "idScore"
+     * @param levelId the id of the level
+     * @param score the score to set
+     */
     public static void setLevelScore(String levelId, Integer score) {
         prefs.putInteger(levelId + "Score", score);
         prefs.flush();
@@ -128,6 +135,9 @@ public class Persistence {
         prefs.flush();
     }
 
+    /**
+     * @return the level file if it exists otherwise null
+     */
     private static FileHandle getLevelFile() {
         FileHandle levelHandle = Gdx.files.internal("level/level.json");
         boolean fileExists = levelHandle.exists();
@@ -178,6 +188,11 @@ public class Persistence {
         return null;
     }
 
+    /**
+     * checks if the statistics file exists in the local storage
+     * if not, it copies the one from the internal to the local
+     * @return the statistics file
+     */
     private static FileHandle getStatisticsFile() {
         FileHandle local = Gdx.files.local("statistics.json");
         boolean isLocAvailable = local.exists();
@@ -225,6 +240,9 @@ public class Persistence {
         writeStatisticMap(statisticsMap);
     }
 
+    /**
+     * sets all statistics to 0, inclusive the highscores of the quick and infinite game
+     */
     public static void resetStatistics() {
         ObjectMap<String, Object> statisticsMap = getStatisticsMap();
         ObjectMap<String, Object> resetMap = new ObjectMap<String, Object>();

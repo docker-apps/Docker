@@ -14,6 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
 
+/**
+ * The menu to change settings for
+ * - sound on/off
+ * - music on/off
+ * - music volume
+ */
 public class SettingsMenu extends AbstractMenu {
     Persistence persistence;
 
@@ -79,6 +85,10 @@ public class SettingsMenu extends AbstractMenu {
         table.add(creditsButton).size(100, 30).colspan(2).center().row();
     }
 
+    /**
+     * set the checkbox label according to the state of the checkbox
+     * @param checkBox the checkbox to set the label
+     */
     private void setCheckBoxLabel(CheckBox checkBox) {
         if (checkBox.isChecked()) {
             checkBox.setText("On");

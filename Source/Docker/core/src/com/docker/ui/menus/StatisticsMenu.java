@@ -13,6 +13,9 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
 
+/**
+ * overview of the statistic values and the possibility to reset them
+ */
 public class StatisticsMenu extends AbstractMenu {
     private TextButton backButton = new TextButton("Back", skin);
     private TextButton resetButton = new TextButton("Reset", skin);
@@ -61,6 +64,10 @@ public class StatisticsMenu extends AbstractMenu {
         this.table.addActor(scrollpane);
     }
 
+    /**
+     * load statistics from the persistence and display them with the correct label
+     * @param table the table to add the values
+     */
     private void loadStatistics(Table table) {
         ObjectMap<String, Object> statisticsMap = Persistence.getStatisticsMap();
         Label h1 = new Label(labelMap.get("totalQuickScore"), skin);

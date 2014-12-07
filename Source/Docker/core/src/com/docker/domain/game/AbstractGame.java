@@ -362,7 +362,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 */
 	public void gameOver(){
         Integer totalGames = (Integer) Persistence.getStatisticsMap().get("totalGames");
-        Persistence.saveStatisticValue("totalGames", totalGames + 1);;
+        Persistence.saveStatisticValue("totalGames", totalGames + 1);
         displayEndScreen(isGameLost());
 	}
 

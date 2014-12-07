@@ -9,7 +9,7 @@ import com.docker.domain.game.InfiniteGame;
 import com.docker.domain.game.QuickGame;
 
 /**
- *
+ * In this menu the player can choose which game he wants to play
  */
 public class GameMenu extends AbstractMenu {
     private Label title = new Label("Game Modes",skin, "title");
