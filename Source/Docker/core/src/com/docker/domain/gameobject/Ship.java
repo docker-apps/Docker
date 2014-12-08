@@ -29,6 +29,8 @@ import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
 
 public class Ship extends Actor {
+	private static final Color PREVIEW_CONTAINER_INVALID_COLOR = new Color(1f, 1f, 1f, 0.5f);
+	private static final Color PREVIEW_CONTAINER_COLOR = new Color(1f, 0f, 0f, 0.5f);
 	private int gridWidth;
 	private int gridHeight;
 	private int breakThreshold;
@@ -88,7 +90,7 @@ public class Ship extends Actor {
 		this.indicatorLampOn = Resource.findRegion("indicator_lamp_on");
 		this.bodyBrokenLeft = Resource.findRegion("ship_body_broken_left");
 		this.bodyBrokenRight = Resource.findRegion("ship_body_broken_right");
-
+		
 		this.gridSize = this.bodyCenter.getRegionWidth();
 
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
@@ -138,9 +140,9 @@ public class Ship extends Actor {
 		Vector2 gridCoords = getGridCoords(x, container.getLength());
 		if(gridCoords.y >= 0 ){
 			previewContainer = new Container(container);
-			previewContainer.setColor(new Color(1f, 0f, 0f, 0.5f));
+			previewContainer.setColor(PREVIEW_CONTAINER_COLOR);
 			if (gridCoords.y < gridHeight) {
-				previewContainer.setColor(new Color(1f, 1f, 1f, 0.5f));
+				previewContainer.setColor(PREVIEW_CONTAINER_INVALID_COLOR);
 			}
 			if(gridCoords.y >= gridHeight-1 || x < xGridstart || x > xGridstart + gridSize * gridWidth)
 				this.gridBoundsAlpha = 1f;

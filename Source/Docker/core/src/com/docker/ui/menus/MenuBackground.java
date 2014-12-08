@@ -31,6 +31,9 @@ import com.docker.technicalservices.Resource;
  * The Background to display in the Menus.
  */
 public class MenuBackground extends Actor {
+	private static final Color WATER_BORDER_COLOR = Color.valueOf("126392");
+	private static final Color WATER_COLOR = Color.valueOf("2c98d6");
+
 	private float stateTime;
 	
 	private static final float SKY_HEIGHT = 50f;
@@ -183,13 +186,13 @@ public class MenuBackground extends Actor {
 		//draw water
 		batch.end();
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(Color.valueOf("2c98d6"));
+		shapeRenderer.setColor(WATER_COLOR);
 		shapeRenderer.rect(
 				this.getX(), 
 				this.getY(), 
 				this.getWidth(), 
 				this.getHeight()-50);
-		shapeRenderer.setColor(Color.valueOf("126392"));
+		shapeRenderer.setColor(WATER_BORDER_COLOR);
 		shapeRenderer.rect(
 				this.getX(), 
 				this.getY()+getHorizonHeight(),

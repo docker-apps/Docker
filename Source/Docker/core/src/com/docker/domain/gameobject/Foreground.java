@@ -27,6 +27,8 @@ import com.docker.technicalservices.Resource;
  * The Foreground is the foremost graphical plane displayed during the game.
  */
 public class Foreground extends Actor {
+	private static final Color WATER_BORDER_COLOR = Color.valueOf("126392");
+	private static final Color WATER_COLOR = Color.valueOf("2c98d6");
 	private static float DEFAULT_WATERLEVEL = 20;
 	private static float LIFE_PADDING = 5;
 
@@ -141,13 +143,13 @@ public class Foreground extends Actor {
 		shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(Color.valueOf("2c98d6"));
+		shapeRenderer.setColor(WATER_COLOR);
 		shapeRenderer.rect(
 				this.getX(), 
 				this.getY(), 
 				this.getWidth(), 
 				this.getWaterLevel()-1);
-		shapeRenderer.setColor(Color.valueOf("126392"));
+		shapeRenderer.setColor(WATER_BORDER_COLOR);
 		shapeRenderer.rect(
 				this.getX(), 
 				this.getY()+this.getWaterLevel()-1,

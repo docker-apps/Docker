@@ -20,7 +20,7 @@ import com.docker.technicalservices.Resource;
  */
 public class Container extends Actor {
 
-	private static final float LABEL_TRANSPARENCY = 0.8f;
+	private static final Color LABEL_COLOR = new Color(1f,1f,1f,0.8f);
 
 	/**
 	 * The Color Value to tint red Containers with. Always use these Colors for Containers.
@@ -147,7 +147,7 @@ public class Container extends Actor {
 					this.getY());
 		}
 		//draw number & labels
-		batch.setColor(new Color(1f,1f,1f,LABEL_TRANSPARENCY));
+		batch.setColor(LABEL_COLOR);
 		batch.draw(this.number, 
 				this.getX()+this.getWidth()-this.number.getRegionWidth()-3, 
 				this.getY()+this.getElementHeight()-this.number.getRegionHeight()-3);

@@ -18,6 +18,8 @@ import com.docker.technicalservices.Resource;
 
 public class Background extends Actor {
 
+	private static final Color HARBOR_COLOR = Color.valueOf("acbfca");
+	private static final Color SKY_COLOR = Color.valueOf("cae4f3");
 	private float harborLevel = 30f;
 	private float cloudSpeed = 0.1f;
 	private Array<AtlasRegion> bird;
@@ -78,7 +80,7 @@ public class Background extends Actor {
 		shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(Color.valueOf("cae4f3"));
+		shapeRenderer.setColor(SKY_COLOR);
 		shapeRenderer.rect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 		shapeRenderer.end();
 		batch.begin();
@@ -101,7 +103,7 @@ public class Background extends Actor {
 		//draw harbor in background
 		batch.end();
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(Color.valueOf("acbfca"));
+		shapeRenderer.setColor(HARBOR_COLOR);
 		shapeRenderer.rect(this.getX(), this.getY(), this.getWidth(), this.harborLevel);
 		shapeRenderer.end();
 		batch.begin();
