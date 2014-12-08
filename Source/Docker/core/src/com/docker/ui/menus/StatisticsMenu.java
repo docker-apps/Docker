@@ -37,8 +37,10 @@ public class StatisticsMenu extends AbstractMenu {
             public void clicked(InputEvent event, float x, float y) {
                 if (resetButton.getText().toString().equals("Reset")) {
                     resetButton.setText("Really?");
+                    resetButton.setColor(1,0,0,1);
                 } else {
                     resetButton.setText("Reset");
+                    resetButton.setColor(1,1,1,1);
                     Persistence.resetStatistics();
                     openNewMenu(new StatisticsMenu(application));
                 }
