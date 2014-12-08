@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.6" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="com.docker.domain.user.Config" project="docker-core" 
-    file="/docker-core/src/com/docker/domain/user/Config.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="91" y="59"/>    
+  <class id="1" language="java" name="com.docker.technicalservices.Resource" project="docker-core" 
+    file="/docker-core/src/com/docker/technicalservices/Resource.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="134" y="90"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.docker.domain.user.Handicap" project="docker-core" 
-    file="/docker-core/src/com/docker/domain/user/Handicap.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="91" y="156"/>    
+  <class id="2" language="java" name="com.docker.technicalservices.Persistence" project="docker-core" 
+    file="/docker-core/src/com/docker/technicalservices/Persistence.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="431" y="253"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.docker.domain.user.Statistics" project="docker-core" 
+  <class id="3" language="java" name="com.docker.technicalservices.WorldStage" project="docker-core" 
+    file="/docker-core/src/com/docker/technicalservices/WorldStage.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="692" y="129"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="com.docker.technicalservices.Persistence.JsonStatistics" project="docker-core" 
+    file="/docker-core/src/com/docker/technicalservices/Persistence.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="710" y="458"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.docker.domain.user.Statistics" project="docker-core" 
     file="/docker-core/src/com/docker/domain/user/Statistics.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="202" y="460"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
-      <operations public="true" package="true" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="com.docker.technicalservices.Persistence" project="docker-core" 
-    file="/docker-core/src/com/docker/technicalservices/Persistence.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="623" y="181"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
-      <operations public="true" package="true" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="5" language="java" name="com.docker.technicalservices.Persistence.JsonStatistics" project="docker-core" 
-    file="/docker-core/src/com/docker/technicalservices/Persistence.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="628" y="447"/>    
+    <position height="-1" width="-1" x="991" y="231"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="false" private="false" static="true"/>      
@@ -47,8 +47,8 @@
     </display>  
   </class>  
   <nesting id="6">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="5"/>  
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
   </nesting>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    

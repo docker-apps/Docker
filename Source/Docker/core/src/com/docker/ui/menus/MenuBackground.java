@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.docker.domain.game.Level;
 import com.docker.domain.gameobject.Train;
+import com.docker.technicalservices.Resource;
 
 /**
  * @author HAL9000
@@ -69,7 +70,7 @@ public class MenuBackground extends Actor {
 		this.shapeRenderer = new ShapeRenderer();
 
 		Random rand = new Random();
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
+		TextureAtlas atlas =  Resource.getDockerTextureAtlas();
 		this.aqueductElement = atlas.findRegion("aqueduct");
 		this.harbor = atlas.findRegion("harbor");
 		this.skyline = atlas.findRegion("skyline");

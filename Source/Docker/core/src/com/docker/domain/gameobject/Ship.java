@@ -12,23 +12,21 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.docker.Docker;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
+import com.docker.technicalservices.Resource;
 
 public class Ship extends Actor {
 	private int gridWidth;
@@ -82,15 +80,14 @@ public class Ship extends Actor {
 		this.containers = new ArrayList<Container>();
 		this.setBreakValues(null);
 
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
-		this.bodyLeft = atlas.findRegion("ship_body_left");
-		this.bodyCenter = atlas.findRegion("ship_body_center");
-		this.bodyRight = atlas.findRegion("ship_body_right");
-		this.tower = atlas.findRegion("ship_tower");
-		this.mast = atlas.findRegion("ship_mast");
-		this.indicatorLampOn = atlas.findRegion("indicator_lamp_on");
-		this.bodyBrokenLeft = atlas.findRegion("ship_body_broken_left");
-		this.bodyBrokenRight = atlas.findRegion("ship_body_broken_right");
+		this.bodyLeft = Resource.findRegion("ship_body_left");
+		this.bodyCenter = Resource.findRegion("ship_body_center");
+		this.bodyRight = Resource.findRegion("ship_body_right");
+		this.tower = Resource.findRegion("ship_tower");
+		this.mast = Resource.findRegion("ship_mast");
+		this.indicatorLampOn = Resource.findRegion("indicator_lamp_on");
+		this.bodyBrokenLeft = Resource.findRegion("ship_body_broken_left");
+		this.bodyBrokenRight = Resource.findRegion("ship_body_broken_right");
 
 		this.gridSize = this.bodyCenter.getRegionWidth();
 

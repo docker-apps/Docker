@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.docker.technicalservices.Resource;
 
 public class Background extends Actor {
 
@@ -39,11 +40,10 @@ public class Background extends Actor {
 		this.shapeRenderer = new ShapeRenderer();
 		this.stateTime = 0f;
 
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
-		this.bird = atlas.findRegions("bg_bird");
-		this.cloud = atlas.findRegions("bg_cloud");
-		this.crane = atlas.findRegion("bg_crane");
-		this.tunnel = atlas.findRegion("bg_train_tunnel");
+		this.bird = Resource.findRegions("bg_bird");
+		this.cloud = Resource.findRegions("bg_cloud");
+		this.crane = Resource.findRegion("bg_crane");
+		this.tunnel = Resource.findRegion("bg_train_tunnel");
 
 		this.birdAnimation = new Animation(0.2f, this.bird);
 

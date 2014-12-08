@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.docker.Docker;
+import com.docker.technicalservices.Resource;
 
 /**
  * @author HAL9000
@@ -67,15 +68,14 @@ public class Foreground extends Actor {
 		this.remainingLives = 0;
 		this.remainingShips = 0;
 		
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
-		this.dock = atlas.findRegion("fg_dock");
-		this.waterLevelBase = atlas.findRegion("water_level_base");
-		this.waterLevelMarkings = atlas.findRegion("water_level_markings");
-		this.waterLevelBubble = atlas.findRegion("water_level_bubble");
-		this.waterMovement = atlas.findRegions("fg_water_movement");
-		this.shipReflection = atlas.findRegions("fg_ship_reflection");
-		this.liveContainer = atlas.findRegion("live_container");
-		this.liveSaver = atlas.findRegion("live_saver");
+		this.dock = Resource.findRegion("fg_dock");
+		this.waterLevelBase = Resource.findRegion("water_level_base");
+		this.waterLevelMarkings = Resource.findRegion("water_level_markings");
+		this.waterLevelBubble = Resource.findRegion("water_level_bubble");
+		this.waterMovement = Resource.findRegions("fg_water_movement");
+		this.shipReflection = Resource.findRegions("fg_ship_reflection");
+		this.liveContainer = Resource.findRegion("live_container");
+		this.liveSaver = Resource.findRegion("live_saver");
 		
 		this.waterMovementAnimation = new Animation(0.2f, this.waterMovement);
 		this.waterMovementAnimation.setPlayMode(PlayMode.LOOP_PINGPONG);

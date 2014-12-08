@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.docker.technicalservices.Resource;
 
 /**
  * The train trasports the container of the game. it knows all the container positions and updates them
@@ -42,12 +43,11 @@ public class Train extends Actor {
 		this.containers = new LinkedList<Container>();
 		this.stateTime = 0f;
 
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
-		this.platform_single = atlas.findRegion("train_platform_single");
-		this.platform_center = atlas.findRegion("train_platform_center");
-		this.platform_left = atlas.findRegion("train_platform_left");
-		this.platform_right = atlas.findRegion("train_platform_right");
-		this.wheel = atlas.findRegion("train_wheel");
+		this.platform_single = Resource.findRegion("train_platform_single");
+		this.platform_center = Resource.findRegion("train_platform_center");
+		this.platform_left = Resource.findRegion("train_platform_left");
+		this.platform_right = Resource.findRegion("train_platform_right");
+		this.wheel = Resource.findRegion("train_wheel");
 	}
 
     /**

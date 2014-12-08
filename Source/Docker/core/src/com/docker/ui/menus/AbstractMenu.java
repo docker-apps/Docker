@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.Docker;
+import com.docker.technicalservices.Resource;
 import com.docker.technicalservices.WorldStage;
 
 /** 
@@ -39,6 +40,8 @@ public class AbstractMenu implements Screen {
     protected WorldStage stage;
     protected ExtendViewport viewport;
     protected Table table;
+
+	private static Skin dockerSkin;
     
     public AbstractMenu(final Docker application){
     	this.application = application;
@@ -147,52 +150,53 @@ public class AbstractMenu implements Screen {
 	@Override
 	public void dispose() {
         stage.dispose();
-        skin.dispose();
 	}
 
 	/**
 	 * @return the custom skin used by docker.
 	 */
 	public static Skin getDockerSkin(){
-		Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-		skin.add("default", new BitmapFont(Gdx.files.internal("ui/rokkitt.fnt")));
-		skin.add("big", new BitmapFont(Gdx.files.internal("ui/rokkitt_32.fnt")));
+		if(dockerSkin == null){
+			dockerSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+			dockerSkin.add("default", new BitmapFont(Gdx.files.internal("ui/rokkitt.fnt")));
+			dockerSkin.add("big", new BitmapFont(Gdx.files.internal("ui/rokkitt_32.fnt")));
 
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("ui/dockerskin.atlas"));
-		skin.addRegions(atlas);
+			TextureAtlas atlas = Resource.getDockerSkinTextureAtlas();
+			dockerSkin.addRegions(atlas);
+
+			TextButtonStyle textButtonStyle = new TextButtonStyle();
+			textButtonStyle.up = dockerSkin.getDrawable("yellow_button");
+			textButtonStyle.down = dockerSkin.getDrawable("yellow_button_pressed");
+			textButtonStyle.font = dockerSkin.getFont("default");
+			dockerSkin.add("default", textButtonStyle);
+
+			LabelStyle labelStyle = new LabelStyle();
+			labelStyle.font = dockerSkin.getFont("default");
+			dockerSkin.add("default", labelStyle);
+
+			LabelStyle labelStyleTitle = new LabelStyle();
+			labelStyleTitle.font = dockerSkin.getFont("big");
+			labelStyleTitle.fontColor = new Color(0f, 0.165f, 0.322f, 1);
+			dockerSkin.add("title", labelStyleTitle);
+
+			CheckBoxStyle checkBoxStyle = new CheckBoxStyle();
+			checkBoxStyle.checkboxOn = dockerSkin.getDrawable("livesaver_off");
+			checkBoxStyle.checkboxOff = dockerSkin.getDrawable("livesaver_on");
+			checkBoxStyle.font = dockerSkin.getFont("default");
+			dockerSkin.add("default", checkBoxStyle);
+
+			SliderStyle sliderStyle = new SliderStyle();
+			sliderStyle.knob = dockerSkin.getDrawable("slider_pointer");
+			sliderStyle.background = dockerSkin.getDrawable("slider_rail");
+			dockerSkin.add("default-horizontal", sliderStyle);
+
+			ButtonStyle shipButtonStyle = new ButtonStyle();
+			shipButtonStyle.up = dockerSkin.getDrawable("ship_button_up");
+			shipButtonStyle.down = dockerSkin.getDrawable("ship_button_down");
+			dockerSkin.add("ship-button", shipButtonStyle);
+		}
 		
-		TextButtonStyle textButtonStyle = new TextButtonStyle();
-		textButtonStyle.up = skin.getDrawable("yellow_button");
-		textButtonStyle.down = skin.getDrawable("yellow_button_pressed");
-		textButtonStyle.font = skin.getFont("default");
-		skin.add("default", textButtonStyle);
-		
-		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.font = skin.getFont("default");
-		skin.add("default", labelStyle);
-		
-		LabelStyle labelStyleTitle = new LabelStyle();
-		labelStyleTitle.font = skin.getFont("big");
-		labelStyleTitle.fontColor = new Color(0f, 0.165f, 0.322f, 1);
-		skin.add("title", labelStyleTitle);
-		
-		CheckBoxStyle checkBoxStyle = new CheckBoxStyle();
-		checkBoxStyle.checkboxOn = skin.getDrawable("livesaver_off");
-		checkBoxStyle.checkboxOff = skin.getDrawable("livesaver_on");
-		checkBoxStyle.font = skin.getFont("default");
-		skin.add("default", checkBoxStyle);
-		
-		SliderStyle sliderStyle = new SliderStyle();
-		sliderStyle.knob = skin.getDrawable("slider_pointer");
-		sliderStyle.background = skin.getDrawable("slider_rail");
-		skin.add("default-horizontal", sliderStyle);
-		
-		ButtonStyle shipButtonStyle = new ButtonStyle();
-		shipButtonStyle.up = skin.getDrawable("ship_button_up");
-		shipButtonStyle.down = skin.getDrawable("ship_button_down");
-		skin.add("ship-button", shipButtonStyle);
-		
-		return skin;
+		return dockerSkin;
 	}
 
     public class AbstractScrollPane extends ScrollPane {

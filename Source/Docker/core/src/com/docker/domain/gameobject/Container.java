@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.docker.technicalservices.Resource;
 
 /**
  * @author HAL9000
@@ -64,14 +66,13 @@ public class Container extends Actor {
 		this.setColor(color);
 		this.setX(0);
 		this.setY(0);
-		
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));		
-		this.baseLeft= atlas.findRegion("container_base_left");
-		this.baseCenter = atlas.findRegion("container_base_center");
-		this.baseRight = atlas.findRegion("container_base_right");
-		this.baseFront = atlas.findRegion("container_base_front");
-		this.number = atlas.findRegions("nr").get(this.weight-1);
-		this.label = atlas.findRegions("label").get(this.length > 1 ? 0 : 1);
+			
+		this.baseLeft= Resource.findRegion("container_base_left");
+		this.baseCenter = Resource.findRegion("container_base_center");
+		this.baseRight = Resource.findRegion("container_base_right");
+		this.baseFront = Resource.findRegion("container_base_front");
+		this.number = Resource.findRegions("nr").get(this.weight-1);
+		this.label = Resource.findRegions("label").get(this.length > 1 ? 0 : 1);
 		
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
@@ -227,8 +228,7 @@ public class Container extends Actor {
 			this.setY(y);
 			this.stateTime = 0f;
 			
-			TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));	
-			this.explosion = atlas.findRegions("container_explosion");
+			this.explosion = Resource.findRegions("container_explosion");
 			this.explosionAnimation = new Animation(0.05f, explosion);
 
 		}

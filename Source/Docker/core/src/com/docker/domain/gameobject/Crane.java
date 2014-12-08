@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.docker.technicalservices.Resource;
 
 public class Crane extends Actor {
 	private int speed;
@@ -36,13 +37,12 @@ public class Crane extends Actor {
 		this.speed = speed;
 		this.container = null;
 
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/docker.atlas"));
-		this.body = atlas.findRegion("crane_body");
-		this.extensionLeft = atlas.findRegion("crane_extension_left");
-		this.extensionLeftOuter = atlas.findRegion("crane_extension_left_outer");
-		this.extensionRight = atlas.findRegion("crane_extension_right");
-		this.extensionRightOuter = atlas.findRegion("crane_extension_right_outer");
-		this.cable = atlas.findRegion("crane_cable");
+		this.body = Resource.findRegion("crane_body");
+		this.extensionLeft = Resource.findRegion("crane_extension_left");
+		this.extensionLeftOuter = Resource.findRegion("crane_extension_left_outer");
+		this.extensionRight = Resource.findRegion("crane_extension_right");
+		this.extensionRightOuter = Resource.findRegion("crane_extension_right_outer");
+		this.cable = Resource.findRegion("crane_cable");
 	}
 	
 	/**
