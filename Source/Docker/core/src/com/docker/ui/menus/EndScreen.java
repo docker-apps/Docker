@@ -22,12 +22,12 @@ public class EndScreen extends AbstractMenu {
                 application.returnToMainmenu();
             }
         });
-        table.add(title).left().padBottom(15).row().padBottom(10);
-        table.add(new Label("Your Score:", skin)).width(120).left();
-        table.add(new Label(""+score+"", skin)).width(70).row();
-        table.add(new Label("Your Highscore:", skin)).width(120).left();
-        table.add(new Label(""+highscore+"", skin)).width(70).padBottom(20).row();
-        table.add(endGameButton).size(100, 30).left().row();
+        table.add(title).padBottom(10).colspan(2).center().row();
+        table.add(new Label("Your Score", skin)).left();
+        table.add(new Label(String.valueOf(score), skin)).row();
+        table.add(new Label("Your Highscore", skin)).padRight(8);
+        table.add(new Label(String.valueOf(highscore), skin)).row();
+        table.add(endGameButton).size(100, 30).padTop(10).left().colspan(2);
 	}
     
     public EndScreen(final Docker application, TextureRegion background) {
@@ -39,8 +39,8 @@ public class EndScreen extends AbstractMenu {
                 application.returnToMainmenu();
             }
         });
-        table.add(title).padBottom(15).row().padBottom(10);
-        table.add(new Label("You lose!", skin)).width(120).left().row();
-        table.add(endGameButton).size(100, 30).left().row();
+        table.add(title).padBottom(10).center().row();
+        table.add(new Label("You lose!", skin)).left().row();
+        table.add(endGameButton).size(100, 30).padTop(10).left();
 	}
 }
