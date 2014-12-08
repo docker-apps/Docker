@@ -73,6 +73,11 @@ public class InfiniteGame extends AbstractGame{
         }
         return highscore;
     }
+    
+    @Override
+    public void displayEndScreen(boolean isGameLost){
+    	super.displayEndScreen(false);
+    }
 
     @Override
 	public void setRemainingShips(int remainingShips) {

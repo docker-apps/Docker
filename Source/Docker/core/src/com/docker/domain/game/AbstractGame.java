@@ -283,9 +283,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 		}
 		// if game is over decrease the endScreenTimer until it's zero, then display the endscreen
 		if (gameOver && !getShip().isStaticAnimationRunning()) {
-			if(this.endScreenTimer > 0f)
-				this.endScreenTimer -= delta;
-			else
 				gameOver();
 		}
 		if ((!train.hasContainers() && !getCrane().isDeploying()) && !getShip().isStaticAnimationRunning() && !gameOver) {
