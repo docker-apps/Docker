@@ -54,7 +54,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	protected boolean gameOver;
 	protected boolean gameLost;
-	protected double endScreenTimer = 3f;
 
 	/**
 	 * @param application the reference to the main docker application object.
@@ -281,7 +280,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 			setGameLost(true);
 			setGameOver(true);
 		}
-		// if game is over decrease the endScreenTimer until it's zero, then display the endscreen
 		if (gameOver && !getShip().isStaticAnimationRunning()) {
 				gameOver();
 		}
