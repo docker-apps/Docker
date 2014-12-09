@@ -1,0 +1,7 @@
+com.docker
+com.docker.domain.game
+com.docker.domain.gameobject
+com.docker.domain.user
+com.docker.technicalservices
+com.docker.tests
+com.docker.ui.menus
