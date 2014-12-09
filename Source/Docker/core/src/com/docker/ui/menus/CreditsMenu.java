@@ -30,7 +30,11 @@ public class CreditsMenu extends AbstractMenu {
         creditsTable.add(new Label("Yacine Mekesser", skin)).row();
         creditsTable.add(new Label("Christoph Mathis", skin)).row();
         creditsTable.add(new Label("Emily Wangler", skin)).row();
-        creditsTable.add(new Label("Music by: balbalbal", skin)).padBottom(10).row();
+        creditsTable.add(new Label("Music by:", skin)).row();
+        creditsTable.add(new Label("'Hustle' Kevin MacLeod", skin)).row();
+        creditsTable.add(new Label("(incompetech.com)", skin)).row();
+        creditsTable.add(new Label("Sounds by: FreqMan", skin)).row();
+        creditsTable.add(new Label("(freesound.org)", skin)).row();
         creditsTable.add(backButton).left().size(100,30).padBottom(5).row();
         ScrollPane scrollpane = new AbstractScrollPane(creditsTable);
         scrollpane.setPosition(0, 0);
