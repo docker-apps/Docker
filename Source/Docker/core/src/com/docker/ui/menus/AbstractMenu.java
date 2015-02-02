@@ -158,7 +158,7 @@ public class AbstractMenu implements Screen {
 	public static Skin getDockerSkin(){
 		if(dockerSkin == null){
 			dockerSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-			dockerSkin.add("default", new BitmapFont(Gdx.files.internal("ui/rokkitt.fnt")));
+			dockerSkin.add("default", new BitmapFont(Gdx.files.internal("ui/rokkitt_28.fnt")));
 			dockerSkin.add("big", new BitmapFont(Gdx.files.internal("ui/rokkitt_32.fnt")));
 
 			TextureAtlas atlas = Resource.getDockerSkinTextureAtlas();
