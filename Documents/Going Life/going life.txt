@@ -1,0 +1,27 @@
+Finanzen
+	remo Konto eröffnen (Post Finance) - Remo
+	remo Prepaid Kreditkarte - Remo
+	remo Finanzchef Remo
+
+Google Store zoix
+	emily Gmail Konto eröffnen (dockerapps@gmail.com) dockerZHAW14! - Emily
+
+Bugs
+	yacine Statistik-Screen
+	chris Errorhandling für Preview Container
+
+Level
+	remo Level Packet neue Levels (Remo)
+
+In-App Käufe
+	emily Werbung
+
+Game
+	yacine game Icon
+	yacine retry Button
+
+Lizenz Fragen
+	yacine libgdx
+
+Achievements Konzept
+	chris
