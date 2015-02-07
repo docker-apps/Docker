@@ -42,7 +42,7 @@ public class StatisticsMenu extends AbstractMenu {
                     resetButton.setText("Reset");
                     resetButton.setColor(1,1,1,1);
                     Persistence.resetStatistics();
-                    openNewMenu(new StatisticsMenu(application));
+                    updateMenu(new StatisticsMenu(application));
                 }
             }
         });

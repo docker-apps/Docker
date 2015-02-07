@@ -44,6 +44,15 @@ public class Docker extends Game {
 	}
 	
 	/**
+	 * Identical to setScreen, but the old screen will not be saved in the screen history.
+	 * 
+	 * @param screen the new screen.
+	 */
+	public void updateScreen(Screen screen){
+		super.setScreen(screen);
+	}
+	
+	/**
 	 * Return to the last screen.
 	 * The current screen will be disposed.
 	 */

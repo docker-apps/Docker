@@ -43,6 +43,11 @@ public class AbstractMenu implements Screen {
 
 	private static Skin dockerSkin;
     
+    /**
+     * Default Constructor for Menus.
+     * 
+     * @param application A reference to the Docker Application (Game) object.
+     */
     public AbstractMenu(final Docker application){
     	this.application = application;
 		
@@ -55,11 +60,26 @@ public class AbstractMenu implements Screen {
         stage.addActor(table);
     }
     
+    /**
+     * Default Constructor for Menus with a background object.
+     * Can be used for seamless menu transitions with animated backgrounds.
+     * 
+     * @param application A reference to the Docker Application (Game) object.
+     * @param background The background object to display in the menu. 
+     */
     public AbstractMenu(final Docker application, Actor background){
     	this(application);
     	this.setBackground(background);
     }
+
     
+    /**
+     * Default Constructor for Menus.
+     * Can be used for pause screens, where the background should be a static image (snapshot) of the game.
+     * 
+     * @param application A reference to the Docker Application (Game) object.
+     * @param background A textureRegion to be used as the background
+     */
     public AbstractMenu(final Docker application, TextureRegion background){
     	this(application);
 
@@ -89,20 +109,40 @@ public class AbstractMenu implements Screen {
         }
     }
     
+    /**
+     * Opens a new menu.
+     * Saves the old menu in the screen history.
+     * 
+     * @param menu the new menu.
+     */
     public void openNewMenu(AbstractMenu menu){
         this.application.setScreen(menu);
         menu.setBackground(getBackground());
     }
     
     /**
+     * Updates the current menu with a new one.
+     * Does NOT save the old menu in the screen history.
+     * 
+     * @param menu the new menu.
+     */
+    public void updateMenu(AbstractMenu menu){
+    	this.application.updateScreen(menu);
+    	menu.setBackground(getBackground());
+    }
+    
+    /**
      * Sets the Background to be displayed in the Menu
      * 
-     * @param texture the texture to be displayed as a background.
+     * @param bg the actor object to be displayed as a background.
      */
     public void setBackground(Actor bg){
         this.stage.setBackground(bg);
     }
     
+    /**
+     * @return the actor object used as a background.
+     */
     public Actor getBackground(){
     	return this.stage.getBackground();
     }
@@ -199,11 +239,19 @@ public class AbstractMenu implements Screen {
 		return dockerSkin;
 	}
 
+    /**
+     * @author HAL9000
+     *
+     * Menu Container control for scrolling menus.
+     */
     public class AbstractScrollPane extends ScrollPane {
         ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-        public AbstractScrollPane(Actor actor){
-            super(actor);
+        /**
+         * @param widget the menu control to be wrapped in a scroll pane. May be null.
+         */
+        public AbstractScrollPane(Actor widget){
+            super(widget);
         }
 
         @Override
