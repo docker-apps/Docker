@@ -24,8 +24,7 @@ public class MainMenu extends AbstractMenu{
 		super(application);
 		this.setBackground(new MenuBackground(this.stage.getWidth(), this.stage.getHeight()));
 		
-		TextureAtlas atlas = Resource.getDockerSkinTextureAtlas();
-		TextureRegion titleRegion = atlas.findRegion("docker_title");
+		TextureRegion titleRegion = Resource.getDockerSkinTextureAtlas().findRegion("docker_title");
 		Image titleImage = new Image(titleRegion);
 		titleImage.setSize(titleRegion.getRegionWidth(), titleRegion.getRegionHeight());
 		titleImage.setPosition(
@@ -61,8 +60,8 @@ public class MainMenu extends AbstractMenu{
     public void handleInput(){
     	if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ||
                 Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
-            Gdx.app.exit();
             Resource.disposeAll();
+            Gdx.app.exit();
         }
     }
 }

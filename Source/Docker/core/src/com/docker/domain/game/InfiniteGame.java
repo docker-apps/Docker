@@ -9,11 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Ship;
 import com.docker.technicalservices.Persistence;
+import com.docker.technicalservices.Resource;
 import com.docker.ui.menus.AbstractMenu;
 
 public class InfiniteGame extends AbstractGame{
 
-	private Skin skin = AbstractMenu.getDockerSkin();
+	private Skin skin = Resource.getDockerSkin();
 	private Button gameMenuButton;
 	private boolean newShip = false;
 
