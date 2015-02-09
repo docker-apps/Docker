@@ -5,6 +5,7 @@ import java.util.Stack;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.docker.technicalservices.Persistence;
+import com.docker.technicalservices.Resource;
 import com.docker.ui.menus.MainMenu;
 
 /**
@@ -61,7 +62,7 @@ public class Docker extends Game {
 			Screen old = this.getScreen();
 			super.setScreen(history.pop());
 			// temporarly removed, as the application crashes here.
-			//old.dispose();
+			old.dispose();
 		}
 	}
 	
@@ -87,6 +88,16 @@ public class Docker extends Game {
 	 */
 	public void setPersistence(Persistence persistence) {
 		this.persistence = persistence;
+	}
+	
+	@Override
+	public void dispose () {
+		super.dispose();
+		for (Screen screen : history) {
+			screen.dispose();
+		}
+        System.out.println("Disposing all resources now");
+        Resource.disposeAll();
 	}
 
 }

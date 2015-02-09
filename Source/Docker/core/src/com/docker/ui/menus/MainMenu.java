@@ -60,7 +60,6 @@ public class MainMenu extends AbstractMenu{
     public void handleInput(){
     	if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ||
                 Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
-            Resource.disposeAll();
             Gdx.app.exit();
         }
     }
