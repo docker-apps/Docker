@@ -23,6 +23,9 @@ public class StatisticsMenu extends AbstractMenu {
 
     private static Map<String,String> labelMap = new HashMap<String, String>();
 
+    /**
+     * @param application A reference to the Docker Application (Game) object.
+     */
     public StatisticsMenu(final Docker application) {
     	super(application);
     	

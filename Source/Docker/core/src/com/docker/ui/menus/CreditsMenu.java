@@ -15,6 +15,9 @@ public class CreditsMenu extends AbstractMenu {
     private Label title = new Label("Credits", skin, "title");
     private TextButton backButton = new TextButton("Back", skin);
 
+    /**
+     * @param application A reference to the Docker Application (Game) object.
+     */
     public CreditsMenu(final Docker application) {
         super(application);
         backButton.addListener(new ClickListener() {

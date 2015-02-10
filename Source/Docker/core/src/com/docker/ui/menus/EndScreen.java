@@ -7,12 +7,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 
+/**
+ * @author HAL9000
+ *
+ * The screen to be displayed at the end of a game.
+ * Either displays a 'You lose'-Message or the score achieved in the game.
+ */
 public class EndScreen extends AbstractMenu {
 
 	private TextButton endGameButton = new TextButton("Exit", skin);
     private Label title = new Label("Game Over",skin,"title");
     
 
+    /**
+     * @param application A reference to the Docker Application (Game) object.
+     * @param background the background to be displayed. Should be a snapshot of the game.
+     * @param score the score achieved by the player. If he has won.
+     * @param highscore the highscore of the player. From the statistics.
+     */
     public EndScreen(final Docker application, TextureRegion background, int score, int highscore) {
     	super(application, background);
         
@@ -29,7 +41,11 @@ public class EndScreen extends AbstractMenu {
         table.add(new Label(String.valueOf(highscore), skin)).row();
         table.add(endGameButton).size(100, 30).padTop(10).left().colspan(2);
 	}
-    
+
+    /**
+     * @param application A reference to the Docker Application (Game) object.
+     * @param background the background to be displayed. Should be a snapshot of the game.
+     */
     public EndScreen(final Docker application, TextureRegion background) {
     	super(application, background);
         

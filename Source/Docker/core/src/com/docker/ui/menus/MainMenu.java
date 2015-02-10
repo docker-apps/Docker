@@ -2,7 +2,6 @@ package com.docker.ui.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -19,7 +18,10 @@ public class MainMenu extends AbstractMenu{
     private TextButton gameMenuButton = new TextButton("Play", skin),
             settingsButton = new TextButton("Settings", skin),
             statisticsButton = new TextButton("Statistics", skin);
-	
+
+    /**
+     * @param application A reference to the Docker Application (Game) object.
+     */
 	public MainMenu(final Docker application){
 		super(application);
 		this.setBackground(new MenuBackground(this.stage.getWidth(), this.stage.getHeight()));

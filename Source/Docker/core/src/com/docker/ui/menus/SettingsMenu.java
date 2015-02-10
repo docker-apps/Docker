@@ -32,6 +32,9 @@ public class SettingsMenu extends AbstractMenu {
     Slider volumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
     
 
+    /**
+     * @param application A reference to the Docker Application (Game) object.
+     */
     public SettingsMenu(final Docker application) {
         super(application);
         

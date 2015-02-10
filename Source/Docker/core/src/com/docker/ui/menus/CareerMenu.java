@@ -22,6 +22,9 @@ public class CareerMenu extends AbstractMenu {
     private TextButton backButton = new TextButton("Back", skin);
     
 
+    /**
+     * @param application A reference to the Docker Application (Game) object.
+     */
     public CareerMenu(final Docker application) {
         super(application);
         backButton.addListener(new ClickListener() {

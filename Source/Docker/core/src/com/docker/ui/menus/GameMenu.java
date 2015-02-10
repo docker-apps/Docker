@@ -19,6 +19,9 @@ public class GameMenu extends AbstractMenu {
     private TextButton backButton = new TextButton("Back", skin);
 
 
+    /**
+     * @param application A reference to the Docker Application (Game) object.
+     */
     public GameMenu(final Docker application) {
         super(application);
         
@@ -48,9 +51,9 @@ public class GameMenu extends AbstractMenu {
         });
 
         table.add(title).padBottom(10).row();
-        table.add(careerGameButton).size(150, 35).padBottom(5).row();
-        table.add(quickGameButton).size(150, 35).padBottom(5).row();
-        table.add(infiniteGameButton).size(150, 35).padBottom(5).row();
+        table.add(careerGameButton).size(160, 35).padBottom(5).row();
+        table.add(quickGameButton).size(160, 35).padBottom(5).row();
+        table.add(infiniteGameButton).size(160, 35).padBottom(5).row();
         table.add(backButton).size(100, 30).center();
     }
 }
