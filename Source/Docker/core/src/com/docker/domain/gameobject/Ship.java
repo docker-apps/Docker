@@ -24,6 +24,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
@@ -44,7 +46,7 @@ public class Ship extends Actor {
 	private float xGridstart;
 	private float[] breakValues;
 	private boolean isBreaking = false;
-	public boolean isTakingOff;
+	private boolean isTakingOff;
 	private boolean isStaticAnimationRunning = false;
 	private boolean isSunken = false;
 	private int breakPos;
@@ -284,12 +286,50 @@ public class Ship extends Actor {
 		fboRegion.flip(false, true);
 		return fboRegion;
 	}
+	
+	private void disposeFbo(){
+        if(fbo != null){
+            fbo.dispose();
+            fbo = null;                	
+        }
+	}
 
 	private void removeFromStage(){
-		this.fbo.dispose();
+		this.disposeFbo();
 		this.clearActions();
 		this.clearListeners();
 		getStage().getRoot().removeActor(this);
+	}
+	
+	public void runIn(){
+		this.previewContainer = null;
+		this.isTakingOff = true;
+		final TextureRegion snapshot = this.takeSnapshot();
+
+		final Image img = new Image(snapshot);
+		img.setPosition(img.getWidth(), 0f);
+
+		MoveToAction moveAction = new MoveToAction();
+		moveAction.setPosition(0f, 0f);
+		moveAction.setDuration(5);
+		moveAction.setInterpolation(Interpolation.pow2);
+
+		Action completeAction = new Action(){
+			public boolean act( float delta ) {
+				isTakingOff = false;
+				isStaticAnimationRunning = false;
+                img.remove();
+                snapshot.getTexture().dispose();
+                disposeFbo();
+				return true;
+			}
+		};
+
+		// chain the two actions and add it to this actor
+		SequenceAction actions = new SequenceAction(moveAction, completeAction);
+		img.addAction(actions);
+		this.getStage().addActor(img);
+		this.isStaticAnimationRunning = true;
 	}
 
 	/**
@@ -301,9 +341,9 @@ public class Ship extends Actor {
 	public void takeOff(){
 		this.previewContainer = null;
 		this.isTakingOff = true;
-		TextureRegion snapshot = this.takeSnapshot();
+		final TextureRegion snapshot = this.takeSnapshot();
 
-		Image img = new Image(snapshot);
+		final Image img = new Image(snapshot);
 
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(img.getWidth()*-1, 0f);
@@ -316,6 +356,9 @@ public class Ship extends Actor {
 				isTakingOff = false;
 				isStaticAnimationRunning = false;
                 setVisible(false);
+                img.remove();
+                snapshot.getTexture().dispose();
+                disposeFbo();
 				return true;
 			}
 		};
@@ -386,6 +429,14 @@ public class Ship extends Actor {
 				setSunken(true);
 				isStaticAnimationRunning = false;
                 setVisible(false);
+                actor.remove();
+                if(actor instanceof Image){
+                   Drawable drawable = ((Image) actor).getDrawable();   
+                   if(drawable instanceof TextureRegionDrawable){
+                	   ((TextureRegionDrawable) drawable).getRegion().getTexture().dispose();
+                   }
+                }
+                disposeFbo();
 				return true;
 			}
 		};
@@ -398,7 +449,6 @@ public class Ship extends Actor {
 
 	/**
 	 * Breaks the ship in half, at the specified position.
-	 * 
 	 * Initiates an animation and sets isBreaking = true
 	 * 
 	 * @param breakPosition The (x-Grid) position, at which the ship should break

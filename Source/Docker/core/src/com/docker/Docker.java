@@ -96,7 +96,6 @@ public class Docker extends Game {
 		for (Screen screen : history) {
 			screen.dispose();
 		}
-        System.out.println("Disposing all resources now");
         Resource.disposeAll();
 	}
 

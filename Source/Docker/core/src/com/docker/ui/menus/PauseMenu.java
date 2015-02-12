@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
 
+/**
+ * Screen to be displayed when a running game is paused. *
+ */
 public class PauseMenu extends AbstractMenu {
     Persistence persistence;
     
@@ -18,6 +21,7 @@ public class PauseMenu extends AbstractMenu {
 
     /**
      * @param application A reference to the Docker Application (Game) object.
+     * @param background the background to be displayed. Should be a snapshot of the game.
      */
     public PauseMenu(final Docker application, TextureRegion background) {
         super(application, background);

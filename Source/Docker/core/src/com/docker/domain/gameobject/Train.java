@@ -4,9 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.docker.technicalservices.Resource;

@@ -3,20 +3,18 @@ package com.docker.domain.game;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Ship;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
-import com.docker.ui.menus.AbstractMenu;
 
 public class InfiniteGame extends AbstractGame{
 
 	private Skin skin = Resource.getDockerSkin();
 	private Button gameMenuButton;
-	private boolean newShip = false;
 
 	public InfiniteGame(final Docker application) {
 		super(application);
@@ -34,24 +32,17 @@ public class InfiniteGame extends AbstractGame{
             public void clicked(InputEvent event, float x, float y) {
             	//TODO:Ship check break and sink
             	checkShipCondition();
-            	newShip = true;
-            	
+            	setShip(Ship.getRandomShip());
+            	getShip().runIn();            	
             }
         });
 		gameMenuButton.setPosition(10, getStage().getHeight() - gameMenuButton.getHeight() - 60);
 		this.stage.addActor(gameMenuButton);	
 	}
 	
-
-	
 	@Override
 	public void render(float delta) {
 		super.render(delta);
-		if(newShip && !getShip().isStaticAnimationRunning()){
-        	getShip().remove();
-        	setShip(Ship.getRandomShip());
-        	newShip = false;
-		}
 		if(getCrane().isDeploying()){
 			gameMenuButton.setTouchable(Touchable.disabled);
 		}else{

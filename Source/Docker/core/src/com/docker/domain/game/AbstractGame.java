@@ -158,7 +158,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @return true if the player is allowed to do something (i.e. position a container)
 	 */
 	public boolean canPlayerAct(){
-		return !getCrane().isDeploying() && getTrain().hasContainers() && !isGameOver() && !getShip().isTakingOff;
+		return !getCrane().isDeploying() && getTrain().hasContainers() && !isGameOver() && !getShip().isTakingOff();
 	}
 
 	/**
