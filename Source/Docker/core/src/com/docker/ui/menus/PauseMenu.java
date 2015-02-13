@@ -30,6 +30,7 @@ public class PauseMenu extends AbstractMenu {
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                application.showAds(false);
                 application.returnToLastScreen();
             }
         });

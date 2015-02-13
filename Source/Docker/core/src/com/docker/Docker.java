@@ -25,11 +25,17 @@ public class Docker extends Game {
 	 * The default y-resolution for the application.
 	 */
 	public static final float HEIGHT = 200;
-	
+
+    private final IActivityRequestHandler iActivityRequestHandler;
+
 	Stack<Screen> history;
     private Persistence persistence;
-	
-	@Override
+
+    public Docker(IActivityRequestHandler iActivityRequestHandler) {
+        this.iActivityRequestHandler = iActivityRequestHandler;
+    }
+
+    @Override
 	public void create() {
 		this.history = new Stack<Screen>();
 		this.setScreen(new MainMenu(this));
@@ -76,7 +82,11 @@ public class Docker extends Game {
 		super.setScreen(new MainMenu(this));
 	}
 
-	/**
+    public void showAds(Boolean showAds) {
+        iActivityRequestHandler.showAds(showAds);
+    }
+
+    /**
 	 * @return an instance of the persistence interface
 	 */
 	public Persistence getPersistence() {
