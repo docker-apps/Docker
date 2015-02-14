@@ -27,6 +27,7 @@ public class CareerMenu extends AbstractMenu {
      */
     public CareerMenu(final Docker application) {
         super(application);
+        application.showAds(true);
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -62,6 +63,7 @@ public class CareerMenu extends AbstractMenu {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    application.showAds(false);
                     application.setScreen(new CareerGame(application, id));
                 }
             });

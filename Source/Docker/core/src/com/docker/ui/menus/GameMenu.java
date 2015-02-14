@@ -40,12 +40,14 @@ public class GameMenu extends AbstractMenu {
         quickGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                application.showAds(false);
                 application.setScreen(new QuickGame(application));
             }
         });
         infiniteGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                application.showAds(false);
                 application.setScreen(new InfiniteGame(application));
             }
         });
