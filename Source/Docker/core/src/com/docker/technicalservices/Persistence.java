@@ -24,11 +24,9 @@ import com.badlogic.gdx.utils.ObjectMap;
 public class Persistence {
 
     private static Preferences prefs;
-    private String localDir;
 
     public Persistence() {
         prefs = Gdx.app.getPreferences("dockerPrefs");
-        localDir = Gdx.files.getLocalStoragePath();
         //default prefs
         prefs.putBoolean("1", true);
         prefs.flush();
