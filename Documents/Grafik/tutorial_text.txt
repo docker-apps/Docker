@@ -1,0 +1,33 @@
+-- 1 --
+Welcome to Docker
+
+This is your ship ->
+
+-- 2 --
+The train delivers containers ->
+
+-- 3 --
+Load them on your ship by dragging...
+[finger animation dragging]
+
+-- 4 --
+...and letting go where you like it.
+[finger animation letting go]
+
+-- 5 --
+This meter shows you the balance of the ship ->
+
+-- 6 --
+The lamps indicate the weight distribution
+
+-- 7 --
+If a container reaches the left screen border, you'll lose a life
+
+-- 8 --
+The game is over if you lose all lives or loaded all containers.
+
+-- 9 --
+Try to keep the ship balanced and the weight of the containers well distributed
+
+-- 10 --
+Have fun
