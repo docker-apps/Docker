@@ -4,17 +4,26 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.docker.Docker;
+import com.docker.IActivityRequestHandler;
 
-public class DesktopLauncher {
+public class DesktopLauncher implements IActivityRequestHandler{
+    private static DesktopLauncher application;
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1280;
 		config.height= 720;
-		// Diese Zeile nur einkommentieren, wenn sich bilddateien geändert haben.
+		// Diese Zeile nur einkommentieren, wenn sich bilddateien geï¿½ndert haben.
 //		TexturePacker.process("../../../Documents/Grafik/deploy", "../android/assets/img", "docker");
 //		TexturePacker.process("../../../Documents/Grafik/deploy_ui", "../android/assets/ui", "dockerskin");
 
-		
-		new LwjglApplication(new Docker(), config);
+        if (application == null) {
+            application = new DesktopLauncher();
+        }
+		new LwjglApplication(new Docker(application), config);
+	}
+
+    @Override
+    public void showAds(boolean show) {
+
 	}
 }
