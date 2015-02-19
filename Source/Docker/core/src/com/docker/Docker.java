@@ -4,6 +4,8 @@ import java.util.Stack;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.docker.domain.game.AbstractGame;
+import com.docker.domain.game.CareerGame;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
 import com.docker.ui.menus.MainMenu;
@@ -25,17 +27,17 @@ public class Docker extends Game {
 	 * The default y-resolution for the application.
 	 */
 	public static final float HEIGHT = 200;
-
+	
     private final IActivityRequestHandler iActivityRequestHandler;
 
 	Stack<Screen> history;
     private Persistence persistence;
-
+	
     public Docker(IActivityRequestHandler iActivityRequestHandler) {
         this.iActivityRequestHandler = iActivityRequestHandler;
     }
 
-    @Override
+	@Override
 	public void create() {
 		this.history = new Stack<Screen>();
 		this.setScreen(new MainMenu(this));
@@ -52,13 +54,13 @@ public class Docker extends Game {
 	
 	/**
 	 * Identical to setScreen, but the old screen will not be saved in the screen history.
-	 * 
+	 *
 	 * @param screen the new screen.
 	 */
 	public void updateScreen(Screen screen){
 		super.setScreen(screen);
 	}
-	
+
 	/**
 	 * Return to the last screen.
 	 * The current screen will be disposed.
@@ -76,17 +78,22 @@ public class Docker extends Game {
 	 * Return to the MainMenu screen.
 	 * The history will be discarded.
 	 */
-	public void returnToMainmenu(){
-		while(history.size() > 0)
-			history.pop().dispose();
-		super.setScreen(new MainMenu(this));
-	}
+	public void returnToMenu(AbstractGame game) {
+        if (game instanceof CareerGame) {
+            history.pop().dispose();
+            super.setScreen(history.pop());
+        } else {
+            while (history.size() > 0)
+                history.pop().dispose();
+            super.setScreen(new MainMenu(this));
+        }
+    }
 
     public void showAds(Boolean showAds) {
         iActivityRequestHandler.showAds(showAds);
-    }
+	}
 
-    /**
+	/**
 	 * @return an instance of the persistence interface
 	 */
 	public Persistence getPersistence() {
@@ -99,7 +106,7 @@ public class Docker extends Game {
 	public void setPersistence(Persistence persistence) {
 		this.persistence = persistence;
 	}
-	
+
 	@Override
 	public void dispose () {
 		super.dispose();

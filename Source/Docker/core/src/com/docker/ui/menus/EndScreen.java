@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
+import com.docker.domain.game.AbstractGame;
 
 /**
  * @author HAL9000
@@ -25,13 +26,13 @@ public class EndScreen extends AbstractMenu {
      * @param score the score achieved by the player. If he has won.
      * @param highscore the highscore of the player. From the statistics.
      */
-    public EndScreen(final Docker application, TextureRegion background, int score, int highscore) {
+    public EndScreen(final Docker application, TextureRegion background, int score, int highscore, final AbstractGame game) {
     	super(application, background);
         
         endGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.returnToMainmenu();
+                application.returnToMenu(game);
             }
         });
         table.add(title).padBottom(10).colspan(2).center().row();
@@ -46,13 +47,13 @@ public class EndScreen extends AbstractMenu {
      * @param application A reference to the Docker Application (Game) object.
      * @param background the background to be displayed. Should be a snapshot of the game.
      */
-    public EndScreen(final Docker application, TextureRegion background) {
+    public EndScreen(final Docker application, TextureRegion background, final AbstractGame game) {
     	super(application, background);
         
         endGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.returnToMainmenu();
+                application.returnToMenu(game);
             }
         });
         table.add(title).padBottom(10).center().row();

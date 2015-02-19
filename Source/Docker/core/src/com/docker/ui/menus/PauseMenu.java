@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
+import com.docker.domain.game.AbstractGame;
 import com.docker.technicalservices.Persistence;
 
 /**
@@ -23,7 +24,7 @@ public class PauseMenu extends AbstractMenu {
      * @param application A reference to the Docker Application (Game) object.
      * @param background the background to be displayed. Should be a snapshot of the game.
      */
-    public PauseMenu(final Docker application, TextureRegion background) {
+    public PauseMenu(final Docker application, TextureRegion background, final AbstractGame game) {
         super(application, background);
         
         this.persistence = application.getPersistence();
@@ -37,7 +38,7 @@ public class PauseMenu extends AbstractMenu {
         endGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.returnToMainmenu();
+                application.returnToMenu(game);
             }
         });
 

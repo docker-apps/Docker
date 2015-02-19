@@ -293,7 +293,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	private void displayPauseScreen() {
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();			
-		application.setScreen(new PauseMenu(application, screenCap));
+		application.setScreen(new PauseMenu(application, screenCap, this));
 	}
 	
 	@Override
@@ -374,9 +374,9 @@ public abstract class AbstractGame extends ScreenAdapter {
         if(!isGameLost){
             Integer gameScore = getLoadRating().getScore();
             Integer highscore = endGame(gameScore);
-            application.setScreen(new EndScreen(application, screenCap, gameScore, highscore));
-        }else{
-        	application.setScreen(new EndScreen(application, screenCap));
+            application.setScreen(new EndScreen(application, screenCap, gameScore, highscore, this));
+        } else{
+        	application.setScreen(new EndScreen(application, screenCap, this));
         }
     }
 
