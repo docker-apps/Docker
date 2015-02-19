@@ -18,6 +18,7 @@ public class PauseMenu extends AbstractMenu {
     
     private TextButton endGameButton = new TextButton("Exit", skin);
     private TextButton resumeButton = new TextButton("Resume", skin);
+    private TextButton retryButton = new TextButton("Retry", skin);
     private Label title = new Label("Pause",skin, "title");
 
     /**
@@ -41,9 +42,17 @@ public class PauseMenu extends AbstractMenu {
                 application.returnToMenu(game);
             }
         });
+        retryButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                application.showAds(false);
+                game.startNewGame();
+            }
+        });
 
         table.add(title).center().padBottom(15).row().padBottom(10);
-        table.add(resumeButton).size(100, 30).center().row();
+        table.add(resumeButton).size(100, 30).padRight(10).left();
+        table.add(retryButton).size(100, 30).right().row();
         table.add(endGameButton).size(100, 30).left().row();
         stage.addActor(table);
     }

@@ -17,6 +17,7 @@ import com.docker.domain.game.AbstractGame;
 public class EndScreen extends AbstractMenu {
 
 	private TextButton endGameButton = new TextButton("Exit", skin);
+	private TextButton retryButton = new TextButton("Retry", skin);
     private Label title = new Label("Game Over",skin,"title");
     
 
@@ -35,12 +36,20 @@ public class EndScreen extends AbstractMenu {
                 application.returnToMenu(game);
             }
         });
+        retryButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                application.showAds(false);
+                game.startNewGame();
+            }
+        });
         table.add(title).padBottom(10).colspan(2).center().row();
         table.add(new Label("Your Score", skin)).left();
         table.add(new Label(String.valueOf(score), skin)).row();
         table.add(new Label("Your Highscore", skin)).padRight(8);
         table.add(new Label(String.valueOf(highscore), skin)).row();
-        table.add(endGameButton).size(100, 30).padTop(10).left().colspan(2);
+        table.add(endGameButton).size(100, 30).padTop(10).padRight(20).left();
+        table.add(retryButton).size(100, 30).padTop(10).left();
 	}
 
     /**

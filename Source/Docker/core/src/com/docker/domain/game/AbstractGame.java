@@ -380,6 +380,8 @@ public abstract class AbstractGame extends ScreenAdapter {
         }
     }
 
+    public abstract void startNewGame();
+
 	/**
 	 * @return the current score
 	 */

@@ -30,6 +30,11 @@ public class QuickGame extends AbstractGame {
         return highscore;
     }
 
+    @Override
+    public void startNewGame() {
+        application.setScreen(new QuickGame(application));
+    }
+
     public double getTimeLeft() {
 		return timeLeft;
 	}
