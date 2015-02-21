@@ -6,6 +6,7 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.docker.Docker;
 import com.docker.IActivityRequestHandler;
 
+@SuppressWarnings("unused")
 public class DesktopLauncher implements IActivityRequestHandler{
     private static DesktopLauncher application;
 	public static void main (String[] arg) {
