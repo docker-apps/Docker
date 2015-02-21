@@ -76,4 +76,9 @@ public class InfiniteGame extends AbstractGame{
 		super.setRemainingShips(remainingShips);
 		this.foreground.setRemainingShips(remainingShips);
 	}
+
+    @Override
+    public void startNewGame() {
+        application.setScreen(new InfiniteGame(application));
+    }
 }

@@ -44,4 +44,10 @@ public class CareerGame extends AbstractGame {
         }
         return levelHighScore;
     }
+
+    @Override
+    public void startNewGame() {
+        application.returnToLastScreen();
+        application.updateScreen(new CareerGame(application, levelId));
+    }
 }
