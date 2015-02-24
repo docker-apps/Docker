@@ -63,6 +63,8 @@ public class Ship extends Actor {
 	private TextureRegion bodyBrokenRight;
 	private FrameBuffer fbo;
 	private ShaderProgram snapshotShader;
+	private Pixmap gridBoundsPixmap;
+	private Texture gridBoundsTexture;
 	
 	private float gridBoundsAlpha = 0f;
 	private float gridBoundsDecay = 1f;
@@ -296,6 +298,7 @@ public class Ship extends Actor {
 
 	private void removeFromStage(){
 		this.disposeFbo();
+		this.disposeGridBounds();
 		this.clearActions();
 		this.clearListeners();
 		getStage().getRoot().removeActor(this);
@@ -596,15 +599,29 @@ public class Ship extends Actor {
 	/**
 	 * @return the texture to display the grid's dimensions.
 	 */
-	public Texture getGridBoundsTexture(){
+	protected Texture getGridBoundsTexture(){
+		disposeGridBounds();
 		int width = gridWidth * gridSize;
 		int height = gridHeight * gridSize;
-		Pixmap pixmap = new Pixmap(width, height, Format.RGBA8888);
-		
-		pixmap.setColor(1f, .5f, .1f, this.gridBoundsAlpha);
-		pixmap.drawRectangle(0, 0, width, height);
-		
-		return new Texture(pixmap);
+		this.gridBoundsPixmap = new Pixmap(width, height, Format.RGBA8888);
+
+		this.gridBoundsPixmap.setColor(1f, .5f, .1f, this.gridBoundsAlpha);
+		this.gridBoundsPixmap.drawRectangle(0, 0, width, height);
+
+		this.gridBoundsTexture = new Texture(gridBoundsPixmap);
+
+		return this.gridBoundsTexture;
+	}
+	
+	protected void disposeGridBounds(){
+		if (this.gridBoundsPixmap != null){
+			this.gridBoundsPixmap.dispose();
+			this.gridBoundsPixmap = null;
+		}
+		if (this.gridBoundsTexture != null){
+			this.gridBoundsTexture.dispose();
+			this.gridBoundsTexture = null;
+		}
 	}
 
 	public float[][] getGrid(){
