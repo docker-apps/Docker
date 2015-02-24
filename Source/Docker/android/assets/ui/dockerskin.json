@@ -12,7 +12,8 @@ com.badlogic.gdx.graphics.Color: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: yellow_button_pressed, up: yellow_button },
-	toggle: { down: yellow_button_pressed, checked: yellow_button_pressed, up: yellow_button }
+	toggle: { down: yellow_button_pressed, checked: yellow_button_pressed, up: yellow_button },
+	ship-button: {down: ship_button_down, up: ship_button_up}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: yellow_button_pressed, up: yellow_button, font: default-font, fontColor: white },
