@@ -58,7 +58,9 @@ public class Docker extends Game {
 	 * @param screen the new screen.
 	 */
 	public void updateScreen(Screen screen){
+		Screen old = this.getScreen();
 		super.setScreen(screen);
+		old.dispose();
 	}
 
 	/**
