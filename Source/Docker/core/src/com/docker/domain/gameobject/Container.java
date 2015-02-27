@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.docker.technicalservices.Resource;
 
@@ -117,11 +120,22 @@ public class Container extends Actor {
 			stage.addActor(explosion);
 		}
 	}
-	
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-	}
+
+    public void animateFling() {
+        MoveToAction moveAction = new MoveToAction();
+        moveAction.setPosition(getStage().getWidth()- getWidth(), getY());
+        moveAction.setDuration(1);
+
+        Action completeAction = new Action() {
+            public boolean act( float delta ) {
+                destroy(getStage());
+                setX(getStage().getWidth());
+                return true;
+            }
+        };
+        SequenceAction actions = new SequenceAction(moveAction, completeAction);
+        this.addAction(actions);
+    }
 
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
@@ -233,7 +247,8 @@ public class Container extends Actor {
 		
 		@Override
 		public void act(float delta){
-			if(this.explosionAnimation.isAnimationFinished(stateTime))
+            super.act(delta);
+            if(this.explosionAnimation.isAnimationFinished(stateTime))
 				this.remove();
 		}
 		
