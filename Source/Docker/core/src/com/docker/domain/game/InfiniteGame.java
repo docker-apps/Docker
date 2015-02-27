@@ -79,6 +79,7 @@ public class InfiniteGame extends AbstractGame{
 
     @Override
     public void startNewGame() {
-        application.setScreen(new InfiniteGame(application));
+        application.returnToLastScreen();
+        application.updateScreen(new InfiniteGame(application));
     }
 }

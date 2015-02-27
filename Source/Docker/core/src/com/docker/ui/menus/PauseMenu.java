@@ -39,13 +39,13 @@ public class PauseMenu extends AbstractMenu {
         endGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                application.showAds(true);
                 application.returnToMenu(game);
             }
         });
         retryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.showAds(false);
                 game.startNewGame();
             }
         });
