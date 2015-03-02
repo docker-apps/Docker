@@ -107,7 +107,7 @@ public abstract class AbstractGame extends ScreenAdapter {
                 Vector3 touchPos = getStage().getViewport().getCamera().unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 float yPos = touchPos.y;
 
-                if(velocityX > -1500){
+                if(velocityX > 1500){
                     if(Math.abs(velocityX/2) > Math.abs(velocityY) && yPos > getStage().getHeight()-50){
                         getTrain().flingContainer(getShip());
                         removeLive();
@@ -138,7 +138,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @return whether the input was processed 
 	 */
 	public boolean touchDownEvent(int x, int y, int pointer, int button){
-		if(canPlayerAct())
+		if(canPlayerAct(y))
 			previewPosition(x, y);
 		return true;
 	}
@@ -152,7 +152,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @return whether the input was processed 
 	 */
 	public boolean touchDraggedEvent(int x, int y, int pointer){
-		if(canPlayerAct())
+		if(canPlayerAct(y))
 			previewPosition(x, y);
 		return true;
 	}
@@ -167,7 +167,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @return whether the input was processed 
 	 */
 	public boolean touchUpEvent (int x, int y, int pointer, int button) {
-		if(canPlayerAct())
+		if(canPlayerAct(y))
 			deployContainer(x, y);
 		return true;
 	}
@@ -175,11 +175,16 @@ public abstract class AbstractGame extends ScreenAdapter {
 	/**
 	 * @return true if the player is allowed to do something (i.e. position a container)
 	 */
-	public boolean canPlayerAct(){
-		return !getCrane().isDeploying() && getTrain().hasContainers() && !isGameOver() && !getShip().isTakingOff();
+	public boolean canPlayerAct(int y){
+		return !getCrane().isDeploying() && getTrain().hasContainers() && !isGameOver()
+                && !getShip().isTakingOff() && !isOnTrain(y);
 	}
 
-	/**
+    private boolean isOnTrain(int y) {
+        return y < getStage().getHeight()-50;
+    }
+
+    /**
 	 * Display a preview container on the ship.
 	 * 
 	 * @param x the x-position for the preview container

@@ -195,7 +195,10 @@ public class Train extends Actor {
 
     public void flingContainer(final Ship ship) {
         final Container container = removeContainer();
-        ship.setPreviewContainer(-1, getFirstContainer());
+        Container firstContainer = getFirstContainer();
+        if (firstContainer != null) {
+            ship.setPreviewContainer(-1, firstContainer);
+        }
         getStage().addActor(container);
 
         container.animateFling();

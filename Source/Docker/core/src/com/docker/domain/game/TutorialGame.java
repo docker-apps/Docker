@@ -301,8 +301,8 @@ public class TutorialGame extends AbstractGame {
 	}
 
 	@Override
-	public boolean canPlayerAct() {
-		return super.canPlayerAct() && group.getActions().size == 0;
+	public boolean canPlayerAct(int y) {
+		return super.canPlayerAct(y) && group.getActions().size == 0;
 	};
 
 	@Override
