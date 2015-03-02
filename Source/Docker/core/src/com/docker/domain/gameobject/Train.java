@@ -119,7 +119,8 @@ public class Train extends Actor {
      */
 	@Override
 	public void act(float delta){
-		this.stateTime += delta;
+        super.act(delta);
+        this.stateTime += delta;
 		for (Container container : this.containers) {
             float xPos = container.getX();
             container.setY(this.getY());
@@ -191,6 +192,14 @@ public class Train extends Actor {
 			}
 		}
 	}
+
+    public void flingContainer(final Ship ship) {
+        final Container container = removeContainer();
+        ship.setPreviewContainer(-1, getFirstContainer());
+        getStage().addActor(container);
+
+        container.animateFling();
+    }
     
     /**
      * @return the size of the Container list

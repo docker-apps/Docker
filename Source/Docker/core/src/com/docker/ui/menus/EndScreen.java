@@ -33,13 +33,13 @@ public class EndScreen extends AbstractMenu {
         endGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                application.showAds(true);
                 application.returnToMenu(game);
             }
         });
         retryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                application.showAds(false);
                 game.startNewGame();
             }
         });
@@ -65,8 +65,15 @@ public class EndScreen extends AbstractMenu {
                 application.returnToMenu(game);
             }
         });
+        retryButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.startNewGame();
+            }
+        });
         table.add(title).padBottom(10).center().row();
         table.add(new Label("You lose!", skin)).left().row();
         table.add(endGameButton).size(100, 30).padTop(10).left();
+        table.add(retryButton).size(100, 30).padTop(10).left();
 	}
 }

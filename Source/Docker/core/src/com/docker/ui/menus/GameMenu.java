@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.game.InfiniteGame;
 import com.docker.domain.game.QuickGame;
+import com.docker.domain.game.TutorialGame;
 
 /**
  * In this menu the player can choose which game he wants to play
@@ -15,7 +16,7 @@ public class GameMenu extends AbstractMenu {
     private Label title = new Label("Game Modes",skin, "title");
     private TextButton careerGameButton = new TextButton("Career Game", skin);
     private TextButton quickGameButton = new TextButton("Quick Game", skin);
-    private TextButton infiniteGameButton = new TextButton("Infinite Game", skin);
+    private TextButton infiniteGameButton = new TextButton("Tutorial Test", skin);
     private TextButton backButton = new TextButton("Back", skin);
 
 
@@ -49,6 +50,13 @@ public class GameMenu extends AbstractMenu {
             public void clicked(InputEvent event, float x, float y) {
                 application.showAds(false);
                 application.setScreen(new InfiniteGame(application));
+            }
+        });
+        infiniteGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                application.showAds(false);
+                application.setScreen(new TutorialGame(application));
             }
         });
 

@@ -2,6 +2,7 @@ package com.docker.domain.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
@@ -11,8 +12,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.input.GestureDetector;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
@@ -98,6 +101,21 @@ public abstract class AbstractGame extends ScreenAdapter {
 				}
 				return result;
 			}
+
+            @Override
+            public boolean fling(float velocityX, float velocityY, int button) {
+                Vector3 touchPos = getStage().getViewport().getCamera().unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+                float yPos = touchPos.y;
+
+                if(velocityX > -1500){
+                    if(Math.abs(velocityX/2) > Math.abs(velocityY) && yPos > getStage().getHeight()-50){
+                        getTrain().flingContainer(getShip());
+                        removeLive();
+                        return true;
+                    }
+                }
+                return false;
+            }
 		};		
 		background = new Background(this.stage.getWidth(), this.stage.getHeight());
 		background.toBack();
@@ -265,9 +283,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 			if(this.getTrain().getFirstContainer().getX() + this.getTrain().getFirstContainer().getWidth() >= stage.getWidth()){
 				this.getTrain().getFirstContainer().destroy(stage);
 				this.getTrain().removeContainer();
-				lives--;
-				Gdx.input.vibrate(400);
-				foreground.setRemainingLives(lives);
+                removeLive();
 			}
 		}
 		
@@ -312,10 +328,12 @@ public abstract class AbstractGame extends ScreenAdapter {
         if (!Persistence.isSoundOn()) {
             getShip().playContainerSound(false);
         }
-        Gdx.input.setInputProcessor(this.stage);
-		Gdx.input.setCatchBackKey(true);
-	}
-	
+        GestureDetector gd = new GestureDetector(this.stage);
+        InputMultiplexer im = new InputMultiplexer(gd, this.stage);
+        Gdx.input.setInputProcessor(im);
+        Gdx.input.setCatchBackKey(true);
+    }
+
 	@Override
 	public void dispose() {
 		this.backgroundMusic.dispose();
@@ -329,7 +347,9 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @return the remaining amount of lives.
 	 */
 	public int removeLive() {
-		this.lives--;
+        lives--;
+        Gdx.input.vibrate(400);
+        foreground.setRemainingLives(lives);
 		return this.lives;
 	}
 	
