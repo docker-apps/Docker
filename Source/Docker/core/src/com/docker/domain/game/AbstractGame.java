@@ -140,7 +140,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public boolean touchDownEvent(int x, int y, int pointer, int button){
 		if(canPlayerAct())
 			previewPosition(x, y);
-		System.out.println("touchDownEvent: " + x +", " + y);
 		return true;
 	}
 
@@ -155,7 +154,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public boolean touchDraggedEvent(int x, int y, int pointer){
 		if(canPlayerAct())
 			previewPosition(x, y);
-		System.out.println("touchDraggedEvent: " + x +", " + y);
 		return true;
 	}
 
