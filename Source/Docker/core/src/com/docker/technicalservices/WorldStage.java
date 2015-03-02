@@ -29,6 +29,7 @@ public class WorldStage extends Stage {
 		if (batch != null) {
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
+			batch.setColor(1, 1, 1, 1f);
 			if(this.background != null)
 				background.draw(batch, 1);
 			getRoot().draw(batch, 1);

@@ -2,8 +2,8 @@ package com.docker.domain.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -22,8 +22,8 @@ import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.WorldStage;
-import com.docker.ui.menus.PauseMenu;
 import com.docker.ui.menus.EndScreen;
+import com.docker.ui.menus.PauseMenu;
 
 /**
  * @author HAL9000
@@ -122,6 +122,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public boolean touchDownEvent(int x, int y, int pointer, int button){
 		if(canPlayerAct())
 			previewPosition(x, y);
+		System.out.println("touchDownEvent: " + x +", " + y);
 		return true;
 	}
 
@@ -136,6 +137,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public boolean touchDraggedEvent(int x, int y, int pointer){
 		if(canPlayerAct())
 			previewPosition(x, y);
+		System.out.println("touchDraggedEvent: " + x +", " + y);
 		return true;
 	}
 

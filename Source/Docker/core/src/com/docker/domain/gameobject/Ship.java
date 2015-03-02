@@ -156,6 +156,10 @@ public class Ship extends Actor {
 			previewContainer = null;
 		}
 	}
+	
+	public void clearPreviewContainer(){
+		this.previewContainer = null;
+	}
 
 	/**
 	 * 

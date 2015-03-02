@@ -4,6 +4,8 @@
 local.properties
 .classpath
 .project
+/Source/.recommenders
 /Source/Docker/desktop/statistics.json
+/Source/google-play-services_lib/bin
 
 /Documents/Grafik/Referenzen
