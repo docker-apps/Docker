@@ -18,7 +18,7 @@ import com.docker.technicalservices.Resource;
  */
 public class Container extends Actor {
 
-	private static final Color LABEL_COLOR = new Color(1f,1f,1f,0.8f);
+	private static final Color LABEL_COLOR = new Color(1f,1f,1f,1f);
 
 	/**
 	 * The Color Value to tint red Containers with. Always use these Colors for Containers.
