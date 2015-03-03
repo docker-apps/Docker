@@ -109,7 +109,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 
                 if(velocityX > 1500){
                     if(Math.abs(velocityX/2) > Math.abs(velocityY) && yPos > getStage().getHeight()-50){
-                        getTrain().flingContainer(getShip());
+                        getTrain().flingContainer();
+                        getShip().clearPreviewContainer();
                         removeLive();
                         return true;
                     }
@@ -140,6 +141,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public boolean touchDownEvent(int x, int y, int pointer, int button){
 		if(canPlayerAct(y))
 			previewPosition(x, y);
+		else
+            getShip().clearPreviewContainer();
 		return true;
 	}
 
@@ -154,6 +157,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public boolean touchDraggedEvent(int x, int y, int pointer){
 		if(canPlayerAct(y))
 			previewPosition(x, y);
+		else
+            getShip().clearPreviewContainer();
 		return true;
 	}
 
