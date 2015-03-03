@@ -85,9 +85,9 @@ public class Docker extends Game {
             history.pop().dispose();
             super.setScreen(history.pop());
         } else {
-            while (history.size() > 0)
+            while (history.size() > 1)
                 history.pop().dispose();
-            super.setScreen(new MainMenu(this));
+            super.setScreen(history.pop());
         }
     }
 

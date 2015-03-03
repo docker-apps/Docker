@@ -170,7 +170,7 @@ public class TutorialGame extends AbstractGame {
 					else if(arrow == ARROW_3){
 						TextureRegion arrowRegion = Resource.getDockerSkinTextureAtlas().findRegion("big_curved_arrow");
 						arrowImage = new Image(arrowRegion);
-						arrowImage.setPosition(textLabel.getX() + textLabel.getWidth() + 10f, textLabel.getY() - 35f);
+						arrowImage.setPosition(getStage().getWidth()-arrowImage.getWidth()-10f, textLabel.getY() - 35f);
 					}
 					group.addActor(arrowImage);
 				}
