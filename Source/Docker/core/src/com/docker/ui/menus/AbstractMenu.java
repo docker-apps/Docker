@@ -139,12 +139,14 @@ public class AbstractMenu implements Screen {
 
     @Override
 	public void render(float delta) {
-    	handleInput();
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+        
+        // handle input after rendering, as a consequence of the input-handling
+        // can be the disposing of relevant resources.
+    	handleInput();
 	}
 
 	@Override
