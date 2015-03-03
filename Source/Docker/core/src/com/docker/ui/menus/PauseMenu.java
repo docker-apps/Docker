@@ -19,7 +19,7 @@ public class PauseMenu extends AbstractMenu {
     private TextButton endGameButton = new TextButton("Exit", skin);
     private TextButton resumeButton = new TextButton("Resume", skin);
     private TextButton retryButton = new TextButton("Retry", skin);
-    private Label title = new Label("Pause",skin, "title");
+    private Label title = new Label("Pause",skin, "title-white");
 
     /**
      * @param application A reference to the Docker Application (Game) object.

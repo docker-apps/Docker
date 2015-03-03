@@ -18,7 +18,7 @@ public class EndScreen extends AbstractMenu {
 
 	private TextButton endGameButton = new TextButton("Exit", skin);
 	private TextButton retryButton = new TextButton("Retry", skin);
-    private Label title = new Label("Game Over",skin,"title");
+    private Label title = new Label("Game Over",skin,"title-white");
     
 
     /**

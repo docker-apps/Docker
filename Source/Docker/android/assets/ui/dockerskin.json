@@ -8,7 +8,9 @@ com.badlogic.gdx.graphics.Color: {
 	white: { a: 1, b: 1, g: 1, r: 1 },
 	red: { a: 1, b: 0, g: 0, r: 1 },
 	black: { a: 1, b: 0, g: 0, r: 0 },
-	navy: {a: 1, b: 0.322, g: 0.165, r: 0 }
+	navy: {a: 1, b: 0.322, g: 0.165, r: 0 },
+	yellow: {a: 1, b: 0.063, g: 0.643, r: 0.859},
+	light-blue: { a: 1, b: 0.839, g: 0.596, r: 0.173 }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: yellow_button_pressed, up: yellow_button },
@@ -25,7 +27,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: default-font, fontColor: white },
-	title: { font: big, fontColor: navy}
+	title: { font: big, fontColor: navy},
+	title-white: { font: big, fontColor: white}
 },
 com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 	default: { checkboxOn: livesaver_off, checkboxOff: livesaver_on, font: default-font, fontColor: white }

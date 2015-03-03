@@ -19,7 +19,7 @@ import com.docker.technicalservices.Persistence;
 public class StatisticsMenu extends AbstractMenu {
     private TextButton backButton = new TextButton("Back", skin);
     private TextButton resetButton = new TextButton("Reset", skin);
-    private Label title = new Label("Statistics",skin, "title");
+    private Label title = new Label("Statistics",skin, "title-white");
 
     private static Map<String,String> labelMap = new HashMap<String, String>();
 
