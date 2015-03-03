@@ -109,7 +109,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 
                 if(velocityX > 1500){
                     if(Math.abs(velocityX/2) > Math.abs(velocityY) && yPos > getStage().getHeight()-50){
-                        getTrain().flingContainer();
+                        getTrain().flingContainer(getShip());
                         getShip().clearPreviewContainer();
                         removeLive();
                         return true;
@@ -306,7 +306,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 			setGameLost(true);
 			setGameOver(true);
 		}
-		if (gameOver && !getShip().isStaticAnimationRunning()) {
+		if (gameOver && !getShip().isStaticAnimationRunning() && !getTrain().isFlingAnimationRunning()) {
 				gameOver();
 		}
 		if ((!train.hasContainers() && !getCrane().isDeploying()) && !getShip().isStaticAnimationRunning() && !gameOver) {
