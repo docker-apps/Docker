@@ -26,7 +26,8 @@ public class Train extends Actor {
 	private float stateTime;
 
 	private boolean indestructible = false;
-	
+	private boolean flingAnimationRunning = false;
+
 	/**
 	 * @param speed Speed at which the train moves rightward
 	 * @param x Initial Position on the x-plane
@@ -193,11 +194,15 @@ public class Train extends Actor {
 		}
 	}
 
-    public void flingContainer() {
+    public void flingContainer(final Ship ship) {
         final Container container = removeContainer();
+        Container firstContainer = getFirstContainer();
+        if (firstContainer != null) {
+            ship.setPreviewContainer(-1, firstContainer);
+        }
         getStage().addActor(container);
-
-        container.animateFling();
+        flingAnimationRunning = true;
+        container.animateFling(this);
     }
     
     /**
@@ -225,7 +230,15 @@ public class Train extends Actor {
 		return indestructible;
 	}
 
-	public void setIndestructible(boolean indestructible) {
+    public void setIndestructible(boolean indestructible) {
 		this.indestructible = indestructible;
 	}
+
+    public boolean isFlingAnimationRunning() {
+        return flingAnimationRunning;
+    }
+
+    public void setFlingAnimationRunning(boolean flingAnimationRunning) {
+        this.flingAnimationRunning = flingAnimationRunning;
+    }
 }

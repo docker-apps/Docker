@@ -121,7 +121,7 @@ public class Container extends Actor {
 		}
 	}
 
-    public void animateFling() {
+    public void animateFling(final Train train) {
         MoveToAction moveAction = new MoveToAction();
         moveAction.setPosition(getStage().getWidth()- getWidth(), getY());
         moveAction.setDuration(1);
@@ -130,6 +130,7 @@ public class Container extends Actor {
             public boolean act( float delta ) {
                 destroy(getStage());
                 setX(getStage().getWidth());
+                train.setFlingAnimationRunning(false);
                 return true;
             }
         };
