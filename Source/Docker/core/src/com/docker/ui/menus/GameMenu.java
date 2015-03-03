@@ -16,7 +16,7 @@ public class GameMenu extends AbstractMenu {
 	private Label title = new Label("Game Modes",skin, "title");
 	private TextButton careerGameButton = new TextButton("Career Game", skin);
 	private TextButton quickGameButton = new TextButton("Quick Game", skin);
-	private TextButton infiniteGameButton = new TextButton("Infinite Game", skin);
+	private TextButton infiniteGameButton = new TextButton("Coming soon", skin);
 	private TextButton tutorialGameButton = new TextButton("How to", skin);
 	private TextButton backButton = new TextButton("Back", skin);
 
@@ -49,15 +49,9 @@ public class GameMenu extends AbstractMenu {
 		infiniteGameButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				application.showAds(false);
-				application.setScreen(new InfiniteGame(application));
-			}
-		});
-		infiniteGameButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				application.showAds(false);
-				application.setScreen(new InfiniteGame(application));
+				//disabled for the moment
+				//application.showAds(false);
+				//application.setScreen(new InfiniteGame(application));
 			}
 		});
 		tutorialGameButton.addListener(new ClickListener() {
@@ -67,7 +61,13 @@ public class GameMenu extends AbstractMenu {
 				application.setScreen(new TutorialGame(application));
 			}
 		});
+		
 		tutorialGameButton.setColor(0.5f, 1f, 0.5f, 1f);
+		//disabled for the moment
+		infiniteGameButton.setColor(0.5f, 0.5f, 0.5f, 1f);
+		infiniteGameButton.getLabel().setColor(0.8f, 0.8f, 0.8f, 1f);
+		infiniteGameButton.setDisabled(true);
+		
 		table.add(title).center().colspan(2).padBottom(10).row();
 		table.add(careerGameButton).size(160, 35).center().colspan(2).padBottom(5).row();
 		table.add(quickGameButton).size(160, 35).center().colspan(2).padBottom(5).row();
