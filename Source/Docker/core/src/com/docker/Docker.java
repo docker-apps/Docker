@@ -8,6 +8,7 @@ import com.docker.domain.game.AbstractGame;
 import com.docker.domain.game.CareerGame;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
+import com.docker.ui.menus.CareerMenu;
 import com.docker.ui.menus.MainMenu;
 
 /**
@@ -40,8 +41,8 @@ public class Docker extends Game {
 	@Override
 	public void create() {
 		this.history = new Stack<Screen>();
-		this.setScreen(new MainMenu(this));
         this.setPersistence(new Persistence());
+        this.setScreen(new MainMenu(this));
 	}
 	
 	@Override

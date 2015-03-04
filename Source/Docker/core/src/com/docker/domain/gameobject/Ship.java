@@ -102,6 +102,7 @@ public class Ship extends Actor {
 		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
 		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
 
+        playContainerSound = Persistence.isSoundOn();
 		containerSound = Gdx.audio.newSound(Gdx.files.internal("container_load.wav"));
 		createTopLineAndGrid();
 	}

@@ -13,6 +13,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.input.GestureDetector;
@@ -307,9 +310,18 @@ public abstract class AbstractGame extends ScreenAdapter {
 			setGameOver(true);
 		}
 		if (gameOver && !getShip().isStaticAnimationRunning() && !getTrain().isFlingAnimationRunning()) {
-				gameOver();
-		}
-		if ((!train.hasContainers() && !getCrane().isDeploying()) && !getShip().isStaticAnimationRunning() && !gameOver) {
+            DelayAction delayAction = new DelayAction();
+            delayAction.setDuration(0.5f);
+            Action completeAction = new Action() {
+                public boolean act( float delta ) {
+                    gameOver();
+                    return true;
+                }
+            };
+            SequenceAction actions = new SequenceAction(delayAction, completeAction);
+            getTrain().addAction(actions);
+        }
+        if ((!train.hasContainers() && !getCrane().isDeploying()) && !getShip().isStaticAnimationRunning() && !gameOver) {
 			checkShipCondition();
 			setGameOver(true);
 		}

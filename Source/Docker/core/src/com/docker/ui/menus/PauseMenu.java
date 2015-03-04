@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.game.AbstractGame;
+import com.docker.domain.game.TutorialGame;
 import com.docker.technicalservices.Persistence;
 
 /**
@@ -52,7 +53,9 @@ public class PauseMenu extends AbstractMenu {
 
         table.add(title).center().padBottom(15).row().padBottom(10);
         table.add(resumeButton).size(100, 30).padRight(10).left();
-        table.add(retryButton).size(100, 30).right().row();
+        if (!(game instanceof TutorialGame)) {
+            table.add(retryButton).size(100, 30).right().row();
+        }
         table.add(endGameButton).size(100, 30).left().row();
         stage.addActor(table);
     }
