@@ -48,13 +48,13 @@ public class TutorialGame extends AbstractGame {
 		LinkedList<Container> containers = new LinkedList<Container>();
 		containers.add(new Container(2, 4));
 		containers.add(new Container(4, 3));
-		containers.add(new Container(1, 1));
+		containers.add(new Container(3, 1));
 		containers.add(new Container(1, 2));
 		containers.add(new Container(3, 4));
 		containers.add(new Container(2, 1));
 		containers.add(new Container(2, 5));
 		this.setTrain(new Train(containers, 5, 0f, getStage().getHeight()-23));
-		this.setShip(new Ship(10, 5, 1, 1, 0f, 0f));
+		this.setShip(new Ship(10, 5, 18, 2, 0f, 0f));
 		this.ship.setPosition(getStage().getWidth()/2-ship.getWidth()/2-20f, 10f);
 		this.setLoadRating(new LoadRating(this.ship.getBreakThreshold(), this.ship.getCapsizeThreshold(), 1));
 		this.setLives(3);
@@ -82,6 +82,7 @@ public class TutorialGame extends AbstractGame {
 		tutorialSequence.addAction(getBaseAction("..and letting go to deploy them", 3f, NO_ARROW, true));
 		tutorialSequence.addAction(getBaseAction("If a container reaches the \nscreen border, you'll lose a life", 3f));
 		tutorialSequence.addAction(getBaseAction("The containers numbers \nindicate their total weight.", 3f));
+		tutorialSequence.addAction(getBaseAction("Sacrifice unwanted containers\nby flinging them to the right", 3f));
 		tutorialSequence.addAction(getBaseAction("This meter shows you the\nbalance of the ship", 3f, ARROW_3));
 		tutorialSequence.addAction(getBaseAction("The ship's lights \nindicate the weight distribution", 3f));
 		tutorialSequence.addAction(getBaseAction("Try to evenly distribute \nthe weight", 3f));
