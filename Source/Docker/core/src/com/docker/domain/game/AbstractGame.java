@@ -110,14 +110,16 @@ public abstract class AbstractGame extends ScreenAdapter {
                 Vector3 touchPos = getStage().getViewport().getCamera().unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 float yPos = touchPos.y;
 
-                if(velocityX > 1500){
-                    if(Math.abs(velocityX/2) > Math.abs(velocityY) && yPos > getStage().getHeight()-50){
-                        getTrain().flingContainer(getShip());
-                        getShip().clearPreviewContainer();
-                        removeLive();
-                        return true;
-                    }
-                }
+            	if(canPlayerAct((int)yPos)){
+	                if(velocityX > 1500){
+	                    if(Math.abs(velocityX/2) > Math.abs(velocityY) && yPos > getStage().getHeight()-50){
+	                        getTrain().flingContainer(getShip());
+	                        getShip().clearPreviewContainer();
+	                        removeLive();
+	                        return true;
+	                    }
+	                }
+            	}
                 return false;
             }
 		};		
