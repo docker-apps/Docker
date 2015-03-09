@@ -2,7 +2,7 @@
 <resources>
 
   <string name="app_name">docker</string>
-  <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+  <string name="ad_unit_id">ca-app-pub-7185675490264542/7288457310</string>
   <string name="load_interstitial">Load Interstitial</string>
   <string name="interstitial_not_ready">Interstitial Not Ready</string>
   <string name="banner_in_xml">Banner in XML</string>
