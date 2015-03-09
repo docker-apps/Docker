@@ -1,0 +1,30 @@
+body {
+	background-color:#F8F8FF;
+}
+
+main {
+	text-align:center;
+}
+
+.accentuation-box {
+	background-color:#DDD;
+	width:100%;
+	margin:-10px;
+}
+
+.title-element {
+	display:block;
+	margin:50px auto;
+}
+
+.description {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 21px;
+	line-height: 1.42857;
+	color: #222;
+	max-width:1004px;
+	padding:20px;
+	background-color:#DDD;
+	border-radius:10px;
+	margin:50px auto;
+}
