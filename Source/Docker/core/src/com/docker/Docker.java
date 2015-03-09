@@ -8,6 +8,7 @@ import com.docker.domain.game.AbstractGame;
 import com.docker.domain.game.CareerGame;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
+import com.docker.ui.menus.AbstractMenu;
 import com.docker.ui.menus.CareerMenu;
 import com.docker.ui.menus.MainMenu;
 
@@ -23,28 +24,28 @@ public class Docker extends Game {
 	 * The default x-resolution for the application.
 	 */
 	public static final float WIDTH = 360;
-	
+
 	/**
 	 * The default y-resolution for the application.
 	 */
 	public static final float HEIGHT = 200;
-	
-    private final IActivityRequestHandler iActivityRequestHandler;
+
+	private final IActivityRequestHandler iActivityRequestHandler;
 
 	Stack<Screen> history;
-    private Persistence persistence;
-	
-    public Docker(IActivityRequestHandler iActivityRequestHandler) {
-        this.iActivityRequestHandler = iActivityRequestHandler;
-    }
+	private Persistence persistence;
+
+	public Docker(IActivityRequestHandler iActivityRequestHandler) {
+		this.iActivityRequestHandler = iActivityRequestHandler;
+	}
 
 	@Override
 	public void create() {
 		this.history = new Stack<Screen>();
-        this.setPersistence(new Persistence());
-        this.setScreen(new MainMenu(this));
+		this.setPersistence(new Persistence());
+		this.setScreen(new MainMenu(this));
 	}
-	
+
 	@Override
 	public void setScreen(Screen screen){
 		if(this.getScreen() != null){
@@ -52,7 +53,7 @@ public class Docker extends Game {
 		}
 		super.setScreen(screen);
 	}
-	
+
 	/**
 	 * Identical to setScreen, but the old screen will not be saved in the screen history.
 	 *
@@ -76,24 +77,23 @@ public class Docker extends Game {
 			old.dispose();
 		}
 	}
-	
+
 	/**
 	 * Return to the MainMenu screen.
 	 * The history will be discarded.
 	 */
 	public void returnToMenu(AbstractGame game) {
-        if (game instanceof CareerGame) {
-            history.pop().dispose();
-            super.setScreen(history.pop());
-        } else {
-            while (history.size() > 1)
-                history.pop().dispose();
-            super.setScreen(history.pop());
-        }
-    }
+		while (history.size() > 1)
+			history.pop().dispose();
+		super.setScreen(history.pop());
+		
+		if (game instanceof CareerGame) {
+			((AbstractMenu)this.getScreen()).openNewMenu(new CareerMenu(this));
+		}
+	}
 
-    public void showAds(Boolean showAds) {
-        iActivityRequestHandler.showAds(showAds);
+	public void showAds(Boolean showAds) {
+		iActivityRequestHandler.showAds(showAds);
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class Docker extends Game {
 		for (Screen screen : history) {
 			screen.dispose();
 		}
-        Resource.disposeAll();
+		Resource.disposeAll();
 	}
 
 }
