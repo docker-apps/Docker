@@ -79,6 +79,15 @@ public class Persistence {
         prefs.flush();
     }
 
+    public static Boolean isVibrationOn() {
+        return prefs.getBoolean("vibrationOn", true);
+    }
+
+    public static void setVibrationOn(Boolean soundOn) {
+        prefs.putBoolean("vibrationOn", soundOn);
+        prefs.flush();
+    }
+
     public static Boolean isLevelLocked(String levelId) {
         return !prefs.getBoolean(levelId);
     }

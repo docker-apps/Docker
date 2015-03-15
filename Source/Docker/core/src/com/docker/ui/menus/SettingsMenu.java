@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -27,6 +29,7 @@ public class SettingsMenu extends AbstractMenu {
     private TextButton creditsButton = new TextButton("Credits", skin);
     private CheckBox soundCheckBox = new CheckBox("",skin);
     private CheckBox musicCheckBox = new CheckBox("", skin);
+    private CheckBox vibrateCheckBox = new CheckBox("", skin);
     private Label title = new Label("Settings", skin, "title");
     private Label volumeValue = new Label("", skin);
     Slider volumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
@@ -65,6 +68,13 @@ public class SettingsMenu extends AbstractMenu {
                 musicCheckBox.setChecked(Persistence.isMusicOn());
             }
         });
+        vibrateCheckBox.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Persistence.setVibrationOn(!Persistence.isVibrationOn());
+                vibrateCheckBox.setChecked(Persistence.isVibrationOn());
+            }
+        });
         volumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -72,20 +82,31 @@ public class SettingsMenu extends AbstractMenu {
                 Persistence.setVolume(slider.getValue());
             }
         });
+        Table settingsTable = new Table();
         volumeSlider.setValue(Persistence.getVolume());
         soundCheckBox.setChecked(Persistence.isSoundOn());
         musicCheckBox.setChecked(Persistence.isMusicOn());
-        table.add(title).center().padBottom(15).colspan(3).row().padBottom(10);
-        table.add(new Label("Sound", skin)).width(100).left();
-        table.add(soundCheckBox).width(100).left().row().padBottom(10);
-        table.add(new Label("Music", skin)).width(100).left();
-        table.add(musicCheckBox).width(100).left().row().padBottom(10);
+        vibrateCheckBox.setChecked(Persistence.isVibrationOn());
+        settingsTable.add(title).center().padBottom(15).colspan(3).row().padBottom(10);
+        settingsTable.add(new Label("Sound", skin)).width(100).left();
+        settingsTable.add(soundCheckBox).width(100).left().row().padBottom(10);
+        settingsTable.add(new Label("Music", skin)).width(100).left();
+        settingsTable.add(musicCheckBox).width(100).left().row().padBottom(10);
+        settingsTable.add(new Label("Vibrate", skin)).width(100).left();
+        settingsTable.add(vibrateCheckBox).width(100).left().row().padBottom(10);
 
-        table.add(new Label("Volume", skin)).width(100).left();
-        table.add(volumeSlider).width(120);
-        table.add(volumeValue).center().width(50).row().padBottom(10);
-        table.add(backButton).size(100, 30).left();
-        table.add(creditsButton).size(100, 30).colspan(2).center().row();
+        settingsTable.add(new Label("Volume", skin)).width(100).left();
+        settingsTable.add(volumeSlider).width(120);
+        settingsTable.add(volumeValue).center().width(50).row().padBottom(10);
+        settingsTable.add(backButton).size(100, 30).left();
+        settingsTable.add(creditsButton).size(100, 30).colspan(2).center().row();
+        ScrollPane scrollpane = new AbstractScrollPane(settingsTable);
+        scrollpane.setPosition(0, 0);
+        scrollpane.setSize(stage.getWidth(), stage.getHeight());
+        scrollpane.setFlingTime(2);
+        scrollpane.setupOverscroll(20, 30, 200);
+        scrollpane.setFadeScrollBars(false);
+        this.table.addActor(scrollpane);
     }
 
     /**
@@ -107,6 +128,7 @@ public class SettingsMenu extends AbstractMenu {
         BigDecimal vol = new BigDecimal(volValue*100);
         volumeValue.setText(vol.setScale(0, BigDecimal.ROUND_HALF_DOWN).toString() + "%");
         setCheckBoxLabel(musicCheckBox);
+        setCheckBoxLabel(vibrateCheckBox);
         setCheckBoxLabel(soundCheckBox);
     }
 }
