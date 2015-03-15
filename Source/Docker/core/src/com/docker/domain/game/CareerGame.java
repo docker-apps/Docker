@@ -50,4 +50,8 @@ public class CareerGame extends AbstractGame {
         application.returnToLastScreen();
         application.updateScreen(new CareerGame(application, levelId));
     }
+
+    public String getLevelId() {
+        return levelId;
+    }
 }
