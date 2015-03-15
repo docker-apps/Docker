@@ -8,7 +8,7 @@
         "shipHeight": 2,
         "breakThreshold": 3,
         "capsizeThreshold": 4,
-        "trainSpeed": 5,
+        "trainSpeed": 10,
         "lives": 3,
         "containers": {
             "container": [
@@ -29,7 +29,7 @@
         "shipHeight": 3,
         "breakThreshold": 5,
         "capsizeThreshold": 5,
-        "trainSpeed": 5,
+        "trainSpeed": 11,
         "lives": 3,
         "containers": {
             "container": [
@@ -52,7 +52,7 @@
         "shipHeight": 3,
         "breakThreshold": 3,
         "capsizeThreshold": 6,
-        "trainSpeed": 6,
+        "trainSpeed": 12,
         "lives": 3,
         "containers": {
             "container": [
@@ -77,7 +77,7 @@
         "shipHeight": 3,
         "breakThreshold": 5,
         "capsizeThreshold": 5,
-        "trainSpeed": 7,
+        "trainSpeed": 13,
         "lives": 3,
         "containers": {
             "container": [
@@ -103,7 +103,7 @@
         "shipHeight": 4,
         "breakThreshold": 5,
         "capsizeThreshold": 6,
-        "trainSpeed": 8,
+        "trainSpeed": 14,
         "lives": 3,
         "containers": {
             "container": [
@@ -134,7 +134,7 @@
         "shipHeight": 4,
         "breakThreshold": 5,
         "capsizeThreshold": 7,
-        "trainSpeed": 9,
+        "trainSpeed": 14,
         "lives": 3,
         "containers": {
             "container": [
@@ -165,7 +165,7 @@
         "shipHeight": 4,
         "breakThreshold": 5,
         "capsizeThreshold": 7,
-        "trainSpeed": 10,
+        "trainSpeed": 14,
         "lives": 3,
         "containers": {
             "container": [
@@ -183,8 +183,7 @@
                 {"weight": 5, "length": 3},
                 {"weight": 1, "length": 1},
                 {"weight": 1, "length": 2},
-                {"weight": 3, "length": 2},
-                {"weight": 3, "length": 1}
+                {"weight": 3, "length": 2}
             ]
         }
     },
@@ -196,7 +195,7 @@
         "shipHeight": 5,
         "breakThreshold": 5,
         "capsizeThreshold": 8,
-        "trainSpeed": 11,
+        "trainSpeed": 15,
         "lives": 3,
         "containers": {
             "container": [
@@ -220,8 +219,8 @@
                 {"weight": 2, "length": 2},
                 {"weight": 3, "length": 4},
                 {"weight": 3, "length": 1},
+                {"weight": 2, "length": 1},
                 {"weight": 2, "length": 1}
-
             ]
         }
     },
@@ -233,7 +232,7 @@
         "shipHeight": 5,
         "breakThreshold": 5,
         "capsizeThreshold": 8,
-        "trainSpeed": 11,
+        "trainSpeed": 15,
         "lives": 3,
         "containers": {
             "container": [
@@ -269,7 +268,7 @@
         "shipHeight": 5,
         "breakThreshold": 5,
         "capsizeThreshold": 9,
-        "trainSpeed": 12,
+        "trainSpeed": 15,
         "lives": 3,
         "containers": {
             "container": [
