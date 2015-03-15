@@ -1,10 +1,14 @@
 Finanzen
-	remo Konto eröffnen (Post Finance) - Remo
+	remo Konto (gemeinschafts, verein, etc) eröffnen (Post Finance) - Remo
 	remo Prepaid Kreditkarte - Remo
 	remo Finanzchef Remo
+	remo Vereingründung?
 
 Google Store zoix
-	emily Gmail Konto eröffnen (dockerapps@gmail.com) dockerZHAW14! - Emily
+	remo Gmail Konto eröffnen (dockerapps@gmail.com) dockerZHAW14! - Emily
+
+Projektmanagement
+	remo
 
 Bugs
 	yacine Statistik-Screen
@@ -14,6 +18,7 @@ Level
 	remo Level Packet neue Levels (Remo)
 
 In-App Käufe
+	In-App Kauf konzept
 	emily Werbung
 
 Game
