@@ -4,72 +4,93 @@ size: 512,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+back_icon
+  rotate: false
+  xy: 306, 99
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
 big_curved_arrow
   rotate: false
-  xy: 2, 5
+  xy: 2, 2
   size: 45, 79
   orig: 45, 79
   offset: 0, 0
   index: -1
-black
-  rotate: false
-  xy: 2, 2
-  size: 1, 1
-  orig: 1, 1
-  offset: 0, 0
-  index: -1
 docker_title
   rotate: false
-  xy: 2, 86
+  xy: 2, 83
   size: 189, 36
   orig: 189, 36
   offset: 0, 0
   index: -1
 finger
   rotate: false
-  xy: 193, 34
+  xy: 193, 31
   size: 64, 88
   orig: 64, 88
   offset: 0, 0
   index: -1
+home_icon
+  rotate: false
+  xy: 49, 36
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
 livesaver_off
   rotate: false
-  xy: 306, 108
+  xy: 328, 105
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 livesaver_on
   rotate: false
-  xy: 96, 70
+  xy: 49, 20
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
+resume_icon
+  rotate: false
+  xy: 292, 74
+  size: 11, 20
+  orig: 11, 20
+  offset: 0, 0
+  index: -1
+retry_icon
+  rotate: false
+  xy: 96, 61
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
 ship_button_down
   rotate: false
-  xy: 259, 99
+  xy: 259, 96
   size: 45, 23
   orig: 45, 23
   offset: 0, 0
   index: -1
 ship_button_up
   rotate: false
-  xy: 49, 61
+  xy: 49, 58
   size: 45, 23
   orig: 45, 23
   offset: 0, 0
   index: -1
 slider_pointer
   rotate: false
-  xy: 49, 35
+  xy: 259, 44
   size: 13, 24
   orig: 13, 24
   offset: 0, 0
   index: -1
 slider_rail
   rotate: false
-  xy: 322, 116
+  xy: 274, 62
   size: 15, 6
   split: 7, 7, 0, 7
   orig: 15, 6
@@ -77,14 +98,14 @@ slider_rail
   index: -1
 small_curved_arrow
   rotate: false
-  xy: 259, 73
+  xy: 259, 70
   size: 31, 24
   orig: 31, 24
   offset: 0, 0
   index: -1
 yellow_button
   rotate: false
-  xy: 259, 57
+  xy: 71, 42
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14
@@ -92,7 +113,7 @@ yellow_button
   index: -1
 yellow_button_pressed
   rotate: false
-  xy: 64, 45
+  xy: 118, 67
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14

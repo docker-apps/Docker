@@ -52,8 +52,6 @@ public class StatisticsMenu extends AbstractMenu {
         setLabelMap();
         
         Table statisticsTable = new Table();
-        statisticsTable.debug();
-        table.debug();
         statisticsTable.add(title).center().padBottom(10).colspan(2).row();
         loadStatistics(statisticsTable);
         Table buttonTable = new Table();

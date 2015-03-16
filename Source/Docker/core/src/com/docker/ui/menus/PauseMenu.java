@@ -3,6 +3,9 @@ package com.docker.ui.menus;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -10,6 +13,7 @@ import com.docker.Docker;
 import com.docker.domain.game.AbstractGame;
 import com.docker.domain.game.TutorialGame;
 import com.docker.technicalservices.Persistence;
+import com.docker.technicalservices.Resource;
 
 /**
  * Screen to be displayed when a running game is paused. *
@@ -17,9 +21,9 @@ import com.docker.technicalservices.Persistence;
 public class PauseMenu extends AbstractMenu {
     Persistence persistence;
     
-    private TextButton endGameButton = new TextButton("Exit", skin);
-    private TextButton resumeButton = new TextButton("Resume", skin);
-    private TextButton retryButton = new TextButton("Retry", skin);
+    private Button endGameButton = new ImageButton(skin);
+    private Button resumeButton = new ImageButton(skin);
+    private Button retryButton = new ImageButton(skin);
     private Label title = new Label("Pause",skin, "title-white");
 
     /**
@@ -51,12 +55,19 @@ public class PauseMenu extends AbstractMenu {
             }
         });
 
-        table.add(title).center().padBottom(15).row().padBottom(10);
-        table.add(resumeButton).size(100, 30).padRight(10).left();
+        Image backIconImage = new Image(Resource.getDockerSkinTextureAtlas().findRegion("resume_icon"));
+        resumeButton.add(backIconImage);
+        Image homeIconImage = new Image(Resource.getDockerSkinTextureAtlas().findRegion("home_icon"));
+        endGameButton.add(homeIconImage);
+        Image retryIconImage = new Image(Resource.getDockerSkinTextureAtlas().findRegion("retry_icon"));
+        retryButton.add(retryIconImage);
+
+        table.add(title).left().padBottom(15).row();
+        table.add(resumeButton).size(50, 30).uniform();
         if (!(game instanceof TutorialGame)) {
-            table.add(retryButton).size(100, 30).right().row();
+            table.add(retryButton).size(50, 30).uniform();
         }
-        table.add(endGameButton).size(100, 30).left().row();
+        table.add(endGameButton).size(50, 30).uniform();
         stage.addActor(table);
     }
 }

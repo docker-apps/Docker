@@ -21,6 +21,10 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: yellow_button_pressed, up: yellow_button, font: default-font, fontColor: white },
 	toggle: { down: yellow_button_pressed, up: yellow_button, checked: yellow_button_pressed, font: default-font, fontColor: white, downFontColor: red }
 },
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: { down: yellow_button_pressed, up: yellow_button},
+	toggle: { down: yellow_button_pressed, up: yellow_button, checked: yellow_button_pressed}
+},
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-horizontal: { background: slider_rail, knob: slider_pointer },
 	default-vertical: { background: slider_rail, knob: slider_pointer }
