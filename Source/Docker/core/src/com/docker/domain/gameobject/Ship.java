@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -62,7 +61,6 @@ public class Ship extends Actor {
 	private TextureRegion bodyBrokenLeft;
 	private TextureRegion bodyBrokenRight;
 	private FrameBuffer fbo;
-	private ShaderProgram snapshotShader;
 	private Pixmap gridBoundsPixmap;
 	private Texture gridBoundsTexture;
 	
@@ -239,54 +237,18 @@ public class Ship extends Actor {
 			fbo = new FrameBuffer(Format.RGBA8888, (int)getStage().getWidth(), (int)getStage().getHeight(), false);
 			fbo.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		}
-		if(this.snapshotShader == null){
-			// No idea how this shader works, but it is needed to blend alpha values correctly.
-			String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
-					+ "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
-					+ "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
-					+ "uniform mat4 u_projTrans;\n" //
-					+ "varying vec4 v_color;\n" //
-					+ "varying vec2 v_texCoords;\n" //
-					+ "\n" //
-					+ "void main()\n" //
-					+ "{\n" //
-					+ "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
-					+ "   v_color.a = v_color.a * (256.0/255.0);\n" //
-					+ "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
-					+ "   gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
-					+ "}\n";
-			String fragmentShader = "#ifdef GL_ES\n" //
-					+ "#define LOWP lowp\n" //
-					+ "precision mediump float;\n" //
-					+ "#else\n" //
-					+ "#define LOWP \n" //
-					+ "#endif\n" //
-					+ "varying LOWP vec4 v_color;\n" //
-					+ "varying vec2 v_texCoords;\n" //
-					+ "uniform sampler2D u_texture;\n" //
-					+ "void main()\n"//
-					+ "{\n" //
-					+ "  vec4 initialColor = v_color * texture2D(u_texture, v_texCoords);\n" //
-					+ "  gl_FragColor = vec4(initialColor.rgb * initialColor.a, initialColor.a);\n" //
-					+ "}";
-			snapshotShader = new ShaderProgram(vertexShader, fragmentShader);
-			if (!snapshotShader.isCompiled()) throw new IllegalArgumentException("Error compiling shader: " + snapshotShader.getLog());
-
-		}
 
 		fbo.begin();
 		Batch batch = this.getStage().getBatch();
 		Gdx.gl.glClearColor(0f, 0f, 0f, 0f); //transparent black
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); //clear the color buffer
-		batch.setShader(snapshotShader);
+		batch.setShader(Resource.getSnapshotShader());
 		batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		batch.enableBlending();
 		batch.begin();
 		this.draw(batch, 1f);
-		//reset batch
-		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		batch.end();
-		snapshotShader.end();
+		Resource.getSnapshotShader().end();
 		fbo.end();
 
 		TextureRegion fboRegion = new TextureRegion(fbo.getColorBufferTexture());

@@ -3,6 +3,7 @@ package com.docker.technicalservices;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
@@ -17,6 +18,7 @@ public class Resource {
 	private static TextureAtlas dockerAtlas;
 	private static TextureAtlas dockerSkinAtlas;
 	private static Skin dockerSkin;
+	private static ShaderProgram snapshotShader;
 	
 	/**
 	 * Returns the first region in the Docker TextureAtlas found with the specified name.
@@ -69,15 +71,63 @@ public class Resource {
 		return dockerSkin;
 	}
 	
+	
+	public static ShaderProgram getSnapshotShader(){
+		if(snapshotShader == null){
+			// No idea how this shader works, but it is needed to blend alpha values correctly.
+			String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+					+ "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
+					+ "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
+					+ "uniform mat4 u_projTrans;\n" //
+					+ "varying vec4 v_color;\n" //
+					+ "varying vec2 v_texCoords;\n" //
+					+ "\n" //
+					+ "void main()\n" //
+					+ "{\n" //
+					+ "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
+					+ "   v_color.a = v_color.a * (256.0/255.0);\n" //
+					+ "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
+					+ "   gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+					+ "}\n";
+			String fragmentShader = "#ifdef GL_ES\n" //
+					+ "#define LOWP lowp\n" //
+					+ "precision mediump float;\n" //
+					+ "#else\n" //
+					+ "#define LOWP \n" //
+					+ "#endif\n" //
+					+ "varying LOWP vec4 v_color;\n" //
+					+ "varying vec2 v_texCoords;\n" //
+					+ "uniform sampler2D u_texture;\n" //
+					+ "void main()\n"//
+					+ "{\n" //
+					+ "  vec4 initialColor = v_color * texture2D(u_texture, v_texCoords);\n" //
+					+ "  gl_FragColor = vec4(initialColor.rgb * initialColor.a, initialColor.a);\n" //
+					+ "}";
+			snapshotShader = new ShaderProgram(vertexShader, fragmentShader);
+			if (!snapshotShader.isCompiled()) throw new IllegalArgumentException("Error compiling shader: " + snapshotShader.getLog());
+		}
+		return snapshotShader;
+	}
+
 	/**
 	 * Dispose of all the resources.
 	 */
 	public static void disposeAll(){
-		dockerAtlas.dispose();
-		dockerAtlas = null;
-		dockerSkinAtlas.dispose();
-		dockerSkinAtlas = null;
-		dockerSkin.dispose();
-		dockerSkin = null;
+		if(dockerAtlas != null){
+			dockerAtlas.dispose();
+			dockerAtlas = null;
+		}
+		if(dockerSkinAtlas != null){
+			dockerSkinAtlas.dispose();
+			dockerSkinAtlas = null;
+		}
+		if(dockerSkin != null){
+			dockerSkin.dispose();
+			dockerSkin = null;
+		}
+		if(snapshotShader != null){
+			snapshotShader.dispose();
+			snapshotShader = null;
+		}
 	}
 }
