@@ -14,6 +14,7 @@ import com.docker.technicalservices.Resource;
 public class Train extends Actor {
 	private static final float PADDING = 11f;
 	private static final float PLATFORM_OFFSET = 6f;
+	private static final float TOP_SPEED = 50f;
 
 	private float speed;
 	private Queue<Container> containers;
@@ -27,6 +28,7 @@ public class Train extends Actor {
 
 	private boolean indestructible = false;
 	private boolean flingAnimationRunning = false;
+	private float actualSpeed;
 
 	/**
 	 * @param speed Speed at which the train moves rightward
@@ -37,7 +39,7 @@ public class Train extends Actor {
 		super();
 		this.setX(x);
 		this.setY(y);
-		this.speed = speed;
+		this.speed = this.actualSpeed = speed;
 		this.containers = new LinkedList<Container>();
 		this.stateTime = 0f;
 
@@ -122,11 +124,30 @@ public class Train extends Actor {
 	public void act(float delta){
         super.act(delta);
         this.stateTime += delta;
-		for (Container container : this.containers) {
+        
+        if(containers.size() > 0 && getFirstContainer().getX() < 0){
+        	if(actualSpeed < TOP_SPEED){
+        		actualSpeed += 1f + delta*((getFirstContainer().getWidth()) + getFirstContainer().getX())*4;
+        	}
+        	else{
+        		actualSpeed = TOP_SPEED;
+        	}
+        }
+        else {
+        	if(actualSpeed > speed){
+        		actualSpeed -= 1f + delta*(TOP_SPEED-actualSpeed)*4;
+        	}
+        	else{
+        		actualSpeed = speed;
+        	}
+
+        }
+
+        for (Container container : this.containers) {
             float xPos = container.getX();
             container.setY(this.getY());
             if (isIndestructible() || xPos + container.getWidth() < this.getStage().getWidth()) {
-                xPos = speed*delta + container.getX();
+                xPos = actualSpeed*delta + container.getX();
                 container.setX(xPos);
             }
         }
