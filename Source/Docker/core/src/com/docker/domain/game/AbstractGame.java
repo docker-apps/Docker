@@ -39,7 +39,9 @@ import com.docker.ui.menus.PauseMenu;
  * Encompasses all functions and attributes which are shared by all Game Modes.
  */
 public abstract class AbstractGame extends ScreenAdapter {
-
+	
+	private final static int CRANE_SPEED = 120;
+	
 	protected Docker application;
 	protected WorldStage stage;
 	protected ExtendViewport viewport;
@@ -131,7 +133,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 		this.stage.setForeground(foreground);
 		
 		// crane is basically the same in every game. Remove from abstraction if cranespeed becomes configurable.
-		setCrane(new Crane(100, stage.getWidth() / 2, stage.getHeight()));
+		setCrane(new Crane(CRANE_SPEED, stage.getWidth() / 2, stage.getHeight()));
 	}
 
 	/**

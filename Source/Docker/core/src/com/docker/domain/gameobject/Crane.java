@@ -2,6 +2,7 @@ package com.docker.domain.gameobject;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
@@ -63,6 +64,7 @@ public class Crane extends Actor {
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(x, y);
 		moveAction.setDuration(distance / this.speed);
+		moveAction.setInterpolation(Interpolation.pow2Out);
 		
 		// create an action which deploys the container to the ship
 		Action completeAction = new Action(){
@@ -80,6 +82,7 @@ public class Crane extends Actor {
 		MoveToAction moveBackAction = new MoveToAction();
 		moveBackAction.setPosition(xOrigin, yOrigin);
 		moveBackAction.setDuration(1);
+		moveBackAction.setInterpolation(Interpolation.pow2In);
 		
 		// chain the two actions and add it to this actor
 		SequenceAction actions = new SequenceAction(moveAction, completeAction, moveBackAction);
