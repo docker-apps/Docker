@@ -74,21 +74,48 @@ public class Background extends Actor {
 	public void draw (Batch batch, float parentAlpha) {
 		this.stateTime += Gdx.graphics.getDeltaTime();
 
-		//draw sky
+		drawSky(batch);
+		drawCloud(batch);
+		drawBirds(batch);
+		drawHarborPlatform(batch);
+		drawCranes(batch);		
+	}
+	
+	public void drawSky(Batch batch){
+		drawSky(batch, SKY_COLOR);
+	}
+	
+	public void drawSky(Batch batch, Color color){
 		batch.end();
 		shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(SKY_COLOR);
+		shapeRenderer.setColor(color);
 		shapeRenderer.rect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 		shapeRenderer.end();
 		batch.begin();
-
+	}
+	
+	public void drawCloud(Batch batch, Color tint){
+		batch.setColor(tint);
+		drawCloud(batch);
+		batch.setColor(Color.WHITE);
+	}
+	
+	public void drawCloud(Batch batch){
 		batch.draw(
 				this.cloud.get(this.cloudIndex),
 				this.cloudPosition.x,
 				this.cloudPosition.y);
-
+	}
+	
+	public void drawBirds(Batch batch, Color tint){
+		batch.setColor(tint);
+		drawBirds(batch);
+		batch.setColor(Color.WHITE);
+	}
+	
+	public void drawBirds(Batch batch){
 		batch.draw(
 				this.birdAnimation.getKeyFrame(stateTime, true),
 				this.getWidth() / 4,
@@ -98,15 +125,28 @@ public class Background extends Actor {
 				this.birdAnimation.getKeyFrame(stateTime, true),
 				this.getWidth() / 4.5f,
 				this.getHeight() / 1.5f);
-		
-		//draw harbor in background
+	}
+	
+	public void drawHarborPlatform(Batch batch){
+		drawHarborPlatform(batch, HARBOR_COLOR);
+	}
+	
+	public void drawHarborPlatform(Batch batch, Color color){
 		batch.end();
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(HARBOR_COLOR);
+		shapeRenderer.setColor(color);
 		shapeRenderer.rect(this.getX(), this.getY(), this.getWidth(), this.harborLevel);
 		shapeRenderer.end();
 		batch.begin();
+	}
+	
+	public void drawCranes(Batch batch, Color tint){
+		batch.setColor(tint);
+		drawCloud(batch);
+		batch.setColor(Color.WHITE);
+	}
 
+	public void drawCranes(Batch batch){
 		for(int i=0;i < 3;i++){
 			batch.draw(
 					this.crane,
@@ -120,5 +160,6 @@ public class Background extends Actor {
 					i,
 					this.getHeight()-this.tunnel.getRegionHeight());
 		}
+		batch.setColor(Color.WHITE);
 	}
 }

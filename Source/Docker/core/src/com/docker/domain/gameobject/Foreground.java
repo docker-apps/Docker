@@ -6,6 +6,11 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Blending;
+import com.badlogic.gdx.graphics.Pixmap.Filter;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -29,6 +34,7 @@ public class Foreground extends Actor {
 	private static final Color WATER_COLOR = Color.valueOf("2c98d6");
 	private static float DEFAULT_WATERLEVEL = 20;
 	private static float LIFE_PADDING = 5;
+	private static int RAIN_DROP_AMOUNT = 50;
 
 	private Stage stage;
 	private float waterLevel;
@@ -50,6 +56,8 @@ public class Foreground extends Actor {
 	private List<Vector2> waterMovementPositions;
 	private ShapeRenderer shapeRenderer;
 	private float stateTime;
+	private Pixmap rainPixmap;
+	private Texture rainTexture;
 
 	
 	/**
@@ -91,6 +99,20 @@ public class Foreground extends Actor {
 					rand.nextFloat()*(this.getWaterLevel()-2));
 			this.waterMovementPositions.add(position);
 		}
+		//TODO: must be disposed
+		rainPixmap = new Pixmap(4, 24, Format.RGBA8888);
+		Pixmap.setFilter(Filter.NearestNeighbour);
+		Pixmap.setBlending(Blending.None);
+		rainPixmap.setColor(new Color(1f, 1f, 1f, 0.2f));
+		rainPixmap.drawLine(0, 0, 1, 6);
+		rainPixmap.setColor(new Color(1f, 1f, 1f, 0.4f));
+		rainPixmap.drawLine(1, 6, 2, 12);
+		rainPixmap.setColor(new Color(1f, 1f, 1f, 0.6f));
+		rainPixmap.drawLine(2, 12, 3, 18);
+		rainPixmap.setColor(new Color(1f, 1f, 1f, 0.8f));
+		rainPixmap.drawLine(3, 18, 4, 24);
+		rainTexture = new Texture(rainPixmap);
+		
 	}
 	
 	/**
@@ -120,23 +142,67 @@ public class Foreground extends Actor {
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
 		this.stateTime += Gdx.graphics.getDeltaTime();
+
+		drawDock(batch);
+		drawWaterLevel(batch);
+		drawWaterPlane(batch);
+		drawWaterAnimation(batch);
+		drawHud(batch);
 		
-		// draw dock
+		
+		
+		//draw raindrop
+//		Random rand = new Random();
+//		for (int i = 0; i < RAIN_DROP_AMOUNT; i++) {
+//			batch.draw(
+//					rainTexture, 
+//					rand.nextFloat()*getStage().getWidth(), 
+//					rand.nextFloat()*getStage().getHeight());
+//			if(rand.nextFloat() <= 0.3f){
+//				batch.draw(
+//						this.waterMovementAnimation.getKeyFrame(stateTime, true),
+//						rand.nextFloat()*this.getWidth(),
+//						rand.nextFloat()*this.getWaterLevel()-2);
+//			
+//			}
+//		}		
+	}
+	
+	public void drawDock(Batch batch, Color tint){
+		batch.setColor(tint);
+		drawDock(batch);
+		batch.setColor(Color.WHITE);
+	}
+	
+	public void drawDock(Batch batch){
 		batch.draw(
 				this.dock,
 				this.getWidth() - this.dock.getRegionWidth(),
 				this.getWaterLevel() - 3);
-		
-		// draw water level
+	}
+	
+	public void drawWaterLevel(Batch batch, Color tint){
+		batch.setColor(tint);
+		drawWaterLevel(batch);
+		batch.setColor(Color.WHITE);
+	}
+	
+	public void drawWaterLevel(Batch batch){
 		batch.draw(this.waterLevelBase, this.getWidth()-39, 30);
 		if(Math.abs(this.bubbleXOffset) >= 13)
 			batch.setColor(Color.RED);
 		batch.draw(this.waterLevelBubble, this.getWidth()-this.bubbleXOffset-23, 32);
 		batch.setColor(Color.WHITE);
 		batch.draw(this.waterLevelMarkings, this.getWidth()-39, 30);
-		
-		
-		// draw water plane
+	}
+	
+	public void drawWaterPlane(Batch batch, Color tint){
+		batch.setColor(tint);
+		drawWaterPlane(batch);
+		batch.setColor(Color.WHITE);
+	}
+	
+	public void drawWaterPlane(Batch batch){
 		batch.end();
 		shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
@@ -154,16 +220,22 @@ public class Foreground extends Actor {
 				this.getX()+this.getWidth(), 
 				1);
 		shapeRenderer.end();
-		
 		batch.begin();
-		
+	}
+	
+	public void drawWaterAnimation(Batch batch, Color tint){
+		batch.setColor(tint);
+		drawWaterAnimation(batch);
+		batch.setColor(Color.WHITE);
+	}
+	
+	public void drawWaterAnimation(Batch batch){
 		TextureRegion shipReflectionFrame = this.shipReflectionAnimation.getKeyFrame(stateTime, true);
 		batch.draw(
 				shipReflectionFrame,
 				this.getX()+((this.getWidth()-shipReflectionFrame.getRegionWidth()) / 2),
 				this.getY()+this.getWaterLevel() - shipReflectionFrame.getRegionHeight());
 		
-		// draw water animation
 		for (Vector2 position : this.waterMovementPositions) {
 			batch.draw(
 					this.waterMovementAnimation.getKeyFrame(stateTime, true),
@@ -178,8 +250,9 @@ public class Foreground extends Actor {
 				position.y = (this.getWaterLevel()-2);
 			}
 		}
-		
-		//draw lives & ships
+	}
+	
+	public void drawHud(Batch batch){
 		for (int i = 0; i < this.remainingLives; i++) {
 			float xOffset = (liveContainer.getRegionWidth()+LIFE_PADDING)*(i+1);
 			batch.draw(this.liveContainer, this.getWidth()-xOffset, this.getHeight()-51);
@@ -198,7 +271,7 @@ public class Foreground extends Actor {
 		return waterLevel;
 	}
 
-	/**
+	/**'	
 	 * @param waterLevel the height of the water plane
 	 */
 	public void setWaterLevel(float waterLevel) {
