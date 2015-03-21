@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.game.AbstractGame;
 import com.docker.domain.game.CareerGame;
+import com.docker.technicalservices.Persistence;
 
 /**
  * @author HAL9000
@@ -52,7 +53,9 @@ public class EndScreen extends AbstractMenu {
                 CareerGame g = (CareerGame) game;
                 int level = Integer.parseInt( g.getLevelId());
                 String nextLevel = String.valueOf(level + 1);
-                application.setScreen(new CareerGame(application, nextLevel));
+                if (Persistence.hasLevel(nextLevel)) {
+                    application.setScreen(new CareerGame(application, nextLevel));
+                }
             }
         });
         table.add(title).padBottom(10).colspan(3).center().row();

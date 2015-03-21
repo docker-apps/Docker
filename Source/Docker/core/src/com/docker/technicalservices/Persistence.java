@@ -101,6 +101,10 @@ public class Persistence {
         return prefs.getInteger(levelId+"Score");
     }
 
+    public static boolean hasLevel(String levelId) {
+       return getLevel(levelId) != null;
+    }
+
     /**
      * level score is saved as "idScore"
      * @param levelId the id of the level
