@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.JsonValue;
 import com.docker.Docker;
 import com.docker.domain.game.CareerGame;
+import com.docker.domain.game.TutorialGame;
 import com.docker.technicalservices.Persistence;
 
 /**
@@ -20,6 +21,7 @@ import com.docker.technicalservices.Persistence;
 public class CareerMenu extends AbstractMenu {
     private Label title = new Label("Career Game",skin, "title");
     private TextButton backButton = new TextButton("Back", skin);
+    private TextButton tutorialGameButton = new TextButton("How to", skin);
     
 
     /**
@@ -56,7 +58,8 @@ public class CareerMenu extends AbstractMenu {
      */
     private void addLevelButtons(Table table) {
         List<JsonValue> allLevels = Persistence.getAllLevels();
-        int i = 1;
+        int i = 2;
+        addTutorialButton(table);
         for (final JsonValue level : allLevels) {
             final String id = level.getString("id");
             TextButton button = new TextButton(level.getString("name"), skin);
@@ -78,6 +81,20 @@ public class CareerMenu extends AbstractMenu {
             }
             i++;
         }
+    }
+
+    private void addTutorialButton(Table table) {
+
+        tutorialGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                application.showAds(false);
+                application.setScreen(new TutorialGame(application));
+            }
+        });
+
+        tutorialGameButton.setColor(0.5f, 1f, 0.5f, 1f);
+        table.add(tutorialGameButton).fillX().width(80).pad(5);
     }
 
 }
