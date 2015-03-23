@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -148,6 +150,29 @@ public class AbstractMenu implements Screen {
         // can be the disposing of relevant resources.
     	handleInput();
 	}
+    
+    protected static Button createIconButton(Skin skin, String iconRegionLabel){
+    	ImageButton button = new ImageButton(skin);
+    	Image iconImage = new Image(Resource.getDockerSkinTextureAtlas().findRegion(iconRegionLabel));
+    	button.add(iconImage);
+		return button;
+    }
+    
+    protected static Button createBackButton(Skin skin){
+    	return createIconButton(skin, "back_icon");
+    }
+    
+    protected static Button createResumeButton(Skin skin){
+    	return createIconButton(skin, "resume_icon");
+    }
+    
+    protected static Button createHomeButton(Skin skin){
+    	return createIconButton(skin, "home_icon");
+    }
+    
+    protected static Button createRetryButton(Skin skin){
+    	return createIconButton(skin, "retry_icon");
+    }
 
 	@Override
 	public void resize(int width, int height) {

@@ -1,13 +1,12 @@
 package com.docker.ui.menus;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
-import com.docker.domain.game.InfiniteGame;
 import com.docker.domain.game.QuickGame;
-import com.docker.domain.game.TutorialGame;
 
 /**
  * In this menu the player can choose which game he wants to play
@@ -17,7 +16,7 @@ public class GameMenu extends AbstractMenu {
 	private TextButton careerGameButton = new TextButton("Career Game", skin);
 	private TextButton quickGameButton = new TextButton("Quick Game", skin);
 	private TextButton infiniteGameButton = new TextButton("Coming soon", skin);
-	private TextButton backButton = new TextButton("Back", skin);
+	private Button backButton = createBackButton(skin);
 
 
 	/**

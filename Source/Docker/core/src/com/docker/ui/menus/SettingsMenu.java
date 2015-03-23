@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -25,7 +26,7 @@ import com.docker.technicalservices.Persistence;
 public class SettingsMenu extends AbstractMenu {
     Persistence persistence;
 
-    private TextButton backButton = new TextButton("Back", skin);
+	private Button backButton = createBackButton(skin);
     private TextButton creditsButton = new TextButton("Credits", skin);
     private CheckBox soundCheckBox = new CheckBox("",skin);
     private CheckBox musicCheckBox = new CheckBox("", skin);

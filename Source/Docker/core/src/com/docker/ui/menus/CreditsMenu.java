@@ -1,10 +1,10 @@
 package com.docker.ui.menus;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 
@@ -13,7 +13,7 @@ import com.docker.Docker;
  */
 public class CreditsMenu extends AbstractMenu {
     private Label title = new Label("Credits", skin, "title");
-    private TextButton backButton = new TextButton("Back", skin);
+	private Button backButton = createBackButton(skin);
 
     /**
      * @param application A reference to the Docker Application (Game) object.

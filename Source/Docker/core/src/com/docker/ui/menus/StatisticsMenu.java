@@ -1,9 +1,11 @@
+
 package com.docker.ui.menus;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,9 +19,9 @@ import com.docker.technicalservices.Persistence;
  * overview of the statistic values and the possibility to reset them
  */
 public class StatisticsMenu extends AbstractMenu {
-    private TextButton backButton = new TextButton("Back", skin);
     private TextButton resetButton = new TextButton("Reset", skin);
     private Label title = new Label("Statistics",skin, "title-white");
+	private Button backButton = createBackButton(skin);
 
     private static Map<String,String> labelMap = new HashMap<String, String>();
 
