@@ -159,20 +159,20 @@ public class Persistence {
     }
 
     /**
-     * get all Levels as JsonValue
+     * get all Level Packages as JsonValue
      * usage: for (JsonValue level : allLevels)
      *
-     * @return levels
+     * @return levelPackages
      */
-    public static List<JsonValue> getAllLevels() {
+    public static List<JsonValue> getAllLevelPackages() {
         List<JsonValue> jsonValues = new ArrayList<JsonValue>();
         JsonReader r = new JsonReader();
         FileHandle levelFile = getLevelFile();
         JsonValue value = r.parse(levelFile);
-        JsonValue levels = value.child.child;
-        for (int i = 0; i < levels.size; i++) {
-            JsonValue level = levels.get(i);
-            jsonValues.add(level);
+        JsonValue levelPackages = value;
+        for (int i = 0; i < levelPackages.size; i++) {
+            JsonValue levelPackage = levelPackages.get(i);
+            jsonValues.add(levelPackage);
         }
         return jsonValues;
     }
@@ -183,19 +183,16 @@ public class Persistence {
      * @return the level as JsonValue
      */
     public static JsonValue getLevel(String id) {
-        JsonReader r = new JsonReader();
-        FileHandle levelFile = getLevelFile();
-        if (levelFile == null) {
-            return null;
-        }
-        JsonValue value = r.parse(levelFile);
-        JsonValue levels = value.child.child;
-        for (int i = 0; i < levels.size; i++) {
-            JsonValue level = levels.get(i);
-            if (level.get("id").asString().equals(id)) {
-                return level;
+        List<JsonValue> levelPackages = Persistence.getAllLevelPackages();
+        for (JsonValue levelPackage : levelPackages) {
+        	for (int i = 0; i < levelPackage.size; i++) {
+                JsonValue level = levelPackage.get("levels").get(i);
+                if (level.get("id").asString().equals(id)) {
+                    return level;
+                }
             }
-        }
+		}
+        
         return null;
     }
 

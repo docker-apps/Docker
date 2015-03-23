@@ -1,6 +1,9 @@
-{"levels": {
-    "level": [
-    {
+[
+  {
+    "id": 1,
+    "title": "Hamburg",
+    "levels": [
+      {
         "id": "1",
         "stage": 1,
         "name": "Level 1",
@@ -11,17 +14,35 @@
         "trainSpeed": 10,
         "lives": 3,
         "containers": {
-            "container": [
-                {"weight": 1, "length": 1},
-                {"weight": 2, "length": 2},
-                {"weight": 2, "length": 1},
-                {"weight": 3, "length": 2},
-                {"weight": 1, "length": 1},
-                {"weight": 2, "length": 1}
-            ]
+          "container": [
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            }
+          ]
         }
-    },
-    {
+      },
+      {
         "id": "2",
         "stage": 1,
         "name": "Level 2",
@@ -32,19 +53,43 @@
         "trainSpeed": 11,
         "lives": 3,
         "containers": {
-            "container": [
-                {"weight": 4, "length": 2},
-                {"weight": 2, "length": 1},
-                {"weight": 3, "length": 3},
-                {"weight": 3, "length": 2},
-                {"weight": 1, "length": 1},
-                {"weight": 6, "length": 3},
-                {"weight": 1, "length": 1},
-                {"weight": 2, "length": 2}
-            ]
+          "container": [
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 6,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 2
+            }
+          ]
         }
-    },
-    {
+      },
+      {
         "id": "3",
         "stage": 1,
         "name": "Level 3",
@@ -55,21 +100,51 @@
         "trainSpeed": 12,
         "lives": 3,
         "containers": {
-            "container": [
-                {"weight": 5, "length": 3},
-                {"weight": 3, "length": 1},
-                {"weight": 1, "length": 1},
-                {"weight": 2, "length": 2},
-                {"weight": 3, "length": 3},
-                {"weight": 2, "length": 2},
-                {"weight": 1, "length": 2},
-                {"weight": 1, "length": 1},
-                {"weight": 3, "length": 1},
-                {"weight": 3, "length": 2}
-            ]
+          "container": [
+            {
+              "weight": 5,
+              "length": 3
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            }
+          ]
         }
-    },
-    {
+      },
+      {
         "id": "4",
         "stage": 1,
         "name": "Level 4",
@@ -80,22 +155,55 @@
         "trainSpeed": 13,
         "lives": 3,
         "containers": {
-            "container": [
-                {"weight": 1, "length": 1},
-                {"weight": 4, "length": 4},
-                {"weight": 2, "length": 3},
-                {"weight": 2, "length": 1},
-                {"weight": 3, "length": 2},
-                {"weight": 2, "length": 2},
-                {"weight": 3, "length": 1},
-                {"weight": 1, "length": 1},
-                {"weight": 1, "length": 1},
-                {"weight": 2, "length": 1},
-                {"weight": 1, "length": 1}
-            ]
+          "container": [
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 4,
+              "length": 4
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            }
+          ]
         }
-    },
-    {
+      },
+      {
         "id": "5",
         "stage": 1,
         "name": "Level 5",
@@ -106,27 +214,71 @@
         "trainSpeed": 14,
         "lives": 3,
         "containers": {
-            "container": [
-                {"weight": 5, "length": 4},
-                {"weight": 2, "length": 2},
-                {"weight": 2, "length": 1},
-                {"weight": 4, "length": 2},
-                {"weight": 1, "length": 1},
-                {"weight": 2, "length": 2},
-                {"weight": 2, "length": 1},
-                {"weight": 4, "length": 3},
-                {"weight": 1, "length": 1},
-                {"weight": 2, "length": 1},
-                {"weight": 3, "length": 2},
-                {"weight": 5, "length": 3},
-                {"weight": 2, "length": 2},
-                {"weight": 2, "length": 1},
-                {"weight": 1, "length": 1}
-
-            ]
+          "container": [
+            {
+              "weight": 5,
+              "length": 4
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 4,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 5,
+              "length": 3
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            }
+          ]
         }
-    },
-    {
+      },
+      {
         "id": "6",
         "stage": 1,
         "name": "Level 6",
@@ -137,27 +289,75 @@
         "trainSpeed": 14,
         "lives": 3,
         "containers": {
-            "container": [
-                {"weight": 2, "length": 4},
-                {"weight": 4, "length": 2},
-                {"weight": 2, "length": 3},
-                {"weight": 1, "length": 2},
-                {"weight": 2, "length": 1},
-                {"weight": 3, "length": 3},
-                {"weight": 5, "length": 2},
-                {"weight": 2, "length": 2},
-                {"weight": 2, "length": 1},
-                {"weight": 3, "length": 2},
-                {"weight": 4, "length": 2},
-                {"weight": 2, "length": 3},
-                {"weight": 1, "length": 1},
-                {"weight": 1, "length": 1},
-                {"weight": 4, "length": 2},
-                {"weight": 3, "length": 1}
-            ]
+          "container": [
+            {
+              "weight": 2,
+              "length": 4
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 5,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 1
+            }
+          ]
         }
-    },
-    {
+      },
+      {
         "id": "7",
         "stage": 1,
         "name": "Level 7",
@@ -168,26 +368,71 @@
         "trainSpeed": 14,
         "lives": 3,
         "containers": {
-            "container": [
-                {"weight": 2, "length": 2},
-                {"weight": 4, "length": 4},
-                {"weight": 2, "length": 1},
-                {"weight": 1, "length": 2},
-                {"weight": 3, "length": 2},
-                {"weight": 3, "length": 4},
-                {"weight": 1, "length": 1},
-                {"weight": 2, "length": 3},
-                {"weight": 3, "length": 1},
-                {"weight": 3, "length": 2},
-                {"weight": 2, "length": 2},
-                {"weight": 5, "length": 3},
-                {"weight": 1, "length": 1},
-                {"weight": 1, "length": 2},
-                {"weight": 3, "length": 2}
-            ]
+          "container": [
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 4,
+              "length": 4
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 4
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 5,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 2
+            }
+          ]
         }
-    },
-    {
+      },
+      {
         "id": "8",
         "stage": 1,
         "name": "Level 8",
@@ -198,33 +443,739 @@
         "trainSpeed": 15,
         "lives": 3,
         "containers": {
-            "container": [
-                {"weight": 5, "length": 3},
-                {"weight": 6, "length": 4},
-                {"weight": 1, "length": 1},
-                {"weight": 3, "length": 2},
-                {"weight": 2, "length": 2},
-                {"weight": 3, "length": 3},
-                {"weight": 4, "length": 2},
-                {"weight": 1, "length": 1},
-                {"weight": 2, "length": 1},
-                {"weight": 2, "length": 3},
-                {"weight": 1, "length": 2},
-                {"weight": 3, "length": 1},
-                {"weight": 1, "length": 1},
-                {"weight": 2, "length": 4},
-                {"weight": 3, "length": 3},
-                {"weight": 2, "length": 1},
-                {"weight": 1, "length": 2},
-                {"weight": 2, "length": 2},
-                {"weight": 3, "length": 4},
-                {"weight": 3, "length": 1},
-                {"weight": 2, "length": 1},
-                {"weight": 2, "length": 1}
-            ]
+          "container": [
+            {
+              "weight": 5,
+              "length": 3
+            },
+            {
+              "weight": 6,
+              "length": 4
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 4
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 4
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            }
+          ]
         }
-    }
-
+      }
     ]
-}
-}
+  },
+  {
+    "id": 2,
+    "title": "London",
+    "levels": [
+      {
+        "id": "9",
+        "stage": 1,
+        "name": "Level 1",
+        "shipLength": 4,
+        "shipHeight": 2,
+        "breakThreshold": 3,
+        "capsizeThreshold": 4,
+        "trainSpeed": 10,
+        "lives": 3,
+        "containers": {
+          "container": [
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "10",
+        "stage": 1,
+        "name": "Level 2",
+        "shipLength": 5,
+        "shipHeight": 3,
+        "breakThreshold": 5,
+        "capsizeThreshold": 5,
+        "trainSpeed": 11,
+        "lives": 3,
+        "containers": {
+          "container": [
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 6,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "11",
+        "stage": 1,
+        "name": "Level 3",
+        "shipLength": 6,
+        "shipHeight": 3,
+        "breakThreshold": 3,
+        "capsizeThreshold": 6,
+        "trainSpeed": 12,
+        "lives": 3,
+        "containers": {
+          "container": [
+            {
+              "weight": 5,
+              "length": 3
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "12",
+        "stage": 1,
+        "name": "Level 4",
+        "shipLength": 6,
+        "shipHeight": 3,
+        "breakThreshold": 5,
+        "capsizeThreshold": 5,
+        "trainSpeed": 13,
+        "lives": 3,
+        "containers": {
+          "container": [
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 4,
+              "length": 4
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "13",
+        "stage": 1,
+        "name": "Level 5",
+        "shipLength": 7,
+        "shipHeight": 4,
+        "breakThreshold": 5,
+        "capsizeThreshold": 6,
+        "trainSpeed": 14,
+        "lives": 3,
+        "containers": {
+          "container": [
+            {
+              "weight": 5,
+              "length": 4
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 4,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 5,
+              "length": 3
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "14",
+        "stage": 1,
+        "name": "Level 6",
+        "shipLength": 8,
+        "shipHeight": 4,
+        "breakThreshold": 5,
+        "capsizeThreshold": 7,
+        "trainSpeed": 14,
+        "lives": 3,
+        "containers": {
+          "container": [
+            {
+              "weight": 2,
+              "length": 4
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 5,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "15",
+        "stage": 1,
+        "name": "Level 7",
+        "shipLength": 8,
+        "shipHeight": 4,
+        "breakThreshold": 5,
+        "capsizeThreshold": 7,
+        "trainSpeed": 14,
+        "lives": 3,
+        "containers": {
+          "container": [
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 4,
+              "length": 4
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 4
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 5,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "16",
+        "stage": 1,
+        "name": "Level 8",
+        "shipLength": 9,
+        "shipHeight": 5,
+        "breakThreshold": 5,
+        "capsizeThreshold": 8,
+        "trainSpeed": 15,
+        "lives": 3,
+        "containers": {
+          "container": [
+            {
+              "weight": 5,
+              "length": 3
+            },
+            {
+              "weight": 6,
+              "length": 4
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 4
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 4
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "17",
+        "stage": 1,
+        "name": "Level 8",
+        "shipLength": 9,
+        "shipHeight": 5,
+        "breakThreshold": 5,
+        "capsizeThreshold": 8,
+        "trainSpeed": 15,
+        "lives": 3,
+        "containers": {
+          "container": [
+            {
+              "weight": 5,
+              "length": 3
+            },
+            {
+              "weight": 6,
+              "length": 4
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 3,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 4,
+              "length": 2
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 3
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 4
+            },
+            {
+              "weight": 3,
+              "length": 3
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 1,
+              "length": 2
+            },
+            {
+              "weight": 2,
+              "length": 2
+            },
+            {
+              "weight": 3,
+              "length": 4
+            },
+            {
+              "weight": 3,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            },
+            {
+              "weight": 2,
+              "length": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+]
