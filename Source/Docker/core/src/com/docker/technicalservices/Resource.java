@@ -1,6 +1,12 @@
 package com.docker.technicalservices;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Blending;
+import com.badlogic.gdx.graphics.Pixmap.Filter;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -14,12 +20,13 @@ import com.badlogic.gdx.utils.Array;
  * Loads the resources lazily and provides a single method to dispose all of them.
  */
 public class Resource {
-	
+
 	private static TextureAtlas dockerAtlas;
 	private static TextureAtlas dockerSkinAtlas;
 	private static Skin dockerSkin;
 	private static ShaderProgram snapshotShader;
-	
+	private static Texture rainTexture;
+
 	/**
 	 * Returns the first region in the Docker TextureAtlas found with the specified name.
 	 * 
@@ -40,7 +47,7 @@ public class Resource {
 	public static Array<AtlasRegion> findRegions(String label){
 		return getDockerTextureAtlas().findRegions(label);
 	}
-	
+
 	/**
 	 * @return the main TextureAtlas for the game.
 	 */
@@ -50,7 +57,7 @@ public class Resource {
 		}
 		return dockerAtlas;		
 	}
-	
+
 	/**
 	 * @return the main TextureAtlas for the ui elements.
 	 */
@@ -60,7 +67,7 @@ public class Resource {
 		}
 		return dockerSkinAtlas;		
 	}
-	
+
 	/**
 	 * @return the custom skin used by docker.
 	 */
@@ -70,8 +77,8 @@ public class Resource {
 		}		
 		return dockerSkin;
 	}
-	
-	
+
+
 	public static ShaderProgram getSnapshotShader(){
 		if(snapshotShader == null){
 			// No idea how this shader works, but it is needed to blend alpha values correctly.
@@ -109,6 +116,26 @@ public class Resource {
 		return snapshotShader;
 	}
 
+	public static Texture getRainTexture(){
+		if(Resource.rainTexture == null){
+			Pixmap rainPixmap;
+			rainPixmap = new Pixmap(4, 24, Format.RGBA8888);
+			Pixmap.setFilter(Filter.NearestNeighbour);
+			Pixmap.setBlending(Blending.None);
+			rainPixmap.setColor(new Color(1f, 1f, 1f, 0.2f));
+			rainPixmap.drawLine(0, 0, 1, 6);
+			rainPixmap.setColor(new Color(1f, 1f, 1f, 0.4f));
+			rainPixmap.drawLine(1, 6, 2, 12);
+			rainPixmap.setColor(new Color(1f, 1f, 1f, 0.6f));
+			rainPixmap.drawLine(2, 12, 3, 18);
+			rainPixmap.setColor(new Color(1f, 1f, 1f, 0.8f));
+			rainPixmap.drawLine(3, 18, 4, 24);
+			Resource.rainTexture = new Texture(rainPixmap);
+			rainPixmap.dispose();
+		}
+		return Resource.rainTexture;
+	}
+
 	/**
 	 * Dispose of all the resources.
 	 */
@@ -128,6 +155,10 @@ public class Resource {
 		if(snapshotShader != null){
 			snapshotShader.dispose();
 			snapshotShader = null;
+		}
+		if(rainTexture != null){
+			rainTexture.dispose();
+			rainTexture = null;
 		}
 	}
 }

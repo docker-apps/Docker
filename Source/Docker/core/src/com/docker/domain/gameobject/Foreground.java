@@ -6,11 +6,6 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Blending;
-import com.badlogic.gdx.graphics.Pixmap.Filter;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -30,11 +25,10 @@ import com.docker.technicalservices.Resource;
  * The Foreground is the foremost graphical plane displayed during the game.
  */
 public class Foreground extends Actor {
-	private static final Color WATER_BORDER_COLOR = Color.valueOf("126392");
-	private static final Color WATER_COLOR = Color.valueOf("2c98d6");
-	private static float DEFAULT_WATERLEVEL = 20;
-	private static float LIFE_PADDING = 5;
-	private static int RAIN_DROP_AMOUNT = 50;
+	protected static final Color WATER_BORDER_COLOR = Color.valueOf("126392");
+	protected static final Color WATER_COLOR = Color.valueOf("2c98d6");
+	protected static final float DEFAULT_WATERLEVEL = 20;
+	protected static final float LIFE_PADDING = 5;
 
 	private Stage stage;
 	private float waterLevel;
@@ -51,14 +45,11 @@ public class Foreground extends Actor {
 	private TextureRegion liveSaver;
 	private Array<AtlasRegion> waterMovement;
 	private Array<AtlasRegion> shipReflection;
-	private Animation waterMovementAnimation;
+	protected Animation waterMovementAnimation;
 	private Animation shipReflectionAnimation;
 	private List<Vector2> waterMovementPositions;
 	private ShapeRenderer shapeRenderer;
-	private float stateTime;
-	private Pixmap rainPixmap;
-	private Texture rainTexture;
-
+	protected float stateTime;
 	
 	/**
 	 * @param width The width over which the foreground spans. Usually equals the stages/screens width.
@@ -98,21 +89,7 @@ public class Foreground extends Actor {
 					rand.nextFloat()*this.getWidth(), 
 					rand.nextFloat()*(this.getWaterLevel()-2));
 			this.waterMovementPositions.add(position);
-		}
-		//TODO: must be disposed
-		rainPixmap = new Pixmap(4, 24, Format.RGBA8888);
-		Pixmap.setFilter(Filter.NearestNeighbour);
-		Pixmap.setBlending(Blending.None);
-		rainPixmap.setColor(new Color(1f, 1f, 1f, 0.2f));
-		rainPixmap.drawLine(0, 0, 1, 6);
-		rainPixmap.setColor(new Color(1f, 1f, 1f, 0.4f));
-		rainPixmap.drawLine(1, 6, 2, 12);
-		rainPixmap.setColor(new Color(1f, 1f, 1f, 0.6f));
-		rainPixmap.drawLine(2, 12, 3, 18);
-		rainPixmap.setColor(new Color(1f, 1f, 1f, 0.8f));
-		rainPixmap.drawLine(3, 18, 4, 24);
-		rainTexture = new Texture(rainPixmap);
-		
+		}		
 	}
 	
 	/**
@@ -148,24 +125,6 @@ public class Foreground extends Actor {
 		drawWaterPlane(batch);
 		drawWaterAnimation(batch);
 		drawHud(batch);
-		
-		
-		
-		//draw raindrop
-//		Random rand = new Random();
-//		for (int i = 0; i < RAIN_DROP_AMOUNT; i++) {
-//			batch.draw(
-//					rainTexture, 
-//					rand.nextFloat()*getStage().getWidth(), 
-//					rand.nextFloat()*getStage().getHeight());
-//			if(rand.nextFloat() <= 0.3f){
-//				batch.draw(
-//						this.waterMovementAnimation.getKeyFrame(stateTime, true),
-//						rand.nextFloat()*this.getWidth(),
-//						rand.nextFloat()*this.getWaterLevel()-2);
-//			
-//			}
-//		}		
 	}
 	
 	public void drawDock(Batch batch, Color tint){
