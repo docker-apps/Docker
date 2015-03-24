@@ -1,7 +1,12 @@
 package com.docker.domain.game;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
+import com.docker.ui.menus.CareerSuccessEndScreen;
+import com.docker.ui.menus.FailureEndScreen;
+import com.docker.ui.menus.SuccessEndScreen;
 
 /**
  * The goal in the career game is to unlock all levels
@@ -43,6 +48,20 @@ public class CareerGame extends AbstractGame {
             return gameScore;
         }
         return levelHighScore;
+    }
+    
+    @Override
+    public void displayEndScreen(boolean isGameLost){
+		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
+		//application.setScreen(new EndScreen(application, screenCap));
+        if(!isGameLost){
+        	getLoadRating().getCapsizeValue();
+            Integer gameScore = getLoadRating().getScore();
+            Integer highscore = endGame(gameScore);
+            application.setScreen(new CareerSuccessEndScreen(application, screenCap, this, gameScore, highscore));
+        } else{
+        	application.setScreen(new FailureEndScreen(application, screenCap, this));
+        }
     }
 
     @Override

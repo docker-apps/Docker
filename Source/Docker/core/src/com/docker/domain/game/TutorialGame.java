@@ -309,7 +309,7 @@ public class TutorialGame extends AbstractGame {
 	@Override
 	public Integer endGame(Integer gameScore) {
         application.showAds(true);
-		application.returnToMenu(this);
+		application.returnToMenu();
 		return null;
 	}
 

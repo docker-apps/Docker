@@ -2,8 +2,8 @@ package com.docker.domain.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -18,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.input.GestureDetector;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
@@ -28,8 +28,9 @@ import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.WorldStage;
-import com.docker.ui.menus.EndScreen;
+import com.docker.ui.menus.FailureEndScreen;
 import com.docker.ui.menus.PauseMenu;
+import com.docker.ui.menus.SuccessEndScreen;
 
 /**
  * @author HAL9000
@@ -397,6 +398,14 @@ public abstract class AbstractGame extends ScreenAdapter {
 		}
 	}
 	
+	public boolean shipIsSunk(){
+		return Math.abs(getLoadRating().getCapsizeValue()) >=1;
+	}
+	
+	public boolean shipIsBroken(){
+		return getLoadRating().doesBreak() != -1;
+	}
+	
 	/**
 	 * Gets called when the game is over (wether the player lost or won the game).
 	 */
@@ -417,11 +426,12 @@ public abstract class AbstractGame extends ScreenAdapter {
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
         if(!isGameLost){
+        	getLoadRating().getCapsizeValue();
             Integer gameScore = getLoadRating().getScore();
             Integer highscore = endGame(gameScore);
-            application.setScreen(new EndScreen(application, screenCap, gameScore, highscore, this));
+            application.setScreen(new SuccessEndScreen(application, screenCap, this, gameScore, highscore));
         } else{
-        	application.setScreen(new EndScreen(application, screenCap, this));
+        	application.setScreen(new FailureEndScreen(application, screenCap, this));
         }
     }
 

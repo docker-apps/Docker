@@ -173,6 +173,10 @@ public class AbstractMenu implements Screen {
     protected static Button createRetryButton(Skin skin){
     	return createIconButton(skin, "retry_icon");
     }
+    
+    protected static Button createNextLevelButton(Skin skin){
+    	return createIconButton(skin, "next_level_icon");
+    }
 
 	@Override
 	public void resize(int width, int height) {

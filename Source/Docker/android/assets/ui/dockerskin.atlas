@@ -41,16 +41,23 @@ home_icon
   index: -1
 livesaver_off
   rotate: false
-  xy: 328, 105
+  xy: 49, 20
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 livesaver_on
   rotate: false
-  xy: 49, 20
+  xy: 71, 42
   size: 14, 14
   orig: 14, 14
+  offset: 0, 0
+  index: -1
+next_level_icon
+  rotate: false
+  xy: 328, 105
+  size: 20, 14
+  orig: 20, 14
   offset: 0, 0
   index: -1
 resume_icon
@@ -90,7 +97,7 @@ slider_pointer
   index: -1
 slider_rail
   rotate: false
-  xy: 274, 62
+  xy: 350, 113
   size: 15, 6
   split: 7, 7, 0, 7
   orig: 15, 6
@@ -105,7 +112,7 @@ small_curved_arrow
   index: -1
 yellow_button
   rotate: false
-  xy: 71, 42
+  xy: 118, 67
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14
@@ -113,7 +120,7 @@ yellow_button
   index: -1
 yellow_button_pressed
   rotate: false
-  xy: 118, 67
+  xy: 274, 54
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14

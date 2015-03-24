@@ -82,14 +82,19 @@ public class Docker extends Game {
 	 * Return to the MainMenu screen.
 	 * The history will be discarded.
 	 */
-	public void returnToMenu(AbstractGame game) {
+	public void returnToMenu() {
 		while (history.size() > 1)
 			history.pop().dispose();
 		super.setScreen(history.pop());
-		
-		if (game instanceof CareerGame) {
-			((AbstractMenu)this.getScreen()).openNewMenu(new CareerMenu(this));
-		}
+	}
+	
+	/**
+	 * Return to the MainMenu screen.
+	 * The history will be discarded.
+	 */
+	public void returnToCareerScreen() {
+		returnToMenu();
+		((AbstractMenu)this.getScreen()).openNewMenu(new CareerMenu(this));
 	}
 
 	public void showAds(Boolean showAds) {

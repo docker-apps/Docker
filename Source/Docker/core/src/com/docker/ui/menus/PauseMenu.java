@@ -42,7 +42,7 @@ public class PauseMenu extends AbstractMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 application.showAds(true);
-                application.returnToMenu(game);
+                application.returnToMenu();
             }
         });
         retryButton.addListener(new ClickListener() {
@@ -53,11 +53,11 @@ public class PauseMenu extends AbstractMenu {
         });
 
         table.add(title).left().padBottom(15).row();
-        table.add(resumeButton).size(50, 30).uniform();
+        table.add(resumeButton).size(100, 40).padTop(10).padLeft(5).center().uniform();
         if (!(game instanceof TutorialGame)) {
-            table.add(retryButton).size(50, 30).uniform();
+            table.add(retryButton).size(100, 40).padTop(10).padLeft(5).center().uniform();
         }
-        table.add(homeButton).size(50, 30).uniform();
+        table.add(homeButton).size(100, 40).padTop(10).padLeft(5).center().uniform();
         stage.addActor(table);
     }
 }
