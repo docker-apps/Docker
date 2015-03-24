@@ -185,7 +185,7 @@ public class Persistence {
     public static JsonValue getLevel(String id) {
         List<JsonValue> levelPackages = Persistence.getAllLevelPackages();
         for (JsonValue levelPackage : levelPackages) {
-        	for (int i = 0; i < levelPackage.size; i++) {
+        	for (int i = 0; i < levelPackage.get("levels").size; i++) {
                 JsonValue level = levelPackage.get("levels").get(i);
                 if (level.get("id").asString().equals(id)) {
                     return level;
