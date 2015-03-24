@@ -12,7 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
+import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.WorldStage;
 
 /**
  * @author HAL9000
@@ -118,6 +120,14 @@ public class Container extends Actor {
 		for (int i = 0; i < this.length; i++) {
 			ContainerExplosion explosion = new ContainerExplosion(this.getX()+i*this.getElementWidth(), this.getY());
 			stage.addActor(explosion);
+
+			// FX
+	        if (Persistence.isVibrationOn()) {
+	            Gdx.input.vibrate(400);
+	        }
+			if(stage instanceof WorldStage){
+		        ((WorldStage)stage).shakeScreen(5, 0);				
+			}
 		}
 	}
 

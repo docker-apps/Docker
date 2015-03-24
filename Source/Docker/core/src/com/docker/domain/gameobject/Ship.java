@@ -2,12 +2,14 @@ package com.docker.domain.gameobject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -25,6 +27,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pool.Poolable;
 import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
@@ -63,13 +67,23 @@ public class Ship extends Actor {
 	private FrameBuffer fbo;
 	private Pixmap gridBoundsPixmap;
 	private Texture gridBoundsTexture;
-	
+
 	private float gridBoundsAlpha = 0f;
 	private float gridBoundsDecay = 1f;
 
-    private Boolean playContainerSound = true;
+	private Boolean playContainerSound = true;
 
-    public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
+	private final Pool<SmokePuff> smokePool= new Pool<Ship.SmokePuff>(5, 10) {
+
+		@Override
+		protected SmokePuff newObject() {
+			return new SmokePuff();
+		}
+	};
+
+	private List<SmokePuff> smokePuffs = new ArrayList<Ship.SmokePuff>();;
+
+	public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
 		super();
 
 		if(gridWidth <= 1)
@@ -92,7 +106,7 @@ public class Ship extends Actor {
 		this.indicatorLampOn = Resource.findRegion("indicator_lamp_on");
 		this.bodyBrokenLeft = Resource.findRegion("ship_body_broken_left");
 		this.bodyBrokenRight = Resource.findRegion("ship_body_broken_right");
-		
+
 		this.gridSize = this.bodyCenter.getRegionWidth();
 
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
@@ -100,7 +114,7 @@ public class Ship extends Actor {
 		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
 		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
 
-        playContainerSound = Persistence.isSoundOn();
+		playContainerSound = Persistence.isSoundOn();
 		containerSound = Gdx.audio.newSound(Gdx.files.internal("container_load.wav"));
 		createTopLineAndGrid();
 	}
@@ -118,20 +132,39 @@ public class Ship extends Actor {
 		if(gridCoords.y >= 0 &&  gridCoords.y < gridHeight){
 			Vector2 realCoords = getRealCoord(gridCoords);
 			container.setPosition(realCoords.x, realCoords.y);
+			Random rand = new Random();
+			
+			//create a smoke puff, but only if containerpart actually touches anything
+			for (int i = 0; i < container.getLength(); i++) {
+				if((int)gridCoords.y == 0 || this.topLine[(int) gridCoords.x + i] == ((int)gridCoords.y)){
+					for (int j = 0; j < 3; j++) {
+						SmokePuff puff = smokePool.obtain();
+						this.smokePuffs.add(puff);
+						float elementOffset = container.getX()+i*container.getElementWidth();
+						puff.init(
+								elementOffset + j*container.getElementWidth()/3 + rand.nextFloat()*container.getElementWidth()/3, 
+								container.getY(), rand);
+						this.getStage().addActor(puff);
+					}					
+				}
+			}
+
 			this.containers.add(container);
-            if (playContainerSound) {
-                containerSound.play();
-            }
-            Integer totalContainer = (Integer) Persistence.getStatisticsMap().get("totalContainer");
-            Persistence.saveStatisticValue("totalContainer", totalContainer+1);
-            Integer totalWeight = (Integer) Persistence.getStatisticsMap().get("totalWeight");
-            Persistence.saveStatisticValue("totalWeight", totalWeight + container.getWeight());
-            createTopLineAndGrid();
+			if (playContainerSound) {
+				containerSound.play();
+			}
+			Integer totalContainer = (Integer) Persistence.getStatisticsMap().get("totalContainer");
+			Persistence.saveStatisticValue("totalContainer", totalContainer+1);
+			Integer totalWeight = (Integer) Persistence.getStatisticsMap().get("totalWeight");
+			Persistence.saveStatisticValue("totalWeight", totalWeight + container.getWeight());
+			createTopLineAndGrid();
 			return true;
 		}else{
 			return false;
 		}
 	}
+
+	
 
 	/**
 	 * Sets a Preview Container, where the Container possible could be set.
@@ -155,7 +188,7 @@ public class Ship extends Actor {
 			previewContainer = null;
 		}
 	}
-	
+
 	public void clearPreviewContainer(){
 		this.previewContainer = null;
 	}
@@ -168,14 +201,14 @@ public class Ship extends Actor {
 	 */
 	private int getXGrid(float x, int containerLenght) {
 		int xGrid = (int) Math.floor((double) (x-xGridstart)/gridSize); 
-        if(xGrid < 0){
-        	xGrid = 0;
-        }else{
-        	float noSpace = this.gridWidth- (xGrid + containerLenght);
-        	if (noSpace < 0 ) {
+		if(xGrid < 0){
+			xGrid = 0;
+		}else{
+			float noSpace = this.gridWidth- (xGrid + containerLenght);
+			if (noSpace < 0 ) {
 				xGrid = this.gridWidth-containerLenght;
 			}
-        }
+		}
 		return xGrid;
 	}
 
@@ -255,12 +288,12 @@ public class Ship extends Actor {
 		fboRegion.flip(false, true);
 		return fboRegion;
 	}
-	
+
 	private void disposeFbo(){
-        if(fbo != null){
-            fbo.dispose();
-            fbo = null;                	
-        }
+		if(fbo != null){
+			fbo.dispose();
+			fbo = null;                	
+		}
 	}
 
 	private void removeFromStage(){
@@ -270,7 +303,7 @@ public class Ship extends Actor {
 		this.clearListeners();
 		getStage().getRoot().removeActor(this);
 	}
-	
+
 	public void runIn(){
 		this.previewContainer = null;
 		this.isTakingOff = true;
@@ -288,9 +321,9 @@ public class Ship extends Actor {
 			public boolean act( float delta ) {
 				isTakingOff = false;
 				isStaticAnimationRunning = false;
-                img.remove();
-                snapshot.getTexture().dispose();
-                disposeFbo();
+				img.remove();
+				snapshot.getTexture().dispose();
+				disposeFbo();
 				return true;
 			}
 		};
@@ -325,10 +358,10 @@ public class Ship extends Actor {
 				removeFromStage();
 				isTakingOff = false;
 				isStaticAnimationRunning = false;
-                setVisible(false);
-                img.remove();
-                snapshot.getTexture().dispose();
-                disposeFbo();
+				setVisible(false);
+				img.remove();
+				snapshot.getTexture().dispose();
+				disposeFbo();
 				return true;
 			}
 		};
@@ -357,12 +390,12 @@ public class Ship extends Actor {
 		startCapsizeAnimation(img, capsizeValue);
 		this.getStage().addActor(img);
 	}
-	
-	
+
+
 	public static Ship getRandomShip() {
 		int width = 5 + (int)(Math.random() * ((10 - 5) + 1));
-		 Ship ship = new Ship(width, 5, 5, 5, 0f, 0f);
-		 ship.setPosition((Docker.WIDTH-ship.getWidth())/2-20f, 10f);
+		Ship ship = new Ship(width, 5, 5, 5, 0f, 0f);
+		ship.setPosition((Docker.WIDTH-ship.getWidth())/2-20f, 10f);
 		return ship;
 	}
 
@@ -376,41 +409,41 @@ public class Ship extends Actor {
 	 */
 	private void startCapsizeAnimation(Actor actor, float capsizeValue){
 		this.setStaticAnimationRunning(true);
-		
+
 		float duration = 6;
-		
+
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(actor.getX(), actor.getY()-this.getWidth());
 		moveAction.setDuration(duration*0.75f);
 		moveAction.setInterpolation(Interpolation.exp5In);
 		actor.addAction(moveAction);
-		
+
 		actor.setOrigin(actor.getWidth()/2-actor.getWidth()/6*Math.signum(capsizeValue), 10);
 		RotateByAction rotateAction = new RotateByAction();
 		rotateAction.setAmount(90*Math.signum(capsizeValue));
 		rotateAction.setDuration(duration);
 		rotateAction.setInterpolation(Interpolation.exp5Out);
-		
+
 		ParallelAction sinkingAction = new ParallelAction(moveAction, rotateAction);
-		
+
 		// set the sunken flag
 		Action completeAction = new Action(){
 			public boolean act( float delta ) {
 				setSunken(true);
 				isStaticAnimationRunning = false;
-                setVisible(false);
-                actor.remove();
-                if(actor instanceof Image){
-                   Drawable drawable = ((Image) actor).getDrawable();   
-                   if(drawable instanceof TextureRegionDrawable){
-                	   ((TextureRegionDrawable) drawable).getRegion().getTexture().dispose();
-                   }
-                }
-                disposeFbo();
+				setVisible(false);
+				actor.remove();
+				if(actor instanceof Image){
+					Drawable drawable = ((Image) actor).getDrawable();   
+					if(drawable instanceof TextureRegionDrawable){
+						((TextureRegionDrawable) drawable).getRegion().getTexture().dispose();
+					}
+				}
+				disposeFbo();
 				return true;
 			}
 		};
-		
+
 		SequenceAction actions = new SequenceAction(sinkingAction, completeAction);
 
 		actor.addAction(actions);
@@ -453,8 +486,18 @@ public class Ship extends Actor {
 		super.act(delta);
 		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
 		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
-		
+
 		this.gridBoundsAlpha = Math.max(0f, this.gridBoundsAlpha - this.gridBoundsDecay * delta);
+
+		for (int i = 0; i < smokePuffs.size(); i++) {
+			SmokePuff puff = smokePuffs.get(i);
+			if(puff.isDead())
+			{
+				puff.remove();
+				smokePool.free(puff);
+				smokePuffs.remove(puff);
+			}
+		}
 	}
 
 	@Override
@@ -483,7 +526,7 @@ public class Ship extends Actor {
 			if (previewContainer != null) {
 				previewContainer.draw(batch, parentAlpha);
 			}
-			
+
 			if(this.gridBoundsAlpha > 0f)
 				batch.draw(this.getGridBoundsTexture(), xGridstart, yGridstart);
 
@@ -562,7 +605,7 @@ public class Ship extends Actor {
 			}
 		}
 	}
-	
+
 	/**
 	 * @return the texture to display the grid's dimensions.
 	 */
@@ -579,7 +622,7 @@ public class Ship extends Actor {
 
 		return this.gridBoundsTexture;
 	}
-	
+
 	protected void disposeGridBounds(){
 		if (this.gridBoundsPixmap != null){
 			this.gridBoundsPixmap.dispose();
@@ -650,14 +693,14 @@ public class Ship extends Actor {
 	public boolean isStaticAnimationRunning() {
 		return isStaticAnimationRunning;
 	}
-	
+
 	public void setStaticAnimationRunning(boolean isStaticAnimationRunning){
 		this.isStaticAnimationRunning = isStaticAnimationRunning;
 	}
 
-    public void playContainerSound(Boolean playSound) {
-        this.playContainerSound = playSound;
-    }
+	public void playContainerSound(Boolean playSound) {
+		this.playContainerSound = playSound;
+	}
 
 	public boolean isSunken() {
 		return isSunken;
@@ -665,6 +708,62 @@ public class Ship extends Actor {
 
 	public void setSunken(boolean isSunken) {
 		this.isSunken = isSunken;
+	}
+	
+	private class SmokePuff extends Actor implements Poolable{
+		private final static float FADE_OUT_SPEED = 2;
+		private final static float RISE_SPEED = 10;
+		private Pixmap pixmap;
+		private Texture texture;
+		private float alpha;
+
+		public SmokePuff(){
+			super();
+			if(pixmap == null){
+				pixmap = new Pixmap(11, 11, Format.RGBA4444);
+				Pixmap.setBlending(Blending.None);
+				pixmap.setColor(Color.WHITE);
+				pixmap.fillCircle(5, 5, 5);
+
+				texture = new Texture(pixmap);
+			}
+		}
+
+		public void init(float x, float y, Random rand){
+			float size= pixmap.getWidth()/2 + (pixmap.getWidth()/2)*rand.nextFloat();
+			this.setSize(size, size);
+			this.setPosition(x, y);
+			this.alpha = 1;
+
+		}
+
+		public boolean isDead(){
+			return this.alpha <= 0;
+		}
+
+		@Override
+		public void act(float delta){
+			this.setScale(this.getScaleX()+1f*delta);
+			this.setColor(1f, 1f, 1f, this.alpha);
+			this.alpha-=delta*FADE_OUT_SPEED;
+			this.setY(this.getY()+RISE_SPEED*delta);
+		}
+
+		@Override
+		public void draw(Batch batch, float delta){
+			float drawWidth = getWidth()*getScaleX();
+			float drawHeight = getHeight()*getScaleY();
+			batch.setColor(this.getColor());
+			batch.draw(texture, getX()-drawWidth/2, getY()-drawHeight/2, drawWidth, drawHeight);
+			batch.setColor(Color.WHITE);
+		}
+
+		@Override
+		public void reset() {
+			this.setScale(1);
+			this.setColor(1f, 1f, 1f, 1f);
+		}
+
 	}
 
 }

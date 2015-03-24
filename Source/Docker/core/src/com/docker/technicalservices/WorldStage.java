@@ -6,29 +6,50 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class WorldStage extends Stage implements GestureListener {
+	private static final int SHAKE_COOLDOWN = 10;
+	private static final int SHAKE_FREQUENCY = 15;
 	Actor foreground = null;
 	Actor background = null;
+
+	protected float shakeTimer;
+	protected float shakeIntensityX;
+	protected float shakeIntensityY;
+	protected Vector3 cameraOriginalPosition;
+	private float cameraOffsetX;
+	private float cameraOffsetY;
 	
 	public WorldStage(Viewport viewport) {
 		super(viewport);
 
         GestureDetector gd = new GestureDetector(this);
         Gdx.input.setInputProcessor(gd);
+        
+		this.shakeTimer = 0;
+		this.shakeIntensityX = shakeIntensityY = 0;
+		this.cameraOriginalPosition = this.getCamera().position.cpy();
 	}
 	
 	public WorldStage(Viewport viewport, Batch batch) {
 		super(viewport, batch);
 	}
 	
+	public void shakeScreen(float intensityX, float intensityY){
+		this.shakeIntensityX = intensityX;
+		this.shakeIntensityY = intensityY;
+	}
+	
 	@Override
 	public void draw () {
 		Camera camera = getViewport().getCamera();
 		camera.update();
+		camera.position.x = this.cameraOriginalPosition.x + cameraOffsetX;
+		camera.position.y = this.cameraOriginalPosition.y + cameraOffsetY;
 
 		if (!getRoot().isVisible()) return;
 
@@ -61,6 +82,27 @@ public class WorldStage extends Stage implements GestureListener {
 		super.act(delta);
 		if(this.foreground != null)
 			this.foreground.act(delta);
+		
+		//calculate current screenshake
+		float cooldown = delta*SHAKE_COOLDOWN;
+		if(Math.abs(shakeIntensityX) >= cooldown || Math.abs(shakeIntensityY) >= cooldown){
+			shakeTimer+=delta;
+			cameraOffsetX = (float) (Math.cos(shakeTimer*SHAKE_FREQUENCY)*shakeIntensityX);
+			cameraOffsetY = (float) (Math.cos(shakeTimer*SHAKE_FREQUENCY)*shakeIntensityY);
+			shakeIntensityX -= Math.signum(shakeIntensityX)*cooldown;
+			shakeIntensityY -= Math.signum(shakeIntensityY)*cooldown;
+		}
+		else {
+			shakeTimer = 0;
+			cameraOffsetX = cameraOffsetY = 0;
+		}
+	}
+	
+	@Override
+	public void dispose(){
+		this.background = null;
+		this.foreground = null;
+		super.dispose();
 	}
 
 	public Actor getForeground() {

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.WorldStage;
 
 public class Crane extends Actor {
 	private int speed;
@@ -72,8 +73,11 @@ public class Crane extends Actor {
 		        // give the container to the ship here, preferrably to a grid coordinate
 		    	Container container = removeContainer();
 		    	ship.addContainer(x, container);
-		    	setX(getX()+container.getWidth()/2);
+		    	setX(getX()+container.getWidth()/2 - body.getRegionWidth()/2);
 		    	setY(getY()+container.getElementHeight());
+		    	if(getStage() instanceof WorldStage){
+		    		((WorldStage) getStage()).shakeScreen(0, 2);
+		    	}
 		    	return true;
 		    }
 		};

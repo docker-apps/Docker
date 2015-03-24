@@ -372,9 +372,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 */
 	public int removeLive() {
         lives--;
-        if (Persistence.isVibrationOn()) {
-            Gdx.input.vibrate(400);
-        }
         foreground.setRemainingLives(lives);
 		return this.lives;
 	}
