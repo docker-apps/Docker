@@ -14,7 +14,7 @@ public class DesktopLauncher implements IActivityRequestHandler{
 		config.width = 1280;
 		config.height= 720;
 		// Diese Zeile nur einkommentieren, wenn sich bilddateien geändert haben.
-//		TexturePacker.process("../../../Documents/Grafik/deploy", "../android/assets/img", "docker");
+		TexturePacker.process("../../../Documents/Grafik/deploy", "../android/assets/img", "docker");
 //		TexturePacker.process("../../../Documents/Grafik/deploy_ui", "../android/assets/ui", "dockerskin");
 
         if (application == null) {

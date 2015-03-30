@@ -1,4 +1,4 @@
-package com.docker.domain.gameobject;
+package com.docker.domain.world;
 
 import java.util.ArrayList;
 import java.util.List;
