@@ -4,8 +4,6 @@ import java.util.Stack;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.docker.domain.game.AbstractGame;
-import com.docker.domain.game.CareerGame;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
 import com.docker.ui.menus.AbstractMenu;
@@ -30,13 +28,18 @@ public class Docker extends Game {
 	 */
 	public static final float HEIGHT = 200;
 
-	private final IActivityRequestHandler iActivityRequestHandler;
+    /**
+     * Count played games to show interstitial ad
+     */
+    public static Integer GAMES_PLAYED = 0;
+
+	private final AdController adController;
 
 	Stack<Screen> history;
 	private Persistence persistence;
 
-	public Docker(IActivityRequestHandler iActivityRequestHandler) {
-		this.iActivityRequestHandler = iActivityRequestHandler;
+	public Docker(AdController adController) {
+		this.adController = adController;
 	}
 
 	@Override
@@ -98,7 +101,15 @@ public class Docker extends Game {
 	}
 
 	public void showAds(Boolean showAds) {
-		iActivityRequestHandler.showAds(showAds);
+		adController.showAds(showAds);
+	}
+
+	public void showInterstital() {
+        int gamesPlayed = Docker.GAMES_PLAYED;
+        if (gamesPlayed % 4 == 0) {
+            adController.showInterstitialAd();
+        }
+        Docker.GAMES_PLAYED++;
 	}
 
 	/**

@@ -20,12 +20,12 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.Docker;
-import com.docker.domain.gameobject.Background;
 import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Crane;
-import com.docker.domain.gameobject.Foreground;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
+import com.docker.domain.world.Background;
+import com.docker.domain.world.Foreground;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.WorldStage;
 import com.docker.ui.menus.FailureEndScreen;
@@ -423,6 +423,7 @@ public abstract class AbstractGame extends ScreenAdapter {
      * @param isGameLost whether the player has lost the game or not. 
      */
     public void displayEndScreen(boolean isGameLost){
+        application.showInterstital();
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
         if(!isGameLost){

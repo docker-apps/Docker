@@ -3,10 +3,10 @@ package com.docker.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
+import com.docker.AdController;
 import com.docker.Docker;
-import com.docker.IActivityRequestHandler;
 
-public class HtmlLauncher extends GwtApplication implements IActivityRequestHandler{
+public class HtmlLauncher extends GwtApplication implements AdController {
 
         @Override
         public GwtApplicationConfiguration getConfig () {
@@ -20,6 +20,11 @@ public class HtmlLauncher extends GwtApplication implements IActivityRequestHand
 
     @Override
     public void showAds(boolean show) {
+
+    }
+
+    @Override
+    public void showInterstitialAd() {
 
     }
 }

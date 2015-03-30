@@ -3,31 +3,30 @@ package com.docker.android;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.docker.AdController;
 import com.docker.Docker;
-import com.docker.IActivityRequestHandler;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
 import android.widget.RelativeLayout.LayoutParams;
+import com.google.android.gms.ads.InterstitialAd;
 
-public class AndroidLauncher extends AndroidApplication implements IActivityRequestHandler {
+public class AndroidLauncher extends AndroidApplication implements AdController {
 
     private AdView adView;
-    private final int SHOW_ADS = 1;
-    private final int HIDE_ADS = 0;
+    private InterstitialAd interstitialAd;
 
     @Override
-	protected void onCreate (Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -40,7 +39,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         layout.setLayoutParams(params);
         adView = createAdView();
         layout.addView(adView);
-
+        setupInterstitial();
         layout.addView(createGameView(config));
         setContentView(layout);
         adView.loadAd(new AdRequest.Builder().build());
@@ -69,9 +68,45 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         return adView;
     }
 
+    private void setupInterstitial() {
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.ad_unit_interstitial_id));
+
+        AdRequest.Builder builder = new AdRequest.Builder();
+        AdRequest ad = builder.build();
+        interstitialAd.loadAd(ad);
+    }
+
     @Override
-    public void showAds(boolean show) {
-        handler.sendEmptyMessage(show ? SHOW_ADS : HIDE_ADS);
+    public void showAds(final boolean show) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (show) {
+                    adView.setVisibility(View.VISIBLE);
+                } else {
+                    adView.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void showInterstitialAd() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                interstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        AdRequest.Builder builder = new AdRequest.Builder();
+                        AdRequest ad = builder.build();
+                        interstitialAd.loadAd(ad);
+                    }
+                });
+                interstitialAd.show();
+            }
+        });
     }
 
     @Override
@@ -91,19 +126,4 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         if (adView != null) adView.destroy();
         super.onDestroy();
     }
-    protected Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case SHOW_ADS: {
-                    adView.setVisibility(View.VISIBLE);
-                    break;
-                }
-                case HIDE_ADS: {
-                    adView.setVisibility(View.GONE);
-                    break;
-                }
-            }
-        }
-    };
 }
