@@ -1,5 +1,7 @@
 package com.docker.ui.menus;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -51,4 +53,13 @@ public class FailureEndScreen extends AbstractMenu{
 		table.add(retryButton).size(100, 40).padTop(10).center();
 
 	}
+	
+	@Override
+    public void lastScreenOnReturn(){
+    	if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ||
+                Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+			application.showAds(true);
+			application.returnToMenu();
+        }
+    }
 }

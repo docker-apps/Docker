@@ -9,7 +9,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -713,24 +712,16 @@ public class Ship extends Actor {
 	private class SmokePuff extends Actor implements Poolable{
 		private final static float FADE_OUT_SPEED = 2;
 		private final static float RISE_SPEED = 10;
-		private Pixmap pixmap;
 		private Texture texture;
 		private float alpha;
 
 		public SmokePuff(){
 			super();
-			if(pixmap == null){
-				pixmap = new Pixmap(11, 11, Format.RGBA4444);
-				Pixmap.setBlending(Blending.None);
-				pixmap.setColor(Color.WHITE);
-				pixmap.fillCircle(5, 5, 5);
-
-				texture = new Texture(pixmap);
-			}
+			this.texture = Resource.getSmokePuffTexture();
 		}
 
 		public void init(float x, float y, Random rand){
-			float size= pixmap.getWidth()/2 + (pixmap.getWidth()/2)*rand.nextFloat();
+			float size= texture.getWidth()/2 + (texture.getWidth()/2)*rand.nextFloat();
 			this.setSize(size, size);
 			this.setPosition(x, y);
 			this.alpha = 1;

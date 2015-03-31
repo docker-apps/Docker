@@ -26,6 +26,7 @@ public class Resource {
 	private static Skin dockerSkin;
 	private static ShaderProgram snapshotShader;
 	private static Texture rainTexture;
+	private static Texture smokePuffTexture;
 
 	/**
 	 * Returns the first region in the Docker TextureAtlas found with the specified name.
@@ -77,7 +78,6 @@ public class Resource {
 		}		
 		return dockerSkin;
 	}
-
 
 	public static ShaderProgram getSnapshotShader(){
 		if(snapshotShader == null){
@@ -135,6 +135,19 @@ public class Resource {
 		}
 		return Resource.rainTexture;
 	}
+	
+	public static Texture getSmokePuffTexture(){
+		if(Resource.smokePuffTexture == null){
+			Pixmap pixmap = new Pixmap(11, 11, Format.RGBA4444);
+			Pixmap.setBlending(Blending.None);
+			pixmap.setColor(Color.WHITE);
+			pixmap.fillCircle(5, 5, 5);
+
+			Resource.smokePuffTexture = new Texture(pixmap);
+			pixmap.dispose();
+		}
+		return Resource.smokePuffTexture;
+	}
 
 	/**
 	 * Dispose of all the resources.
@@ -159,6 +172,10 @@ public class Resource {
 		if(rainTexture != null){
 			rainTexture.dispose();
 			rainTexture = null;
+		}
+		if(smokePuffTexture != null){
+			smokePuffTexture.dispose();
+			smokePuffTexture = null;
 		}
 	}
 }

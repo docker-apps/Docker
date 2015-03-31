@@ -292,6 +292,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 			this.getTrain().setSpeed(this.getTrain().getSpeed()*2);
 		else if(Gdx.input.isKeyJustPressed(Keys.R))
 			this.getTrain().setSpeed(this.getTrain().getSpeed()/2);
+		else if(Gdx.input.isKeyJustPressed(Keys.W))
+			this.displayEndScreen(false);
 		
 		this.stage.act(Gdx.graphics.getDeltaTime());
 		
