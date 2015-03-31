@@ -2,6 +2,8 @@ package com.docker.ui.menus;
 
 import java.util.List;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -15,6 +17,7 @@ import com.docker.Docker;
 import com.docker.domain.game.CareerGame;
 import com.docker.domain.game.TutorialGame;
 import com.docker.technicalservices.Persistence;
+import com.docker.technicalservices.Resource;
 
 /**
  * menu with a overview of all levels (locked and unlocked)
@@ -25,6 +28,8 @@ public class CareerMenu extends AbstractMenu {
 	private Button backButton = createBackButton(skin);
     private final static float BACKBUTTON_PADDING_X = 5;
     private TextButton tutorialGameButton = new TextButton("How to", skin);
+	private ScrollPane scrollpane;
+	private TextureRegion arrowTexture;
     
 
     /**
@@ -32,6 +37,9 @@ public class CareerMenu extends AbstractMenu {
      */
     public CareerMenu(final Docker application) {
         super(application);
+
+		arrowTexture = Resource.getDockerSkinTextureAtlas().findRegion("straight_arrow");
+        
         application.showAds(true);
         backButton.addListener(new ClickListener() {
             @Override
@@ -45,14 +53,13 @@ public class CareerMenu extends AbstractMenu {
         Table careerTable = new Table();
         addLevelButtons(careerTable);
         careerTable.row();
-        ScrollPane scrollpane = new AbstractScrollPane(careerTable);
+        scrollpane = new AbstractScrollPane(careerTable);
         scrollpane.setPosition(0, 0);
         scrollpane.setSize(this.stage.getWidth(), this.stage.getHeight());
         scrollpane.setFlingTime(2);
         scrollpane.setupOverscroll(20, 30, 200);
         scrollpane.setFadeScrollBars(false);
         this.table.add(scrollpane).top();
-
     }
 
     /**
@@ -98,6 +105,7 @@ public class CareerMenu extends AbstractMenu {
 	            }
 	            i++;
 			}
+			
 			float fullPaddingSpace = this.stage.getWidth() - packageTable.getColumns() * (LEVEL_BUTTON_WIDTH+2*LEVEL_BUTTON_PADDING);
 			float padLeft = fullPaddingSpace / 2;
 			float backButtonSpace = backButton.getWidth()+BACKBUTTON_PADDING_X*2;
@@ -120,6 +128,26 @@ public class CareerMenu extends AbstractMenu {
 
         tutorialGameButton.setColor(0.5f, 1f, 0.5f, 1f);
         table.add(tutorialGameButton).fillX().width(LEVEL_BUTTON_WIDTH).pad(LEVEL_BUTTON_PADDING);
+    }
+    
+    @Override
+    public void render(float delta){
+    	super.render(delta);
+
+    	Batch batch = this.stage.getBatch();
+    	batch.begin();
+    	if(scrollpane.getScrollPercentX() != 0){
+    		if(!arrowTexture.isFlipX())
+    			arrowTexture.flip(true, false);
+    		batch.draw(arrowTexture, 50, 5);
+    	}
+
+    	if(scrollpane.getScrollPercentX() != 1){
+    		if(arrowTexture.isFlipX())
+    			arrowTexture.flip(true, false);
+    		batch.draw(arrowTexture, stage.getWidth()-50, 5);
+    	}
+    	batch.end();
     }
 
 }

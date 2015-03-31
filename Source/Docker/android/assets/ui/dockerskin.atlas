@@ -34,21 +34,21 @@ finger
   index: -1
 home_icon
   rotate: false
-  xy: 49, 36
+  xy: 96, 61
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 livesaver_off
   rotate: false
-  xy: 49, 20
+  xy: 118, 67
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 livesaver_on
   rotate: false
-  xy: 71, 42
+  xy: 259, 41
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
@@ -62,14 +62,14 @@ next_level_icon
   index: -1
 resume_icon
   rotate: false
-  xy: 292, 74
+  xy: 82, 36
   size: 11, 20
   orig: 11, 20
   offset: 0, 0
   index: -1
 retry_icon
   rotate: false
-  xy: 96, 61
+  xy: 259, 57
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
@@ -90,7 +90,7 @@ ship_button_up
   index: -1
 slider_pointer
   rotate: false
-  xy: 259, 44
+  xy: 49, 6
   size: 13, 24
   orig: 13, 24
   offset: 0, 0
@@ -105,14 +105,21 @@ slider_rail
   index: -1
 small_curved_arrow
   rotate: false
-  xy: 259, 70
+  xy: 49, 32
   size: 31, 24
   orig: 31, 24
   offset: 0, 0
   index: -1
+straight_arrow
+  rotate: false
+  xy: 259, 79
+  size: 44, 15
+  orig: 44, 15
+  offset: 0, 0
+  index: -1
 yellow_button
   rotate: false
-  xy: 118, 67
+  xy: 281, 63
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14
@@ -120,7 +127,7 @@ yellow_button
   index: -1
 yellow_button_pressed
   rotate: false
-  xy: 274, 54
+  xy: 64, 16
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14
