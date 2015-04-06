@@ -13,28 +13,28 @@ aqueduct
   index: -1
 bg_bird
   rotate: false
-  xy: 247, 461
+  xy: 247, 425
   size: 7, 4
   orig: 7, 4
   offset: 0, 0
   index: 1
 bg_bird
   rotate: false
-  xy: 247, 454
+  xy: 247, 418
   size: 7, 3
   orig: 7, 3
   offset: 0, 0
   index: 2
 bg_bird
   rotate: false
-  xy: 247, 447
+  xy: 227, 318
   size: 7, 3
   orig: 7, 3
   offset: 0, 0
   index: 4
 bg_bird
   rotate: false
-  xy: 247, 440
+  xy: 246, 124
   size: 7, 3
   orig: 7, 3
   offset: 0, 0
@@ -312,6 +312,27 @@ london_tower_bridge
   orig: 241, 100
   offset: 0, 0
   index: -1
+london_tower_bridge_flag
+  rotate: false
+  xy: 247, 468
+  size: 7, 8
+  orig: 7, 8
+  offset: 0, 0
+  index: 1
+london_tower_bridge_flag
+  rotate: false
+  xy: 247, 456
+  size: 7, 8
+  orig: 7, 8
+  offset: 0, 0
+  index: 2
+london_tower_bridge_flag
+  rotate: false
+  xy: 247, 444
+  size: 7, 8
+  orig: 7, 8
+  offset: 0, 0
+  index: 3
 mini_ship
   rotate: false
   xy: 72, 4
@@ -335,42 +356,42 @@ mini_ship
   index: 3
 nr
   rotate: false
-  xy: 247, 426
+  xy: 245, 173
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 1
 nr
   rotate: false
-  xy: 245, 173
+  xy: 246, 159
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 2
 nr
   rotate: false
-  xy: 247, 412
+  xy: 246, 145
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 3
 nr
   rotate: false
-  xy: 246, 159
+  xy: 246, 131
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 4
 nr
   rotate: false
-  xy: 246, 145
+  xy: 246, 60
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
   index: 5
 nr
   rotate: false
-  xy: 246, 131
+  xy: 246, 46
   size: 6, 10
   orig: 6, 10
   offset: 0, 0
@@ -475,7 +496,7 @@ train_platform_single
   index: -1
 train_wheel
   rotate: false
-  xy: 247, 469
+  xy: 247, 433
   size: 7, 7
   orig: 7, 7
   offset: 0, 0
@@ -489,7 +510,7 @@ water_level_base
   index: -1
 water_level_bubble
   rotate: false
-  xy: 202, 49
+  xy: 247, 410
   size: 5, 4
   orig: 5, 4
   offset: 0, 0

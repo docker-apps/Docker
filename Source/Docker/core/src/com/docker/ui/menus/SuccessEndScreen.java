@@ -1,6 +1,7 @@
 package com.docker.ui.menus;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -80,15 +81,12 @@ public class SuccessEndScreen extends AbstractMenu{
         }
     }
 	
-	private static float statetime=0;
-	
 	@Override
 	public void render(float delta){
 		super.render(delta);
-//		statetime+=delta*100;
-//		generateParticles(10, (float)Math.toRadians(statetime), (float)Math.toRadians(5), 150, 75, 150, 100);
 		
-		for (Particle particle : particles) {
+		for (Iterator<Particle> iterator = particles.iterator(); iterator.hasNext();) {
+			Particle particle = (Particle) iterator.next();
 			if(particle.color.a > 0){
 				particle.act(delta);
 				Batch batch = stage.getBatch();
@@ -97,8 +95,9 @@ public class SuccessEndScreen extends AbstractMenu{
 				batch.end();
 			}
 			else{
-				//particles.remove(particle);
+				iterator.remove();
 			}
+			
 		}
 	}
 

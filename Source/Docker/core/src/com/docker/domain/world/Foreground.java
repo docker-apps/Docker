@@ -104,6 +104,7 @@ public class Foreground extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		this.stateTime += delta;
 		float goalXPos = 13*this.capsizeValue;
 		if(Math.abs(this.bubbleXOffset - goalXPos) > 0.01)
 			this.bubbleXOffset += (goalXPos- this.bubbleXOffset+1)*delta;
@@ -118,8 +119,6 @@ public class Foreground extends Actor {
 
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
-		this.stateTime += Gdx.graphics.getDeltaTime();
-
 		drawDock(batch);
 		drawWaterLevel(batch);
 		drawWaterPlane(batch);
@@ -155,24 +154,22 @@ public class Foreground extends Actor {
 		batch.draw(this.waterLevelMarkings, this.getWidth()-39, 30);
 	}
 	
-	public void drawWaterPlane(Batch batch, Color tint){
-		batch.setColor(tint);
-		drawWaterPlane(batch);
-		batch.setColor(Color.WHITE);
+	public void drawWaterPlane(Batch batch){
+		drawWaterPlane(batch, WATER_COLOR, WATER_BORDER_COLOR);
 	}
 	
-	public void drawWaterPlane(Batch batch){
+	public void drawWaterPlane(Batch batch, Color waterColor, Color waterBorderColor){
 		batch.end();
 		shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(WATER_COLOR);
+		shapeRenderer.setColor(waterColor);
 		shapeRenderer.rect(
 				this.getX(), 
 				this.getY(), 
 				this.getWidth(), 
 				this.getWaterLevel()-1);
-		shapeRenderer.setColor(WATER_BORDER_COLOR);
+		shapeRenderer.setColor(waterBorderColor);
 		shapeRenderer.rect(
 				this.getX(), 
 				this.getY()+this.getWaterLevel()-1,
