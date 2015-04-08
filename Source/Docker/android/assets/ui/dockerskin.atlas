@@ -1,12 +1,12 @@
 
 dockerskin.png
-size: 512,128
+size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 back_icon
   rotate: false
-  xy: 306, 99
+  xy: 96, 44
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
@@ -21,83 +21,97 @@ big_curved_arrow
 docker_title
   rotate: false
   xy: 2, 83
-  size: 189, 36
-  orig: 189, 36
+  size: 154, 36
+  orig: 154, 36
+  offset: 0, 0
+  index: -1
+docker_title_logo
+  rotate: false
+  xy: 224, 84
+  size: 30, 35
+  orig: 30, 35
+  offset: 0, 0
+  index: -1
+docker_title_logo_gold
+  rotate: false
+  xy: 224, 47
+  size: 30, 35
+  orig: 30, 35
   offset: 0, 0
   index: -1
 finger
   rotate: false
-  xy: 193, 31
+  xy: 158, 31
   size: 64, 88
   orig: 64, 88
   offset: 0, 0
   index: -1
 home_icon
   rotate: false
-  xy: 96, 61
+  xy: 118, 44
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 livesaver_off
   rotate: false
-  xy: 118, 67
+  xy: 142, 67
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 livesaver_on
   rotate: false
-  xy: 259, 41
+  xy: 142, 51
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 next_level_icon
   rotate: false
-  xy: 328, 105
+  xy: 224, 31
   size: 20, 14
   orig: 20, 14
   offset: 0, 0
   index: -1
 resume_icon
   rotate: false
-  xy: 82, 36
+  xy: 119, 22
   size: 11, 20
   orig: 11, 20
   offset: 0, 0
   index: -1
 retry_icon
   rotate: false
-  xy: 259, 57
+  xy: 97, 22
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
 ship_button_down
   rotate: false
-  xy: 259, 96
+  xy: 49, 58
   size: 45, 23
   orig: 45, 23
   offset: 0, 0
   index: -1
 ship_button_up
   rotate: false
-  xy: 49, 58
+  xy: 49, 33
   size: 45, 23
   orig: 45, 23
   offset: 0, 0
   index: -1
 slider_pointer
   rotate: false
-  xy: 49, 6
+  xy: 82, 7
   size: 13, 24
   orig: 13, 24
   offset: 0, 0
   index: -1
 slider_rail
   rotate: false
-  xy: 350, 113
+  xy: 140, 43
   size: 15, 6
   split: 7, 7, 0, 7
   orig: 15, 6
@@ -105,21 +119,21 @@ slider_rail
   index: -1
 small_curved_arrow
   rotate: false
-  xy: 49, 32
+  xy: 49, 7
   size: 31, 24
   orig: 31, 24
   offset: 0, 0
   index: -1
 straight_arrow
   rotate: false
-  xy: 259, 79
+  xy: 96, 66
   size: 44, 15
   orig: 44, 15
   offset: 0, 0
   index: -1
 yellow_button
   rotate: false
-  xy: 281, 63
+  xy: 97, 6
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14
@@ -127,7 +141,7 @@ yellow_button
   index: -1
 yellow_button_pressed
   rotate: false
-  xy: 64, 16
+  xy: 113, 6
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14

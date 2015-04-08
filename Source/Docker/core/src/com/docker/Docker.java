@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.docker.domain.user.IInventory;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
 import com.docker.ui.menus.AbstractMenu;
@@ -37,9 +38,15 @@ public class Docker extends Game {
 
 	Stack<Screen> history;
 	private Persistence persistence;
+	private IInventory inventory;
 
-	public Docker(AdController adController) {
+	/**
+	 * @param adController
+	 * @param inventoryInstance an instance of a platform-specific Inventory implementation
+	 */
+	public Docker(AdController adController, IInventory inventoryInstance) {
 		this.adController = adController;
+		this.inventory = inventoryInstance;
 	}
 
 	@Override
@@ -101,7 +108,10 @@ public class Docker extends Game {
 	}
 
 	public void showAds(Boolean showAds) {
-		adController.showAds(showAds);
+		if(inventory.hasBeenUpdated() && inventory.hasPremium())
+			adController.showAds(false);
+		else
+			adController.showAds(showAds);
 	}
 
 	public void showInterstital() {
@@ -117,6 +127,13 @@ public class Docker extends Game {
 	 */
 	public Persistence getPersistence() {
 		return persistence;
+	}
+
+	/**
+	 * @return an instance of the users Inventory of in-app purchases
+	 */
+	public IInventory getInventory() {
+		return inventory;
 	}
 
 	/**

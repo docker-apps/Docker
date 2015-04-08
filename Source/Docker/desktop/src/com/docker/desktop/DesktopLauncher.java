@@ -5,6 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.docker.AdController;
 import com.docker.Docker;
+import com.docker.domain.user.Inventory;
 
 @SuppressWarnings("unused")
 public class DesktopLauncher implements AdController {
@@ -15,12 +16,12 @@ public class DesktopLauncher implements AdController {
 		config.height= 720;
 		// Diese Zeile nur einkommentieren, wenn sich bilddateien gendaert haben.
 //		TexturePacker.process("../../../Documents/Grafik/deploy", "../android/assets/img", "docker");
-//		TexturePacker.process("../../../Documents/Grafik/deploy_ui", "../android/assets/ui", "dockerskin");
+		TexturePacker.process("../../../Documents/Grafik/deploy_ui", "../android/assets/ui", "dockerskin");
 
         if (application == null) {
             application = new DesktopLauncher();
         }
-		new LwjglApplication(new Docker(application), config);
+		new LwjglApplication(new Docker(application, new Inventory()), config);
 	}
 
     @Override
