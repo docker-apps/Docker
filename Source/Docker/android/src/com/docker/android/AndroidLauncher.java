@@ -18,6 +18,7 @@ import com.google.android.gms.ads.AdView;
 
 import android.widget.RelativeLayout.LayoutParams;
 import com.google.android.gms.ads.InterstitialAd;
+import com.purplebrain.adbuddiz.sdk.AdBuddiz;
 
 public class AndroidLauncher extends AndroidApplication implements AdController {
 
@@ -39,10 +40,10 @@ public class AndroidLauncher extends AndroidApplication implements AdController 
         layout.setLayoutParams(params);
         adView = createAdView();
         layout.addView(adView);
-        setupInterstitial();
         layout.addView(createGameView(config));
         setContentView(layout);
         adView.loadAd(new AdRequest.Builder().build());
+        setupInterstitial();
     }
 
     private View createGameView(AndroidApplicationConfiguration cfg) {
@@ -69,12 +70,16 @@ public class AndroidLauncher extends AndroidApplication implements AdController 
     }
 
     private void setupInterstitial() {
-        interstitialAd = new InterstitialAd(this);
+
+        AdBuddiz.setPublisherKey("f0655068-7dd9-4d63-8975-14b483b98b57");
+        AdBuddiz.cacheAds(this);
+
+        /*interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.ad_unit_interstitial_id));
 
         AdRequest.Builder builder = new AdRequest.Builder();
         AdRequest ad = builder.build();
-        interstitialAd.loadAd(ad);
+        interstitialAd.loadAd(ad);*/
     }
 
     @Override
@@ -93,10 +98,12 @@ public class AndroidLauncher extends AndroidApplication implements AdController 
 
     @Override
     public void showInterstitialAd() {
+        final AndroidLauncher androidLauncher = this;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                interstitialAd.setAdListener(new AdListener() {
+                AdBuddiz.showAd(androidLauncher);
+                /*interstitialAd.setAdListener(new AdListener() {
                     @Override
                     public void onAdClosed() {
                         AdRequest.Builder builder = new AdRequest.Builder();
@@ -104,7 +111,7 @@ public class AndroidLauncher extends AndroidApplication implements AdController 
                         interstitialAd.loadAd(ad);
                     }
                 });
-                interstitialAd.show();
+                interstitialAd.show();*/
             }
         });
     }
