@@ -90,7 +90,7 @@ public class AndroidLauncher extends AndroidApplication implements AdController 
                 if (show) {
                     adView.setVisibility(View.VISIBLE);
                 } else {
-                    adView.setVisibility(View.INVISIBLE);
+                    adView.setVisibility(View.GONE);
                 }
             }
         });
