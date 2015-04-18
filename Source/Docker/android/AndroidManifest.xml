@@ -37,6 +37,9 @@
       <activity android:name=".InterstitialActivity"
                 android:label="@string/interstitial"/>
 
+    <activity android:name="com.purplebrain.adbuddiz.sdk.AdBuddizActivity"
+              android:theme="@android:style/Theme.Translucent" />
+
     </application>
 
   <!-- Include required permissions for Google Mobile Ads to run-->
