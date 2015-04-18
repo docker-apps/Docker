@@ -132,8 +132,6 @@ public class CareerMenu extends AbstractMenu {
     
     @Override
     public void render(float delta){
-    	super.render(delta);
-
     	Batch batch = this.stage.getBatch();
     	batch.begin();
     	if(scrollpane.getScrollPercentX() != 0){
@@ -148,6 +146,10 @@ public class CareerMenu extends AbstractMenu {
     		batch.draw(arrowTexture, stage.getWidth()-50, 5);
     	}
     	batch.end();
+    	
+    	super.render(delta);
+
+    	
     }
 
 }

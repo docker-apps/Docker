@@ -20,18 +20,18 @@ public class MainMenu extends AbstractMenu{
 	private TextButton gameMenuButton = new TextButton("Play", skin),
 			settingsButton = new TextButton("Settings", skin),
 			statisticsButton = new TextButton("Statistics", skin),
-			premiumButton = new TextButton("Get Premium!", skin);
+			premiumButton = new TextButton("Premium!", skin);
 
 	/**
 	 * @param application A reference to the Docker Application (Game) object.
 	 */
 	public MainMenu(final Docker application){
 		super(application);
-		this.setBackground(new MenuBackground(this.stage.getWidth(), this.stage.getHeight(), application.getInventory().hasPremium()));
+		this.setBackground(new MenuBackground(this.stage.getWidth(), this.stage.getHeight(), Docker.getInventory().hasPremium()));
 
 		TextureRegion titleRegion = Resource.getDockerSkinTextureAtlas().findRegion("docker_title");
 		TextureRegion logoRegion = Resource.getDockerSkinTextureAtlas().findRegion(
-				application.getInventory().hasPremium() ? "docker_title_logo_gold" : "docker_title_logo");
+				Docker.getInventory().hasPremium() ? "docker_title_logo_gold" : "docker_title_logo");
 
 		Image titleImage = new Image(titleRegion);
 		titleImage.setSize(titleRegion.getRegionWidth(), titleRegion.getRegionHeight());		
@@ -75,10 +75,10 @@ public class MainMenu extends AbstractMenu{
 			}
 		});
 
-		table.add(gameMenuButton).size(100, 35).padTop(20).padBottom(5).row();
-		table.add(settingsButton).size(100, 35).padBottom(5).row();
-		table.add(statisticsButton).size(100, 35).padBottom(5).row();
-		table.add(premiumButton).size(100, 35).padBottom(5).row();
+		table.add(gameMenuButton).size(120, 35).pad(5).padTop(20);
+		table.add(settingsButton).size(120, 35).pad(5).padTop(20).row();
+		table.add(statisticsButton).size(120, 35).pad(5);
+		table.add(premiumButton).size(120, 35).pad(5);
 	}
 
 	@Override
