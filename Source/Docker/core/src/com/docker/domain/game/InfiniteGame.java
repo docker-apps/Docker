@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Ship;
+import com.docker.domain.gameobject.shipskins.ShipSkinManager;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
 
@@ -32,7 +33,7 @@ public class InfiniteGame extends AbstractGame{
             public void clicked(InputEvent event, float x, float y) {
             	//TODO:Ship check break and sink
             	checkShipCondition();
-            	setShip(Ship.getRandomShip());
+            	setShip(Ship.getRandomShip(ShipSkinManager.getConfiguredSkin()));
             	getShip().runIn();            	
             }
         });

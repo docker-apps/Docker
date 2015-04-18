@@ -60,6 +60,15 @@ public class Persistence {
         prefs.put(map);
         prefs.flush();
     }
+    
+    public static int getShipSkinId(){
+    	return prefs.getInteger("shipSkinId");
+    }
+
+    public static void setShipSkinId(int shipSkinId) {
+        prefs.putInteger("shipSkinId", shipSkinId);
+        prefs.flush();
+    }
 
     public static Boolean isSoundOn() {
         return prefs.getBoolean("soundOn", true);

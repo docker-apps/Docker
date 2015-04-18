@@ -38,8 +38,8 @@ public class Docker extends Game {
 	private final AdController adController;
 
 	Stack<Screen> history;
-	private Persistence persistence;
-	private IInventory inventory;
+	private static Persistence persistence;
+	private static IInventory inventory;
 
 	/**
 	 * @param adController
@@ -47,13 +47,13 @@ public class Docker extends Game {
 	 */
 	public Docker(AdController adController, IInventory inventoryInstance) {
 		this.adController = adController;
-		this.inventory = inventoryInstance;
+		Docker.inventory = inventoryInstance;
 	}
 
 	@Override
 	public void create() {
 		this.history = new Stack<Screen>();
-		this.setPersistence(new Persistence());
+		Docker.setPersistence(new Persistence());
 		this.setScreen(new MainMenu(this));
 		//this.setScreen(new SplashScreen(this));
 	}
@@ -127,22 +127,22 @@ public class Docker extends Game {
 	/**
 	 * @return an instance of the persistence interface
 	 */
-	public Persistence getPersistence() {
-		return persistence;
+	public static Persistence getPersistence() {
+		return Docker.persistence;
 	}
 
 	/**
 	 * @return an instance of the users Inventory of in-app purchases
 	 */
-	public IInventory getInventory() {
-		return inventory;
+	public static IInventory getInventory() {
+		return Docker.inventory;
 	}
 
 	/**
 	 * @param persistence the instance of the persistence interface
 	 */
-	public void setPersistence(Persistence persistence) {
-		this.persistence = persistence;
+	public static void setPersistence(Persistence persistence) {
+		Docker.persistence = persistence;
 	}
 
 	@Override

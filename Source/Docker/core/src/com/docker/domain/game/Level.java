@@ -8,10 +8,10 @@ import java.util.List;
 import com.badlogic.gdx.utils.JsonValue;
 import com.docker.Docker;
 import com.docker.technicalservices.Persistence;
-
 import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
+import com.docker.domain.gameobject.shipskins.ShipSkinManager;
 
 /**
  * Level class which loads levels from persistence or generates random level with specified input
@@ -77,7 +77,7 @@ public class Level {
 	 */
 	private void generateSpecifiedLevel(){
 		//ship does not need carryingCapacity
-		this.ship = new Ship(shipLength, shipHeight, capsizeThreshold, breakThreshold, 0, 0);
+		this.ship = new Ship(shipLength, shipHeight, capsizeThreshold, breakThreshold, 0, 0, ShipSkinManager.getConfiguredSkin());
 		this.initShipPosition();
 		LinkedList<Container> allContainers = new LinkedList<Container>();
 		while(!containerLengths.isEmpty()){
@@ -134,7 +134,7 @@ public class Level {
 		
 		this.train = new Train(allContainers, trainSpeed);
 		this.initTrainPosition();
-		this.ship = new Ship(shipLength, shipHeight, capsizeThreshold, breakThreshold, 0f, 10f);
+		this.ship = new Ship(shipLength, shipHeight, capsizeThreshold, breakThreshold, 0f, 10f, ShipSkinManager.getConfiguredSkin());
 		this.initShipPosition();
 	}
 	

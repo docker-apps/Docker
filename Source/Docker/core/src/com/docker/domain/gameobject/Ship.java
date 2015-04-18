@@ -12,7 +12,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Interpolation;
@@ -26,15 +28,18 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.docker.Docker;
+import com.docker.domain.gameobject.shipskins.IShipSkin;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
 
-public class Ship extends Actor {
+public class Ship extends Actor {	
 	private static final Color PREVIEW_CONTAINER_INVALID_COLOR = new Color(1f, 1f, 1f, 0.5f);
 	private static final Color PREVIEW_CONTAINER_COLOR = new Color(1f, 0f, 0f, 0.5f);
+	
 	private int gridWidth;
 	private int gridHeight;
 	private int breakThreshold;
@@ -55,14 +60,7 @@ public class Ship extends Actor {
 
 	private Sound containerSound;
 
-	private TextureRegion bodyLeft;
-	private TextureRegion bodyCenter;
-	private TextureRegion bodyRight;
-	private TextureRegion tower;
-	private TextureRegion mast;
-	private TextureRegion indicatorLampOn;
-	private TextureRegion bodyBrokenLeft;
-	private TextureRegion bodyBrokenRight;
+	private IShipSkin skin;
 	private FrameBuffer fbo;
 	private Pixmap gridBoundsPixmap;
 	private Texture gridBoundsTexture;
@@ -80,9 +78,9 @@ public class Ship extends Actor {
 		}
 	};
 
-	private List<SmokePuff> smokePuffs = new ArrayList<Ship.SmokePuff>();;
-
-	public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y) {
+	private List<SmokePuff> smokePuffs = new ArrayList<Ship.SmokePuff>();
+	
+	public Ship(int gridWidth, int gridHeight, int capsizeThreshold, int breakThreshold, float x, float y, IShipSkin skin) {
 		super();
 
 		if(gridWidth <= 1)
@@ -97,21 +95,14 @@ public class Ship extends Actor {
 		this.containers = new ArrayList<Container>();
 		this.setBreakValues(null);
 
-		this.bodyLeft = Resource.findRegion("ship_body_left");
-		this.bodyCenter = Resource.findRegion("ship_body_center");
-		this.bodyRight = Resource.findRegion("ship_body_right");
-		this.tower = Resource.findRegion("ship_tower");
-		this.mast = Resource.findRegion("ship_mast");
-		this.indicatorLampOn = Resource.findRegion("indicator_lamp_on");
-		this.bodyBrokenLeft = Resource.findRegion("ship_body_broken_left");
-		this.bodyBrokenRight = Resource.findRegion("ship_body_broken_right");
+		this.skin = skin;
 
-		this.gridSize = this.bodyCenter.getRegionWidth();
+		this.gridSize = skin.getBodyCenter().getRegionWidth();
 
 		this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 
-		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
-		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
+		this.xGridstart = this.getX()+skin.getBodyLeft().getRegionWidth() - gridSize;
+		this.yGridstart = this.getY()+skin.getBodyCenter().getRegionHeight();
 
 		playContainerSound = Persistence.isSoundOn();
 		containerSound = Gdx.audio.newSound(Gdx.files.internal("container_load.wav"));
@@ -132,7 +123,7 @@ public class Ship extends Actor {
 			Vector2 realCoords = getRealCoord(gridCoords);
 			container.setPosition(realCoords.x, realCoords.y);
 			Random rand = new Random();
-			
+
 			//create a smoke puff, but only if containerpart actually touches anything
 			for (int i = 0; i < container.getLength(); i++) {
 				if((int)gridCoords.y == 0 || this.topLine[(int) gridCoords.x + i] == ((int)gridCoords.y)){
@@ -163,7 +154,7 @@ public class Ship extends Actor {
 		}
 	}
 
-	
+
 
 	/**
 	 * Sets a Preview Container, where the Container possible could be set.
@@ -364,9 +355,31 @@ public class Ship extends Actor {
 				return true;
 			}
 		};
+		
+		Action waterSplashAction = new Action() {
+			Random rand = new Random();
+
+			@Override
+			public boolean act(float delta) {
+				float waterHeight = 20f;
+				float offset = getX() + getWidth()/2;
+				
+				if(rand.nextFloat() > 0.5){
+					float randomOffset = - getWidth()/2 + rand.nextFloat()*getWidth();
+					WaterSplash splashTest = new WaterSplash(
+							actor.getX()+ offset + randomOffset,
+							waterHeight);
+					getStage().addActor(splashTest);
+					System.out.println("new splash added at " + splashTest.getX());
+				}
+				return true;
+			}
+		};
+		
+		ParallelAction parallelAction = new ParallelAction(moveAction, waterSplashAction);
 
 		// chain the two actions and add it to this actor
-		SequenceAction actions = new SequenceAction(moveAction, completeAction);
+		SequenceAction actions = new SequenceAction(parallelAction, completeAction);
 		img.addAction(actions);
 		this.getStage().addActor(img);
 		this.isStaticAnimationRunning = true;
@@ -383,7 +396,7 @@ public class Ship extends Actor {
 	public void capsize(float capsizeValue){
 		TextureRegion region = takeSnapshot();
 
-		this.startCapsizeAnimation(this, capsizeValue);
+		//this.startCapsizeAnimation(this, capsizeValue);
 
 		Image img = new Image(region);
 		startCapsizeAnimation(img, capsizeValue);
@@ -391,9 +404,9 @@ public class Ship extends Actor {
 	}
 
 
-	public static Ship getRandomShip() {
+	public static Ship getRandomShip(IShipSkin skin) {
 		int width = 5 + (int)(Math.random() * ((10 - 5) + 1));
-		Ship ship = new Ship(width, 5, 5, 5, 0f, 0f);
+		Ship ship = new Ship(width, 5, 5, 5, 0f, 0f, skin);
 		ship.setPosition((Docker.WIDTH-ship.getWidth())/2-20f, 10f);
 		return ship;
 	}
@@ -406,24 +419,53 @@ public class Ship extends Actor {
 	 * @param actor The actor to which should be animated.
 	 * @param capsizeValue if positive, the ship will capsize to the left, if negative, to the right.
 	 */
-	private void startCapsizeAnimation(Actor actor, float capsizeValue){
+	private void startCapsizeAnimation(Actor actor, final float capsizeValue){
 		this.setStaticAnimationRunning(true);
 
-		float duration = 6;
+		float duration = 60;
 
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(actor.getX(), actor.getY()-this.getWidth());
 		moveAction.setDuration(duration*0.75f);
 		moveAction.setInterpolation(Interpolation.exp5In);
-		actor.addAction(moveAction);
 
-		actor.setOrigin(actor.getWidth()/2-actor.getWidth()/6*Math.signum(capsizeValue), 10);
+		actor.setOrigin(actor.getWidth()/2, 5);
 		RotateByAction rotateAction = new RotateByAction();
 		rotateAction.setAmount(90*Math.signum(capsizeValue));
 		rotateAction.setDuration(duration);
 		rotateAction.setInterpolation(Interpolation.exp5Out);
 
-		ParallelAction sinkingAction = new ParallelAction(moveAction, rotateAction);
+		Action waterSplashAction = new Action() {
+			Random rand = new Random();
+
+			@Override
+			public boolean act(float delta) {
+				if(rand.nextFloat() > 0.8){
+//					float waterHeight = 20f;
+//					Vector2 p1 = new Vector2(actor.getOriginX()-getX(), actor.getOriginY()-getY()-30);
+//					Vector2 p2 = new Vector2(actor.getOriginX()-(getX()-getWidth()), actor.getOriginY()-getY()-30);
+////					double angle = Math.toRadians(actor.getRotation());
+////					float shipBodyOffset = actor.getOriginY() - getY() - 10f;
+////					float wateroffset = actor.getOriginY() - waterHeight;
+////					float offset = (float)(Math.cos(angle) * wateroffset);
+//					
+//					float randomSpread = 100f;
+//					float randomOffset = - randomSpread + rand.nextFloat()*randomSpread;
+//					WaterSplash splashTest = new WaterSplash(
+//							actor.getX() + actor.getOriginX() - p1.x,
+//							actor.getY() + actor.getOriginY() - p1.y);
+//					WaterSplash splashTest2 = new WaterSplash(
+//							actor.getX() + actor.getOriginX() - p2.x,
+//							actor.getY() + actor.getOriginY() - p2.y);
+//					getStage().addActor(splashTest);
+//					getStage().addActor(splashTest2);
+//					System.out.println("new splash added at " + splashTest.getX());
+				}
+				return true;
+			}
+		};
+
+		ParallelAction sinkingAction = new ParallelAction(moveAction, rotateAction, waterSplashAction);
 
 		// set the sunken flag
 		Action completeAction = new Action(){
@@ -483,8 +525,8 @@ public class Ship extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		this.xGridstart = this.getX()+bodyLeft.getRegionWidth() - gridSize;
-		this.yGridstart = this.getY()+bodyCenter.getRegionHeight();
+		this.xGridstart = this.getX()+skin.getBodyLeft().getRegionWidth() - gridSize;
+		this.yGridstart = this.getY()+skin.getBodyCenter().getRegionHeight();
 
 		this.gridBoundsAlpha = Math.max(0f, this.gridBoundsAlpha - this.gridBoundsDecay * delta);
 
@@ -503,23 +545,44 @@ public class Ship extends Actor {
 	public void draw (Batch batch, float parentAlpha) {
 		if(!isStaticAnimationRunning){
 			// draw ship
-			batch.draw(this.bodyLeft, this.getX(), this.getY());
-			batch.draw(this.mast, this.getX()+this.bodyLeft.getRegionWidth()-this.getElementWidth()-this.mast.getRegionWidth()-1, this.getY()+this.bodyLeft.getRegionHeight());
+			batch.draw(
+					skin.getBodyLeft(), 
+					getX(), 
+					getY());
+			batch.draw(
+					skin.getMast(), 
+					getX()+skin.getMastOffset().x, 
+					getY()+skin.getBodyLeft().getRegionHeight()+skin.getMastOffset().y);
 			for (int i = 0; i < this.gridWidth-2; i++) {
-				float xPos = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*i);
+				float xPos = this.getX()+this.skin.getBodyLeft().getRegionWidth()+(getElementWidth()*i);
 				if(isBreaking && i == this.breakPos-1){
-					batch.draw(this.bodyBrokenLeft, xPos, this.getY());
+					batch.draw(
+							skin.getBodyBrokenLeft(),
+							xPos, 
+							getY());
 				}
 				else if(isBreaking && i == this.breakPos){
-					batch.draw(this.bodyBrokenRight, xPos, this.getY());
+					batch.draw(
+							skin.getBodyBrokenRight(),
+							xPos,
+							getY());
 				}
 				else{
-					batch.draw(this.bodyCenter, xPos, this.getY());
+					batch.draw(
+							skin.getBodyCenter(),
+							xPos,
+							this.getY());
 				}
 			}
-			float bodyRightX = this.getX()+this.bodyLeft.getRegionWidth()+(getElementWidth()*(this.gridWidth-2));
-			batch.draw(this.bodyRight, bodyRightX, this.getY());
-			batch.draw(this.tower, bodyRightX+this.bodyRight.getRegionWidth()-this.tower.getRegionWidth()-1, this.getY()+this.bodyRight.getRegionHeight());
+			float bodyRightX = getX()+skin.getBodyLeft().getRegionWidth()+(getElementWidth()*(gridWidth-2));
+			batch.draw(
+					skin.getBodyRight(), 
+					bodyRightX, 
+					this.getY());
+			batch.draw(
+					skin.getTower(),
+					bodyRightX+this.skin.getBodyRight().getRegionWidth()-skin.getTower().getRegionWidth()+skin.getTowerOffset().x, 
+					this.getY()+skin.getBodyRight().getRegionHeight()+skin.getTowerOffset().y);
 
 			// draw preview Container
 			if (previewContainer != null) {
@@ -527,15 +590,18 @@ public class Ship extends Actor {
 			}
 
 			if(this.gridBoundsAlpha > 0f)
-				batch.draw(this.getGridBoundsTexture(), xGridstart, yGridstart);
+				batch.draw(
+						this.getGridBoundsTexture(), 
+						xGridstart, 
+						yGridstart);
 
 			// draw Containers
 			for (Container container : containers) {
 				container.draw(batch, parentAlpha);
 			}
 
-			float lampsOffsetX = this.getX() + this.bodyLeft.getRegionWidth() - 
-					this.getElementWidth()/2-this.indicatorLampOn.getRegionWidth()/2;
+			float lampsOffsetX = getX() + skin.getBodyLeft().getRegionWidth() - 
+					getElementWidth()/2-skin.getIndicatorLamp().getRegionWidth()/2;
 			float lampsOffsetY = this.getY()+34;
 			// draw indicator lamps
 			if(this.breakValues != null){
@@ -547,8 +613,8 @@ public class Ship extends Actor {
 					else
 						batch.setColor(1f, 0, 0, 1);
 					batch.draw(
-							this.indicatorLampOn,
-							lampsOffsetX + this.getElementWidth()*i,
+							skin.getIndicatorLamp(),
+							lampsOffsetX + getElementWidth()*i,
 							lampsOffsetY);
 				}
 				batch.setColor(Color.WHITE);
@@ -559,13 +625,13 @@ public class Ship extends Actor {
 	@Override
 	public float getWidth(){
 		return 
-				this.bodyLeft.getRegionWidth() + 
-				this.bodyCenter.getRegionWidth()*(this.gridWidth-2) + 
-				this.bodyRight.getRegionWidth();
+				skin.getBodyLeft().getRegionWidth() + 
+				skin.getBodyCenter().getRegionWidth()*(this.gridWidth-2) + 
+				skin.getBodyRight().getRegionWidth();
 	}
 
 	public float getElementWidth(){
-		return this.bodyCenter.getRegionWidth();
+		return skin.getBodyCenter().getRegionWidth();
 	}
 
 	/**
@@ -708,7 +774,7 @@ public class Ship extends Actor {
 	public void setSunken(boolean isSunken) {
 		this.isSunken = isSunken;
 	}
-	
+
 	private class SmokePuff extends Actor implements Poolable{
 		private final static float FADE_OUT_SPEED = 2;
 		private final static float RISE_SPEED = 10;
@@ -755,6 +821,37 @@ public class Ship extends Actor {
 			this.setColor(1f, 1f, 1f, 1f);
 		}
 
+	}
+
+	private class WaterSplash extends Actor{
+		private Array<AtlasRegion> frames;
+		private Animation animation;
+		private float stateTime;
+
+		public WaterSplash(float x, float y){
+			this.setX(x);
+			this.setY(y);
+
+			frames = Resource.findRegions("water_splash");
+			animation = new Animation(0.2f, frames);
+		}
+
+		@Override
+		public void act(float delta){
+			stateTime+=delta;
+			if (isFinished()) {
+				remove();
+			}
+		}
+
+		@Override
+		public void draw(Batch batch, float parentAlpha){
+			batch.draw(animation.getKeyFrame(stateTime), getX(), getY());
+		}
+
+		public boolean isFinished(){
+			return animation.isAnimationFinished(stateTime);
+		}
 	}
 
 }

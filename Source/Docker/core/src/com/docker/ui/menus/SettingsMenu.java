@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
+import com.docker.domain.gameobject.shipskins.ShipSkinManager;
 import com.docker.technicalservices.Persistence;
 
 /**
@@ -24,9 +25,8 @@ import com.docker.technicalservices.Persistence;
  * - music volume
  */
 public class SettingsMenu extends AbstractMenu {
-    Persistence persistence;
-
 	private Button backButton = createBackButton(skin);
+	private TextButton shipButton = new TextButton("-", skin);
     private TextButton creditsButton = new TextButton("Credits", skin);
     private CheckBox soundCheckBox = new CheckBox("",skin);
     private CheckBox musicCheckBox = new CheckBox("", skin);
@@ -42,7 +42,6 @@ public class SettingsMenu extends AbstractMenu {
     public SettingsMenu(final Docker application) {
         super(application);
         
-        this.persistence = application.getPersistence();
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -54,6 +53,15 @@ public class SettingsMenu extends AbstractMenu {
             public void clicked(InputEvent event, float x, float y) {
                 openNewMenu(new CreditsMenu(application));
             }
+        });
+        shipButton.addListener(new ClickListener(){
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            	int newId = ShipSkinManager.getNextSkin();
+            	Persistence.setShipSkinId(newId);
+            	shipButton.setText(ShipSkinManager.getSkinName(newId));
+	        }
         });
         soundCheckBox.addListener(new ClickListener() {
             @Override
@@ -84,11 +92,16 @@ public class SettingsMenu extends AbstractMenu {
             }
         });
         Table settingsTable = new Table();
+        
+        shipButton.setText(ShipSkinManager.getSkinName(Persistence.getShipSkinId()));
         volumeSlider.setValue(Persistence.getVolume());
         soundCheckBox.setChecked(Persistence.isSoundOn());
         musicCheckBox.setChecked(Persistence.isMusicOn());
         vibrateCheckBox.setChecked(Persistence.isVibrationOn());
+        
         settingsTable.add(title).center().padBottom(15).colspan(3).row().padBottom(10);
+        settingsTable.add(new Label("Ship", skin)).width(100).left();
+        settingsTable.add(shipButton).width(180).colspan(2).left().row().padBottom(10);
         settingsTable.add(new Label("Sound", skin)).width(100).left();
         settingsTable.add(soundCheckBox).width(100).left().row().padBottom(10);
         settingsTable.add(new Label("Music", skin)).width(100).left();
@@ -100,7 +113,7 @@ public class SettingsMenu extends AbstractMenu {
         settingsTable.add(volumeSlider).width(120);
         settingsTable.add(volumeValue).center().width(50).row().padBottom(10);
         settingsTable.add(backButton).size(100, 30).left();
-        settingsTable.add(creditsButton).size(100, 30).colspan(2).center().row();
+        settingsTable.add(creditsButton).size(100, 30).colspan(2).right().row();
         ScrollPane scrollpane = new AbstractScrollPane(settingsTable);
         scrollpane.setPosition(0, 0);
         scrollpane.setSize(stage.getWidth(), stage.getHeight());

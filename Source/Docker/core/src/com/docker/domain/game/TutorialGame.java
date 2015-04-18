@@ -24,6 +24,7 @@ import com.docker.Docker;
 import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
+import com.docker.domain.gameobject.shipskins.ShipSkinManager;
 import com.docker.technicalservices.Resource;
 
 public class TutorialGame extends AbstractGame {
@@ -54,7 +55,7 @@ public class TutorialGame extends AbstractGame {
 		containers.add(new Container(2, 1));
 		containers.add(new Container(2, 5));
 		this.setTrain(new Train(containers, 5, 0f, getStage().getHeight()-23));
-		this.setShip(new Ship(10, 5, 18, 2, 0f, 0f));
+		this.setShip(new Ship(10, 5, 18, 2, 0f, 0f, ShipSkinManager.getSkin(ShipSkinManager.DEFAULT_SHIP_SKIN)));
 		this.ship.setPosition(getStage().getWidth()/2-ship.getWidth()/2-20f, 10f);
 		this.setLoadRating(new LoadRating(this.ship.getBreakThreshold(), this.ship.getCapsizeThreshold(), 1));
 		this.setLives(3);
