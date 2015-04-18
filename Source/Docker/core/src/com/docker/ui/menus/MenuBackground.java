@@ -34,14 +34,16 @@ public class MenuBackground extends Actor {
 	private static final Color WATER_COLOR = Color.valueOf("2c98d6");
 
 	private float stateTime;
-	
+
+	private boolean drawPremium = false;
+
 	private static final float SKY_HEIGHT = 50f;
 	private static final int WATER_MOVEMENT_AMOUNT = 1000;
 	private static final float TRAIN_SPEED = 10f;
 	private static final float AQUEDUCT_SPEED = -20f;
 	private static final float MINI_SHIP_SPEED = -5f;
 	private static final float CLOUD_SPEED = 0.1f;
-	
+
 	private ShapeRenderer shapeRenderer;
 
 	private TextureRegion aqueductElement;
@@ -59,8 +61,10 @@ public class MenuBackground extends Actor {
 	private Array<AtlasRegion> waterMovement;
 	private Animation waterMovementAnimation;
 	private List<Vector2> waterMovementPositions;
-	
+
 	private Train train;
+	private Pixmap sunPixmap;
+	private Pixmap rayPixmap;
 
 	/**
 	 * @param width the width of the Background. Usually equals the width of the screen.
@@ -76,23 +80,23 @@ public class MenuBackground extends Actor {
 		this.aqueductElement = atlas.findRegion("aqueduct");
 		this.harbor = atlas.findRegion("harbor");
 		this.skyline = atlas.findRegion("skyline");
-		
+
 		this.miniShip = atlas.findRegions("mini_ship");
 		this.miniShipAnimation = new Animation(0.3f, this.miniShip);
 		this.miniShipAnimation.setPlayMode(PlayMode.LOOP);
 		this.miniShipXPos = this.getWidth()-20f;
-		
+
 		this.bird = atlas.findRegions("bg_bird");
 		this.birdAnimation = new Animation(0.2f, this.bird);
 
 		this.cloud = atlas.findRegions("bg_cloud");
 		this.cloudIndex = rand.nextInt(2);
 		this.cloudPosition = new Vector2(rand.nextFloat()*this.getWidth(), getHorizonHeight() + rand.nextFloat()*SKY_HEIGHT);
-		
+
 		this.waterMovement = atlas.findRegions("fg_water_movement");
 		this.waterMovementAnimation = new Animation(0.2f, this.waterMovement);
 		this.waterMovementAnimation.setPlayMode(PlayMode.LOOP_PINGPONG);
-		
+
 		this.waterMovementPositions = new ArrayList<Vector2>();
 		for (int i = 0; i < WATER_MOVEMENT_AMOUNT; i++) {
 			Vector2 position = new Vector2(
@@ -100,17 +104,22 @@ public class MenuBackground extends Actor {
 					rand.nextFloat()*(getHorizonHeight() - 2));
 			this.waterMovementPositions.add(position);
 		}
-		
+
 		this.train = Level.loadLevel().getTrain();
 		this.train.setPosition(20f, this.aqueductElement.getRegionHeight()+8);
 		this.train.setIndestructible(true);
 		this.train.setSpeed(TRAIN_SPEED);
 	}
-	
+
+	public MenuBackground(float width, float height, boolean drawPremium){
+		this(width, height);
+		this.drawPremium = drawPremium;
+	}
+
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		
+
 		//move cloud
 		if(this.cloudPosition.x > this.getX() + this.getWidth()){
 			Random rand = new Random();
@@ -122,20 +131,20 @@ public class MenuBackground extends Actor {
 		else{
 			this.cloudPosition.add(CLOUD_SPEED, 0);
 		}
-		
+
 		this.train.act(delta);
-		
+
 		if(Math.abs(this.aqueductOffset) < this.aqueductElement.getRegionWidth())
 			this.aqueductOffset += AQUEDUCT_SPEED * delta;
 		else
 			this.aqueductOffset = AQUEDUCT_SPEED * delta;
-		
+
 		if(this.miniShipXPos + this.miniShip.get(0).getRegionWidth() + 60 > 0)
 			this.miniShipXPos += MINI_SHIP_SPEED * delta;
 		else
 			this.miniShipXPos = this.getWidth() + this.miniShip.get(0).getRegionWidth();
 	}
-	
+
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
 		this.stateTime += Gdx.graphics.getDeltaTime();
@@ -153,15 +162,46 @@ public class MenuBackground extends Actor {
 		batch.begin();
 
 		// draw sun
-		Pixmap pixmap = new Pixmap(21, 21, Format.RGBA8888);
-		pixmap.setColor(1f, 0.5f+dayTimeSin*0.5f, dayTimeSin*0.8f, 1f);
-		pixmap.fillCircle(10, 10, 10);
-		
-		batch.draw(new Texture(pixmap),
-				this.getWidth()/2+(float)Math.cos(dayTime)*(this.getWidth()/2-20),
-				this.getHorizonHeight()-21+dayTimeSin*50);
-		
-		
+		Color sunColor = new Color(1f, 0.5f+dayTimeSin*0.5f, dayTimeSin*0.8f, 1f);
+		int sunRadius = 10;
+		if(sunPixmap != null)
+			sunPixmap.dispose();
+		sunPixmap = new Pixmap(sunRadius*2+1, sunRadius*2+1, Format.RGBA8888);
+		sunPixmap.setColor(sunColor);
+		sunPixmap.fillCircle(sunRadius, sunRadius, sunRadius);		
+		float sunXPos = this.getWidth()/2+(float)Math.cos(dayTime)*(this.getWidth()/2-20);
+		float sunYPos = this.getHorizonHeight()-21+dayTimeSin*50;		
+		batch.draw(new Texture(sunPixmap),
+				sunXPos,
+				sunYPos);
+
+		if(drawPremium){
+			int rayWidth = (int) Math.sqrt(Math.pow((Math.max(this.getWidth() - sunXPos, sunXPos) + sunRadius), 2) + Math.pow(SKY_HEIGHT, 2));
+			int rayHeight = 50;
+			if(rayPixmap != null)
+				rayPixmap.dispose();
+			rayPixmap = new Pixmap(rayWidth,rayHeight, Format.RGBA8888);
+			rayPixmap.setColor(sunColor);
+			rayPixmap.fillTriangle(-10, rayHeight/2, rayWidth, rayHeight, rayWidth, 0);		
+			Texture rayTexture = new Texture(rayPixmap);
+			TextureRegion rayTextureRegion = new TextureRegion(rayTexture);
+			int rayCount = 12;
+			for (int i = 0; i < rayCount; i++) {
+				float angleOffset = 360/rayCount * i;
+				batch.draw(
+						rayTextureRegion, 
+						sunXPos + sunRadius,
+						sunYPos - rayHeight/2 + sunRadius,
+						0,
+						rayHeight/2, 
+						rayWidth, 
+						rayHeight, 
+						1, 
+						1, 
+						stateTime*5 + angleOffset);
+			}
+		}
+
 		batch.draw(
 				this.cloud.get(this.cloudIndex),
 				this.cloudPosition.x,
@@ -181,7 +221,7 @@ public class MenuBackground extends Actor {
 				this.birdAnimation.getKeyFrame(stateTime+1, true),
 				this.getWidth()-40,
 				this.getHeight()-10);
-		
+
 		//draw water
 		batch.end();
 		shapeRenderer.begin(ShapeType.Filled);
@@ -190,7 +230,7 @@ public class MenuBackground extends Actor {
 				this.getX(), 
 				this.getY(), 
 				this.getWidth(), 
-				this.getHeight()-50);
+				this.getHeight()-SKY_HEIGHT);
 		shapeRenderer.setColor(WATER_BORDER_COLOR);
 		shapeRenderer.rect(
 				this.getX(), 
@@ -199,7 +239,7 @@ public class MenuBackground extends Actor {
 				1);
 		shapeRenderer.end();
 		batch.begin();
-		
+
 		// draw water animation
 		for (Vector2 position : this.waterMovementPositions) {
 			TextureRegion frame = this.waterMovementAnimation.getKeyFrame((float) (stateTime+position.y), true);
@@ -210,13 +250,13 @@ public class MenuBackground extends Actor {
 					frame.getRegionWidth() / Math.max(1f, (float) Math.exp(position.y/100)),
 					frame.getRegionHeight());
 		}
-		
+
 		batch.draw(this.skyline, this.getWidth()-this.skyline.getRegionWidth()-10f, this.getHorizonHeight() + 1);
-		
+
 		batch.draw(harbor, this.getWidth() - this.harbor.getRegionWidth(), 70f);
-		
+
 		batch.draw(miniShipAnimation.getKeyFrame(stateTime), this.miniShipXPos, 57f);
-		
+
 		this.train.draw(batch, parentAlpha);
 
 		// draw aqueduct
@@ -225,7 +265,7 @@ public class MenuBackground extends Actor {
 			batch.draw(this.aqueductElement, aqueductOffset + aqueductWidth*i, 0f);
 		}
 	}
-	
+
 	private float getHorizonHeight(){
 		return this.getHeight() - SKY_HEIGHT;
 	}

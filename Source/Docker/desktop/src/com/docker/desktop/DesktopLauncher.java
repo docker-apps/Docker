@@ -16,7 +16,7 @@ public class DesktopLauncher implements AdController {
 		config.height= 720;
 		// Diese Zeile nur einkommentieren, wenn sich bilddateien gendaert haben.
 //		TexturePacker.process("../../../Documents/Grafik/deploy", "../android/assets/img", "docker");
-		TexturePacker.process("../../../Documents/Grafik/deploy_ui", "../android/assets/ui", "dockerskin");
+//		TexturePacker.process("../../../Documents/Grafik/deploy_ui", "../android/assets/ui", "dockerskin");
 
         if (application == null) {
             application = new DesktopLauncher();

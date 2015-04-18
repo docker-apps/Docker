@@ -27,7 +27,7 @@ public class MainMenu extends AbstractMenu{
 	 */
 	public MainMenu(final Docker application){
 		super(application);
-		this.setBackground(new MenuBackground(this.stage.getWidth(), this.stage.getHeight()));
+		this.setBackground(new MenuBackground(this.stage.getWidth(), this.stage.getHeight(), application.getInventory().hasPremium()));
 
 		TextureRegion titleRegion = Resource.getDockerSkinTextureAtlas().findRegion("docker_title");
 		TextureRegion logoRegion = Resource.getDockerSkinTextureAtlas().findRegion(
