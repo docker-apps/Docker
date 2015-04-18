@@ -5,6 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.docker.AdController;
 import com.docker.Docker;
+import com.docker.domain.user.Inventory;
 
 @SuppressWarnings("unused")
 public class DesktopLauncher implements AdController {
@@ -20,7 +21,7 @@ public class DesktopLauncher implements AdController {
         if (application == null) {
             application = new DesktopLauncher();
         }
-		new LwjglApplication(new Docker(application), config);
+		new LwjglApplication(new Docker(application, new Inventory()), config);
 	}
 
     @Override

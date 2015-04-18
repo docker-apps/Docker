@@ -26,6 +26,7 @@ import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 import com.docker.domain.world.Background;
 import com.docker.domain.world.Foreground;
+import com.docker.domain.world.SnowyForeground;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.WorldStage;
 import com.docker.ui.menus.FailureEndScreen;
@@ -294,6 +295,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 			this.getTrain().setSpeed(this.getTrain().getSpeed()/2);
 		else if(Gdx.input.isKeyJustPressed(Keys.W))
 			this.displayEndScreen(false);
+		else if(Gdx.input.isKeyJustPressed(Keys.E))
+			this.checkShipCondition();
 		
 		this.stage.act(Gdx.graphics.getDeltaTime());
 		

@@ -1,29 +1,35 @@
 package com.docker.android;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.docker.AdController;
 import com.docker.Docker;
+import com.docker.domain.user.Inventory;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
 import android.widget.RelativeLayout.LayoutParams;
+
 import com.google.android.gms.ads.InterstitialAd;
 import com.purplebrain.adbuddiz.sdk.AdBuddiz;
 
 public class AndroidLauncher extends AndroidApplication implements AdController {
-
+	// Debug tag, for logging
+	public static final String TAG = "Docker";
     private AdView adView;
     private InterstitialAd interstitialAd;
+	private Inventory userInventory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,12 @@ public class AndroidLauncher extends AndroidApplication implements AdController 
     }
 
     private View createGameView(AndroidApplicationConfiguration cfg) {
-        View gameView = initializeForView(new Docker(this), cfg);
+    	// In-App Billing (mostly straight from http://developer.android.com/training/in-app-billing/preparing-iab-app.html)
+		// TODO: Obfuscate string according to http://developer.android.com/training/in-app-billing/preparing-iab-app.html#Connect
+		String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn9tZy9cm10LKEnZrS29EcG9j2SKAqn6+QPmQuAwHsj+rc53rdO4eGfNFQFXuet7X+bmpCjZvyazzzNxQhyTuqqM8xmezo/rpfBHatzhRmg7pPJgrW5LpmyjReM/1Qbaw0Ib13W8A1U6O4CCngzihFmM2t/LWy+IFahU0x2DfY8bYtuR+mmPjBJ6Qu6XCiSBU8fCrfTgvP3vk3oKZFOyiUtSnlIfuBpKmFKhccFCpkQmmleGjwbux2dfWrl71hZtEfDfaaWRorNliXANX2qkkOMyN5+5BUoClCio5pnDhd1lgZzQO5sjHvVK1pLh6bpnrSRFC89oxwNoSQ11i1dXpPwIDAQAB";
+		userInventory = new Inventory(this, base64EncodedPublicKey); 
+		
+        View gameView = initializeForView(new Docker(this, userInventory), cfg);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
@@ -132,5 +143,25 @@ public class AndroidLauncher extends AndroidApplication implements AdController 
     public void onDestroy() {
         if (adView != null) adView.destroy();
         super.onDestroy();
+		userInventory.dispose();
+    }
+
+    /**
+     * Ist nötig, damit die Callback für das Billing funktionieren.
+     */
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+	
+	    // Pass on the activity result to the helper for handling
+	    if (!((Inventory)userInventory).getmHelper().handleActivityResult(requestCode, resultCode, data)) {
+	        // not handled, so handle it ourselves (here's where you'd
+	        // perform any handling of activity results not related to in-app
+	        // billing...
+	        super.onActivityResult(requestCode, resultCode, data);
+	    }
+	    else {
+	        Log.d(TAG, "onActivityResult handled by IABUtil.");
+	    }
     }
 }
