@@ -15,7 +15,7 @@ public class HtmlLauncher extends GwtApplication implements AdController {
 
         @Override
         public ApplicationListener getApplicationListener () {
-                return new Docker(this);
+                return new Docker(this, null);
         }
 
     @Override

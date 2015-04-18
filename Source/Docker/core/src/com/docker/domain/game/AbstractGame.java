@@ -26,7 +26,6 @@ import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.Train;
 import com.docker.domain.world.Background;
 import com.docker.domain.world.Foreground;
-import com.docker.domain.world.SnowyForeground;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.WorldStage;
 import com.docker.ui.menus.FailureEndScreen;

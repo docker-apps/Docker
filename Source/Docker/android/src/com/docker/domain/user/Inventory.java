@@ -2,15 +2,13 @@ package com.docker.domain.user;
 
 import java.util.Date;
 
-import com.docker.android.AndroidLauncher;
-import com.google.android.gms.internal.mh;
-
 import android.app.Activity;
-import android.os.RemoteException;
 import android.util.Log;
 import billing.IabHelper;
 import billing.IabResult;
 import billing.Purchase;
+
+import com.docker.android.AndroidLauncher;
 
 
 public class Inventory implements IInventory{
