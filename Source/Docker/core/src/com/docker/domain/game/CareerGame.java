@@ -3,6 +3,8 @@ package com.docker.domain.game;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.docker.Docker;
+import com.docker.domain.world.LondonBackground;
+import com.docker.domain.world.RainyForeground;
 import com.docker.technicalservices.Persistence;
 import com.docker.ui.menus.CareerSuccessEndScreen;
 import com.docker.ui.menus.FailureEndScreen;
@@ -12,11 +14,13 @@ import com.docker.ui.menus.FailureEndScreen;
  * the levels are defined in assets/level/level.json
  */
 public class CareerGame extends AbstractGame {
+	private String packageId;
     private String levelId;
 
 	public CareerGame(Docker application, String levelId) {
         super(application);
         this.levelId = levelId;
+        this.packageId = Persistence.getPackageId(levelId);
 
 		Level level = Level.loadLevel(levelId);
 		this.setLives(level.getLifeCount());
@@ -24,6 +28,11 @@ public class CareerGame extends AbstractGame {
 		this.setTrain(level.getTrain());
 		this.setLives(level.getLifeCount());
 		setLoadRating(new LoadRating(ship.getBreakThreshold(), ship.getCapsizeThreshold(), 1));
+		
+		if(packageId.equals("2")){
+			stage.setBackground(new LondonBackground(stage.getWidth(), stage.getHeight()));
+			stage.setForeground(new RainyForeground(stage));
+		}
 	}
 
 	@Override

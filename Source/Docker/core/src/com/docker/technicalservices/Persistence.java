@@ -204,6 +204,19 @@ public class Persistence {
         
         return null;
     }
+    
+    public static String getPackageId(String levelId){
+    	List<JsonValue> levelPackages = Persistence.getAllLevelPackages();
+        for (JsonValue levelPackage : levelPackages) {
+        	for (int i = 0; i < levelPackage.get("levels").size; i++) {
+                JsonValue level = levelPackage.get("levels").get(i);
+                if (level.get("id").asString().equals(levelId)) {
+                    return levelPackage.getString("id");
+                }
+            }
+		}
+        return null;
+    }
 
     /**
      * checks if the statistics file exists in the local storage
