@@ -10,6 +10,7 @@ import com.docker.technicalservices.Resource;
 import com.docker.ui.menus.AbstractMenu;
 import com.docker.ui.menus.CareerMenu;
 import com.docker.ui.menus.MainMenu;
+import com.docker.ui.menus.SplashScreen;
 
 /**
  * @author HAL9000
@@ -54,6 +55,7 @@ public class Docker extends Game {
 		this.history = new Stack<Screen>();
 		this.setPersistence(new Persistence());
 		this.setScreen(new MainMenu(this));
+		//this.setScreen(new SplashScreen(this));
 	}
 
 	@Override
