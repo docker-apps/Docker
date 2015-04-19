@@ -5,6 +5,7 @@ import java.util.Date;
 import android.app.Activity;
 import android.util.Log;
 import billing.IabHelper;
+import billing.IabHelper.QueryInventoryFinishedListener;
 import billing.IabResult;
 import billing.Purchase;
 
@@ -51,23 +52,33 @@ public class Inventory implements IInventory{
 			}
 		}); 
 	}
+	
+	@Override
+	public void update(final IInventoryCallback callback) {
+		QueryInventoryFinishedListener listener = new QueryInventoryFinishedListener() {
+			@Override
+			public void onQueryInventoryFinished(IabResult result,
+					billing.Inventory inv) {
+				mGotInventoryListener.onQueryInventoryFinished(result, inv);
+				callback.call();
+			}
+		};
 
+		update(listener);
+	}
+	
 	@Override
 	public void update() {
+		update(mGotInventoryListener);
+	}
+	
+	private void update(final QueryInventoryFinishedListener listener){
 		Log.d(AndroidLauncher.TAG, "Querying inventory.");
-		// TODO: Testing code follows
-		//		try {
-		//			int response = mHelper.getmService().consumePurchase(3, context.getPackageName(),"inapp:"+context.getPackageName()+":"+PREMIUM_PRODUCT_ID);
-		//			System.out.println(response);
-		//		} catch (RemoteException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
 
 		context.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				mHelper.queryInventoryAsync(mGotInventoryListener);
+				mHelper.queryInventoryAsync(listener);
 			}
 		});
 	}
@@ -76,7 +87,7 @@ public class Inventory implements IInventory{
 	IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
 		public void onQueryInventoryFinished(IabResult result, billing.Inventory inventory) {
 			Log.d(AndroidLauncher.TAG, "Query inventory finished.");
-
+			
 			// Have we been disposed of in the meantime? If so, quit.
 			if (mHelper == null) return;
 
@@ -85,7 +96,7 @@ public class Inventory implements IInventory{
 				Log.d(AndroidLauncher.TAG, "Failed to query inventory: " + result);
 				return;
 			}
-
+			lastUpdatedAt = new Date();
 			Log.d(AndroidLauncher.TAG, "Query inventory was successful.");
 
 			// Do we have the premium upgrade?
@@ -103,6 +114,8 @@ public class Inventory implements IInventory{
 						Log.d(AndroidLauncher.TAG, "isPremium consumed.");
 					}
 				});
+				
+				
 			}
 		}
 	};
@@ -137,19 +150,7 @@ public class Inventory implements IInventory{
 		return true;
 	}
 
-	IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-
-		@Override
-		public void onIabPurchaseFinished(IabResult result, Purchase info) {
-			if (result.isFailure()) {
-				Log.d(AndroidLauncher.TAG, "Error purchasing: " + result);
-				return;
-			}
-
-			Log.d(AndroidLauncher.TAG, "Purchase of Item " + info.getSku() + " succesful!");
-			update();
-		}
-	};
+	
 
 	public Date getLastUpdateDate(){
 		return lastUpdatedAt;
@@ -163,7 +164,20 @@ public class Inventory implements IInventory{
 		return isPremium;
 	}
 
-	public void buyPremium(){
+	public void buyPremium(final IInventoryCallback updateCallback){
+		final IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+			@Override
+			public void onIabPurchaseFinished(IabResult result, Purchase info) {
+				if (result.isFailure()) {
+					Log.d(AndroidLauncher.TAG, "Error purchasing: " + result);
+					return;
+				}
+
+				Log.d(AndroidLauncher.TAG, "Purchase of Item " + info.getSku() + " succesful!");
+				update(updateCallback);
+			}
+		};
+		
 		if (mHelper != null) mHelper.flagEndAsync();
 		context.runOnUiThread(new Runnable() {
 			@Override

@@ -5,6 +5,8 @@ import java.util.Date;
 public interface IInventory {
 	
 	public void update();
+
+	public void update(IInventoryCallback callback);
 	
 	public Date getLastUpdateDate();
 	
@@ -12,7 +14,11 @@ public interface IInventory {
 	
 	public boolean hasPremium();
 	
-	public void buyPremium();
+	public void buyPremium(IInventoryCallback callback);
 	
 	public void dispose();
+	
+	public interface IInventoryCallback {
+		public void call();
+	}
 }

@@ -12,7 +12,7 @@ public class Inventory implements IInventory{
 	}
 
 	@Override
-	public void buyPremium(){
+	public void buyPremium(IInventoryCallback callback){
 	}
 
 	@Override
@@ -22,16 +22,19 @@ public class Inventory implements IInventory{
 	@Override
 	public void update() {
 	}
+	
+	@Override
+	public void update(IInventoryCallback callback){
+	}
 
 	@Override
 	public Date getLastUpdateDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Date();
 	}
 
 	@Override
 	public boolean hasBeenUpdated() {
-		// TODO Auto-generated method stub
-		return false;
+		// return true as a default
+		return true;
 	}
 }

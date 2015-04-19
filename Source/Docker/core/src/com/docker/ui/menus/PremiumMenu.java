@@ -8,10 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
+import com.docker.domain.user.IInventory.IInventoryCallback;
 
 public class PremiumMenu extends AbstractMenu {
 	private static final String buyPleaseText = "Disable Ads and \nget a special ship by \nbuying us a coffee!";
-	private static final String thanksMuchText = "Thank you for\nsupporting us!";
+	private static final String thanksMuchText = "You already have Premium.\nThank you for supporting us!";
 	
 	private Button backButton = createBackButton(skin);
 	private Button buyPremiumButton = new TextButton("Buy Premium!", skin);
@@ -29,10 +30,13 @@ public class PremiumMenu extends AbstractMenu {
 		buyPremiumButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	Docker.getInventory().buyPremium();
-            	
-            	//TODO: Do this as a call back
-            	updateMenu(new PremiumMenu(application));
+            	Docker.getInventory().buyPremium(new IInventoryCallback() {
+					@Override
+					public void call() {
+						application.showAds(true);
+						application.returnToMenu();
+					}
+				});
             }
         });
 		

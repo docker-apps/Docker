@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.docker.Docker;
 import com.docker.domain.game.Level;
 import com.docker.domain.gameobject.Train;
 import com.docker.technicalservices.Resource;
@@ -35,7 +36,6 @@ public class MenuBackground extends Actor {
 
 	private float stateTime;
 
-	private boolean drawPremium = false;
 
 	private static final float SKY_HEIGHT = 50f;
 	private static final int WATER_MOVEMENT_AMOUNT = 1000;
@@ -111,11 +111,6 @@ public class MenuBackground extends Actor {
 		this.train.setSpeed(TRAIN_SPEED);
 	}
 
-	public MenuBackground(float width, float height, boolean drawPremium){
-		this(width, height);
-		this.drawPremium = drawPremium;
-	}
-
 	@Override
 	public void act(float delta) {
 		super.act(delta);
@@ -175,7 +170,7 @@ public class MenuBackground extends Actor {
 				sunXPos,
 				sunYPos);
 
-		if(drawPremium){
+		if(isDrawPremium()){
 			int rayWidth = (int) Math.sqrt(Math.pow((Math.max(this.getWidth() - sunXPos, sunXPos) + sunRadius), 2) + Math.pow(SKY_HEIGHT, 2));
 			int rayHeight = 50;
 			if(rayPixmap != null)
@@ -268,5 +263,9 @@ public class MenuBackground extends Actor {
 
 	private float getHorizonHeight(){
 		return this.getHeight() - SKY_HEIGHT;
+	}
+
+	public boolean isDrawPremium() {
+		return Docker.getInventory().hasPremium();
 	}
 }
