@@ -6,9 +6,6 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -63,8 +60,6 @@ public class MenuBackground extends Actor {
 	private List<Vector2> waterMovementPositions;
 
 	private Train train;
-	private Pixmap sunPixmap;
-	private Pixmap rayPixmap;
 
 	/**
 	 * @param width the width of the Background. Usually equals the width of the screen.
@@ -158,35 +153,23 @@ public class MenuBackground extends Actor {
 
 		// draw sun
 		Color sunColor = new Color(1f, 0.5f+dayTimeSin*0.5f, dayTimeSin*0.8f, 1f);
-		int sunRadius = 10;
-		if(sunPixmap != null)
-			sunPixmap.dispose();
-		sunPixmap = new Pixmap(sunRadius*2+1, sunRadius*2+1, Format.RGBA8888);
-		sunPixmap.setColor(sunColor);
-		sunPixmap.fillCircle(sunRadius, sunRadius, sunRadius);		
 		float sunXPos = this.getWidth()/2+(float)Math.cos(dayTime)*(this.getWidth()/2-20);
 		float sunYPos = this.getHorizonHeight()-21+dayTimeSin*50;		
-		batch.draw(new Texture(sunPixmap),
+		batch.draw(Resource.getSunTexture(sunColor),
 				sunXPos,
 				sunYPos);
 
 		if(isDrawPremium()){
-			int rayWidth = (int) Math.sqrt(Math.pow((Math.max(this.getWidth() - sunXPos, sunXPos) + sunRadius), 2) + Math.pow(SKY_HEIGHT, 2));
+			int rayWidth = (int) Math.sqrt(Math.pow((Math.max(this.getWidth() - sunXPos, sunXPos) + 10), 2) + Math.pow(SKY_HEIGHT, 2));
 			int rayHeight = 50;
-			if(rayPixmap != null)
-				rayPixmap.dispose();
-			rayPixmap = new Pixmap(rayWidth,rayHeight, Format.RGBA8888);
-			rayPixmap.setColor(sunColor);
-			rayPixmap.fillTriangle(-10, rayHeight/2, rayWidth, rayHeight, rayWidth, 0);		
-			Texture rayTexture = new Texture(rayPixmap);
-			TextureRegion rayTextureRegion = new TextureRegion(rayTexture);
+			TextureRegion rayTextureRegion = new TextureRegion(Resource.getSunRayTexture(sunColor, rayWidth, rayHeight));
 			int rayCount = 12;
 			for (int i = 0; i < rayCount; i++) {
 				float angleOffset = 360/rayCount * i;
 				batch.draw(
 						rayTextureRegion, 
-						sunXPos + sunRadius,
-						sunYPos - rayHeight/2 + sunRadius,
+						sunXPos + 10,
+						sunYPos - rayHeight/2 + 10,
 						0,
 						rayHeight/2, 
 						rayWidth, 

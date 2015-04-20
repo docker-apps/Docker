@@ -27,6 +27,9 @@ public class Resource {
 	private static ShaderProgram snapshotShader;
 	private static Texture rainTexture;
 	private static Texture smokePuffTexture;
+	private static Color sunColor;
+	private static Texture sunTexture;
+	private static Texture sunRayTexture;
 
 	/**
 	 * Returns the first region in the Docker TextureAtlas found with the specified name.
@@ -148,6 +151,38 @@ public class Resource {
 		}
 		return Resource.smokePuffTexture;
 	}
+	
+	public static Texture getSunTexture(Color color){
+		if(sunTexture == null || sunColor == null || !sunColor.equals(color)){
+			sunColor = color;
+			Pixmap pixmap = new Pixmap(21, 21, Format.RGBA8888);
+			pixmap.setColor(sunColor);
+			pixmap.fillCircle(10, 10, 10);
+			
+			sunTexture = new Texture(pixmap);
+			pixmap.dispose();
+		}
+		
+		return Resource.sunTexture;
+	}
+	
+	public static Texture getSunRayTexture(Color color, int width, int height){
+		if(sunRayTexture == null || 
+				sunColor == null || 
+				!sunColor.equals(color) ||
+				width != sunRayTexture.getWidth() ||
+				height != sunRayTexture.getHeight()){
+			sunColor = color;
+			Pixmap pixmap = new Pixmap(width,height, Format.RGBA8888);
+			pixmap.setColor(sunColor);
+			pixmap.fillTriangle(-10, height/2, width, height, width, 0);
+			
+			sunRayTexture = new Texture(pixmap);
+			pixmap.dispose();
+		}
+		
+		return Resource.sunRayTexture;
+	}
 
 	/**
 	 * Dispose of all the resources.
@@ -176,6 +211,14 @@ public class Resource {
 		if(smokePuffTexture != null){
 			smokePuffTexture.dispose();
 			smokePuffTexture = null;
+		}
+		if(sunTexture != null){
+			sunTexture.dispose();
+			sunTexture = null;
+		}
+		if(sunRayTexture != null){
+			sunRayTexture.dispose();
+			sunRayTexture = null;
 		}
 	}
 }

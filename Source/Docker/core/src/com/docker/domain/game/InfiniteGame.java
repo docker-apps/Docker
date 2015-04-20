@@ -31,7 +31,6 @@ public class InfiniteGame extends AbstractGame{
 		gameMenuButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	//TODO:Ship check break and sink
             	checkShipCondition();
             	setShip(Ship.getRandomShip(ShipSkinManager.getConfiguredSkin()));
             	getShip().runIn();            	

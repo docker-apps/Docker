@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -30,6 +31,8 @@ public class CareerMenu extends AbstractMenu {
     private TextButton tutorialGameButton = new TextButton("How to", skin);
 	private ScrollPane scrollpane;
 	private TextureRegion arrowTexture;
+	private Image arrowToLeft;
+	private Image arrowToRight;
     
 
     /**
@@ -38,7 +41,7 @@ public class CareerMenu extends AbstractMenu {
     public CareerMenu(final Docker application) {
         super(application);
 
-		arrowTexture = Resource.getDockerSkinTextureAtlas().findRegion("straight_arrow");
+        arrowTexture = Resource.getDockerSkinTextureAtlas().findRegion("straight_arrow");
         
         application.showAds(true);
         backButton.addListener(new ClickListener() {
@@ -50,6 +53,15 @@ public class CareerMenu extends AbstractMenu {
         backButton.setPosition(BACKBUTTON_PADDING_X, 13);
         backButton.setSize(40, 30);
         this.stage.addActor(backButton);
+        
+        arrowToLeft = new Image(arrowTexture);
+        arrowToLeft.setPosition(50+arrowToLeft.getWidth(), 5);
+        arrowToLeft.setWidth(-arrowToLeft.getWidth());
+        arrowToRight = new Image(arrowTexture);
+        arrowToRight.setPosition(stage.getWidth()-50, 5);
+        this.stage.addActor(arrowToLeft);
+        this.stage.addActor(arrowToRight);
+        
         Table careerTable = new Table();
         addLevelButtons(careerTable);
         careerTable.row();
@@ -131,25 +143,17 @@ public class CareerMenu extends AbstractMenu {
     }
     
     @Override
-    public void render(float delta){
-    	Batch batch = this.stage.getBatch();
-    	batch.begin();
-    	if(scrollpane.getScrollPercentX() != 0){
-    		if(!arrowTexture.isFlipX())
-    			arrowTexture.flip(true, false);
-    		batch.draw(arrowTexture, 50, 5);
-    	}
-
-    	if(scrollpane.getScrollPercentX() != 1){
-    		if(arrowTexture.isFlipX())
-    			arrowTexture.flip(true, false);
-    		batch.draw(arrowTexture, stage.getWidth()-50, 5);
-    	}
-    	batch.end();
+    public void render(float delta){ 
+    	if(scrollpane.getScrollPercentX() != 0)
+    		arrowToLeft.setVisible(true);
+    	else
+    		arrowToLeft.setVisible(false);
+    	if(scrollpane.getScrollPercentX() != 1)
+    		arrowToRight.setVisible(true);
+    	else
+    		arrowToRight.setVisible(false);
     	
     	super.render(delta);
-
-    	
     }
 
 }

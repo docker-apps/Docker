@@ -316,8 +316,7 @@ public class TutorialGame extends AbstractGame {
 
 	@Override
 	public void startNewGame() {
-		// TODO Auto-generated method stub
-
+		// not possible in Tutorial
 	}
 
 	@Override

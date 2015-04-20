@@ -362,10 +362,10 @@ public class Ship extends Actor {
 			@Override
 			public boolean act(float delta) {
 				float waterHeight = 20f;
-				float offset = getX() + getWidth()/2;
+				float offset = getX();
 				
 				if(rand.nextFloat() > 0.5){
-					float randomOffset = - getWidth()/2 + rand.nextFloat()*getWidth();
+					float randomOffset = rand.nextFloat()*getWidth();
 					WaterSplash splashTest = new WaterSplash(
 							actor.getX()+ offset + randomOffset,
 							waterHeight);
@@ -516,7 +516,7 @@ public class Ship extends Actor {
 	 */
 	public void breakShip(int breakPosition){
 		this.breakPos = breakPosition;
-		float breakingXPos = this.xGridstart + this.gridSize*(breakPosition+1);
+		float breakingXPos = this.xGridstart + this.gridSize*(breakPosition);
 		this.isBreaking = true;
 		this.previewContainer = null;
 		TextureRegion fboRegion1 = takeSnapshot();
@@ -572,13 +572,13 @@ public class Ship extends Actor {
 					getY()+skin.getBodyLeft().getRegionHeight()+skin.getMastOffset().y);
 			for (int i = 0; i < this.gridWidth-2; i++) {
 				float xPos = this.getX()+this.skin.getBodyLeft().getRegionWidth()+(getElementWidth()*i);
-				if(isBreaking && i == this.breakPos-1){
+				if(isBreaking && i == this.breakPos-2){
 					batch.draw(
 							skin.getBodyBrokenLeft(),
 							xPos, 
 							getY());
 				}
-				else if(isBreaking && i == this.breakPos){
+				else if(isBreaking && i == this.breakPos-1){
 					batch.draw(
 							skin.getBodyBrokenRight(),
 							xPos,

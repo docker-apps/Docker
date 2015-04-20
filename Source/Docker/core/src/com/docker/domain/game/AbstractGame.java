@@ -40,9 +40,9 @@ import com.docker.ui.menus.SuccessEndScreen;
  * Encompasses all functions and attributes which are shared by all Game Modes.
  */
 public abstract class AbstractGame extends ScreenAdapter {
-	
+
 	private final static int CRANE_SPEED = 120;
-	
+
 	protected Docker application;
 	protected WorldStage stage;
 	protected ExtendViewport viewport;
@@ -108,23 +108,23 @@ public abstract class AbstractGame extends ScreenAdapter {
 				return result;
 			}
 
-            @Override
-            public boolean fling(float velocityX, float velocityY, int button) {
-                Vector3 touchPos = getStage().getViewport().getCamera().unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-                float yPos = touchPos.y;
+			@Override
+			public boolean fling(float velocityX, float velocityY, int button) {
+				Vector3 touchPos = getStage().getViewport().getCamera().unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+				float yPos = touchPos.y;
 
-            	if(canPlayerAct((int)yPos)){
-	                if(velocityX > 1500){
-	                    if(Math.abs(velocityX/2) > Math.abs(velocityY) && yPos > getStage().getHeight()-50){
-	                        getTrain().flingContainer(getShip());
-	                        getShip().clearPreviewContainer();
-	                        removeLive();
-	                        return true;
-	                    }
-	                }
-            	}
-                return false;
-            }
+				if(canPlayerAct((int)yPos)){
+					if(velocityX > 1500){
+						if(Math.abs(velocityX/2) > Math.abs(velocityY) && yPos > getStage().getHeight()-50){
+							getTrain().flingContainer(getShip());
+							getShip().clearPreviewContainer();
+							removeLive();
+							return true;
+						}
+					}
+				}
+				return false;
+			}
 		};		
 		background = new Background(this.stage.getWidth(), this.stage.getHeight());
 		background.toBack();
@@ -132,7 +132,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 		foreground = new Foreground(this.stage);
 		foreground.toFront();
 		this.stage.setForeground(foreground);
-		
+
 		// crane is basically the same in every game. Remove from abstraction if cranespeed becomes configurable.
 		setCrane(new Crane(CRANE_SPEED, stage.getWidth() / 2, stage.getHeight()));
 	}
@@ -150,7 +150,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 		if(canPlayerAct(y))
 			previewPosition(x, y);
 		else
-            getShip().clearPreviewContainer();
+			getShip().clearPreviewContainer();
 		return true;
 	}
 
@@ -166,7 +166,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 		if(canPlayerAct(y))
 			previewPosition(x, y);
 		else
-            getShip().clearPreviewContainer();
+			getShip().clearPreviewContainer();
 		return true;
 	}
 
@@ -190,14 +190,14 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 */
 	public boolean canPlayerAct(int y){
 		return !getCrane().isDeploying() && getTrain().hasContainers() && !isGameOver()
-                && !getShip().isTakingOff() && !isOnTrain(y);
+				&& !getShip().isTakingOff() && !isOnTrain(y);
 	}
 
-    private boolean isOnTrain(int y) {
-        return y < getStage().getHeight()-50;
-    }
+	private boolean isOnTrain(int y) {
+		return y < getStage().getHeight()-50;
+	}
 
-    /**
+	/**
 	 * Display a preview container on the ship.
 	 * 
 	 * @param x the x-position for the preview container
@@ -278,7 +278,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	@Override
 	public void render(float delta) {
 		this.time += delta;
-		
+
 		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE) ||
 				Gdx.input.isKeyJustPressed(Input.Keys.BACK))
 		{
@@ -296,17 +296,17 @@ public abstract class AbstractGame extends ScreenAdapter {
 			this.displayEndScreen(false);
 		else if(Gdx.input.isKeyJustPressed(Keys.E))
 			this.checkShipCondition();
-		
+
 		this.stage.act(Gdx.graphics.getDeltaTime());
-		
+
 		if(getTrain().hasContainers()){
 			if(this.getTrain().getFirstContainer().getX() + this.getTrain().getFirstContainer().getWidth() >= stage.getWidth()){
 				this.getTrain().getFirstContainer().destroy(stage);
 				this.getTrain().removeContainer();
-                removeLive();
+				removeLive();
 			}
 		}
-		
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		this.stage.draw();
 
@@ -319,18 +319,18 @@ public abstract class AbstractGame extends ScreenAdapter {
 			setGameOver(true);
 		}
 		if (gameOver && !getShip().isStaticAnimationRunning() && !getTrain().isFlingAnimationRunning()) {
-            DelayAction delayAction = new DelayAction();
-            delayAction.setDuration(0.5f);
-            Action completeAction = new Action() {
-                public boolean act( float delta ) {
-                    gameOver();
-                    return true;
-                }
-            };
-            SequenceAction actions = new SequenceAction(delayAction, completeAction);
-            getTrain().addAction(actions);
-        }
-        if ((!train.hasContainers() && !getCrane().isDeploying()) && !getShip().isStaticAnimationRunning() && !gameOver) {
+			DelayAction delayAction = new DelayAction();
+			delayAction.setDuration(0.5f);
+			Action completeAction = new Action() {
+				public boolean act( float delta ) {
+					gameOver();
+					return true;
+				}
+			};
+			SequenceAction actions = new SequenceAction(delayAction, completeAction);
+			getTrain().addAction(actions);
+		}
+		if ((!train.hasContainers() && !getCrane().isDeploying()) && !getShip().isStaticAnimationRunning() && !gameOver) {
 			checkShipCondition();
 			setGameOver(true);
 		}
@@ -342,7 +342,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();			
 		application.setScreen(new PauseMenu(application, screenCap, this));
 	}
-	
+
 	@Override
 	public void pause(){
 		displayPauseScreen();
@@ -350,18 +350,18 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	@Override
 	public void show(){
-        if (Persistence.isMusicOn()) {
-            backgroundMusic.setVolume(Persistence.getVolume());
-            backgroundMusic.play();
-        }
-        if (!Persistence.isSoundOn()) {
-            getShip().playContainerSound(false);
-        }
-        GestureDetector gd = new GestureDetector(this.stage);
-        InputMultiplexer im = new InputMultiplexer(gd, this.stage);
-        Gdx.input.setInputProcessor(im);
-        Gdx.input.setCatchBackKey(true);
-    }
+		if (Persistence.isMusicOn()) {
+			backgroundMusic.setVolume(Persistence.getVolume());
+			backgroundMusic.play();
+		}
+		if (!Persistence.isSoundOn()) {
+			getShip().playContainerSound(false);
+		}
+		GestureDetector gd = new GestureDetector(this.stage);
+		InputMultiplexer im = new InputMultiplexer(gd, this.stage);
+		Gdx.input.setInputProcessor(im);
+		Gdx.input.setCatchBackKey(true);
+	}
 
 	@Override
 	public void dispose() {
@@ -376,71 +376,71 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @return the remaining amount of lives.
 	 */
 	public int removeLive() {
-        lives--;
-        foreground.setRemainingLives(lives);
+		lives--;
+		foreground.setRemainingLives(lives);
 		return this.lives;
 	}
-	
-	
+
+
 	public void checkShipCondition(){
 		getLoadRating().calculateScore(getShip().getGrid());
 		int burstPos = getLoadRating().doesBreak();
-		if(Math.abs(getLoadRating().getCapsizeValue()) >=1){
-			ship.capsize(getLoadRating().getCapsizeValue());
-            Integer totalShipsCapsized = (Integer) Persistence.getStatisticsMap().get("totalShipsCapsized");
-            Persistence.saveStatisticValue("totalShipsCapsized", totalShipsCapsized + 1);
-			setRemainingShips(getRemainingShips()-1);
-		}else if(burstPos != -1){
+		if(burstPos != -1){
 			ship.breakShip(burstPos);
-            Integer totalShipsBroken = (Integer) Persistence.getStatisticsMap().get("totalShipsBroken");
-            Persistence.saveStatisticValue("totalShipsBroken", totalShipsBroken + 1);
-            setRemainingShips(getRemainingShips()-1);
+			Integer totalShipsBroken = (Integer) Persistence.getStatisticsMap().get("totalShipsBroken");
+			Persistence.saveStatisticValue("totalShipsBroken", totalShipsBroken + 1);
+			setRemainingShips(getRemainingShips()-1);
+		}else if(Math.abs(getLoadRating().getCapsizeValue()) >=1){
+			ship.capsize(getLoadRating().getCapsizeValue());
+			Integer totalShipsCapsized = (Integer) Persistence.getStatisticsMap().get("totalShipsCapsized");
+			Persistence.saveStatisticValue("totalShipsCapsized", totalShipsCapsized + 1);
+			setRemainingShips(getRemainingShips()-1);
 		}else{
 			ship.takeOff();
-            Integer totalShipsSuccessfullyLoaded = (Integer) Persistence.getStatisticsMap().get("totalShipsSuccessfullyLoaded");
-            Persistence.saveStatisticValue("totalShipsSuccessfullyLoaded", totalShipsSuccessfullyLoaded + 1);
+			Integer totalShipsSuccessfullyLoaded = (Integer) Persistence.getStatisticsMap().get("totalShipsSuccessfullyLoaded");
+			Persistence.saveStatisticValue("totalShipsSuccessfullyLoaded", totalShipsSuccessfullyLoaded + 1);
 		}
 	}
-	
+
 	public boolean shipIsSunk(){
 		return Math.abs(getLoadRating().getCapsizeValue()) >=1;
 	}
-	
+
 	public boolean shipIsBroken(){
 		return getLoadRating().doesBreak() != -1;
 	}
-	
+
 	/**
 	 * Gets called when the game is over (wether the player lost or won the game).
 	 */
 	public void gameOver(){
-        Integer totalGames = (Integer) Persistence.getStatisticsMap().get("totalGames");
-        Persistence.saveStatisticValue("totalGames", totalGames + 1);
-        displayEndScreen(isGameLost());
+		Integer totalGames = (Integer) Persistence.getStatisticsMap().get("totalGames");
+		Persistence.saveStatisticValue("totalGames", totalGames + 1);
+		displayEndScreen(isGameLost());
 	}
 
-    public abstract Integer endGame(Integer gameScore);
-    
-    /**
-     * Switches to the endscreen and effectively finishes the game.
-     * 
-     * @param isGameLost whether the player has lost the game or not. 
-     */
-    public void displayEndScreen(boolean isGameLost){
-        application.showInterstital();
+	public abstract Integer endGame(Integer gameScore);
+
+	/**
+	 * Switches to the endscreen and effectively finishes the game.
+	 * 
+	 * @param isGameLost whether the player has lost the game or not. 
+	 */
+	public void displayEndScreen(boolean isGameLost){
+		application.showInterstital();
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
-        if(!isGameLost){
-        	getLoadRating().getCapsizeValue();
-            Integer gameScore = getLoadRating().getScore();
-            Integer highscore = endGame(gameScore);
-            application.setScreen(new SuccessEndScreen(application, screenCap, this, gameScore, highscore));
-        } else{
-        	application.setScreen(new FailureEndScreen(application, screenCap, this));
-        }
-    }
+		if(!isGameLost){
+			getLoadRating().getCapsizeValue();
+			Integer gameScore = getLoadRating().getScore();
+			Integer highscore = endGame(gameScore);
+			application.setScreen(new SuccessEndScreen(application, screenCap, this, gameScore, highscore));
+		} else{
+			application.setScreen(new FailureEndScreen(application, screenCap, this));
+		}
+	}
 
-    public abstract void startNewGame();
+	public abstract void startNewGame();
 
 	/**
 	 * @return the current score
