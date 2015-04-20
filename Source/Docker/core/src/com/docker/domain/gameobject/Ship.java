@@ -399,7 +399,7 @@ public class Ship extends Actor {
 		//this.startCapsizeAnimation(this, capsizeValue);
 
 		Image img = new Image(region);
-		startCapsizeAnimation(img, capsizeValue);
+		startCapsizeAnimation(img, capsizeValue, getY()+getWidth()/2, yGridstart);
 		this.getStage().addActor(img);
 	}
 
@@ -419,17 +419,17 @@ public class Ship extends Actor {
 	 * @param actor The actor to which should be animated.
 	 * @param capsizeValue if positive, the ship will capsize to the left, if negative, to the right.
 	 */
-	private void startCapsizeAnimation(Actor actor, final float capsizeValue){
+	private void startCapsizeAnimation(Actor actor, final float capsizeValue, final float originX, final float originY){
 		this.setStaticAnimationRunning(true);
 
-		float duration = 60;
+		float duration = 10;
 
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(actor.getX(), actor.getY()-this.getWidth());
 		moveAction.setDuration(duration*0.75f);
 		moveAction.setInterpolation(Interpolation.exp5In);
 
-		actor.setOrigin(actor.getWidth()/2, 5);
+		actor.setOrigin(originX, originY);
 		RotateByAction rotateAction = new RotateByAction();
 		rotateAction.setAmount(90*Math.signum(capsizeValue));
 		rotateAction.setDuration(duration);
@@ -441,25 +441,42 @@ public class Ship extends Actor {
 			@Override
 			public boolean act(float delta) {
 				if(rand.nextFloat() > 0.8){
-//					float waterHeight = 20f;
-//					Vector2 p1 = new Vector2(actor.getOriginX()-getX(), actor.getOriginY()-getY()-30);
-//					Vector2 p2 = new Vector2(actor.getOriginX()-(getX()-getWidth()), actor.getOriginY()-getY()-30);
-////					double angle = Math.toRadians(actor.getRotation());
-////					float shipBodyOffset = actor.getOriginY() - getY() - 10f;
-////					float wateroffset = actor.getOriginY() - waterHeight;
-////					float offset = (float)(Math.cos(angle) * wateroffset);
-//					
-//					float randomSpread = 100f;
-//					float randomOffset = - randomSpread + rand.nextFloat()*randomSpread;
-//					WaterSplash splashTest = new WaterSplash(
-//							actor.getX() + actor.getOriginX() - p1.x,
-//							actor.getY() + actor.getOriginY() - p1.y);
-//					WaterSplash splashTest2 = new WaterSplash(
-//							actor.getX() + actor.getOriginX() - p2.x,
-//							actor.getY() + actor.getOriginY() - p2.y);
-//					getStage().addActor(splashTest);
-//					getStage().addActor(splashTest2);
-//					System.out.println("new splash added at " + splashTest.getX());
+					float waterHeight = 20f;
+					Vector2 p1 = new Vector2(	// upper left corner of ship body, relative to origin
+							getX() - originX, 
+							getY() + yGridstart - originY - 10f);
+					Vector2 p2 = new Vector2(	// lower left corner of ship body, relative to origin
+							getX() - originX, 
+							getY() - originY);
+					Vector2 p3 = new Vector2(	// lower right corner of ship body, relative to origin
+							getX()+getWidth() - originX, 
+							getY() - originY);
+
+					//rotate points (around origin)
+					p1.rotate(actor.getRotation());
+					p2.rotate(actor.getRotation());
+					p3.rotate(actor.getRotation());
+					
+					//translate points back relative to screen coordinates
+					p1.add(actor.getX()+originX, actor.getY()+originY);
+					p2.add(actor.getX()+originX, actor.getY()+originY);
+					p3.add(actor.getX()+originX, actor.getY()+originY);
+					
+					//calculate left and right bounds of the area where the ship and the water collides
+					float xBoundLeft = (float) Math.max(
+							p1.x + Math.tan(Math.toRadians(90-actor.getRotation())) * (waterHeight-p1.y),
+							p1.x
+							);
+					float xBoundRight = (float) Math.min(
+							p2.x + Math.tan(Math.toRadians(90-actor.getRotation())) * (waterHeight-p2.y),
+							p3.x
+							);
+					
+					// create new splash
+					Random rand = new Random();
+					float randomOffset = rand.nextFloat()*(xBoundRight-xBoundLeft);
+					WaterSplash splash = new WaterSplash(xBoundLeft + randomOffset, waterHeight);
+					getStage().addActor(splash);
 				}
 				return true;
 			}
@@ -509,7 +526,7 @@ public class Ship extends Actor {
 		fboRegion1.setRegionWidth((int)breakingXPos);
 		Image img = new Image(fboRegion1);
 		img.setOrigin(breakingXPos, this.getY());
-		startCapsizeAnimation(img, -1);
+		startCapsizeAnimation(img, -1, img.getWidth()/2, yGridstart);
 		this.getStage().addActor(img);
 
 		//right part
@@ -518,7 +535,7 @@ public class Ship extends Actor {
 		Image img2 = new Image(fboRegion2);
 		img2.setPosition(breakingXPos, 0);
 		img2.setOrigin(breakingXPos, this.getY());
-		startCapsizeAnimation(img2, 1);
+		startCapsizeAnimation(img2, 1, img2.getWidth()/2,yGridstart);
 		this.getStage().addActor(img2);
 	}
 
@@ -846,7 +863,8 @@ public class Ship extends Actor {
 
 		@Override
 		public void draw(Batch batch, float parentAlpha){
-			batch.draw(animation.getKeyFrame(stateTime), getX(), getY());
+			TextureRegion frame = animation.getKeyFrame(stateTime);
+			batch.draw(frame, getX()-frame.getRegionWidth()/2, getY());
 		}
 
 		public boolean isFinished(){
