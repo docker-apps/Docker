@@ -49,7 +49,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 	protected BitmapFont font;
 	protected boolean showDebugInfo = false;	
 
-	protected int score;
 	private int remainingShips;
 	protected double time;
 	protected int lives;
@@ -70,7 +69,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public AbstractGame(final Docker application){
 		this.application = application;
 
-		this.score = 0;
 		this.remainingShips = 1;
 		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("hustle.mp3"));
 		backgroundMusic.setLooping(true);
@@ -441,20 +439,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 	}
 
 	public abstract void startNewGame();
-
-	/**
-	 * @return the current score
-	 */
-	public int getScore() {
-		return score;
-	}
-
-	/**
-	 * @param score the current score
-	 */
-	public void setScore(int score) {
-		this.score = score;
-	}
 
 	/**
 	 * @return the amount of time that has passed since the game was started.

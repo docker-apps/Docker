@@ -1,21 +1,35 @@
 package com.docker.domain.game;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.docker.Docker;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.shipskins.ShipSkinManager;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
+import com.docker.ui.menus.InfiniteSuccessEndScreen;
 
 public class InfiniteGame extends AbstractGame{
 
+	private static final float TRAIN_SPEEDUP_RATE = 0.05f;
+	
+	protected int score;
+	protected int shipCounter;
 	private Skin skin = Resource.getDockerSkin();
 	private Button gameMenuButton;
+	private Label scoreTitle = new Label("Score: ", skin);;
+	private Label scoreLabel = new Label("0", skin);;
 
 	public InfiniteGame(final Docker application) {
 		super(application);
@@ -27,22 +41,43 @@ public class InfiniteGame extends AbstractGame{
 		setRemainingShips(3);
 		setLoadRating(new LoadRating(getShip().getBreakThreshold(), getShip().getCapsizeThreshold(), 1));
 		
+		setScore(0);
+		
 		gameMenuButton = new Button(skin.get("ship-button", ButtonStyle.class));
 		gameMenuButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	checkShipCondition();
+            	if(!shipIsBroken() &&!shipIsSunk()){
+            		addToScore(getLoadRating().getScore());
+            		increaseShipCounter();
+            	}
             	setShip(Ship.getRandomShip(ShipSkinManager.getConfiguredSkin()));
             	getShip().runIn();            	
             }
         });
 		gameMenuButton.setPosition(10, getStage().getHeight() - gameMenuButton.getHeight() - 60);
-		this.stage.addActor(gameMenuButton);	
+		this.stage.addActor(gameMenuButton);
+		
+		scoreTitle.setPosition(
+				gameMenuButton.getX() + gameMenuButton.getWidth() + 10f,
+				getStage().getHeight() - 60f);
+		scoreLabel.setPosition(
+				scoreTitle.getX() + scoreTitle.getTextBounds().width,
+				scoreTitle.getY());
+		// position on water
+		//scoreLabel.setPosition(10f, 10f);
+		this.stage.addActor(scoreTitle);
+		this.stage.addActor(scoreLabel);
 	}
 	
 	@Override
 	public void render(float delta) {
 		super.render(delta);
+		
+		//the train gets continually faster
+		getTrain().setSpeed(getTrain().getSpeed() + TRAIN_SPEEDUP_RATE * delta);
+		
 		if(getCrane().isDeploying()){
 			gameMenuButton.setTouchable(Touchable.disabled);
 		}else{
@@ -50,9 +85,12 @@ public class InfiniteGame extends AbstractGame{
 		}
 		if(train.getContainerListSize()<= 5)
 			train.addContainer(Level.createRandomContainer());
-		//Like that can the button be at first position
+		
+		//so the ui stuff is drawn at topmost position
 		this.stage.getBatch().begin();
 		gameMenuButton.draw(this.stage.getBatch(), 1);
+		scoreTitle.draw(this.stage.getBatch(), 1);
+		scoreLabel.draw(this.stage.getBatch(), 1);
 		this.stage.getBatch().end();
 	}
 
@@ -68,7 +106,11 @@ public class InfiniteGame extends AbstractGame{
     
     @Override
     public void displayEndScreen(boolean isGameLost){
-    	super.displayEndScreen(false);
+    	application.showInterstital();
+		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
+		getLoadRating().getCapsizeValue();
+		Integer highscore = endGame(getScore());
+		application.setScreen(new InfiniteSuccessEndScreen(application, screenCap, this, getScore(), highscore));
     }
 
     @Override
@@ -82,4 +124,81 @@ public class InfiniteGame extends AbstractGame{
         application.returnToLastScreen();
         application.updateScreen(new InfiniteGame(application));
     }
+
+	/**
+	 * @return the current score
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * @param score the current score
+	 */
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public void updateScoreLabel(){
+		this.scoreLabel.setText(""+getScore());
+	}
+	
+	public void addToScore(final int points) {
+		setScore(getScore() + points);
+		
+		final Label score = new Label(""+points, skin);
+		score.setPosition(
+				getShip().getX() + getShip().getWidth() - score.getWidth(),
+				getShip().getY() + getShip().getHeight()/2);
+		
+		MoveToAction moveAction = new MoveToAction();
+		moveAction.setPosition(
+				scoreLabel.getX() + scoreLabel.getTextBounds().width/2, 
+				scoreLabel.getY());
+		moveAction.setDuration(1f);
+		moveAction.setInterpolation(Interpolation.pow2In);
+		
+		Action addPointsAction = new Action() {
+			
+			@Override
+			public boolean act(float delta) {
+				score.remove();
+				updateScoreLabel();
+				
+				scoreLabel.setFontScale(1.5f);
+				Action sizeDown = new Action() {
+					
+					@Override
+					public boolean act(float delta) {
+						float scale = scoreLabel.getFontScaleX();
+						if(scale <= 1f){
+							scoreLabel.setFontScale(1);
+							return true;
+						}
+						scoreLabel.setFontScale(scale - delta*3f);
+						return false;
+					}
+				};
+				
+				scoreLabel.addAction(sizeDown);
+				return true;
+			}
+		};
+		
+		SequenceAction sequence = new SequenceAction(moveAction, addPointsAction);
+		score.addAction(sequence);
+		getStage().addActor(score);
+	}
+
+	public int getShipCounter() {
+		return shipCounter;
+	}
+
+	public void setShipCounter(int shipCounter) {
+		this.shipCounter = shipCounter;
+	}
+	
+	public void increaseShipCounter() {
+		setShipCounter(getShipCounter() + 1);
+	}
 }

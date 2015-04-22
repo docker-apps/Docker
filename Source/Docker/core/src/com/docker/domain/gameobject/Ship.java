@@ -170,7 +170,7 @@ public class Ship extends Actor {
 			if (gridCoords.y < gridHeight) {
 				previewContainer.setColor(PREVIEW_CONTAINER_INVALID_COLOR);
 			}
-			if(gridCoords.y >= gridHeight-1 || x < xGridstart || x > xGridstart + gridSize * gridWidth)
+			if(gridCoords.y >= gridHeight-1 || x < xGridstart - 20f || x > xGridstart + gridSize * gridWidth)
 				this.gridBoundsAlpha = 1f;
 			Vector2 realCoords = getRealCoord(gridCoords);
 			previewContainer.setPosition(realCoords.x, realCoords.y);
@@ -295,6 +295,7 @@ public class Ship extends Actor {
 	}
 
 	public void runIn(){
+		//TODO: This and TakeOff is very similar. Should be refactored if possible.
 		this.previewContainer = null;
 		this.isTakingOff = true;
 		final TextureRegion snapshot = this.takeSnapshot();
@@ -317,9 +318,29 @@ public class Ship extends Actor {
 				return true;
 			}
 		};
+		
+		Action waterSplashAction = new Action() {
+			Random rand = new Random();
+
+			@Override
+			public boolean act(float delta) {
+				float waterHeight = 20f;
+				float offset = getX();
+				
+				if(rand.nextFloat() > 0.5){
+					float randomOffset = rand.nextFloat()*getWidth();
+					WaterSplash splashTest = new WaterSplash(
+							actor.getX()+ offset + randomOffset,
+							waterHeight);
+					getStage().addActor(splashTest);
+				}
+				return true;
+			}
+		};
+		ParallelAction parallelAction = new ParallelAction(moveAction, waterSplashAction);
 
 		// chain the two actions and add it to this actor
-		SequenceAction actions = new SequenceAction(moveAction, completeAction);
+		SequenceAction actions = new SequenceAction(parallelAction, completeAction);
 		img.addAction(actions);
 		this.getStage().addActor(img);
 		this.isStaticAnimationRunning = true;
@@ -370,7 +391,6 @@ public class Ship extends Actor {
 							actor.getX()+ offset + randomOffset,
 							waterHeight);
 					getStage().addActor(splashTest);
-					System.out.println("new splash added at " + splashTest.getX());
 				}
 				return true;
 			}
@@ -399,7 +419,7 @@ public class Ship extends Actor {
 		//this.startCapsizeAnimation(this, capsizeValue);
 
 		Image img = new Image(region);
-		startCapsizeAnimation(img, capsizeValue, getY()+getWidth()/2, yGridstart);
+		startCapsizeAnimation(img, capsizeValue, getX()+getWidth()/2, yGridstart);
 		this.getStage().addActor(img);
 	}
 
@@ -625,7 +645,7 @@ public class Ship extends Actor {
 				for (int i = 0; i < this.breakValues.length; i++) {
 					if(breakValues[i] <= 0.5)
 						batch.setColor(Color.WHITE);
-					else if(breakValues[i] <= 1)
+					else if(breakValues[i] < 1)
 						batch.setColor(1, 1, 0, 1);
 					else
 						batch.setColor(1f, 0, 0, 1);
@@ -645,6 +665,13 @@ public class Ship extends Actor {
 				skin.getBodyLeft().getRegionWidth() + 
 				skin.getBodyCenter().getRegionWidth()*(this.gridWidth-2) + 
 				skin.getBodyRight().getRegionWidth();
+	}
+	
+	@Override
+	public float getHeight(){
+		return (float) Math.max(
+				skin.getBodyLeft().getRegionHeight() + skin.getMastOffset().y + skin.getMast().getRegionHeight(), 
+				skin.getBodyRight().getRegionHeight() + skin.getTowerOffset().y + skin.getTower().getRegionHeight());
 	}
 
 	public float getElementWidth(){
