@@ -3,6 +3,8 @@ package com.docker.domain.game;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.docker.Docker;
+import com.docker.domain.world.Background;
+import com.docker.domain.world.Foreground;
 import com.docker.domain.world.LondonBackground;
 import com.docker.domain.world.RainyForeground;
 import com.docker.technicalservices.Persistence;
@@ -30,8 +32,12 @@ public class CareerGame extends AbstractGame {
 		setLoadRating(new LoadRating(ship.getBreakThreshold(), ship.getCapsizeThreshold(), 1));
 		
 		if(packageId.equals("2")){
-			stage.setBackground(new LondonBackground(stage.getWidth(), stage.getHeight()));
-			stage.setForeground(new RainyForeground(stage));
+			Background bg = new LondonBackground(stage.getWidth(), stage.getHeight());
+			this.background = bg;
+			stage.setBackground(bg);
+			Foreground fg = new RainyForeground(stage);
+			this.foreground = fg;
+			stage.setForeground(fg);
 		}
 	}
 
