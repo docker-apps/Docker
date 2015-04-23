@@ -25,6 +25,7 @@ public class FailureEndScreen extends AbstractMenu{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				application.returnToMenu();
+                application.showAds(true);
 			}
 		});
 		retryButton.addListener(new ClickListener() {
