@@ -1,6 +1,7 @@
 package com.docker.technicalservices;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,6 +31,9 @@ public class Resource {
 	private static Color sunColor;
 	private static Texture sunTexture;
 	private static Texture sunRayTexture;
+	
+	private static Sound containerSound;
+	private static Sound buttonClickSound;
 
 	/**
 	 * Returns the first region in the Docker TextureAtlas found with the specified name.
@@ -183,6 +187,18 @@ public class Resource {
 		
 		return Resource.sunRayTexture;
 	}
+	
+	public static Sound getContainerSound(){
+		if(containerSound == null)
+			containerSound = Gdx.audio.newSound(Gdx.files.internal("sfx/container_load.wav"));
+		return containerSound;
+	}
+	
+	public static Sound getButtonClickSound(){
+		if(buttonClickSound == null)
+			buttonClickSound = Gdx.audio.newSound(Gdx.files.internal("sfx/button_click.wav"));
+		return buttonClickSound;
+	}
 
 	/**
 	 * Dispose of all the resources.
@@ -219,6 +235,14 @@ public class Resource {
 		if(sunRayTexture != null){
 			sunRayTexture.dispose();
 			sunRayTexture = null;
+		}
+		if(containerSound != null){
+			containerSound.dispose();
+			containerSound = null;
+		}
+		if(buttonClickSound != null){
+			buttonClickSound.dispose();
+			buttonClickSound = null;
 		}
 	}
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.docker.Docker;
 import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 import com.docker.technicalservices.WorldStage;
 
 /** 
@@ -236,4 +238,12 @@ public class AbstractMenu implements Screen {
             super.draw(batch, parentAlpha);
         }
     }
+    
+    protected class ClickListener extends com.badlogic.gdx.scenes.scene2d.utils.ClickListener{
+		@Override
+		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+			SoundHandler.playSound(Resource.getButtonClickSound());
+			return super.touchDown(event, x, y, pointer, button);
+		}
+	}
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -35,6 +34,7 @@ import com.docker.Docker;
 import com.docker.domain.gameobject.shipskins.IShipSkin;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 
 public class Ship extends Actor {	
 	private static final Color PREVIEW_CONTAINER_INVALID_COLOR = new Color(1f, 1f, 1f, 0.5f);
@@ -58,8 +58,6 @@ public class Ship extends Actor {
 	private boolean isSunken = false;
 	private int breakPos;
 
-	private Sound containerSound;
-
 	private IShipSkin skin;
 	private FrameBuffer fbo;
 	private Pixmap gridBoundsPixmap;
@@ -67,8 +65,6 @@ public class Ship extends Actor {
 
 	private float gridBoundsAlpha = 0f;
 	private float gridBoundsDecay = 1f;
-
-	private Boolean playContainerSound = true;
 
 	private final Pool<SmokePuff> smokePool= new Pool<Ship.SmokePuff>(5, 10) {
 
@@ -104,8 +100,6 @@ public class Ship extends Actor {
 		this.xGridstart = this.getX()+skin.getBodyLeft().getRegionWidth() - gridSize;
 		this.yGridstart = this.getY()+skin.getBodyCenter().getRegionHeight();
 
-		playContainerSound = Persistence.isSoundOn();
-		containerSound = Gdx.audio.newSound(Gdx.files.internal("container_load.wav"));
 		createTopLineAndGrid();
 	}
 
@@ -140,9 +134,9 @@ public class Ship extends Actor {
 			}
 
 			this.containers.add(container);
-			if (playContainerSound) {
-				containerSound.play();
-			}
+
+			SoundHandler.playSound(Resource.getContainerSound());
+			
 			Integer totalContainer = (Integer) Persistence.getStatisticsMap().get("totalContainer");
 			Persistence.saveStatisticValue("totalContainer", totalContainer+1);
 			Integer totalWeight = (Integer) Persistence.getStatisticsMap().get("totalWeight");
@@ -805,10 +799,6 @@ public class Ship extends Actor {
 
 	public void setStaticAnimationRunning(boolean isStaticAnimationRunning){
 		this.isStaticAnimationRunning = isStaticAnimationRunning;
-	}
-
-	public void playContainerSound(Boolean playSound) {
-		this.playContainerSound = playSound;
 	}
 
 	public boolean isSunken() {
