@@ -18,6 +18,13 @@ big_curved_arrow
   orig: 45, 79
   offset: 0, 0
   index: -1
+career_menu_icon
+  rotate: false
+  xy: 118, 44
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
 docker_title
   rotate: false
   xy: 2, 83
@@ -48,7 +55,7 @@ finger
   index: -1
 home_icon
   rotate: false
-  xy: 118, 44
+  xy: 224, 25
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
@@ -69,14 +76,14 @@ livesaver_on
   index: -1
 next_level_icon
   rotate: false
-  xy: 224, 31
+  xy: 119, 28
   size: 20, 14
   orig: 20, 14
   offset: 0, 0
   index: -1
 resume_icon
   rotate: false
-  xy: 119, 22
+  xy: 141, 29
   size: 11, 20
   orig: 11, 20
   offset: 0, 0
@@ -111,7 +118,7 @@ slider_pointer
   index: -1
 slider_rail
   rotate: false
-  xy: 140, 43
+  xy: 119, 20
   size: 15, 6
   split: 7, 7, 0, 7
   orig: 15, 6
@@ -141,7 +148,7 @@ yellow_button
   index: -1
 yellow_button_pressed
   rotate: false
-  xy: 113, 6
+  xy: 113, 4
   size: 14, 14
   split: 4, 4, 4, 4
   orig: 14, 14

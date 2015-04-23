@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.docker.Docker;
 import com.docker.domain.game.AbstractGame;
 
@@ -17,14 +16,26 @@ public class FailureEndScreen extends AbstractMenu{
 	protected Button homeButton = createHomeButton(skin);
 	protected Button retryButton = createRetryButton(skin);
 
+
 	public FailureEndScreen(final Docker application, TextureRegion background, final AbstractGame game) {
+		this(application, background, game, false);
+	}
+	
+	public FailureEndScreen(final Docker application, TextureRegion background, final AbstractGame game, final boolean isCareerMode) {
 		super(application, background);
 
-
+		if(isCareerMode)
+			homeButton = createIconButton(skin, "career_menu_icon");
+		else
+			homeButton = createHomeButton(skin);
+		
 		homeButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				application.returnToMenu();
+				if(isCareerMode)
+					application.returnToCareerScreen();
+				else
+					application.returnToMenu();
                 application.showAds(true);
 			}
 		});

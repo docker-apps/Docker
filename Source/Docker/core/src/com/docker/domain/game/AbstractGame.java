@@ -336,7 +336,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 			drawDebugInfo(this.stage.getBatch());
 	}
 
-	private void displayPauseScreen() {
+	protected void displayPauseScreen() {
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();			
 		application.setScreen(new PauseMenu(application, screenCap, this));
 	}
@@ -351,9 +351,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 		if (Persistence.isMusicOn()) {
 			backgroundMusic.setVolume(Persistence.getVolume());
 			backgroundMusic.play();
-		}
-		if (!Persistence.isSoundOn()) {
-			getShip().playContainerSound(false);
 		}
 		GestureDetector gd = new GestureDetector(this.stage);
 		InputMultiplexer im = new InputMultiplexer(gd, this.stage);

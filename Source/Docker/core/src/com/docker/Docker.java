@@ -10,7 +10,6 @@ import com.docker.technicalservices.Resource;
 import com.docker.ui.menus.AbstractMenu;
 import com.docker.ui.menus.CareerMenu;
 import com.docker.ui.menus.MainMenu;
-import com.docker.ui.menus.SplashScreen;
 
 /**
  * @author HAL9000
@@ -101,7 +100,7 @@ public class Docker extends Game {
 	}
 	
 	/**
-	 * Return to the MainMenu screen.
+	 * Return to the Career screen.
 	 * The history will be discarded.
 	 */
 	public void returnToCareerScreen() {

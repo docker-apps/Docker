@@ -3,11 +3,12 @@ package com.docker.ui.menus;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.docker.Docker;
 import com.docker.domain.game.AbstractGame;
 import com.docker.domain.game.CareerGame;
 import com.docker.technicalservices.Persistence;
+import com.docker.technicalservices.Resource;
 
 public class CareerSuccessEndScreen extends SuccessEndScreen {
 
@@ -37,7 +38,15 @@ public class CareerSuccessEndScreen extends SuccessEndScreen {
 		//				);
 
 		table.add(nextLevelButton).size(100, 40).padTop(10).padLeft(5).center();
+		
+		Image iconImage = new Image(Resource.getDockerSkinTextureAtlas().findRegion("career_menu_icon"));
+		homeButton.clear();
+    	homeButton.add(iconImage);
+    	homeButton.addListener(new ClickListener(){
+    		@Override
+			public void clicked(InputEvent event, float x, float y) {
+				application.returnToCareerScreen();
+			}
+    	});
 	}
-
-
 }

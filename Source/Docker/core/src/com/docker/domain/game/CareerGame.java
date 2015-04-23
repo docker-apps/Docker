@@ -10,6 +10,7 @@ import com.docker.domain.world.RainyForeground;
 import com.docker.technicalservices.Persistence;
 import com.docker.ui.menus.CareerSuccessEndScreen;
 import com.docker.ui.menus.FailureEndScreen;
+import com.docker.ui.menus.PauseMenu;
 
 /**
  * The goal in the career game is to unlock all levels
@@ -75,7 +76,7 @@ public class CareerGame extends AbstractGame {
             Integer highscore = endGame(gameScore);
             application.setScreen(new CareerSuccessEndScreen(application, screenCap, this, gameScore, highscore));
         } else{
-        	application.setScreen(new FailureEndScreen(application, screenCap, this));
+        	application.setScreen(new FailureEndScreen(application, screenCap, this, true));
         }
     }
 
@@ -84,6 +85,12 @@ public class CareerGame extends AbstractGame {
         application.returnToLastScreen();
         application.updateScreen(new CareerGame(application, levelId));
     }
+    
+    @Override
+	protected void displayPauseScreen() {
+		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();			
+		application.setScreen(new PauseMenu(application, screenCap, this, true));
+	}
 
     public String getLevelId() {
         return levelId;
