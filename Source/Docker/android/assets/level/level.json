@@ -591,30 +591,30 @@
         "shipLength": 5,
         "shipHeight": 2,
         "breakThreshold": 2,
-        "capsizeThreshold": 2,
-        "trainSpeed": 16,
+        "capsizeThreshold": 3,
+        "trainSpeed": 14,
         "lives": 3,
         "containers": {
           "container": [
             {
+              "length": 1,
+              "weight": 2
+            },
+            {
               "length": 4,
-              "weight": 4
-            },
-            {
-              "length": 1,
-              "weight": 1
-            },
-            {
-              "length": 1,
-              "weight": 1
-            },
-            {
-              "length": 1,
-              "weight": 1
+              "weight": 5
             },
             {
               "length": 3,
-              "weight": 4
+              "weight": 3
+            },
+            {
+              "length": 1,
+              "weight": 2
+            },
+            {
+              "length": 1,
+              "weight": 1
             }
           ]
         }
@@ -952,7 +952,86 @@
             }
           ]
         }
-      }  
+      },
+      {
+        "id": "17",
+        "stage": 2,
+        "name": "Level 8",
+        "shipLength": 6,
+        "shipHeight": 4,
+        "breakThreshold": 2,
+        "capsizeThreshold": 9,
+        "trainSpeed": 14,
+        "lives": 3,
+        "containers": {
+          "container": [
+            {
+              "length": 1,
+              "weight": 2
+            },
+            {
+              "length": 3,
+              "weight": 2
+            },
+            {
+              "length": 1,
+              "weight": 2
+            },
+            {
+              "length": 1,
+              "weight": 1
+            },
+            {
+              "length": 1,
+              "weight": 1
+            },
+            {
+              "length": 1,
+              "weight": 3
+            },
+            {
+              "length": 2,
+              "weight": 1
+            },
+            {
+              "length": 1,
+              "weight": 1
+            },
+            {
+              "length": 2,
+              "weight": 5
+            },
+            {
+              "length": 4,
+              "weight": 5
+            },
+            {
+              "length": 1,
+              "weight": 2
+            },
+            {
+              "length": 1,
+              "weight": 2
+            },
+            {
+              "length": 1,
+              "weight": 1
+            },
+            {
+              "length": 2,
+              "weight": 4
+            },
+            {
+              "length": 1,
+              "weight": 2
+            },
+            {
+              "length": 1,
+              "weight": 2
+            }
+          ]
+        }
+      }
     ]
   }
 ]
