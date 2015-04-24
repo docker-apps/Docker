@@ -106,6 +106,7 @@ public class InfiniteGame extends AbstractGame{
     
     @Override
     public void displayEndScreen(boolean isGameLost){
+    	stopAllSound();
     	application.showInterstital();
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		getLoadRating().getCapsizeValue();
@@ -123,6 +124,7 @@ public class InfiniteGame extends AbstractGame{
     public void startNewGame() {
         application.returnToLastScreen();
         application.updateScreen(new InfiniteGame(application));
+        playAllSound();
     }
 
 	/**

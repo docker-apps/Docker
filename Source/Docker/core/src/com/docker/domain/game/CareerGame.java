@@ -67,6 +67,7 @@ public class CareerGame extends AbstractGame {
 
     @Override
     public void displayEndScreen(boolean isGameLost){
+		stopAllSound();
         application.showInterstital();
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
@@ -84,6 +85,7 @@ public class CareerGame extends AbstractGame {
     public void startNewGame() {
         application.returnToLastScreen();
         application.updateScreen(new CareerGame(application, levelId));
+        playAllSound();
     }
     
     @Override

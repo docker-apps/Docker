@@ -8,9 +8,10 @@ import com.docker.technicalservices.Resource;
 
 public class RainyForeground extends Foreground {
 	private static int RAIN_DROP_AMOUNT = 50;
-
+	
 	public RainyForeground(Stage stage) {
 		this(stage, DEFAULT_WATERLEVEL);
+		ambientSound.add(Resource.getRainAmbient());
 	}
 
 

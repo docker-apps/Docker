@@ -34,6 +34,7 @@ public class QuickGame extends AbstractGame {
     public void startNewGame() {
         application.returnToLastScreen();
         application.updateScreen(new QuickGame(application));
+        playAllSound();
     }
 
     public double getTimeLeft() {

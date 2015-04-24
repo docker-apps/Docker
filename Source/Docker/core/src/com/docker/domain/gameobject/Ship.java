@@ -338,6 +338,8 @@ public class Ship extends Actor {
 		img.addAction(actions);
 		this.getStage().addActor(img);
 		this.isStaticAnimationRunning = true;
+		
+		SoundHandler.playSound(Resource.getShipRunInSound());
 	}
 
 	/**
@@ -397,6 +399,8 @@ public class Ship extends Actor {
 		img.addAction(actions);
 		this.getStage().addActor(img);
 		this.isStaticAnimationRunning = true;
+		
+		SoundHandler.playSound(Resource.getShipTakeOffSound());
 	}
 
 
@@ -445,7 +449,7 @@ public class Ship extends Actor {
 
 		actor.setOrigin(originX, originY);
 		RotateByAction rotateAction = new RotateByAction();
-		rotateAction.setAmount(90*Math.signum(capsizeValue));
+		rotateAction.setAmount(90*0.75f*Math.signum(capsizeValue));
 		rotateAction.setDuration(duration);
 		rotateAction.setInterpolation(Interpolation.exp5Out);
 
@@ -519,6 +523,8 @@ public class Ship extends Actor {
 		SequenceAction actions = new SequenceAction(sinkingAction, completeAction);
 
 		actor.addAction(actions);
+		
+		SoundHandler.playSound(Resource.getBubbleSound());
 	}
 
 
@@ -551,6 +557,8 @@ public class Ship extends Actor {
 		img2.setOrigin(breakingXPos, this.getY());
 		startCapsizeAnimation(img2, 1, img2.getWidth()/2,yGridstart);
 		this.getStage().addActor(img2);
+		
+		SoundHandler.playSound(Resource.getShipBreakSound());
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.docker.technicalservices;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -34,6 +35,15 @@ public class Resource {
 	
 	private static Sound containerSound;
 	private static Sound buttonClickSound;
+	private static Sound shipHornSound;
+	private static Sound shipTakeOffSound;
+	private static Sound shipRunInSound;
+	private static Sound shipBreakSound;
+	private static Sound bubbleSound;
+	
+	private static Music hustle;
+	private static Music harborAmbient;
+	private static Music rainAmbient;
 
 	/**
 	 * Returns the first region in the Docker TextureAtlas found with the specified name.
@@ -199,6 +209,54 @@ public class Resource {
 			buttonClickSound = Gdx.audio.newSound(Gdx.files.internal("sfx/button_click.wav"));
 		return buttonClickSound;
 	}
+	
+	public static Sound getShipHornSound(){
+		if(shipHornSound == null)
+			shipHornSound = Gdx.audio.newSound(Gdx.files.internal("sfx/ship_horn_2.wav"));
+		return shipHornSound;
+	}
+	
+	public static Sound getShipTakeOffSound(){
+		if(shipTakeOffSound == null)
+			shipTakeOffSound = Gdx.audio.newSound(Gdx.files.internal("sfx/ship_takeoff.wav"));
+		return shipTakeOffSound;
+	}
+	
+	public static Sound getShipRunInSound(){
+		if(shipRunInSound == null)
+			shipRunInSound = Gdx.audio.newSound(Gdx.files.internal("sfx/ship_runin.wav"));
+		return shipRunInSound;
+	}
+	
+	public static Sound getShipBreakSound(){
+		if(shipBreakSound == null)
+			shipBreakSound = Gdx.audio.newSound(Gdx.files.internal("sfx/ship_break.wav"));
+		return shipBreakSound;
+	}
+	
+	public static Sound getBubbleSound(){
+		if(bubbleSound == null)
+			bubbleSound = Gdx.audio.newSound(Gdx.files.internal("sfx/bubbles.wav"));
+		return bubbleSound;
+	}
+	
+	public static Music getHustle(){
+		if(hustle == null)
+			hustle = Gdx.audio.newMusic(Gdx.files.internal("tracks/hustle.mp3"));
+		return hustle;
+	}
+	
+	public static Music getHarborAmbient(){
+		if(harborAmbient == null)
+			harborAmbient = Gdx.audio.newMusic(Gdx.files.internal("tracks/harbor_ambient.wav"));
+		return harborAmbient;
+	}
+	
+	public static Music getRainAmbient(){
+		if(rainAmbient == null)
+			rainAmbient = Gdx.audio.newMusic(Gdx.files.internal("tracks/rain_ambient.wav"));
+		return rainAmbient;
+	}
 
 	/**
 	 * Dispose of all the resources.
@@ -243,6 +301,38 @@ public class Resource {
 		if(buttonClickSound != null){
 			buttonClickSound.dispose();
 			buttonClickSound = null;
+		}
+		if(shipHornSound != null){
+			shipHornSound.dispose();
+			shipHornSound = null;
+		}
+		if(shipTakeOffSound != null){
+			shipTakeOffSound.dispose();
+			shipTakeOffSound = null;
+		}
+		if(shipRunInSound != null){
+			shipRunInSound.dispose();
+			shipRunInSound = null;
+		}
+		if(shipBreakSound != null){
+			shipBreakSound.dispose();
+			shipBreakSound = null;
+		}
+		if(bubbleSound != null){
+			bubbleSound.dispose();
+			bubbleSound = null;
+		}
+		if(hustle != null){
+			hustle.dispose();
+			hustle = null;
+		}
+		if(harborAmbient != null){
+			harborAmbient.dispose();
+			harborAmbient = null;
+		}
+		if(rainAmbient != null){
+			rainAmbient.dispose();
+			rainAmbient = null;
 		}
 	}
 }

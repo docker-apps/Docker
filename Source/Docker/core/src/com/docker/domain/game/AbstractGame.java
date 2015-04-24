@@ -27,6 +27,8 @@ import com.docker.domain.gameobject.Train;
 import com.docker.domain.world.Background;
 import com.docker.domain.world.Foreground;
 import com.docker.technicalservices.Persistence;
+import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 import com.docker.technicalservices.WorldStage;
 import com.docker.ui.menus.FailureEndScreen;
 import com.docker.ui.menus.PauseMenu;
@@ -56,9 +58,10 @@ public abstract class AbstractGame extends ScreenAdapter {
 	protected Train train;
 	protected Crane crane;
 	protected LoadRating loadRating;
-	protected Music backgroundMusic;
 	protected Foreground foreground;
 	protected Background background;
+	
+	protected Music soundtrack = Resource.getHustle();
 
 	protected boolean gameOver;
 	protected boolean gameLost;
@@ -70,9 +73,6 @@ public abstract class AbstractGame extends ScreenAdapter {
 		this.application = application;
 
 		this.remainingShips = 1;
-		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("hustle.mp3"));
-		backgroundMusic.setLooping(true);
-		backgroundMusic.setVolume(1);
 
 		this.font = new BitmapFont();
 
@@ -337,6 +337,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	}
 
 	protected void displayPauseScreen() {
+		pauseAllSound();
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();			
 		application.setScreen(new PauseMenu(application, screenCap, this));
 	}
@@ -348,10 +349,8 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	@Override
 	public void show(){
-		if (Persistence.isMusicOn()) {
-			backgroundMusic.setVolume(Persistence.getVolume());
-			backgroundMusic.play();
-		}
+		playAllSound();
+		
 		GestureDetector gd = new GestureDetector(this.stage);
 		InputMultiplexer im = new InputMultiplexer(gd, this.stage);
 		Gdx.input.setInputProcessor(im);
@@ -360,7 +359,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	@Override
 	public void dispose() {
-		this.backgroundMusic.dispose();
+		stopAllSound();
 		this.stage.dispose();
 		this.font.dispose();
 	}
@@ -422,6 +421,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	 * @param isGameLost whether the player has lost the game or not. 
 	 */
 	public void displayEndScreen(boolean isGameLost){
+		stopAllSound();
 		application.showInterstital();
 		TextureRegion screenCap = ScreenUtils.getFrameBufferTexture();
 		//application.setScreen(new EndScreen(application, screenCap));
@@ -433,6 +433,21 @@ public abstract class AbstractGame extends ScreenAdapter {
 		} else{
 			application.setScreen(new FailureEndScreen(application, screenCap, this));
 		}
+	}
+	
+	protected void stopAllSound(){
+		SoundHandler.stopMusic(soundtrack);
+		foreground.stopAmbient();
+	}
+	
+	protected void playAllSound(){
+		SoundHandler.playMusic(soundtrack);
+		foreground.playAmbient();
+	}
+	
+	protected void pauseAllSound(){
+		SoundHandler.pauseMusic(soundtrack);
+		foreground.pauseAmbient();
 	}
 
 	public abstract void startNewGame();

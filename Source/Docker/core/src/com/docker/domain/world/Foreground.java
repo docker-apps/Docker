@@ -1,9 +1,11 @@
 package com.docker.domain.world;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 
 /**
  * @author HAL9000
@@ -49,6 +52,8 @@ public class Foreground extends Actor {
 	private List<Vector2> waterMovementPositions;
 	private ShapeRenderer shapeRenderer;
 	protected float stateTime;
+	
+	protected Collection<Music> ambientSound;
 	
 	/**
 	 * @param width The width over which the foreground spans. Usually equals the stages/screens width.
@@ -88,7 +93,10 @@ public class Foreground extends Actor {
 					rand.nextFloat()*this.getWidth(), 
 					rand.nextFloat()*(this.getWaterLevel()-2));
 			this.waterMovementPositions.add(position);
-		}		
+		}
+
+		ambientSound = new ArrayList<Music>();
+		ambientSound.add(Resource.getHarborAmbient());
 	}
 	
 	/**
@@ -216,6 +224,24 @@ public class Foreground extends Actor {
 		for (int i = 0; i < this.remainingShips; i++) {
 			batch.draw(this.liveSaver, xOffset, this.getHeight()-51);
 			xOffset += (liveSaver.getRegionWidth()+LIFE_PADDING);
+		}
+	}
+	
+	public void playAmbient(){
+		for (Music track : ambientSound) {
+			SoundHandler.playAmbient(track);
+		}
+	}
+	
+	public void pauseAmbient(){
+		for (Music track : ambientSound) {
+			SoundHandler.pauseAmbient(track);
+		}
+	}
+	
+	public void stopAmbient(){
+		for (Music track : ambientSound) {
+			SoundHandler.stopAmbient(track);
 		}
 	}
 
