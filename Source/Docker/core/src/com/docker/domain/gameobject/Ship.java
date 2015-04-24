@@ -399,7 +399,8 @@ public class Ship extends Actor {
 		img.addAction(actions);
 		this.getStage().addActor(img);
 		this.isStaticAnimationRunning = true;
-		
+
+		SoundHandler.playSound(Resource.getShipHornSound());
 		SoundHandler.playSound(Resource.getShipTakeOffSound());
 	}
 
@@ -413,8 +414,6 @@ public class Ship extends Actor {
 	 */
 	public void capsize(float capsizeValue){
 		TextureRegion region = takeSnapshot();
-
-		//this.startCapsizeAnimation(this, capsizeValue);
 
 		Image img = new Image(region);
 		startCapsizeAnimation(img, capsizeValue, getX()+getWidth()/2, yGridstart);
@@ -449,7 +448,7 @@ public class Ship extends Actor {
 
 		actor.setOrigin(originX, originY);
 		RotateByAction rotateAction = new RotateByAction();
-		rotateAction.setAmount(90*0.75f*Math.signum(capsizeValue));
+		rotateAction.setAmount(90*Math.signum(capsizeValue));
 		rotateAction.setDuration(duration);
 		rotateAction.setInterpolation(Interpolation.exp5Out);
 

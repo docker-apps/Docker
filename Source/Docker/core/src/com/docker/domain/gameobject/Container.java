@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 import com.docker.technicalservices.WorldStage;
 
 /**
@@ -128,6 +129,7 @@ public class Container extends Actor {
 			if(stage instanceof WorldStage){
 		        ((WorldStage)stage).shakeScreen(5, 0);				
 			}
+			SoundHandler.playSound(Resource.getContainerExplosion());
 		}
 	}
 

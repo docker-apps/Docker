@@ -1,14 +1,39 @@
 package com.docker.technicalservices;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 public class SoundHandler {
 	
+	public static Collection<Sound> currentSounds = new ArrayList<Sound>();
+	
 	public static void playSound(Sound sound){
 		if(isSoundOn()){
 			sound.play(getVolume());
+			currentSounds.add(sound);
 		}
+	}
+	
+	public static void pauseAllSounds(){
+		for (Sound sound : currentSounds) {
+			sound.pause();
+		}
+	}
+	
+	public static void resumeAllSounds(){
+		for (Sound sound : currentSounds) {
+			sound.resume();
+		}
+	}
+	
+	public static void stopAllSounds(){
+		for (Sound sound : currentSounds) {
+			sound.stop();
+		}
+		currentSounds.clear();
 	}
 	
 	public static void playAmbient(Music music){

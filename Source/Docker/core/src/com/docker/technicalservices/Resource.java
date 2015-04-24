@@ -40,6 +40,7 @@ public class Resource {
 	private static Sound shipRunInSound;
 	private static Sound shipBreakSound;
 	private static Sound bubbleSound;
+	private static Sound containerExplosion;
 	
 	private static Music hustle;
 	private static Music harborAmbient;
@@ -240,6 +241,12 @@ public class Resource {
 		return bubbleSound;
 	}
 	
+	public static Sound getContainerExplosion(){
+		if(containerExplosion == null)
+			containerExplosion = Gdx.audio.newSound(Gdx.files.internal("sfx/container_explosion.wav"));
+		return containerExplosion;
+	}
+	
 	public static Music getHustle(){
 		if(hustle == null)
 			hustle = Gdx.audio.newMusic(Gdx.files.internal("tracks/hustle.mp3"));
@@ -321,6 +328,10 @@ public class Resource {
 		if(bubbleSound != null){
 			bubbleSound.dispose();
 			bubbleSound = null;
+		}
+		if(containerExplosion != null){
+			containerExplosion.dispose();
+			containerExplosion = null;
 		}
 		if(hustle != null){
 			hustle.dispose();

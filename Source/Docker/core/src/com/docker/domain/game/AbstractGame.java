@@ -436,16 +436,19 @@ public abstract class AbstractGame extends ScreenAdapter {
 	}
 	
 	protected void stopAllSound(){
+		SoundHandler.stopAllSounds();
 		SoundHandler.stopMusic(soundtrack);
 		foreground.stopAmbient();
 	}
 	
 	protected void playAllSound(){
+		SoundHandler.resumeAllSounds();
 		SoundHandler.playMusic(soundtrack);
 		foreground.playAmbient();
 	}
 	
 	protected void pauseAllSound(){
+		SoundHandler.pauseAllSounds();
 		SoundHandler.pauseMusic(soundtrack);
 		foreground.pauseAmbient();
 	}
