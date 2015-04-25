@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.docker.Docker;
+import com.docker.domain.gameobject.Container;
 import com.docker.domain.gameobject.Ship;
 import com.docker.domain.gameobject.shipskins.ShipSkinManager;
 import com.docker.technicalservices.Persistence;
@@ -83,7 +84,9 @@ public class InfiniteGame extends AbstractGame{
 		}else{
 			gameMenuButton.setTouchable(Touchable.enabled);
 		}
-		if(train.getContainerListSize()<= 5)
+		
+		Container lastContainer = train.getLastContainer();
+		if(lastContainer.getX() >= -(lastContainer.getWidth()+20f))
 			train.addContainer(Level.createRandomContainer());
 		
 		//so the ui stuff is drawn at topmost position

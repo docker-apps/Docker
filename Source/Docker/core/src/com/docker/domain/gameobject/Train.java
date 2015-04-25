@@ -156,7 +156,7 @@ public class Train extends Actor {
     /**
      * @return the last container in the train
      */
-    private Container getLastContainer() {
+    public Container getLastContainer() {
         Container lastContainer = getFirstContainer();
         for (Container container : containers) {
             float xPos = container.getX();
