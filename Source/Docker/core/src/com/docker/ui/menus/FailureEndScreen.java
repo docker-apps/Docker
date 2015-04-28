@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.docker.Docker;
 import com.docker.domain.game.AbstractGame;
+import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 
 public class FailureEndScreen extends AbstractMenu{
 
@@ -23,6 +25,8 @@ public class FailureEndScreen extends AbstractMenu{
 	
 	public FailureEndScreen(final Docker application, TextureRegion background, final AbstractGame game, final boolean isCareerMode) {
 		super(application, background);
+		
+		setMenuMusicEnabled(false);
 
 		if(isCareerMode)
 			homeButton = createIconButton(skin, "career_menu_icon");
@@ -64,6 +68,7 @@ public class FailureEndScreen extends AbstractMenu{
 		table.add(homeButton).size(100, 40).padTop(10).center();
 		table.add(retryButton).size(100, 40).padTop(10).center();
 
+		SoundHandler.playSound(Resource.getSound("game_lose"));
 	}
 	
 	@Override

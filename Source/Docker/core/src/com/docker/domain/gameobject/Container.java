@@ -129,7 +129,7 @@ public class Container extends Actor {
 			if(stage instanceof WorldStage){
 		        ((WorldStage)stage).shakeScreen(5, 0);				
 			}
-			SoundHandler.playSound(Resource.getContainerExplosion());
+			SoundHandler.playSound(Resource.getSound("container_explosion"));
 		}
 	}
 

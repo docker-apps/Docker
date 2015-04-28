@@ -1,14 +1,17 @@
 package com.docker.technicalservices;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.Pixmap.Filter;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -33,16 +36,10 @@ public class Resource {
 	private static Texture sunTexture;
 	private static Texture sunRayTexture;
 	
-	private static Sound containerSound;
-	private static Sound buttonClickSound;
-	private static Sound shipHornSound;
-	private static Sound shipTakeOffSound;
-	private static Sound shipRunInSound;
-	private static Sound shipBreakSound;
-	private static Sound bubbleSound;
-	private static Sound containerExplosion;
+	private static HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 	
-	private static Music hustle;
+	private static Music gameTheme;
+	private static Music menuTheme;
 	private static Music harborAmbient;
 	private static Music rainAmbient;
 
@@ -199,58 +196,37 @@ public class Resource {
 		return Resource.sunRayTexture;
 	}
 	
-	public static Sound getContainerSound(){
-		if(containerSound == null)
-			containerSound = Gdx.audio.newSound(Gdx.files.internal("sfx/container_load.wav"));
-		return containerSound;
+	public static Sound getSound(String name){
+		if(sounds.containsKey(name))
+			return sounds.get(name);
+		
+		FileHandle fileHandle = Gdx.files.internal("sfx/" + name + ".wav");
+		if(!fileHandle.exists())
+			fileHandle = Gdx.files.internal("sfx/" + name + ".mp3");
+			if(!fileHandle.exists())
+				return null;
+		Sound sound = Gdx.audio.newSound(fileHandle);
+		sounds.put(name, sound);
+		return sound;
 	}
 	
-	public static Sound getButtonClickSound(){
-		if(buttonClickSound == null)
-			buttonClickSound = Gdx.audio.newSound(Gdx.files.internal("sfx/button_click.wav"));
-		return buttonClickSound;
+	public static void disposeSounds(){
+		for (Sound sound : sounds.values()) {
+			sound.dispose();
+		}
+		sounds.clear();
 	}
 	
-	public static Sound getShipHornSound(){
-		if(shipHornSound == null)
-			shipHornSound = Gdx.audio.newSound(Gdx.files.internal("sfx/ship_horn_2.wav"));
-		return shipHornSound;
+	public static Music getGameTheme(){
+		if(gameTheme == null)
+			gameTheme = Gdx.audio.newMusic(Gdx.files.internal("tracks/hustle.mp3"));
+		return gameTheme;
 	}
 	
-	public static Sound getShipTakeOffSound(){
-		if(shipTakeOffSound == null)
-			shipTakeOffSound = Gdx.audio.newSound(Gdx.files.internal("sfx/ship_takeoff.wav"));
-		return shipTakeOffSound;
-	}
-	
-	public static Sound getShipRunInSound(){
-		if(shipRunInSound == null)
-			shipRunInSound = Gdx.audio.newSound(Gdx.files.internal("sfx/ship_runin.wav"));
-		return shipRunInSound;
-	}
-	
-	public static Sound getShipBreakSound(){
-		if(shipBreakSound == null)
-			shipBreakSound = Gdx.audio.newSound(Gdx.files.internal("sfx/ship_break.wav"));
-		return shipBreakSound;
-	}
-	
-	public static Sound getBubbleSound(){
-		if(bubbleSound == null)
-			bubbleSound = Gdx.audio.newSound(Gdx.files.internal("sfx/bubbles.wav"));
-		return bubbleSound;
-	}
-	
-	public static Sound getContainerExplosion(){
-		if(containerExplosion == null)
-			containerExplosion = Gdx.audio.newSound(Gdx.files.internal("sfx/container_explosion.wav"));
-		return containerExplosion;
-	}
-	
-	public static Music getHustle(){
-		if(hustle == null)
-			hustle = Gdx.audio.newMusic(Gdx.files.internal("tracks/hustle.mp3"));
-		return hustle;
+	public static Music getMenuTheme(){
+		if(menuTheme == null)
+			menuTheme = Gdx.audio.newMusic(Gdx.files.internal("tracks/Whiskey on the Mississippi.mp3"));
+		return menuTheme;
 	}
 	
 	public static Music getHarborAmbient(){
@@ -301,41 +277,16 @@ public class Resource {
 			sunRayTexture.dispose();
 			sunRayTexture = null;
 		}
-		if(containerSound != null){
-			containerSound.dispose();
-			containerSound = null;
+
+		disposeSounds();
+		
+		if(gameTheme != null){
+			gameTheme.dispose();
+			gameTheme = null;
 		}
-		if(buttonClickSound != null){
-			buttonClickSound.dispose();
-			buttonClickSound = null;
-		}
-		if(shipHornSound != null){
-			shipHornSound.dispose();
-			shipHornSound = null;
-		}
-		if(shipTakeOffSound != null){
-			shipTakeOffSound.dispose();
-			shipTakeOffSound = null;
-		}
-		if(shipRunInSound != null){
-			shipRunInSound.dispose();
-			shipRunInSound = null;
-		}
-		if(shipBreakSound != null){
-			shipBreakSound.dispose();
-			shipBreakSound = null;
-		}
-		if(bubbleSound != null){
-			bubbleSound.dispose();
-			bubbleSound = null;
-		}
-		if(containerExplosion != null){
-			containerExplosion.dispose();
-			containerExplosion = null;
-		}
-		if(hustle != null){
-			hustle.dispose();
-			hustle = null;
+		if(menuTheme != null){
+			menuTheme.dispose();
+			menuTheme = null;
 		}
 		if(harborAmbient != null){
 			harborAmbient.dispose();

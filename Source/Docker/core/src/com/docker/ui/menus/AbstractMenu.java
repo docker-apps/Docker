@@ -37,6 +37,8 @@ public class AbstractMenu implements Screen {
     protected ExtendViewport viewport;
     protected Table table;
     
+    protected boolean menuMusicEnabled = true;
+    
     /**
      * Default Constructor for Menus.
      * 
@@ -182,12 +184,15 @@ public class AbstractMenu implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
+		//stage.getViewport().update((int)Docker.WIDTH, (int)Docker.HEIGHT, false);
 	}
 
 	@Override
 	public void show() {
         Gdx.input.setInputProcessor(stage);
         Gdx.input.setCatchBackKey(true);
+
+		playMenuMusic();
 	}
 
 	@Override
@@ -196,15 +201,30 @@ public class AbstractMenu implements Screen {
 
 	@Override
 	public void pause() {
+        SoundHandler.pauseMusic(Resource.getMenuTheme());
 	}
 
 	@Override
 	public void resume() {
+		playMenuMusic();
 	}
 
 	@Override
 	public void dispose() {
         stage.dispose();
+	}
+	
+	protected void playMenuMusic(){
+		if(getMenuMusicEnabled())
+			SoundHandler.playMusic(Resource.getMenuTheme());		
+	}
+	
+	public void setMenuMusicEnabled(boolean menuMusicEnabled){
+		this.menuMusicEnabled = menuMusicEnabled;
+	}
+	
+	public boolean getMenuMusicEnabled(){
+		return this.menuMusicEnabled;
 	}
 
     /**
@@ -242,7 +262,7 @@ public class AbstractMenu implements Screen {
     protected class ClickListener extends com.badlogic.gdx.scenes.scene2d.utils.ClickListener{
 		@Override
 		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-			SoundHandler.playSound(Resource.getButtonClickSound());
+			SoundHandler.playSound(Resource.getSound("button_click"));
 			return super.touchDown(event, x, y, pointer, button);
 		}
 	}

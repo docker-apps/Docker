@@ -61,7 +61,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	protected Foreground foreground;
 	protected Background background;
 	
-	protected Music soundtrack = Resource.getHustle();
+	protected Music soundtrack = Resource.getGameTheme();
 
 	protected boolean gameOver;
 	protected boolean gameLost;

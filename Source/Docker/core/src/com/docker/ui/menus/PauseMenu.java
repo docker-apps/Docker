@@ -29,6 +29,8 @@ public class PauseMenu extends AbstractMenu {
 	 */
 	public PauseMenu(final Docker application, TextureRegion background, final AbstractGame game, final boolean isCareerMode) {
 		super(application, background);
+		
+		setMenuMusicEnabled(false);
 
 		if(isCareerMode)
 			homeButton = createIconButton(skin, "career_menu_icon");

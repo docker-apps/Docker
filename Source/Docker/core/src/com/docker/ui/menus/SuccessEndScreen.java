@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.docker.Docker;
 import com.docker.domain.game.AbstractGame;
 import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 
 public class SuccessEndScreen extends AbstractMenu{
 
@@ -29,6 +30,8 @@ public class SuccessEndScreen extends AbstractMenu{
 
 	public SuccessEndScreen(final Docker application, TextureRegion background, final AbstractGame game, int gameScore, int highscore) {
 		super(application, background);
+		
+		setMenuMusicEnabled(false);
 
 		homeButton.addListener(new ClickListener() {
 			@Override
@@ -57,6 +60,8 @@ public class SuccessEndScreen extends AbstractMenu{
 		this.particles = new ArrayList<SuccessEndScreen.Particle>();
 		generateParticles(300, (float)Math.toRadians(60), (float)Math.toRadians(20), 100, 75, 0, 0);
 		generateParticles(300, (float)Math.toRadians(120), (float)Math.toRadians(20), 100, 75, stage.getWidth(), 0);
+		
+		SoundHandler.playSound(Resource.getSound("game_win"));
 	}
 	
 	private void generateParticles(int count, float angle, float angleVar, float speed, float speedVar, float x, float y){

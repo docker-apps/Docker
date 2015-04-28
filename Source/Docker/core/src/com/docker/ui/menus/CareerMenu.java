@@ -17,6 +17,7 @@ import com.docker.domain.game.CareerGame;
 import com.docker.domain.game.TutorialGame;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 
 /**
  * menu with a overview of all levels (locked and unlocked)
@@ -100,6 +101,7 @@ public class CareerMenu extends AbstractMenu {
 	            button.addListener(new ClickListener() {
 	                @Override
 	                public void clicked(InputEvent event, float x, float y) {
+	    		        SoundHandler.stopMusic(Resource.getMenuTheme());
 	                    application.showAds(false);
 	                    application.setScreen(new CareerGame(application, id));
 	                }

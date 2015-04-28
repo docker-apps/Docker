@@ -135,7 +135,7 @@ public class Ship extends Actor {
 
 			this.containers.add(container);
 
-			SoundHandler.playSound(Resource.getContainerSound());
+			SoundHandler.playSound(Resource.getSound("container_load"));
 			
 			Integer totalContainer = (Integer) Persistence.getStatisticsMap().get("totalContainer");
 			Persistence.saveStatisticValue("totalContainer", totalContainer+1);
@@ -339,7 +339,7 @@ public class Ship extends Actor {
 		this.getStage().addActor(img);
 		this.isStaticAnimationRunning = true;
 		
-		SoundHandler.playSound(Resource.getShipRunInSound());
+		SoundHandler.playSound(Resource.getSound("ship_runin"));
 	}
 
 	/**
@@ -356,7 +356,7 @@ public class Ship extends Actor {
 		final Image img = new Image(snapshot);
 
 		MoveToAction moveAction = new MoveToAction();
-		moveAction.setPosition(img.getWidth()*-1, 0f);
+		moveAction.setPosition(-(getX() + getWidth()+10), 0f);
 		moveAction.setDuration(5);
 		moveAction.setInterpolation(Interpolation.pow2In);
 
@@ -400,8 +400,8 @@ public class Ship extends Actor {
 		this.getStage().addActor(img);
 		this.isStaticAnimationRunning = true;
 
-		SoundHandler.playSound(Resource.getShipHornSound());
-		SoundHandler.playSound(Resource.getShipTakeOffSound());
+		SoundHandler.playSound(Resource.getSound("ship_horn"));
+		SoundHandler.playSound(Resource.getSound("ship_takeoff"));
 	}
 
 
@@ -523,7 +523,7 @@ public class Ship extends Actor {
 
 		actor.addAction(actions);
 		
-		SoundHandler.playSound(Resource.getBubbleSound());
+		SoundHandler.playSound(Resource.getSound("bubbles"));
 	}
 
 
@@ -557,7 +557,7 @@ public class Ship extends Actor {
 		startCapsizeAnimation(img2, 1, img2.getWidth()/2,yGridstart);
 		this.getStage().addActor(img2);
 		
-		SoundHandler.playSound(Resource.getShipBreakSound());
+		SoundHandler.playSound(Resource.getSound("ship_break"));
 	}
 
 	@Override

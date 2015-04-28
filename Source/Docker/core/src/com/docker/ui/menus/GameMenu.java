@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.docker.Docker;
 import com.docker.domain.game.InfiniteGame;
 import com.docker.domain.game.QuickGame;
+import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 
 /**
  * In this menu the player can choose which game he wants to play
@@ -40,6 +42,7 @@ public class GameMenu extends AbstractMenu {
 		quickGameButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+		        SoundHandler.stopMusic(Resource.getMenuTheme());
 				application.showAds(false);
 				application.setScreen(new QuickGame(application));
 			}
@@ -47,6 +50,7 @@ public class GameMenu extends AbstractMenu {
 		infiniteGameButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+		        SoundHandler.stopMusic(Resource.getMenuTheme());
 				application.showAds(false);
 				application.setScreen(new InfiniteGame(application));
 			}
