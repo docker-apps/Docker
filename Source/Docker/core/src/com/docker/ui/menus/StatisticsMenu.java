@@ -78,11 +78,10 @@ public class StatisticsMenu extends AbstractMenu {
         Label v1 = new Label(Persistence.getQuickHighscore().toString(), skin);
         table.add(h1).width(300).left().padBottom(5);
         table.add(v1).row().padBottom(5);
-//		don't show the infinite score while the game mode is deactived.
-//        Label h2 = new Label(labelMap.get("totalInfiniteScore"), skin);
-//        Label v2 = new Label(Persistence.getInfiniteHighscore().toString(), skin);
-//        table.add(h2).width(300).left().padBottom(5);
-//        table.add(v2).row().padBottom(5);
+        Label h2 = new Label(labelMap.get("totalInfiniteScore"), skin);
+        Label v2 = new Label(Persistence.getInfiniteHighscore().toString(), skin);
+        table.add(h2).width(300).left().padBottom(5);
+        table.add(v2).row().padBottom(5);
         for (ObjectMap.Entry<String, Object> stringObjectEntry : statisticsMap) {
             Label l = new Label(labelMap.get(stringObjectEntry.key), skin);
             Label v = new Label(stringObjectEntry.value.toString(), skin);
