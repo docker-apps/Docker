@@ -33,12 +33,8 @@ public class CareerGame extends AbstractGame {
 		setLoadRating(new LoadRating(ship.getBreakThreshold(), ship.getCapsizeThreshold(), 1));
 		
 		if(packageId.equals("2")){
-			Background bg = new LondonBackground(stage.getWidth(), stage.getHeight());
-			this.background = bg;
-			stage.setBackground(bg);
-			Foreground fg = new RainyForeground(stage);
-			this.foreground = fg;
-			stage.setForeground(fg);
+			this.setBackground(new LondonBackground(stage.getWidth(), stage.getHeight()));
+			this.setForeground(new RainyForeground(stage));
 		}
 	}
 
