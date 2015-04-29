@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.docker.Docker;
 import com.docker.domain.gameobject.shipskins.ShipSkinManager;
 import com.docker.technicalservices.Persistence;
+import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 
 /**
  * The menu to change settings for
@@ -74,6 +76,10 @@ public class SettingsMenu extends AbstractMenu {
             public void clicked(InputEvent event, float x, float y) {
                 Persistence.setMusicOn(!Persistence.isMusicOn());
                 musicCheckBox.setChecked(Persistence.isMusicOn());
+                if(musicCheckBox.isChecked())
+                	SoundHandler.playMusic(Resource.getMenuTheme());
+                else
+                	SoundHandler.pauseMusic(Resource.getMenuTheme());
             }
         });
         vibrateCheckBox.addListener(new ClickListener() {
@@ -88,6 +94,7 @@ public class SettingsMenu extends AbstractMenu {
             public void changed(ChangeEvent event, Actor actor) {
                 Slider slider = (Slider) actor;
                 Persistence.setVolume(slider.getValue());
+                SoundHandler.playMusic(Resource.getMenuTheme());
             }
         });
         Table settingsTable = new Table();
