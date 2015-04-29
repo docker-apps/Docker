@@ -9,6 +9,7 @@ import com.docker.domain.game.AbstractGame;
 import com.docker.domain.game.CareerGame;
 import com.docker.technicalservices.Persistence;
 import com.docker.technicalservices.Resource;
+import com.docker.technicalservices.SoundHandler;
 
 public class CareerSuccessEndScreen extends SuccessEndScreen {
 
@@ -21,6 +22,7 @@ public class CareerSuccessEndScreen extends SuccessEndScreen {
 		nextLevelButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				SoundHandler.stopMusic(Resource.getEndScreenTheme());
 				CareerGame g = (CareerGame) game;
 				int level = Integer.parseInt( g.getLevelId());
 				String nextLevel = String.valueOf(level + 1);
@@ -45,6 +47,7 @@ public class CareerSuccessEndScreen extends SuccessEndScreen {
     	homeButton.addListener(new ClickListener(){
     		@Override
 			public void clicked(InputEvent event, float x, float y) {
+				SoundHandler.stopMusic(Resource.getEndScreenTheme());
 				application.returnToCareerScreen();
 			}
     	});

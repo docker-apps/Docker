@@ -402,6 +402,7 @@ public class Ship extends Actor {
 
 		SoundHandler.playSound(Resource.getSound("ship_horn"));
 		SoundHandler.playSound(Resource.getSound("ship_takeoff"));
+		SoundHandler.playSound(Resource.getSound("ship_takeoff_engine"));
 	}
 
 

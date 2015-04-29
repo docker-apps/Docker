@@ -40,6 +40,7 @@ public class Resource {
 	
 	private static Music gameTheme;
 	private static Music menuTheme;
+	private static Music endScreenTheme;
 	private static Music harborAmbient;
 	private static Music rainAmbient;
 
@@ -225,8 +226,14 @@ public class Resource {
 	
 	public static Music getMenuTheme(){
 		if(menuTheme == null)
-			menuTheme = Gdx.audio.newMusic(Gdx.files.internal("tracks/Whiskey on the Mississippi.mp3"));
+			menuTheme = Gdx.audio.newMusic(Gdx.files.internal("tracks/Happy Alley.wav"));
 		return menuTheme;
+	}
+	
+	public static Music getEndScreenTheme(){
+		if(endScreenTheme == null)
+			endScreenTheme = Gdx.audio.newMusic(Gdx.files.internal("tracks/Airport Lounge.mp3"));
+		return endScreenTheme;
 	}
 	
 	public static Music getHarborAmbient(){
@@ -287,6 +294,10 @@ public class Resource {
 		if(menuTheme != null){
 			menuTheme.dispose();
 			menuTheme = null;
+		}
+		if(endScreenTheme != null){
+			endScreenTheme.dispose();
+			endScreenTheme = null;
 		}
 		if(harborAmbient != null){
 			harborAmbient.dispose();

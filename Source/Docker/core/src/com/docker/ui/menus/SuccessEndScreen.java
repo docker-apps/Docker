@@ -11,7 +11,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.docker.Docker;
@@ -30,12 +33,11 @@ public class SuccessEndScreen extends AbstractMenu{
 
 	public SuccessEndScreen(final Docker application, TextureRegion background, final AbstractGame game, int gameScore, int highscore) {
 		super(application, background);
-		
-		setMenuMusicEnabled(false);
 
 		homeButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				SoundHandler.stopMusic(Resource.getEndScreenTheme());
 				application.showAds(true);
 				application.returnToMenu();
 			}
@@ -43,6 +45,7 @@ public class SuccessEndScreen extends AbstractMenu{
 		retryButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				SoundHandler.stopMusic(Resource.getEndScreenTheme());
 				game.startNewGame();
 			}
 		});
@@ -58,10 +61,30 @@ public class SuccessEndScreen extends AbstractMenu{
 		table.add(retryButton).size(100, 40).padTop(10).padLeft(5).center();
 		
 		this.particles = new ArrayList<SuccessEndScreen.Particle>();
-		generateParticles(300, (float)Math.toRadians(60), (float)Math.toRadians(20), 100, 75, 0, 0);
-		generateParticles(300, (float)Math.toRadians(120), (float)Math.toRadians(20), 100, 75, stage.getWidth(), 0);
 		
 		SoundHandler.playSound(Resource.getSound("game_win"));
+		
+		setMenuMusicEnabled(false);
+		
+		DelayAction delayToFanfareAction = new DelayAction(1.258f);
+		Action fireworksAndMusicAction = new Action() {
+			
+			@Override
+			public boolean act(float delta) {
+				startFirework();
+				setMenuMusicEnabled(true);
+				playMenuMusic();
+				return true;
+			}
+		};
+		
+		SequenceAction sequence = new SequenceAction(delayToFanfareAction, fireworksAndMusicAction);
+		this.stage.addAction(sequence);
+	}
+	
+	private void startFirework(){
+		generateParticles(150, (float)Math.toRadians(60), (float)Math.toRadians(20), 100, 75, 0, 0);
+		generateParticles(150, (float)Math.toRadians(120), (float)Math.toRadians(20), 100, 75, stage.getWidth(), 0);
 	}
 	
 	private void generateParticles(int count, float angle, float angleVar, float speed, float speedVar, float x, float y){
@@ -74,6 +97,11 @@ public class SuccessEndScreen extends AbstractMenu{
 			this.particles.add(new Particle(x, y, vx, vy));
 		}
 		
+	}
+	
+	protected void playMenuMusic(){
+		if(getMenuMusicEnabled())
+			SoundHandler.playMusic(Resource.getEndScreenTheme());		
 	}
 	
 	@Override
