@@ -771,7 +771,7 @@
       {
         "id": "14",
         "stage": 2,
-        "name": "Level 5",
+        "name": "Level 6",
         "shipLength": 6,
         "shipHeight": 4,
         "breakThreshold": 4,
@@ -838,7 +838,7 @@
       {
         "id": "15",
         "stage": 2,
-        "name": "Level 6",
+        "name": "Level 7",
         "shipLength": 7,
         "shipHeight": 1,
         "breakThreshold": 3,
@@ -869,7 +869,7 @@
       {
         "id": "16",
         "stage": 2,
-        "name": "Level 7",
+        "name": "Level 8",
         "shipLength": 7,
         "shipHeight": 5,
         "breakThreshold": 3,
@@ -956,7 +956,7 @@
       {
         "id": "17",
         "stage": 2,
-        "name": "Level 8",
+        "name": "Level 9",
         "shipLength": 6,
         "shipHeight": 4,
         "breakThreshold": 2,
