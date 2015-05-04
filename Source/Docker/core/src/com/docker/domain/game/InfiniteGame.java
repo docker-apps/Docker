@@ -28,7 +28,7 @@ public class InfiniteGame extends AbstractGame{
 	protected int score;
 	protected int shipCounter;
 	private Skin skin = Resource.getDockerSkin();
-	private Button gameMenuButton;
+	private Button goButton;
 	private Label scoreTitle = new Label("Score: ", skin);;
 	private Label scoreLabel = new Label("0", skin);;
 
@@ -44,8 +44,8 @@ public class InfiniteGame extends AbstractGame{
 		
 		setScore(0);
 		
-		gameMenuButton = new Button(skin.get("ship-button", ButtonStyle.class));
-		gameMenuButton.addListener(new ClickListener(){
+		goButton = new Button(skin.get("ship-button", ButtonStyle.class));
+		goButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	checkShipCondition();
@@ -57,19 +57,23 @@ public class InfiniteGame extends AbstractGame{
             	getShip().runIn();            	
             }
         });
-		gameMenuButton.setPosition(10, getStage().getHeight() - gameMenuButton.getHeight() - 60);
-		this.stage.addActor(gameMenuButton);
+		
+		initUiPositions();
+
+		this.stage.addActor(scoreTitle);
+		this.stage.addActor(scoreLabel);
+		this.stage.addActor(goButton);
+	}
+	
+	private void initUiPositions(){
+		goButton.setPosition(10, getStage().getHeight() - goButton.getHeight() - 60);
 		
 		scoreTitle.setPosition(
-				gameMenuButton.getX() + gameMenuButton.getWidth() + 10f,
+				goButton.getX() + goButton.getWidth() + 10f,
 				getStage().getHeight() - 60f);
 		scoreLabel.setPosition(
 				scoreTitle.getX() + scoreTitle.getTextBounds().width,
 				scoreTitle.getY());
-		// position on water
-		//scoreLabel.setPosition(10f, 10f);
-		this.stage.addActor(scoreTitle);
-		this.stage.addActor(scoreLabel);
 	}
 	
 	@Override
@@ -80,9 +84,9 @@ public class InfiniteGame extends AbstractGame{
 		getTrain().setSpeed(getTrain().getSpeed() + TRAIN_SPEEDUP_RATE * delta);
 		
 		if(getCrane().isDeploying()){
-			gameMenuButton.setTouchable(Touchable.disabled);
+			goButton.setTouchable(Touchable.disabled);
 		}else{
-			gameMenuButton.setTouchable(Touchable.enabled);
+			goButton.setTouchable(Touchable.enabled);
 		}
 		
 		Container lastContainer = train.getLastContainer();
@@ -91,7 +95,7 @@ public class InfiniteGame extends AbstractGame{
 		
 		//so the ui stuff is drawn at topmost position
 		this.stage.getBatch().begin();
-		gameMenuButton.draw(this.stage.getBatch(), 1);
+		goButton.draw(this.stage.getBatch(), 1);
 		scoreTitle.draw(this.stage.getBatch(), 1);
 		scoreLabel.draw(this.stage.getBatch(), 1);
 		this.stage.getBatch().end();
@@ -205,5 +209,11 @@ public class InfiniteGame extends AbstractGame{
 	
 	public void increaseShipCounter() {
 		setShipCounter(getShipCounter() + 1);
+	}
+	
+	@Override
+	public void resize(int width, int height){
+		super.resize(width, height);
+		this.initUiPositions();
 	}
 }

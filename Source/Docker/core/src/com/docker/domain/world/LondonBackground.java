@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.docker.technicalservices.Resource;
 
@@ -28,8 +29,8 @@ public class LondonBackground extends Background {
 	private TextureRegion stPauls;
 	private TextureRegion gherkin;
 	
-	public LondonBackground(float width, float height) {
-		super(width, height);
+	public LondonBackground(Stage stage) {
+		super(stage);
 		
 		this.towerBridge = Resource.findRegion("london_tower_bridge");
 		this.towerBridgeFlag = Resource.findRegions("london_tower_bridge_flag");

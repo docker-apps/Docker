@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.docker.domain.world.Background;
+import com.docker.domain.world.Foreground;
 
 public class WorldStage extends Stage implements GestureListener {
 	private static final int SHAKE_COOLDOWN = 10;
@@ -32,7 +34,6 @@ public class WorldStage extends Stage implements GestureListener {
         
 		this.shakeTimer = 0;
 		this.shakeIntensityX = shakeIntensityY = 0;
-		this.cameraOriginalPosition = this.getCamera().position.cpy();
 	}
 	
 	public WorldStage(Viewport viewport, Batch batch) {
@@ -47,9 +48,10 @@ public class WorldStage extends Stage implements GestureListener {
 	@Override
 	public void draw () {
 		Camera camera = getViewport().getCamera();
+		cameraOriginalPosition = this.getCamera().position.cpy();
+		camera.position.x = cameraOriginalPosition.x + cameraOffsetX;
+		camera.position.y = cameraOriginalPosition.y + cameraOffsetY;
 		camera.update();
-		camera.position.x = this.cameraOriginalPosition.x + cameraOffsetX;
-		camera.position.y = this.cameraOriginalPosition.y + cameraOffsetY;
 
 		if (!getRoot().isVisible()) return;
 
@@ -73,6 +75,10 @@ public class WorldStage extends Stage implements GestureListener {
 
 		//debug drawing doesn't work atm
 //		//if (super.debug()) drawDebug();
+		
+		camera.position.x = cameraOriginalPosition.x;
+		camera.position.y = cameraOriginalPosition.y;
+		camera.update();
 	}
 
 	@Override
@@ -113,15 +119,24 @@ public class WorldStage extends Stage implements GestureListener {
 	public void setForeground(Actor foreground) {
 		this.foreground = foreground;
 	}
+	
+	public void setForeground(Foreground foreground){
+		this.foreground = foreground;
+		((Foreground) this.foreground).setStage(this);
+	}
 
 
 	public Actor getBackground() {
 		return background;
 	}
 
-
 	public void setBackground(Actor background) {
 		this.background = background;
+	}
+	
+	public void setBackground(Background background) {
+		this.background = background;
+		((Background) this.background).setStage(this);
 	}
 
     @Override

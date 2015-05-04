@@ -184,7 +184,10 @@ public class AbstractMenu implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		//stage.getViewport().update((int)Docker.WIDTH, (int)Docker.HEIGHT, false);
+		stage.getViewport().update(width, height, true);
+		if(stage.getBackground() instanceof MenuBackground){
+			((MenuBackground) stage.getBackground()).setStage(stage);
+		}
 	}
 
 	@Override

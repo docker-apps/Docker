@@ -124,11 +124,29 @@ public abstract class AbstractGame extends ScreenAdapter {
 				return false;
 			}
 		};		
-		setBackground(new Background(this.stage.getWidth(), this.stage.getHeight()));
+		setBackground(new Background(this.stage));
 		setForeground(new Foreground(this.stage));
 
 		// crane is basically the same in every game. Remove from abstraction if cranespeed becomes configurable.
 		setCrane(new Crane(CRANE_SPEED, stage.getWidth() / 2, stage.getHeight()));
+	}
+	
+	protected void initAllObjectPositions(){
+		this.initCranePosition();
+		this.initShipPosition();
+		this.initTrainXPosition();
+	}
+	
+	protected void initCranePosition(){
+		this.getCrane().setPosition(stage.getWidth() / 2, stage.getHeight());
+	}
+	
+	protected void initShipPosition(){
+		this.ship.setPosition((this.stage.getWidth()-ship.getWidth())/2-20f, 10f);
+	}
+	
+	protected void initTrainXPosition(){
+		this.train.setY(this.stage.getHeight()-26);		
 	}
 	
 	public void setBackground(Background bg){
@@ -462,6 +480,12 @@ public abstract class AbstractGame extends ScreenAdapter {
 
 	public abstract void startNewGame();
 
+	@Override
+	public void resize (int width, int height) {
+		stage.getViewport().update(width, height, true);
+		initAllObjectPositions();
+	}
+
 	/**
 	 * @return the amount of time that has passed since the game was started.
 	 */
@@ -485,7 +509,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	}
 
 	/**
-	 * Note that the game will likely end if the amount of remaing lives equals zero.
+	 * Note that the game will likely end if the amount of remaining lives equals zero.
 	 * 
 	 * @param lives the amount of remaining lives
 	 */
@@ -509,7 +533,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public void setShip(Ship ship) {
 		this.ship = ship;
 		this.stage.addActor(ship);
-		this.ship.setPosition((this.stage.getWidth()-ship.getWidth())/2-20f, 10f);
+		initShipPosition();
 	}
 
 	/**
@@ -527,7 +551,7 @@ public abstract class AbstractGame extends ScreenAdapter {
 	public void setTrain(Train train) {
 		this.train = train;
 		this.stage.addActor(train);
-		this.train.setY(this.stage.getHeight()-26);
+		initTrainXPosition();
 	}
 
 	/**

@@ -22,29 +22,28 @@ public class MainMenu extends AbstractMenu{
 			statisticsButton = new TextButton("Statistics", skin),
 			premiumButton = new TextButton("Premium!", skin);
 
+	private Image titleImage;
+
+	private Image logoImage;
+
 	/**
 	 * @param application A reference to the Docker Application (Game) object.
 	 */
 	public MainMenu(final Docker application){
 		super(application);
-		MenuBackground background = new MenuBackground(this.stage.getWidth(), this.stage.getHeight());
+		MenuBackground background = new MenuBackground(this.stage);
 		this.setBackground(background);
 
 		TextureRegion titleRegion = Resource.getDockerSkinTextureAtlas().findRegion("docker_title");
 		TextureRegion logoRegion = Resource.getDockerSkinTextureAtlas().findRegion(
 				Docker.getInventory().hasPremium() ? "docker_title_logo_gold" : "docker_title_logo");
 
-		Image titleImage = new Image(titleRegion);
+		titleImage = new Image(titleRegion);
 		titleImage.setSize(titleRegion.getRegionWidth(), titleRegion.getRegionHeight());		
-		Image logoImage = new Image(logoRegion);
+		logoImage = new Image(logoRegion);
 		logoImage.setSize(logoRegion.getRegionWidth(), logoRegion.getRegionHeight());
 
-		titleImage.setPosition(
-				(this.stage.getWidth()-titleImage.getWidth()-logoImage.getWidth() - TITLE_SPACING)/2, 
-				(this.stage.getHeight()-titleImage.getHeight()-8f));
-		logoImage.setPosition(
-				(this.stage.getWidth()-titleImage.getWidth()-logoImage.getWidth() - TITLE_SPACING)/2 + titleImage.getWidth(), 
-				(this.stage.getHeight()-titleImage.getHeight()-8f));
+		setTitlePosition();
 
 		Group titleGroup = new Group();
 		titleGroup.addActor(titleImage);
@@ -89,6 +88,15 @@ public class MainMenu extends AbstractMenu{
 			}
 		});
 	}
+	
+	private void setTitlePosition(){
+		titleImage.setPosition(
+				(this.stage.getWidth()-titleImage.getWidth()-logoImage.getWidth() - TITLE_SPACING)/2, 
+				(this.stage.getHeight()-titleImage.getHeight()-8f));
+		logoImage.setPosition(
+				(this.stage.getWidth()-titleImage.getWidth()-logoImage.getWidth() - TITLE_SPACING)/2 + titleImage.getWidth() + TITLE_SPACING, 
+				(this.stage.getHeight()-titleImage.getHeight()-8f));
+	}
 
 	@Override
 	public void handleInput(){
@@ -96,5 +104,11 @@ public class MainMenu extends AbstractMenu{
 				Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
 			Gdx.app.exit();
 		}
+	}
+	
+	@Override
+	public void resize(int width, int height){
+		super.resize(width, height);
+		this.setTitlePosition();
 	}
 }

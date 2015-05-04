@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.docker.technicalservices.Resource;
 
@@ -20,6 +21,9 @@ public class Background extends Actor {
 
 	protected static final Color HARBOR_COLOR = Color.valueOf("acbfca");
 	protected static final Color SKY_COLOR = Color.valueOf("cae4f3");
+	
+	protected Stage stage;
+	
 	protected float harborLevel = 30f;
 	protected Array<AtlasRegion> bird;
 	protected ArrayList<Cloud> clouds;
@@ -30,12 +34,11 @@ public class Background extends Actor {
 	protected float stateTime;
 
 
-	public Background(float width, float height){
+	public Background(Stage stage){
 		super();
+		this.stage = stage;
 		this.setX(0);
 		this.setY(0);
-		this.setWidth(width);
-		this.setHeight(height);
 		this.shapeRenderer = new ShapeRenderer();
 		this.stateTime = 0f;
 
@@ -178,6 +181,20 @@ public class Background extends Actor {
 					i,
 					this.getHeight()-this.tunnel.getRegionHeight());
 		}
+	}
+
+	@Override
+	public float getWidth(){
+		return stage.getWidth();
+	}
+	
+	@Override
+	public float getHeight(){
+		return stage.getHeight();
+	}
+	
+	public void setStage(Stage stage){
+		this.stage = stage;
 	}
 	
 	protected static class Cloud {

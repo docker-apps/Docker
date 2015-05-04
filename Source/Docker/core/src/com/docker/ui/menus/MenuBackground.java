@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.docker.Docker;
 import com.docker.domain.game.Level;
@@ -30,16 +31,15 @@ import com.docker.technicalservices.Resource;
 public class MenuBackground extends Actor {
 	private static final Color WATER_BORDER_COLOR = Color.valueOf("126392");
 	private static final Color WATER_COLOR = Color.valueOf("2c98d6");
-
-	private float stateTime;
-
-
 	private static final float SKY_HEIGHT = 50f;
 	private static final int WATER_MOVEMENT_AMOUNT = 1000;
 	private static final float TRAIN_SPEED = 10f;
 	private static final float AQUEDUCT_SPEED = -20f;
 	private static final float MINI_SHIP_SPEED = -5f;
 	private static final float CLOUD_SPEED = 0.1f;
+
+	private float stateTime;
+	private Stage stage;
 
 	private ShapeRenderer shapeRenderer;
 
@@ -65,9 +65,8 @@ public class MenuBackground extends Actor {
 	 * @param width the width of the Background. Usually equals the width of the screen.
 	 * @param height the height of the Background. Usually equals the height of the screen.
 	 */
-	public MenuBackground(float width, float height){
-		this.setWidth(width);
-		this.setHeight(height);
+	public MenuBackground(Stage stage){
+		this.stage = stage;
 		this.shapeRenderer = new ShapeRenderer();
 
 		Random rand = new Random();
@@ -92,6 +91,15 @@ public class MenuBackground extends Actor {
 		this.waterMovementAnimation = new Animation(0.2f, this.waterMovement);
 		this.waterMovementAnimation.setPlayMode(PlayMode.LOOP_PINGPONG);
 
+		this.initWaterMovementPositions(rand);
+
+		this.train = Level.loadLevel().getTrain();
+		this.train.setPosition(20f, this.aqueductElement.getRegionHeight()+8);
+		this.train.setIndestructible(true);
+		this.train.setSpeed(TRAIN_SPEED);
+	}
+	
+	private void initWaterMovementPositions(Random rand){
 		this.waterMovementPositions = new ArrayList<Vector2>();
 		for (int i = 0; i < WATER_MOVEMENT_AMOUNT; i++) {
 			Vector2 position = new Vector2(
@@ -99,11 +107,6 @@ public class MenuBackground extends Actor {
 					rand.nextFloat()*(getHorizonHeight() - 2));
 			this.waterMovementPositions.add(position);
 		}
-
-		this.train = Level.loadLevel().getTrain();
-		this.train.setPosition(20f, this.aqueductElement.getRegionHeight()+8);
-		this.train.setIndestructible(true);
-		this.train.setSpeed(TRAIN_SPEED);
 	}
 
 	@Override
@@ -145,9 +148,11 @@ public class MenuBackground extends Actor {
 		batch.end();
 		shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+		shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
+		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(0.5f+dayTimeSin*0.29f, 0.2f+dayTimeSin*0.69f,dayTimeSin*0.95f,1f);
-		shapeRenderer.rect(0f, 0f, this.getWidth(), this.getHeight());
+		shapeRenderer.rect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 		shapeRenderer.end();
 		batch.begin();
 
@@ -243,6 +248,10 @@ public class MenuBackground extends Actor {
 			batch.draw(this.aqueductElement, aqueductOffset + aqueductWidth*i, 0f);
 		}
 	}
+	
+	public void update(){
+		initWaterMovementPositions(new Random());
+	}
 
 	private float getHorizonHeight(){
 		return this.getHeight() - SKY_HEIGHT;
@@ -250,5 +259,30 @@ public class MenuBackground extends Actor {
 
 	public boolean isDrawPremium() {
 		return Docker.getInventory().hasPremium();
+	}
+	
+	public void setStage(Stage stage){
+		this.stage = stage;
+		update();
+	}
+	
+	@Override
+	public float getWidth(){
+		return this.stage.getWidth();
+	}
+
+	@Override
+	public float getHeight(){
+		return this.stage.getHeight();
+	}
+	
+	@Override
+	public float getX(){
+		return 0f;
+	}
+	
+	@Override
+	public float getY(){
+		return 0f;
 	}
 }
